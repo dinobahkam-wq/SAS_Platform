@@ -18,7 +18,7 @@ export function BrandLogo({
       src={
         compact
           ? "/brand/icons/sas-logo-512.png"
-          : "/brand/logos/sas-logo.svg"
+          : "/brand/logos/sas-logo-for%20white%20background.png"
       }
       alt={
         compact
