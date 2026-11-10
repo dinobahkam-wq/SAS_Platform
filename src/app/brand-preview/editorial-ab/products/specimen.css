@@ -1,0 +1,53 @@
+.products-specimen{min-height:100vh;background:var(--background);color:var(--foreground);padding-bottom:1px}
+.products-header,.products-intro,.products-content,.products-method-note{width:min(1240px,calc(100% - 56px));margin-inline:auto}
+.products-header{padding-inline:0}.products-intro{padding:54px 0 28px}
+.products-intro h1{margin:12px 0 9px;font:500 clamp(30px,4vw,46px)/1.45 var(--font-display)}
+.products-intro>p{max-width:900px;margin:0;color:var(--muted);font:400 13px/2.1 var(--font-body)}
+.products-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.products-legend span{padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:#64736a;font:400 10px/1.7 var(--font-body)}
+.products-content{display:grid;gap:24px}.product-panel{border:1px solid var(--line);background:#fff;min-width:0}
+.product-panel-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 23px;border-bottom:1px solid var(--line)}
+.product-index{display:block;color:#89958d;font:10px/1.5 Arial,sans-serif;letter-spacing:.1em;direction:ltr}
+.product-panel-heading h2{margin:5px 0 0;font:700 15px/1.7 var(--font-interface)}
+.product-type{color:var(--muted);font:400 11px/1.8 var(--font-body)}
+.news-specimen{padding:clamp(22px,4vw,46px)}.news-topline{display:flex;flex-wrap:wrap;align-items:center;gap:12px;color:var(--muted);font:400 11px/1.8 var(--font-body)}
+.news-breaking-label{padding:5px 12px;background:#a33f36;color:white;border-radius:3px;font:700 11px/1.5 var(--font-body)}
+.news-category{margin-top:23px;color:var(--accent);font:500 12px/1.8 var(--font-body)}.news-category span{padding-inline:4px;color:var(--gold)}
+.news-headline{max-width:1020px;margin:10px 0 15px;font:900 clamp(34px,5vw,62px)/1.45 var(--font-display);letter-spacing:-.025em}
+.news-summary{max-width:900px;margin:0;color:#64736a;font:400 16px/2.15 var(--font-body)}
+.news-source-row{display:flex;flex-wrap:wrap;gap:9px 22px;margin-top:25px;padding:15px 0;border-block:1px solid var(--line);color:#87948b;font:400 10px/1.8 var(--font-body)}
+.news-followup{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:18px;margin-top:20px;padding:17px 19px;background:#f6f7f4;border-right:2px solid var(--gold)}
+.news-followup strong{font:500 15px/1.8 "Thmanyah Serif Display",var(--font-body)}.news-followup p{margin:0;color:#64736a;font:400 11px/2 var(--font-body)}
+.news-followup-link{color:var(--accent);white-space:nowrap;font:500 10px/1.8 var(--font-body)}
+.product-typography-note{padding:12px 22px;border-top:1px solid var(--line);background:#fbfcfa;color:#87948b;font:400 10px/1.9 var(--font-body)}
+.opinion-layout{display:grid;grid-template-columns:minmax(0,1fr) 235px;gap:34px;padding:clamp(22px,4vw,44px)}
+.opinion-header{padding-bottom:22px;border-bottom:1px solid var(--line)}.opinion-kicker{color:var(--accent);font:500 11px/1.8 var(--font-body)}
+.opinion-kicker span{color:var(--gold);padding-inline:3px}.opinion-title{max-width:880px;margin:11px 0 13px;font:700 clamp(29px,3.5vw,45px)/1.55 "Thmanyah Serif Display",var(--font-body)}
+.opinion-deck{max-width:830px;margin:0;color:#64736a;font:400 15px/2.15 var(--font-body)}
+.opinion-meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:18px;color:#89958d;font:400 10px/1.8 var(--font-body)}
+.opinion-body{padding-top:23px;color:#35433b;font:400 14px/2.3 var(--font-body)}.opinion-body p{margin:0 0 18px}
+.opinion-body h4{margin:30px 0 11px;font:500 23px/1.7 "Thmanyah Serif Display",var(--font-body)}
+.opinion-body h5{margin:24px 0 9px;font:500 19px/1.7 var(--font-display)}
+.opinion-body blockquote{margin:25px 0 0;padding:17px 21px;border-right:3px solid var(--gold);background:#f5f6f3;font:400 14px/2.2 var(--font-body)}
+.opinion-aside{display:grid;align-content:start;gap:13px}.opinion-aside-card{display:grid;gap:10px;padding:17px;border:1px solid var(--line);background:#fbfcfa}
+.opinion-aside-card>span{color:var(--accent);font:700 11px/1.8 var(--font-body)}.opinion-aside-card strong{color:#68766e;font:400 10px/1.8 var(--font-body)}
+.opinion-aside-highlight{border-right:2px solid var(--gold)}.opinion-aside-highlight p{margin:0;color:#68766e;font:400 11px/2.1 var(--font-body)}
+.research-specimen{padding:clamp(18px,3vw,34px)}.research-cover{display:flex;min-height:570px;flex-direction:column;justify-content:space-between;padding:clamp(25px,5vw,60px);border:1px solid var(--line);border-top:4px solid var(--accent);background:#f2f5f1}
+.research-cover-top,.research-cover-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.research-brand-line{color:var(--accent);font:700 12px/1.8 var(--font-body)}.research-series{color:#89958d;font:400 10px/1.8 var(--font-body)}
+.research-cover-content{max-width:930px;padding:48px 0}.research-kicker{color:var(--accent);font:500 12px/1.8 var(--font-body)}
+.research-title{margin:14px 0 15px;font:700 clamp(34px,5vw,58px)/1.5 "Thmanyah Serif Display",var(--font-body)}
+.research-deck{max-width:790px;margin:0;color:#64736a;font:400 15px/2.2 var(--font-body)}
+.research-cover-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid var(--line);background:var(--line)}
+.research-cover-meta>div{padding:13px 15px;background:rgba(255,255,255,.9)}.research-cover-meta span,.research-cover-meta strong{display:block}
+.research-cover-meta span{color:#89958d;font:400 9px/1.8 var(--font-body)}.research-cover-meta strong{margin-top:5px;font:500 11px/1.8 var(--font-body)}
+.research-cover-footer{margin-top:26px;padding-top:15px;border-top:1px solid #dce3dc;color:#89958d;font:9px/1.8 Arial,sans-serif;letter-spacing:.08em;direction:ltr}
+.research-inside{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr);gap:18px;margin-top:18px}
+.research-executive,.research-outline{padding:21px;border:1px solid var(--line);background:#fff}.research-section-label{color:#89958d;font:400 9px/1.8 var(--font-body)}
+.research-executive h4{margin:13px 0 9px;font:500 22px/1.7 "Thmanyah Serif Display",var(--font-body)}
+.research-executive h5{margin:23px 0 8px;font:500 18px/1.7 var(--font-display)}
+.research-executive p{margin:0;color:#58665e;font:400 12px/2.2 var(--font-body)}
+.research-outline ol{display:grid;gap:13px;margin:15px 0 0;padding:0 20px 0 0;color:#58665e;font:400 11px/2 var(--font-body)}
+.products-method-note{margin:26px auto 48px;padding:13px 17px;border-right:2px solid var(--gold);color:var(--muted);font:400 11px/2 var(--font-body)}
+@media(max-width:850px){.products-header,.products-intro,.products-content,.products-method-note{width:calc(100% - 32px)}.opinion-layout{grid-template-columns:1fr}.opinion-aside{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.products-intro{padding-top:38px}.product-panel-heading{align-items:flex-start;flex-direction:column;padding:15px 16px}.news-specimen{padding:22px 17px}.news-headline{font-size:35px}.news-summary{font-size:14px}.news-followup{grid-template-columns:1fr;gap:8px}.opinion-layout{padding:22px 17px}.opinion-title{font-size:30px}.opinion-aside,.research-inside{grid-template-columns:1fr}.research-cover{min-height:520px;padding:24px 19px}.research-title{font-size:35px}.research-cover-meta{grid-template-columns:1fr}.research-cover-content{padding:38px 0}.research-specimen{padding:14px}.research-executive,.research-outline{padding:17px}}
