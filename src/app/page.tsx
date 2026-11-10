@@ -8,15 +8,12 @@ import {
 import { getPublishedContent } from "@/lib/public-content";
 
 export default async function Home() {
-  const [news, analysis, research, media, featuredAnalysis] = await Promise.all([
-    getPublishedContent({ section: "news", limit: 6 }),
-    getPublishedContent({ section: "analysis", limit: 6 }),
-    getPublishedContent({ section: "research", limit: 4 }),
-    getPublishedContent({ section: "media", limit: 4 }),
-    getPublishedContent({ section: "analysis", featured: true, limit: 1 }),
-  ]);
-
-  const lead = featuredAnalysis[0] || analysis[0] || news[0] || research[0] || media[0] || null;
+  const published = await getPublishedContent({ limit: 36 });
+  const news = published.filter((item) => item.section === "news").slice(0, 6);
+  const analysis = published.filter((item) => item.section === "analysis").slice(0, 6);
+  const research = published.filter((item) => item.section === "research").slice(0, 4);
+  const media = published.filter((item) => item.section === "media").slice(0, 4);
+  const lead = analysis.find((item) => item.is_featured) || analysis[0] || news[0] || research[0] || media[0] || null;
 
   return (
     <main className="public-site">
