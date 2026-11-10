@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { SectionLanding } from "@/components/section-landing";
 import { getPublishedContent } from "@/lib/public-content";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "الدراسات والأبحاث",
   description: "دراسات وأوراق بحثية تدعم الفهم وصناعة القرار.",
