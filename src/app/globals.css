@@ -843,6 +843,9 @@ textarea {
   background: #fff;
   font-family: var(--font-body);
 }
+.ab-system-a {
+  --ab-secondary-font: "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+}
 .ab-system-b {
   --ab-secondary-font: "Thmanyah Serif Display", "Thmanyah Sans", sans-serif;
 }
