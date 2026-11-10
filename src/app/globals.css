@@ -282,7 +282,7 @@ button { cursor: pointer; }
 
 :root {
   --font-arabic: "Thmanyah Sans", Arial, sans-serif;
-  --font-display: "Thmanyah Serif Display", "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
+  --font-display: "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
 }
 
 body {
@@ -407,25 +407,53 @@ body {
   font-display: swap;
 }
 
-/* Temporary typography review page */
-.brand-preview-page { min-height: 100vh; }
-.brand-preview-intro { max-width: 1240px; margin: auto; padding: 64px 28px 34px; }
-.brand-preview-intro h1 { font-family: var(--font-display); font-size: clamp(34px, 5vw, 56px); line-height: 1.35; margin: 12px 0; }
-.brand-preview-intro p { max-width: 760px; color: var(--muted); line-height: 2; font-size: 14px; }
-.brand-preview-grid { max-width: 1240px; margin: auto; padding: 0 28px 80px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
-.brand-specimen { background: #fff; border: 1px solid var(--line); padding: clamp(22px, 3vw, 38px); min-width: 0; }
-.brand-specimen-label { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); color: var(--muted); font: 10px Arial,sans-serif; letter-spacing: .08em; }
-.brand-specimen h2 { margin: 26px 0 18px; font-size: clamp(30px, 3.4vw, 43px); line-height: 1.55; font-weight: 500; }
-.brand-specimen h3 { margin: 28px 0 10px; font-size: 23px; font-weight: 500; }
-.brand-specimen p { color: var(--muted); font-size: 14px; line-height: 2.15; margin: 0; }
-.brand-specimen-serif { font-family: "Thmanyah Serif Display", "Tajarib Taweel", serif; }
-.brand-specimen-sans { font-family: "Thmanyah Sans", Arial, sans-serif; }
-.brand-weight-list { display: grid; gap: 10px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); }
-.brand-weight-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; color: var(--foreground); }
-.brand-weight-row small { color: var(--muted); font: 10px Arial,sans-serif; direction: ltr; }
-.brand-preview-note { max-width: 1184px; margin: 0 auto 64px; padding: 16px 20px; border-right: 2px solid var(--gold); color: var(--muted); font-size: 12px; line-height: 2; }
+/* SAS typography system comparison — internal review only */
+.typography-review { min-height: 100vh; background: var(--background); }
+.typography-review-header { max-width: 1480px; margin: auto; padding: 0 28px; }
+.typography-review-intro { max-width: 1480px; margin: auto; padding: 54px 28px 30px; }
+.typography-review-intro h1 { margin: 12px 0 10px; font-family: "Tajarib Taweel", "Thmanyah Sans", sans-serif; font-size: clamp(30px, 4vw, 48px); line-height: 1.5; font-weight: 500; }
+.typography-review-intro p { max-width: 820px; color: var(--muted); font-size: 13px; line-height: 2.1; margin: 0; }
+.typography-review-legend { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+.typography-review-legend span { border: 1px solid var(--line); background: #fff; padding: 7px 11px; border-radius: 6px; color: #64736a; font-size: 10px; }
+.typography-review-grid { max-width: 1480px; margin: auto; padding: 0 28px 42px; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; align-items: stretch; }
+.typography-option { --specimen-display: "Tajarib Taweel", sans-serif; min-width: 0; background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; }
+.typography-option--tajarib { --specimen-display: "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
+.typography-option--serif { --specimen-display: "Thmanyah Serif Display", "Thmanyah Sans", sans-serif; }
+.typography-option--sans { --specimen-display: "Thmanyah Sans", Arial, sans-serif; }
+.typography-option-head { padding: 18px 20px 15px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.typography-option-code { color: var(--accent); font: 700 10px Arial,sans-serif; letter-spacing: .12em; direction: ltr; }
+.typography-option-head small { color: var(--muted); font: 9px Arial,sans-serif; letter-spacing: .07em; direction: ltr; text-align: left; }
+.typography-option-body { padding: 22px 20px 20px; display: grid; gap: 20px; flex: 1; }
+.typography-option h2, .typography-option h3, .typography-option h4 { font-family: var(--specimen-display); font-weight: 500; }
+.typography-option-hero { min-height: 205px; display: flex; flex-direction: column; justify-content: center; }
+.typography-option-hero .eyebrow { font-size: 10px; }
+.typography-option-hero h2 { margin: 13px 0 10px; font-size: clamp(27px,2.35vw,35px); line-height: 1.55; letter-spacing: -.025em; }
+.typography-option-hero p { margin: 0; color: var(--muted); font: 12px/2.05 "Thmanyah Sans",Arial,sans-serif; }
+.typography-option-divider { border: 0; border-top: 1px solid var(--line); margin: 0; }
+.typography-sample-label { color: #87948b; font: 9px Arial,sans-serif; letter-spacing: .09em; direction: ltr; margin-bottom: 11px; }
+.typography-sample-card { border: 1px solid var(--line); padding: 15px; background: #fcfdfb; }
+.typography-sample-card-index { color: #9aa69e; font: 10px Arial,sans-serif; direction: ltr; }
+.typography-sample-card h3 { margin: 17px 0 7px; font-size: 20px; line-height: 1.55; }
+.typography-sample-card p { margin: 0; color: var(--muted); font: 11px/1.95 "Thmanyah Sans",Arial,sans-serif; }
+.typography-sample-article h3 { margin: 7px 0 9px; font-size: 22px; line-height: 1.65; }
+.typography-sample-article p { margin: 0; color: #66746c; font: 11px/2.05 "Thmanyah Sans",Arial,sans-serif; }
+.typography-sample-meta { color: #8a978f; font: 9px "Thmanyah Sans",Arial,sans-serif; }
+.typography-sample-report { background: #f5f6f3; border-right: 2px solid var(--gold); padding: 15px 16px; }
+.typography-sample-report h4 { margin: 7px 0 7px; font-size: 19px; line-height: 1.6; }
+.typography-sample-report p { margin: 0; color: var(--muted); font: 11px/2 "Thmanyah Sans",Arial,sans-serif; }
+.typography-weight-sample { border-top: 1px solid var(--line); padding-top: 15px; display: grid; gap: 8px; }
+.typography-weight-sample-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-family: var(--specimen-display); color: var(--foreground); }
+.typography-weight-sample-row span { font-size: 14px; }
+.typography-weight-sample-row small { flex-shrink: 0; color: #8b978f; font: 9px Arial,sans-serif; direction: ltr; }
+.typography-review-footnote { max-width: 1424px; margin: 0 auto 55px; padding: 15px 18px; border-right: 2px solid var(--gold); color: var(--muted); font: 11px/2 "Thmanyah Sans",Arial,sans-serif; }
+@media (max-width: 1100px) {
+  .typography-review-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
 @media (max-width: 720px) {
-  .brand-preview-intro { padding: 42px 20px 24px; }
-  .brand-preview-grid { grid-template-columns: 1fr; padding: 0 18px 50px; }
-  .brand-preview-note { margin: 0 18px 48px; }
+  .typography-review-header { padding: 0 16px; }
+  .typography-review-intro { padding: 38px 18px 22px; }
+  .typography-review-grid { grid-template-columns: 1fr; padding: 0 16px 30px; gap: 13px; }
+  .typography-option-hero { min-height: 0; }
+  .typography-option-hero h2 { font-size: 31px; }
+  .typography-review-footnote { margin: 0 16px 35px; }
 }
