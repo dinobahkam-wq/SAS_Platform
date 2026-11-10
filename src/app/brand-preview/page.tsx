@@ -127,6 +127,11 @@ export default function BrandPreviewPage() {
           <span>الأوزان المتاحة: 300–900</span>
           <span>صفحة اختبار داخلية</span>
         </div>
+        <div className="typography-review-next-step">
+          <Link href="/brand-preview/editorial" className="public-login-link">
+            اختبار النظام A على قوالب المقالات والدراسات
+          </Link>
+        </div>
       </section>
 
       <section className="typography-review-grid" aria-label="مقارنة الأنظمة الطباعية">
