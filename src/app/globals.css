@@ -1143,24 +1143,24 @@ textarea {
 .product-specimen-block-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
 .product-specimen-block-head h2 { margin: 7px 0 0; font: 500 25px/1.5 "Thmanyah Serif Display","Thmanyah Sans",sans-serif; }
 .product-specimen-block-head > span { color: var(--muted); font: 400 11px/1.8 "Thmanyah Sans",sans-serif; }
-.product-specimen-label { color: #6f7d74; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; text-align: right; }
-.product-specimen-caption { margin: 0; padding: 13px 22px 16px; border-top: 1px solid var(--line); color: var(--muted); font: 400 10px/1.9 "Thmanyah Sans",sans-serif; }
+.product-specimen-label { color: #53645a; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; text-align: right; }
+.product-specimen-caption { margin: 0; padding: 13px 22px 16px; border-top: 1px solid var(--line); color: #59675f; font: 400 11px/1.9 "Thmanyah Sans",sans-serif; }
 
 /* 01 — breaking news: fast scanning, strong title, quiet metadata */
 .breaking-news-card { margin: 24px; border: 1px solid var(--line); background: #fff; }
-.breaking-news-topline { min-height: 44px; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px; background: #f8faf8; border-bottom: 1px solid var(--line); color: #65736a; font: 400 10px/1.5 "Thmanyah Sans",sans-serif; }
+.breaking-news-topline { min-height: 44px; padding: 10px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 18px; background: #f8faf8; border-bottom: 1px solid var(--line); color: #59675f; font: 400 11px/1.6 "Thmanyah Sans",sans-serif; }
 .breaking-news-status { display: inline-flex; align-items: center; gap: 7px; color: #9d3932; font-weight: 700; }
 .breaking-news-status i { width: 7px; height: 7px; border-radius: 50%; background: #b8473d; display: inline-block; }
 .breaking-news-body { display: grid; grid-template-columns: minmax(0,1fr) 230px; gap: 34px; padding: 30px 28px; }
 .product-kicker { display: block; color: var(--accent); font: 700 11px/1.6 "Thmanyah Sans",sans-serif; }
 .breaking-news-copy h3 { max-width: 900px; margin: 13px 0 14px; font: 900 clamp(28px,3.4vw,43px)/1.55 "Tajarib Taweel","Thmanyah Sans",sans-serif; letter-spacing: -.02em; }
 .breaking-news-copy > p { max-width: 850px; margin: 0; color: #66746c; font: 400 13px/2.1 "Thmanyah Sans",sans-serif; }
-.breaking-news-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--line); color: #6f7d74; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
+.breaking-news-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--line); color: #59675f; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; }
 .breaking-news-side { align-self: stretch; padding: 18px; background: #f4f6f3; border-right: 2px solid var(--gold); }
-.breaking-side-index { display: block; color: #89958d; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; text-align: right; }
+.breaking-side-index { display: block; color: #59675f; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; text-align: right; }
 .breaking-news-side strong { display: block; margin: 20px 0 7px; font: 500 21px/1.5 "Thmanyah Serif Display","Thmanyah Sans",sans-serif; }
 .breaking-news-side p { margin: 0; color: #64736a; font: 400 11px/2 "Thmanyah Sans",sans-serif; }
-.breaking-news-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--line); color: #748178; font: 400 9px/1.7 "Thmanyah Sans",sans-serif; }
+.breaking-news-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--line); color: #59675f; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
 
 /* 02 — opinion article: serif H1/H4, Tajarib H5, Sans body */
 .opinion-layout { display: grid; grid-template-columns: minmax(0,1fr) 250px; gap: 38px; padding: 28px; }
@@ -1168,7 +1168,7 @@ textarea {
 .opinion-header { padding-bottom: 23px; border-bottom: 1px solid var(--line); }
 .opinion-header h3 { max-width: 900px; margin: 12px 0 10px; font: 700 clamp(30px,3.3vw,42px)/1.55 "Thmanyah Serif Display","Thmanyah Sans",serif; letter-spacing: -.02em; }
 .opinion-deck { max-width: 850px; margin: 0; color: #59675f; font: 400 15px/2.15 "Thmanyah Sans",sans-serif; }
-.opinion-byline { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 18px; color: #718078; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
+.opinion-byline { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 18px; color: #59675f; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; }
 .opinion-body { max-width: 850px; padding-top: 20px; }
 .opinion-body p { margin: 0 0 17px; color: #34423a; font: 400 15px/2.15 "Thmanyah Sans",sans-serif; }
 .opinion-body h4 { margin: 28px 0 10px; font: 500 25px/1.55 "Thmanyah Serif Display","Thmanyah Sans",serif; }
@@ -1178,8 +1178,8 @@ textarea {
 .opinion-aside-card { padding: 17px; background: #f8faf8; border: 1px solid var(--line); }
 .opinion-aside-card h4 { margin: 12px 0; font: 500 19px/1.5 "Thmanyah Serif Display","Thmanyah Sans",serif; }
 .opinion-aside-card dl { margin: 0; }
-.opinion-aside-card dl div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font: 400 11px/1.7 "Thmanyah Sans",sans-serif; }
-.opinion-aside-card dt { color: #718078; }
+.opinion-aside-card dl div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font: 400 12px/1.7 "Thmanyah Sans",sans-serif; }
+.opinion-aside-card dt { color: #59675f; }
 .opinion-aside-card dd { margin: 0; color: #425047; }
 .opinion-aside-card ul { margin: 0; padding-right: 17px; color: #4f5f55; font: 400 12px/2 "Thmanyah Sans",sans-serif; }
 
@@ -1187,7 +1187,7 @@ textarea {
 .research-cover-stage { display: grid; grid-template-columns: minmax(0,1fr) 260px; gap: 24px; padding: 28px; background: #f3f5f2; align-items: stretch; }
 .research-cover-sheet { min-height: 660px; padding: 30px 34px 20px; display: flex; flex-direction: column; background: #fff; border: 1px solid #e1e7e1; box-shadow: 0 12px 35px #1c30200a; }
 .research-cover-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-.research-cover-top .brand-logo-full { width: 152px; max-height: 82px; }
+.research-cover-top .brand-logo-full { width: 175px; max-height: 94px; }
 .research-cover-top > span { color: var(--accent); font: 500 12px/1.7 "Thmanyah Serif Display","Thmanyah Sans",serif; }
 .research-cover-rule { height: 3px; margin-top: 22px; background: var(--accent); }
 .research-cover-content { padding: 96px 4px 54px; }
@@ -1196,9 +1196,9 @@ textarea {
 .research-cover-summary { max-width: 720px; margin: 0; color: #65736a; font: 400 14px/2.15 "Thmanyah Sans",sans-serif; }
 .research-cover-bottom { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px 22px; margin-top: auto; padding: 22px 0; border-top: 1px solid var(--line); }
 .research-cover-bottom div { display: grid; gap: 5px; }
-.research-cover-bottom span { color: #718078; font: 400 11px/1.5 "Thmanyah Sans",sans-serif; }
+.research-cover-bottom span { color: #59675f; font: 400 12px/1.5 "Thmanyah Sans",sans-serif; }
 .research-cover-bottom strong { color: #334239; font: 500 12px/1.7 "Thmanyah Serif Display","Thmanyah Sans",serif; }
-.research-cover-footer { display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--line); color: #78857c; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; }
+.research-cover-footer { display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--line); color: #59675f; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; }
 .research-cover-notes { padding: 20px; background: #fff; border: 1px solid var(--line); }
 .research-cover-notes h4 { margin: 13px 0; font: 500 21px/1.5 "Thmanyah Serif Display","Thmanyah Sans",serif; }
 .research-cover-notes ul { list-style: none; padding: 0; margin: 0; }
@@ -1206,7 +1206,7 @@ textarea {
 .research-cover-notes li strong { font: 500 13px/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif; }
 .research-cover-notes li span, .research-cover-notes p { color: #64736a; font: 400 10px/1.9 "Thmanyah Sans",sans-serif; }
 .research-cover-notes p { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--line); }
-.product-specimens-note { max-width: 1424px; margin: 0 auto 42px; padding: 14px 18px; border-right: 2px solid var(--gold); color: #7d8981; font: 400 10px/2 "Thmanyah Sans",sans-serif; }
+.product-specimens-note { max-width: 1424px; margin: 0 auto 42px; padding: 14px 18px; border-right: 2px solid var(--gold); color: #59675f; font: 400 11px/2 "Thmanyah Sans",sans-serif; }
 
 @media (max-width: 900px) {
   .opinion-layout { grid-template-columns: 1fr; }
@@ -1230,11 +1230,11 @@ textarea {
   .opinion-layout { padding: 18px 15px; }
   .opinion-header h3 { font-size: 30px; }
   .opinion-deck { font-size: 14px; }
-  .opinion-body p { font-size: 14px; }
+  .opinion-body p { font-size: 15px; }
   .opinion-aside { grid-template-columns: 1fr; }
   .research-cover-stage { padding: 12px; }
   .research-cover-sheet { min-height: 580px; padding: 20px 17px 15px; }
-  .research-cover-top .brand-logo-full { width: 120px; max-height: 66px; }
+  .research-cover-top .brand-logo-full { width: 138px; max-height: 76px; }
   .research-cover-content { padding: 72px 0 36px; }
   .research-cover-content h3 { font-size: 36px; }
   .research-cover-summary { font-size: 12px; }
