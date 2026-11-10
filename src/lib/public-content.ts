@@ -58,6 +58,10 @@ type ContentOptions = {
   featured?: boolean;
 };
 
+function reportPublicDataError(scope: string, error: unknown) {
+  console.error("[SAS public content] " + scope, error);
+}
+
 async function attachCovers(
   supabase: Awaited<ReturnType<typeof createClient>>,
   rows: ContentRow[],
@@ -66,10 +70,11 @@ async function attachCovers(
   let assets: AssetRow[] = [];
 
   if (assetIds.length) {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("media_assets")
       .select("id,bucket_id,object_path,alt_text,caption")
       .in("id", assetIds);
+    if (error) reportPublicDataError("cover assets", error);
     assets = data ?? [];
   }
 
@@ -108,10 +113,15 @@ export async function getPublishedContent(options: ContentOptions = {}): Promise
     if (options.featured !== undefined) query = query.eq("is_featured", options.featured);
 
     const { data, error } = await query;
-    if (error || !data) return [];
+    if (error) {
+      reportPublicDataError("content feed", error);
+      return [];
+    }
+    if (!data) return [];
 
     return attachCovers(supabase, data);
-  } catch {
+  } catch (error) {
+    reportPublicDataError("content feed initialization", error);
     return [];
   }
 }
@@ -128,10 +138,15 @@ export async function getPublishedContentBySlug(slug: string): Promise<PublicCon
       .eq("status", "published")
       .maybeSingle();
 
-    if (error || !data) return null;
+    if (error) {
+      reportPublicDataError("content detail", error);
+      return null;
+    }
+    if (!data) return null;
     const [item] = await attachCovers(supabase, [data]);
     return item ?? null;
-  } catch {
+  } catch (error) {
+    reportPublicDataError("content detail initialization", error);
     return null;
   }
 }
@@ -145,7 +160,11 @@ export async function getPublishedSources(contentId: string): Promise<PublicSour
       .eq("content_id", contentId)
       .order("display_order", { ascending: true });
 
-    if (linksError || !links?.length) return [];
+    if (linksError) {
+      reportPublicDataError("content source links", linksError);
+      return [];
+    }
+    if (!links?.length) return [];
 
     const sourceIds = links.map((link) => link.source_id);
     const { data: sources, error } = await supabase
@@ -153,7 +172,11 @@ export async function getPublishedSources(contentId: string): Promise<PublicSour
       .select("id,source_name,organization_name,source_url,source_type")
       .in("id", sourceIds);
 
-    if (error || !sources) return [];
+    if (error) {
+      reportPublicDataError("content sources", error);
+      return [];
+    }
+    if (!sources) return [];
 
     const sourceMap = new Map(sources.map((source) => [source.id, source]));
     return links.flatMap((link) => {
@@ -162,7 +185,8 @@ export async function getPublishedSources(contentId: string): Promise<PublicSour
         ? [{ ...source, source_role: link.source_role, attribution_text: link.attribution_text }]
         : [];
     });
-  } catch {
+  } catch (error) {
+    reportPublicDataError("source attribution", error);
     return [];
   }
 }
@@ -176,7 +200,11 @@ export async function getPublishedAuthors(contentId: string): Promise<PublicAuth
       .eq("content_id", contentId)
       .order("author_order", { ascending: true });
 
-    if (linksError || !links?.length) return [];
+    if (linksError) {
+      reportPublicDataError("content author links", linksError);
+      return [];
+    }
+    if (!links?.length) return [];
 
     const authorIds = links.map((link) => link.author_id);
     const { data: authors, error } = await supabase
@@ -185,14 +213,19 @@ export async function getPublishedAuthors(contentId: string): Promise<PublicAuth
       .in("id", authorIds)
       .eq("is_active", true);
 
-    if (error || !authors) return [];
+    if (error) {
+      reportPublicDataError("content authors", error);
+      return [];
+    }
+    if (!authors) return [];
 
     const authorMap = new Map(authors.map((author) => [author.id, author]));
     return links.flatMap((link) => {
       const author = authorMap.get(link.author_id);
       return author ? [{ ...author, contribution_label: link.contribution_label }] : [];
     });
-  } catch {
+  } catch (error) {
+    reportPublicDataError("author attribution", error);
     return [];
   }
 }
@@ -210,7 +243,8 @@ export async function getPublicCategory(categoryId: string | null) {
       .maybeSingle();
 
     return data;
-  } catch {
+  } catch (error) {
+    reportPublicDataError("content category", error);
     return null;
   }
 }
