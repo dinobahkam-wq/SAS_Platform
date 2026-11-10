@@ -775,3 +775,11 @@ textarea {
   .specimen-block-heading { padding: 14px 16px; }
   .long-headline-stage { padding: 24px 18px 28px; }
 }
+
+.typography-review-next-step { margin-top: 18px; }
+.typography-review-next-step .public-login-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  background: #fff;
+}
