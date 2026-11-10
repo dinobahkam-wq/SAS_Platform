@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 
 const sections = [
   { number: "01", title: "الأخبار والشؤون الجارية", description: "متابعة منظمة للأحداث والتطورات، مع إسناد واضح للمصادر والتوقيت." },
@@ -13,8 +14,7 @@ export default function Home() {
       <header className="public-header">
         <div className="public-header-inner">
           <Link href="/" className="public-brand" aria-label="منصة ساس">
-            <span className="brand-symbol">S</span>
-            <span><strong>منصة ساس</strong><small>للإعلام والدراسات</small></span>
+            <BrandLogo variant="full" priority />
           </Link>
           <nav className="public-nav" aria-label="الأقسام">
             <a href="#news">الأخبار</a><a href="#analysis">التحليل والرأي</a><a href="#research">الدراسات والأبحاث</a><a href="#media">البرامج والوسائط</a>
@@ -42,7 +42,7 @@ export default function Home() {
         </div>
         <div className="public-section-grid">
           {sections.map((section) => (
-            <a id={["news","analysis","research","media"][Number(section.number)-1]} href="#top" key={section.number} className="public-section-card">
+            <a id={["news", "analysis", "research", "media"][Number(section.number) - 1]} href="#top" key={section.number} className="public-section-card">
               <span className="helper-text" dir="ltr">{section.number}</span>
               <h3>{section.title}</h3><p>{section.description}</p>
             </a>
