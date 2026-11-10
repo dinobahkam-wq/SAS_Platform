@@ -7,6 +7,8 @@ import {
 } from "@/components/public-site";
 import { getPublishedContent } from "@/lib/public-content";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const published = await getPublishedContent({ limit: 36 });
   const news = published.filter((item) => item.section === "news").slice(0, 6);
