@@ -1260,7 +1260,7 @@ textarea {
 
 .home-hero { display: grid; grid-template-columns: minmax(0,.92fr) minmax(0,1.08fr); gap: 54px; align-items: center; padding-top: 68px; padding-bottom: 52px; }
 .home-hero-copy { padding: 18px 0; }
-.home-hero-copy h1 { margin: 16px 0 17px; color: var(--foreground); font: 900 clamp(42px,5.2vw,68px)/1.45 "Tajarib Taweel","Thmanyah Sans",sans-serif; letter-spacing: -.035em; }
+.home-hero-copy h1 { margin: 16px 0 17px; color: var(--foreground); font: var(--weight-editorial-headline) clamp(42px,5.2vw,68px)/1.45 var(--font-brand-headline); letter-spacing: -.035em; }
 .home-hero-copy h1 em { color: var(--accent); font-style: normal; }
 .home-hero-copy > p { max-width: 620px; margin: 0; color: #68766e; font: 400 15px/2.2 "Thmanyah Sans",sans-serif; }
 .home-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
@@ -1281,7 +1281,7 @@ textarea {
 .home-analysis-section { padding-top: 48px; padding-bottom: 56px; }
 .home-media-section { padding-top: 48px; padding-bottom: 58px; }
 .site-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
-.site-section-heading h2 { margin: 5px 0 0; color: var(--foreground); font: 500 clamp(25px,2.6vw,34px)/1.5 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.site-section-heading h2 { margin: 5px 0 0; color: var(--foreground); font: var(--weight-editorial-heading) clamp(25px,2.6vw,34px)/1.5 var(--font-editorial-heading); }
 .site-section-heading > a { color: var(--accent); font: 500 11px/1.6 "Thmanyah Sans",sans-serif; white-space: nowrap; }
 .site-section-heading > a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .home-news-grid { display: grid; grid-template-columns: minmax(0,1.25fr) repeat(3,minmax(0,.75fr)); gap: 14px; align-items: stretch; }
@@ -1299,11 +1299,11 @@ textarea {
 .content-card-copy { display: flex; flex-direction: column; align-items: flex-start; padding: 18px 19px 20px; }
 .content-meta { display: flex; flex-wrap: wrap; gap: 6px 13px; color: #7d8a81; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
 .content-meta span:first-child { color: var(--accent); font-weight: 700; }
-.content-card-copy h3 { margin: 11px 0 8px; color: var(--foreground); font: 700 21px/1.6 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.content-card-copy h3 { margin: 11px 0 8px; color: var(--foreground); font: var(--weight-editorial-title) 21px/1.6 var(--font-editorial-title); }
 .content-card-copy > p { margin: 0; color: #68766e; font: 400 12px/2 "Thmanyah Sans",sans-serif; }
 .content-card-more { display: inline-flex; gap: 8px; align-items: center; margin-top: auto; padding-top: 17px; color: var(--accent); font: 500 10px/1.6 "Thmanyah Sans",sans-serif; }
-.content-card--news .content-card-copy h3, .content-card--research .content-card-copy h3 { font-family: "Tajarib Taweel","Thmanyah Sans",sans-serif; font-weight: 700; }
-.content-card--analysis .content-card-copy h3 { font-family: "Thmanyah Serif Display","Thmanyah Sans",serif; font-weight: 700; }
+.content-card--news .content-card-copy h3, .content-card--research .content-card-copy h3 { font-family: var(--font-brand-headline); font-weight: 700; }
+.content-card--analysis .content-card-copy h3 { font-family: var(--font-editorial-title); font-weight: var(--weight-editorial-title); }
 .content-card--feature .content-card-copy { padding: 23px; }
 .content-card--feature .content-card-copy h3 { font-size: clamp(24px,2.2vw,32px); line-height: 1.55; }
 .content-card--compact { border: 0; border-bottom: 1px solid var(--line); }
@@ -1378,7 +1378,7 @@ textarea {
 .research-public-label { color: var(--accent); font: 500 12px/1.7 "Thmanyah Serif Display","Thmanyah Sans",serif; }
 .research-public-rule { height: 2px; margin-top: 17px; background: var(--accent); }
 .research-public-cover > .article-kicker { display: block; margin-top: 54px; }
-.research-public-cover h1 { max-width: 920px; margin: 15px 0 16px; color: var(--foreground); font: 900 clamp(36px,4.5vw,58px)/1.5 "Tajarib Taweel","Thmanyah Sans",sans-serif; letter-spacing: -.025em; }
+.research-public-cover h1 { max-width: 920px; margin: 15px 0 16px; color: var(--foreground); font: var(--weight-editorial-headline) clamp(36px,4.5vw,58px)/1.5 var(--font-brand-headline); letter-spacing: -.025em; }
 .research-public-meta { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1px; margin-top: 35px; border: 1px solid var(--line); background: var(--line); }
 .research-public-meta > div { display: grid; gap: 5px; padding: 13px 15px; background: #fff; }
 .research-public-meta span { color: #89958d; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
@@ -1463,4 +1463,67 @@ textarea {
   .content-card--compact .content-card-copy h3 { font-size: 15px; }
   .article-sidebar { grid-template-columns: 1fr; }
   .research-public-meta { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* SAS public interface — approved editorial typography System B */
+:root {
+  --font-body: "Thmanyah Sans", Arial, sans-serif;
+  --font-interface: "Thmanyah Sans", Arial, sans-serif;
+  --font-brand-headline: "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
+  --font-editorial-title: "Thmanyah Serif Display", "Thmanyah Sans", serif;
+  --font-editorial-heading: "Thmanyah Serif Display", "Thmanyah Sans", serif;
+  --font-editorial-secondary: "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
+  --weight-editorial-headline: 900;
+  --weight-editorial-title: 700;
+  --weight-editorial-heading: 500;
+  --weight-editorial-secondary: 500;
+}
+
+/* Homepage: display-led hero, serif section headings, functional sans copy */
+.public-hero h1 {
+  font-family: var(--font-brand-headline);
+  font-weight: var(--weight-editorial-headline);
+  line-height: 1.4;
+  letter-spacing: -.025em;
+  font-synthesis: none;
+}
+
+.public-sections .panel-header h2,
+.public-section-card h3 {
+  font-family: var(--font-editorial-heading);
+  font-weight: var(--weight-editorial-heading);
+  line-height: 1.6;
+  font-synthesis: none;
+}
+
+/* Reusable semantic roles for the forthcoming public editorial templates */
+.editorial-primary-headline,
+.research-cover-title {
+  font-family: var(--font-brand-headline);
+  font-weight: var(--weight-editorial-headline);
+  font-synthesis: none;
+}
+
+.editorial-article-title {
+  font-family: var(--font-editorial-title);
+  font-weight: var(--weight-editorial-title);
+  font-synthesis: none;
+}
+
+.editorial-section-heading {
+  font-family: var(--font-editorial-heading);
+  font-weight: var(--weight-editorial-heading);
+  font-synthesis: none;
+}
+
+.editorial-secondary-heading {
+  font-family: var(--font-editorial-secondary);
+  font-weight: var(--weight-editorial-secondary);
+  font-synthesis: none;
+}
+
+.editorial-body {
+  font-family: var(--font-body);
+  font-weight: 400;
 }
