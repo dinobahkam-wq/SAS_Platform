@@ -207,6 +207,7 @@ export default function EditorialTypographyABPage() {
       <aside className="ab-review-note">
         هذه صفحة اختبار داخلية فقط. لم يتغير النظام الطباعي المستخدم في صفحات المنصة
         أو لوحة الإدارة. جميع النصوص أمثلة تصميمية وليست مواد منشورة.
+        <p><Link href="/brand-preview/products-b" className="public-login-link">اختبار النظام B على الخبر والمقال وغلاف الدراسة</Link></p>
       </aside>
     </main>
   );
