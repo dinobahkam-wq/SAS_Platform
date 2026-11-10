@@ -128,8 +128,11 @@ export default function BrandPreviewPage() {
           <span>صفحة اختبار داخلية</span>
         </div>
         <div className="typography-review-next-step">
+          <Link href="/brand-preview/editorial-ab" className="public-login-link">
+            مقارنة النظامين A وB على القوالب التحريرية
+          </Link>
           <Link href="/brand-preview/editorial" className="public-login-link">
-            اختبار النظام A على قوالب المقالات والدراسات
+            معاينة النظام A منفردًا
           </Link>
         </div>
       </section>
