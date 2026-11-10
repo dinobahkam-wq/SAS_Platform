@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { SectionLanding } from "@/components/section-landing";
 import { getPublishedContent } from "@/lib/public-content";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "البرامج والوسائط",
   description: "حوارات وبرامج ومواد مرئية وصوتية ومحتوى معرفي متعدد الوسائط.",
