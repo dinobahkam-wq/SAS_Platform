@@ -3,6 +3,7 @@ import { formats, sections } from "@/lib/content";
 
 type Category = Database["public"]["Tables"]["categories"]["Row"];
 type Source = Database["public"]["Tables"]["content_sources"]["Row"];
+type MediaAsset = Pick<Database["public"]["Tables"]["media_assets"]["Row"], "id" | "file_name" | "alt_text" | "caption" | "mime_type">;
 
 type ContentInitial = {
   id?: string;
@@ -15,12 +16,14 @@ type ContentInitial = {
   status: string;
   category_id: string;
   is_featured: boolean;
+  cover_asset_id: string;
 };
 
 export function ContentForm({
   action,
   categories,
   sources,
+  mediaAssets,
   initial,
   selectedSourceIds = [],
   error,
@@ -28,6 +31,7 @@ export function ContentForm({
   action: (formData: FormData) => void | Promise<void>;
   categories: Category[];
   sources: Source[];
+  mediaAssets: MediaAsset[];
   initial?: ContentInitial;
   selectedSourceIds?: string[];
   error?: string;
@@ -68,6 +72,18 @@ export function ContentForm({
               <option value="">بدون تصنيف</option>
               {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
             </select>
+          </label>
+          <label className="field field-full">
+            <span>الصورة الرئيسية</span>
+            <select name="cover_asset_id" defaultValue={initial?.cover_asset_id ?? ""}>
+              <option value="">بدون صورة رئيسية</option>
+              {mediaAssets.map((asset) => (
+                <option key={asset.id} value={asset.id}>
+                  {asset.file_name}{asset.alt_text ? " — " + asset.alt_text : ""}
+                </option>
+              ))}
+            </select>
+            <small className="helper-text">اختر صورة من مكتبة الوسائط لتظهر في بطاقة المادة وصفحتها. لا تُعرض الملفات غير المرتبطة بمادة منشورة للعامة.</small>
           </label>
           <label className="field field-full">
             <span>الموجز / المقدمة</span>
