@@ -9,9 +9,10 @@ export default async function NewContentPage({
 }) {
   const params = await searchParams;
   const { supabase } = await requireAdmin();
-  const [{ data: categories }, { data: sources }] = await Promise.all([
+  const [{ data: categories }, { data: sources }, { data: mediaAssets }] = await Promise.all([
     supabase.from("categories").select("*").eq("is_active", true).order("display_order"),
     supabase.from("content_sources").select("*").eq("is_active", true).order("source_name"),
+    supabase.from("media_assets").select("id,file_name,alt_text,caption,mime_type").order("created_at", { ascending: false }).limit(100),
   ]);
 
   return (
@@ -23,6 +24,7 @@ export default async function NewContentPage({
         action={createContent}
         categories={categories ?? []}
         sources={sources ?? []}
+        mediaAssets={mediaAssets ?? []}
         error={params.error ? "تحقق من العنوان والقسم والنوع ومتن المادة، ثم أعد المحاولة." : undefined}
       />
     </>
