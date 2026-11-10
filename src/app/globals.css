@@ -1339,8 +1339,8 @@ textarea {
 .article-kicker { color: var(--accent); font: 700 11px/1.7 "Thmanyah Sans",sans-serif; }
 .article-format { color: #89958d; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
 .article-header h1 { margin: 13px 0 12px; color: var(--foreground); font-size: clamp(31px,4vw,48px); line-height: 1.55; letter-spacing: -.02em; }
-.article-header--analysis h1 { font-family: "Thmanyah Serif Display","Thmanyah Sans",serif; font-weight: 700; }
-.article-header--news h1 { font-family: "Tajarib Taweel","Thmanyah Sans",sans-serif; font-weight: 900; }
+.article-header--analysis h1 { font-family: var(--font-editorial-title); font-weight: var(--weight-editorial-title); }
+.article-header--news h1 { font-family: var(--font-brand-headline); font-weight: var(--weight-editorial-headline); }
 .article-deck { max-width: 850px; margin: 0; color: #68766e; font: 400 15px/2.15 "Thmanyah Sans",sans-serif; }
 .article-byline { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 22px; padding-top: 15px; border-top: 1px solid var(--line); color: #89958d; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
 .article-data-card { align-self: stretch; display: flex; flex-direction: column; justify-content: center; padding: 19px; border-right: 2px solid var(--gold); background: #f4f6f3; }
@@ -1354,8 +1354,8 @@ textarea {
 .article-content { min-width: 0; padding: 4px 0; }
 .public-article-body { color: #34423a; font: 400 16px/2.25 "Thmanyah Sans",sans-serif; }
 .public-article-body p { margin: 0 0 20px; }
-.public-article-body h2 { margin: 34px 0 13px; color: var(--foreground); font: 500 26px/1.6 "Thmanyah Serif Display","Thmanyah Sans",serif; }
-.public-article-body h3 { margin: 26px 0 10px; color: var(--foreground); font: 500 22px/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif; }
+.public-article-body h2 { margin: 34px 0 13px; color: var(--foreground); font: var(--weight-editorial-heading) 26px/1.6 var(--font-editorial-heading); }
+.public-article-body h3 { margin: 26px 0 10px; color: var(--foreground); font: var(--weight-editorial-secondary) 22px/1.6 var(--font-editorial-secondary); }
 .public-article-body blockquote { margin: 26px 0; padding: 17px 21px; border-right: 3px solid var(--gold); background: #f4f6f3; color: #34423a; font: 400 15px/2.15 "Thmanyah Sans",sans-serif; }
 .public-article-body ul { margin: 0 0 22px; padding-right: 22px; }
 .public-article-body li { padding-right: 4px; margin-bottom: 8px; }
