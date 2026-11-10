@@ -459,7 +459,7 @@ body {
 }
 
 
-/* SAS Typography System A — approved editorial display + functional sans */
+/* Historical System A specimen rules — retained for internal comparison; public production roles are superseded by System B below. */
 :root {
   --font-body: "Thmanyah Sans", Arial, sans-serif;
   --font-interface: "Thmanyah Sans", Arial, sans-serif;
