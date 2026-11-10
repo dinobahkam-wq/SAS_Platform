@@ -24,22 +24,22 @@ export default function EditorialProductSpecimensPage() {
       </header>
 
       <section className="product-specimens-intro">
-        <span className="eyebrow">SAS · EDITORIAL PRODUCT TEST</span>
+        <span className="eyebrow">ساس · اختبار المنتجات التحريرية</span>
         <h1>اختبار النظام B على المنتجات التحريرية</h1>
         <p>ثلاث بيئات استخدام مختلفة لاختبار توزيع الخطوط: خبر عاجل سريع الالتقاط، ومقال رأي طويل القراءة، وغلاف دراسة استراتيجية. هذه نماذج تصميمية داخلية.</p>
         <div className="product-specimens-legend">
           <span>العنوان الرئيسي: تجاريب طويل · 900</span>
-          <span>عنوان المقال: ثمانية Serif Display · 700</span>
-          <span>العنوان الفرعي الرئيسي: ثمانية Serif Display · 500</span>
+          <span>عنوان المقال: ثمانية سيريف ديسبلاي · 700</span>
+          <span>العنوان الفرعي الرئيسي: ثمانية سيريف ديسبلاي · 500</span>
           <span>العنوان الثانوي: تجاريب طويل · 500</span>
-          <span>النصوص: ثمانية Sans · 400</span>
+          <span>النصوص: ثمانية سانس · 400</span>
         </div>
       </section>
 
       <div className="product-specimens-content">
         <section className="product-specimen-block">
           <header className="product-specimen-block-head">
-            <div><SpecimenLabel>01 / BREAKING NEWS</SpecimenLabel><h2>الخبر العاجل</h2></div>
+            <div><SpecimenLabel>01 · الخبر العاجل</SpecimenLabel><h2>الخبر العاجل</h2></div>
             <span>اختبار السرعة والوضوح وكثافة المعلومات</span>
           </header>
           <article className="breaking-news-card">
@@ -54,7 +54,7 @@ export default function EditorialProductSpecimensPage() {
                 <p>نموذج خبر عاجل لاختبار قراءة العنوان من النظرة الأولى، ثم الانتقال إلى خلاصة قصيرة ومعلومات المصدر والتوقيت دون ازدحام بصري.</p>
                 <div className="breaking-news-meta"><span>المصدر: نموذج افتراضي</span><span>آخر تحديث: 20:45</span><span>متابعة ساس</span></div>
               </div>
-              <aside className="breaking-news-side"><span className="breaking-side-index">LIVE UPDATE</span><strong>تحديث مستمر</strong><p>تُضاف التطورات اللاحقة في سجل زمني مرتبط بالخبر الأصلي.</p></aside>
+              <aside className="breaking-news-side"><span className="breaking-side-index">تحديث مباشر</span><strong>تحديث مستمر</strong><p>تُضاف التطورات اللاحقة في سجل زمني مرتبط بالخبر الأصلي.</p></aside>
             </div>
             <div className="breaking-news-footer"><span>الخبر العاجل · نموذج تصميمي غير منشور</span><span>ساس / الأخبار والشؤون الجارية</span></div>
           </article>
@@ -63,7 +63,7 @@ export default function EditorialProductSpecimensPage() {
 
         <section className="product-specimen-block">
           <header className="product-specimen-block-head">
-            <div><SpecimenLabel>02 / OPINION ARTICLE</SpecimenLabel><h2>مقال الرأي والتحليل</h2></div>
+            <div><SpecimenLabel>02 · مقال الرأي والتحليل</SpecimenLabel><h2>مقال الرأي والتحليل</h2></div>
             <span>اختبار القراءة المتواصلة والتدرج بين العناوين</span>
           </header>
           <article className="opinion-layout">
@@ -85,16 +85,16 @@ export default function EditorialProductSpecimensPage() {
               </div>
             </div>
             <aside className="opinion-aside">
-              <div className="opinion-aside-card"><SpecimenLabel>ARTICLE DETAILS</SpecimenLabel><h4>بيانات المادة</h4><dl><div><dt>القسم</dt><dd>التحليل والرأي</dd></div><div><dt>الموضوع</dt><dd>بناء الدولة</dd></div><div><dt>الحالة</dt><dd>نموذج تصميمي</dd></div></dl></div>
-              <div className="opinion-aside-card"><SpecimenLabel>IN THIS ARTICLE</SpecimenLabel><h4>في هذا المقال</h4><ul><li>من الاتفاق السياسي إلى القدرة المؤسسية</li><li>المؤسسات بوصفها شرطًا للاستدامة</li></ul></div>
+              <div className="opinion-aside-card"><SpecimenLabel>بيانات المادة</SpecimenLabel><h4>بيانات المادة</h4><dl><div><dt>القسم</dt><dd>التحليل والرأي</dd></div><div><dt>الموضوع</dt><dd>بناء الدولة</dd></div><div><dt>الحالة</dt><dd>نموذج تصميمي</dd></div></dl></div>
+              <div className="opinion-aside-card"><SpecimenLabel>في هذا المقال</SpecimenLabel><h4>في هذا المقال</h4><ul><li>من الاتفاق السياسي إلى القدرة المؤسسية</li><li>المؤسسات بوصفها شرطًا للاستدامة</li></ul></div>
             </aside>
           </article>
-          <p className="product-specimen-caption">ملاحظة الاختبار: السيريف مخصص لعنوان المقال والعنوان الفرعي H4، ويعود H5 إلى تجاريب لخلق إيقاع طباعي واضح دون إدخال عائلة ثالثة في النصوص.</p>
+          <p className="product-specimen-caption">ملاحظة الاختبار: السيريف مخصص لعنوان المقال والعنوان الفرعي العنوان الفرعي الأول، ويعود العنوان الفرعي الثاني إلى تجاريب لخلق إيقاع طباعي واضح دون إدخال عائلة ثالثة في النصوص.</p>
         </section>
 
         <section className="product-specimen-block">
           <header className="product-specimen-block-head">
-            <div><SpecimenLabel>03 / STRATEGIC RESEARCH COVER</SpecimenLabel><h2>غلاف الدراسة الاستراتيجية</h2></div>
+            <div><SpecimenLabel>03 · غلاف الدراسة الاستراتيجية</SpecimenLabel><h2>غلاف الدراسة الاستراتيجية</h2></div>
             <span>اختبار الحضور المؤسسي والعنوان متعدد الأسطر</span>
           </header>
           <article className="research-cover-stage">
@@ -112,11 +112,11 @@ export default function EditorialProductSpecimensPage() {
                 <div><span>التصنيف</span><strong>دراسة استراتيجية</strong></div>
                 <div><span>التاريخ</span><strong>نموذج تصميمي · 2026</strong></div>
               </div>
-              <div className="research-cover-footer"><span>SAS MEDIA AND STUDIES PLATFORM</span><span>01</span></div>
+              <div className="research-cover-footer"><span>منصة ساس للإعلام والدراسات</span><span>01</span></div>
             </div>
             <aside className="research-cover-notes">
-              <SpecimenLabel>TYPE HIERARCHY</SpecimenLabel><h4>توزيع الخطوط</h4>
-              <ul><li><strong>عنوان الغلاف</strong><span>تجاريب طويل · 900</span></li><li><strong>العنوان التعريفي</strong><span>ثمانية Serif Display · 500</span></li><li><strong>الملخص والبيانات</strong><span>ثمانية Sans · 400</span></li></ul>
+              <SpecimenLabel>التسلسل الطباعي</SpecimenLabel><h4>توزيع الخطوط</h4>
+              <ul><li><strong>عنوان الغلاف</strong><span>تجاريب طويل · 900</span></li><li><strong>العنوان التعريفي</strong><span>ثمانية سيريف ديسبلاي · 500</span></li><li><strong>الملخص والبيانات</strong><span>ثمانية سانس · 400</span></li></ul>
               <p>صُمم الغلاف ليعمل مطبوعًا ورقميًا، مع مساحة بيضاء كافية وتدرج واضح بين العنوان والبيانات المؤسسية.</p>
             </aside>
           </article>
