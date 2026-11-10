@@ -29,6 +29,23 @@ SAS Platform is the digital information and research platform for structured pol
 
 See [Development Workflow](docs/development-workflow.md) for the operational rules.
 
-## Repository status
+## Current application scope
 
-This repository is being initialized. The application schema is not yet defined; do not create application tables until the data model and access policies have been reviewed.
+The repository contains the initial editorial database and protected CMS foundation, plus the first public editorial experience:
+
+- Public homepage and section pages for news, analysis, research, and media.
+- Public content detail pages backed by published Supabase records.
+- Shared production components using the approved System B typography.
+- Protected admin workspace for content, sources, categories, and media.
+- Main cover-image selection from the media library.
+
+See [Public Editorial Experience v1](docs/public-editorial-experience-v1.md) for the public rendering rules, typography mapping, route structure, and current release boundaries.
+
+## Local development
+
+1. Copy `.env.example` to `.env.local`.
+2. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+3. Run `npm install`.
+4. Run `npm run dev`.
+
+Use `npm run typecheck` and `npm run build` before opening or updating a pull request.
