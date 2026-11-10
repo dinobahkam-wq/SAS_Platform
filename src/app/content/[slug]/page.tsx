@@ -4,7 +4,6 @@ import { BrandLogo } from "@/components/brand-logo";
 import { notFound } from "next/navigation";
 import {
   ContentBody,
-  ContentMeta,
   PublicFooter,
   PublicHeader,
 } from "@/components/public-site";
