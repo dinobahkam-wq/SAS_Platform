@@ -17,6 +17,8 @@ import {
 } from "@/lib/public-content";
 import { formatLabel, sectionLabel } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
 type PageProps = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
