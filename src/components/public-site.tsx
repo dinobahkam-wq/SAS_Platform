@@ -93,7 +93,7 @@ export function ContentCard({
   variant?: "standard" | "compact" | "feature";
 }) {
   return (
-    <article className={"content-card content-card--" + variant}>
+    <article className={"content-card content-card--" + variant + " content-card--" + item.section}>
       <Link href={"/content/" + item.slug} className="content-card-link">
         {variant !== "compact" ? <ContentImage item={item} /> : null}
         <div className="content-card-copy">
