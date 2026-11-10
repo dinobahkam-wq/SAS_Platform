@@ -15,6 +15,7 @@ function readContent(formData: FormData) {
   const excerpt = String(formData.get("excerpt") ?? "").trim();
   const bodyText = String(formData.get("body") ?? "").trim();
   const categoryValue = String(formData.get("category_id") ?? "").trim();
+  const coverAssetValue = String(formData.get("cover_asset_id") ?? "").trim();
   const statusValue = String(formData.get("status") ?? "draft");
   const isFeatured = formData.get("is_featured") === "on";
   const sourceIds = [...new Set(formData.getAll("source_ids").map(String).filter(Boolean))];
@@ -27,6 +28,7 @@ function readContent(formData: FormData) {
   }
   if (!title) throw new Error("عنوان المحتوى مطلوب.");
   if (!bodyText) throw new Error("أدخل متن المحتوى قبل الحفظ.");
+  if (coverAssetValue && !/^[0-9a-f-]{36}$/i.test(coverAssetValue)) throw new Error("الصورة الرئيسية غير صالحة.");
   if (!["draft", "published", "archived"].includes(statusValue)) {
     throw new Error("حالة النشر غير صحيحة.");
   }
@@ -42,6 +44,7 @@ function readContent(formData: FormData) {
     excerpt: excerpt || null,
     body: textToBody(bodyText),
     category_id: categoryValue || null,
+    cover_asset_id: coverAssetValue || null,
     status: statusValue,
     is_featured: isFeatured,
     sourceIds,
@@ -124,6 +127,7 @@ export async function createContent(formData: FormData) {
       excerpt: values.excerpt,
       body: values.body,
       category_id: values.category_id,
+      cover_asset_id: values.cover_asset_id,
       status: "draft",
       is_featured: values.is_featured,
       created_by: userId,
@@ -151,6 +155,9 @@ export async function createContent(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/admin/content");
+  revalidatePath("/");
+  revalidatePath("/" + values.section);
+  revalidatePath("/content/" + values.slug);
   redirect("/admin/content?created=1");
 }
 
@@ -199,6 +206,7 @@ export async function updateContent(formData: FormData) {
       excerpt: values.excerpt,
       body: values.body,
       category_id: values.category_id,
+      cover_asset_id: values.cover_asset_id,
       status: values.status,
       is_featured: values.is_featured,
       updated_by: userId,
@@ -210,5 +218,8 @@ export async function updateContent(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/admin/content");
   revalidatePath(`/admin/content/${id}`);
+  revalidatePath("/");
+  revalidatePath("/" + values.section);
+  revalidatePath("/content/" + values.slug);
   redirect("/admin/content?saved=1");
 }
