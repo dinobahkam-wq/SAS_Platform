@@ -113,16 +113,13 @@ export async function getPublishedContent(options: ContentOptions = {}): Promise
     if (options.featured !== undefined) query = query.eq("is_featured", options.featured);
 
     const { data, error } = await query;
-    if (error) {
-      reportPublicDataError("content feed", error);
-      return [];
-    }
+    if (error) throw error;
     if (!data) return [];
 
     return attachCovers(supabase, data);
   } catch (error) {
     reportPublicDataError("content feed initialization", error);
-    return [];
+    throw new Error("تعذر تحميل المواد المنشورة حاليًا.", { cause: error });
   }
 }
 
@@ -138,16 +135,13 @@ export async function getPublishedContentBySlug(slug: string): Promise<PublicCon
       .eq("status", "published")
       .maybeSingle();
 
-    if (error) {
-      reportPublicDataError("content detail", error);
-      return null;
-    }
+    if (error) throw error;
     if (!data) return null;
     const [item] = await attachCovers(supabase, [data]);
     return item ?? null;
   } catch (error) {
     reportPublicDataError("content detail initialization", error);
-    return null;
+    throw new Error("تعذر تحميل المادة المنشورة حاليًا.", { cause: error });
   }
 }
 
