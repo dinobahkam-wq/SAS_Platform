@@ -1,7 +1,7 @@
 # SAS Platform — Editorial Database Design
 
-**Status:** Design proposal — product decisions partially resolved; pending final review  
-**Version:** 0.2  
+**Status:** Approved design baseline — implementation may proceed to migration drafting  
+**Version:** 1.0  
 **Date:** 2026-11-10  
 **Project:** `SAS_Platform`  
 **Supabase project ref:** `budsfbyrdpjkobqstpyr`
@@ -22,6 +22,9 @@ The following product decisions were explicitly selected:
 | Archived item public URL | Not accessible; return 404 |
 | Media bucket | Public bucket |
 | Multiple authors | Supported equally; display order only |
+| News sourcing | At least one attributable source per news item; may be an official statement/document, agency, or SAS field correspondent |
+| Image formats | JPEG, PNG, WebP, AVIF |
+| Image limits | 10 MB maximum; longest edge 2560 px (initial configurable defaults) |
 
 Interpretation:
 
@@ -79,6 +82,20 @@ A separate `format` field describes the presentation format within a section. Th
 | `user_roles` | Application roles for authenticated staff | Yes |
 
 The exact set of tables, columns, constraints, and indexes must be confirmed during schema review before migration authoring.
+
+
+### 3.3 Section and format allowlist
+
+The database should validate that each `format` is permitted for its selected `section`. Use stable machine values; labels shown in the CMS may be Arabic.
+
+| Section | Initial allowed formats |
+|---|---|
+| `news` | `news_brief`, `news_report`, `official_statement` |
+| `analysis` | `analysis`, `opinion`, `interview` |
+| `research` | `research_paper`, `policy_brief`, `study_report` |
+| `media` | `video`, `podcast`, `interview`, `infographic`, `photo_gallery` |
+
+Treat this list as the version 1.0 allowlist. Add new formats through a reviewed schema migration or a controlled reference-data update, not arbitrary free text.
 
 ### 3.2 Central content record
 
@@ -229,7 +246,7 @@ The bucket and object path together identify the file. Do not store expiring sig
 - A public bucket permits unauthenticated reads of every object in that bucket when its URL is known; Storage RLS does not make public objects private.
 - Restrict uploads, updates, and deletes to authorized staff.
 - Do not place confidential, embargoed, or otherwise restricted files in the public bucket. If pre-publication assets must remain confidential, introduce a separate private staging bucket and move/copy approved assets to the public bucket on publication.
-- Establish image size limits, accepted MIME types, and naming conventions before implementation.
+- For version 1.0, accept JPEG, PNG, WebP, and AVIF images; use a 10 MB maximum file size and 2560 px maximum longest edge as initial configurable defaults. Validate MIME type and actual file content, not only the filename extension. These limits may be tuned after observing actual upload patterns and storage usage.
 
 ## 8. Sources and attribution
 
@@ -241,6 +258,18 @@ Use:
 - `content_source_links`: relation between a content item and one or more sources, including attribution text, source role, and ordering.
 
 This supports multiple sources per article and reuse of a source across multiple items. It does not, by itself, constitute a full fact-checking or evidence-management system.
+
+### 8.1 Mandatory source attribution for news
+
+Every item in the `news` section must have at least one linked source before it can be published. A source does not have to be an external website URL. Supported source types include:
+
+- Official statement or official document.
+- News agency or media organization.
+- SAS field correspondent / reporter.
+- Direct field observation or interview documented by SAS, with an attributable correspondent or record.
+
+The source record should capture, as applicable, source type, source name or correspondent, source URL or document reference (nullable when not applicable), publication/issue date, and an attribution note. The publication rule must reject a news item with no source link. Other sections may use sources when relevant but are not subject to this mandatory minimum in version 1.0.
+
 
 ## 9. Indexes and data integrity
 
@@ -305,22 +334,21 @@ The initial design should leave room for these capabilities without prematurely 
 
 ## 13. Open questions before migration approval
 
-The following points require a product decision or a final technical review:
+The following implementation details remain technical configuration tasks rather than unresolved product decisions:
 
-1. Which exact formats are allowed in each section?
-2. Which image types, maximum dimensions, and upload-size limits should be enforced?
-3. Which source fields are mandatory for news items?
+1. Implement and validate the section-to-format allowlist described below.
+2. Enforce the initial image defaults (JPEG, PNG, WebP, AVIF; 10 MB maximum; 2560 px maximum longest edge) in upload validation and document any operational adjustment.
+3. Implement the mandatory source attribution rule for news items and validate it at publication time.
 
 ## 14. Approval gate
 
-This document records the selected product direction and recommended technical design. It is not permission to execute a database migration.
+This document records the approved version 1.0 product and technical design baseline. It authorizes drafting and local testing of migrations, but it is not permission to apply a migration to the hosted production database.
 
 Before the first migration:
 
-1. Resolve the remaining open questions that affect schema constraints and access control.
-2. Review the exact table and column definitions.
-3. Review RLS policies and Storage policies.
-4. Create the SQL migration on a feature branch.
-5. Test it locally, including positive and negative authorization tests.
-6. Inspect the remote dry-run and target project identity.
-7. Apply to the hosted project only after explicit approval.
+1. Review the exact table and column definitions against this approved baseline.
+2. Review RLS policies and Storage policies, including the implications of a public media bucket.
+3. Create the SQL migration on a feature branch.
+4. Test it locally, including positive and negative authorization tests and the news-source publication constraint.
+5. Inspect the remote dry-run and target project identity.
+6. Apply to the hosted project only after explicit approval.
