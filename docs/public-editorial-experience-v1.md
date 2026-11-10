@@ -10,10 +10,10 @@ The production public interface adopts System B as demonstrated in the approved 
 
 The public platform is an editorial and knowledge interface, not a generic news-feed template. Its four content sections remain:
 
-- News and current affairs (\`news\`)
-- Analysis and opinion (\`analysis\`)
-- Research and studies (\`research\`)
-- Programs and media (\`media\`)
+- News and current affairs (`news`)
+- Analysis and opinion (`analysis`)
+- Research and studies (`research`)
+- Programs and media (`media`)
 
 ## 2. Approved typography mapping
 
@@ -25,37 +25,37 @@ The public platform is an editorial and knowledge interface, not a generic news-
 | Secondary subheadings | Tajarib Taweel | 500 |
 | Body copy, excerpts, metadata, interface labels | Thmanyah Sans | 400 |
 
-The implementation uses the locally bundled font assets already present in \`public/fonts/\`. Public production remains subject to confirming the applicable font-serving licence and retaining any required written permission.
+The implementation uses the locally bundled font assets already present in `public/fonts/`. Public production remains subject to confirming the applicable font-serving licence and retaining any required written permission.
 
 ## 3. Production routes
 
 | Route | Purpose |
 |---|---|
-| \`/\` | Editorial homepage with the latest published content across all sections |
-| \`/news\` | News listing |
-| \`/analysis\` | Analysis and opinion listing |
-| \`/research\` | Research and studies listing |
-| \`/media\` | Programs and media listing |
-| \`/content/[slug]\` | Public detail page for a published item |
-| \`/login\` | Existing staff sign-in |
-| \`/admin\` | Existing protected editorial workspace |
+| `/` | Editorial homepage with the latest published content across all sections |
+| `/news` | News listing |
+| `/analysis` | Analysis and opinion listing |
+| `/research` | Research and studies listing |
+| `/media` | Programs and media listing |
+| `/content/[slug]` | Public detail page for a published item |
+| `/login` | Existing staff sign-in |
+| `/admin` | Existing protected editorial workspace |
 
 The internal typography and product specimen routes remain noindex design-review pages and are not used as production content pages.
 
 ## 4. Data and rendering
 
-- \`src/lib/public-content.ts\` is the server-only public data-access layer.
-- Public queries explicitly request \`status = published\`; Supabase RLS remains the authoritative access boundary.
+- `src/lib/public-content.ts` is the server-only public data-access layer.
+- Public queries explicitly request `status = published`; Supabase RLS remains the authoritative access boundary.
 - The homepage reads a single bounded feed and partitions it into the four editorial sections.
 - Section pages read the selected section and render a lead item plus supporting items.
 - Detail pages resolve a published item by slug and render its title, excerpt, body, publication date, category, linked authors, and linked sources when available.
-- Cover image metadata is read from \`media_assets\`; public URLs are generated from the configured Supabase Storage bucket.
+- Cover image metadata is read from `media_assets`; public URLs are generated from the configured Supabase Storage bucket.
 - Body rendering supports paragraph, heading, subheading, quote, and list blocks. The current CMS form still writes paragraph blocks only.
 - Public data-access failures are written to server logs; a genuinely empty dataset is rendered as an explicit empty state.
 
 ## 5. CMS integration
 
-The existing editorial workflow and server-side authorization are retained. The content form now allows an editor to select a main image from the existing media library. The selected \`cover_asset_id\` is saved with the content record and used by public cards and detail pages.
+The existing editorial workflow and server-side authorization are retained. The content form now allows an editor to select a main image from the existing media library. The selected `cover_asset_id` is saved with the content record and used by public cards and detail pages.
 
 The public pages do not expose drafts or archived content. Public media metadata is read only when permitted by the existing RLS policy for media attached to published content.
 
@@ -64,7 +64,7 @@ No service-role key is introduced into the public application. No database schem
 ## 6. Editorial display rules
 
 - A news item is not automatically labelled “urgent” or “breaking”; the current schema has no dedicated urgency field.
-- Featured placement is controlled by the existing \`is_featured\` flag.
+- Featured placement is controlled by the existing `is_featured` flag.
 - Source attribution is displayed on the detail page when source links exist. The database continues to enforce the mandatory source link for publishing news.
 - Missing cover images use a neutral SAS placeholder; the interface does not invent imagery.
 - Empty sections display an explicit empty state rather than fabricated sample content.
@@ -80,8 +80,8 @@ No service-role key is introduced into the public application. No database schem
 
 ## 8. Release checks
 
-- Run \`npm run typecheck\`.
-- Run \`npm run build\`.
+- Run `npm run typecheck`.
+- Run `npm run build`.
 - Verify homepage and all four section routes with both populated and empty datasets.
 - Verify a published news item with at least one linked source.
 - Verify drafts and archived items return no public detail page.
