@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { SectionLanding } from "@/components/section-landing";
 import { getPublishedContent } from "@/lib/public-content";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "الأخبار والشؤون الجارية",
   description: "متابعة منظمة للأخبار والتطورات المرتبطة باليمن ومحيطه الإقليمي والدولي.",
