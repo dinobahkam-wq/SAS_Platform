@@ -1242,3 +1242,66 @@ textarea {
   .research-cover-notes ul { grid-template-columns: 1fr; }
   .product-specimens-note { margin: 0 12px 28px; }
 }
+
+
+/* SAS public interface — approved editorial typography System B */
+:root {
+  --font-body: "Thmanyah Sans", Arial, sans-serif;
+  --font-interface: "Thmanyah Sans", Arial, sans-serif;
+  --font-brand-headline: "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
+  --font-editorial-title: "Thmanyah Serif Display", "Thmanyah Sans", serif;
+  --font-editorial-heading: "Thmanyah Serif Display", "Thmanyah Sans", serif;
+  --font-editorial-secondary: "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
+  --weight-editorial-headline: 900;
+  --weight-editorial-title: 700;
+  --weight-editorial-heading: 500;
+  --weight-editorial-secondary: 500;
+}
+
+/* Homepage: display-led hero, serif section headings, functional sans copy */
+.public-hero h1 {
+  font-family: var(--font-brand-headline);
+  font-weight: var(--weight-editorial-headline);
+  line-height: 1.4;
+  letter-spacing: -.025em;
+  font-synthesis: none;
+}
+
+.public-sections .panel-header h2,
+.public-section-card h3 {
+  font-family: var(--font-editorial-heading);
+  font-weight: var(--weight-editorial-heading);
+  line-height: 1.6;
+  font-synthesis: none;
+}
+
+/* Reusable semantic roles for the forthcoming public editorial templates */
+.editorial-primary-headline,
+.research-cover-title {
+  font-family: var(--font-brand-headline);
+  font-weight: var(--weight-editorial-headline);
+  font-synthesis: none;
+}
+
+.editorial-article-title {
+  font-family: var(--font-editorial-title);
+  font-weight: var(--weight-editorial-title);
+  font-synthesis: none;
+}
+
+.editorial-section-heading {
+  font-family: var(--font-editorial-heading);
+  font-weight: var(--weight-editorial-heading);
+  font-synthesis: none;
+}
+
+.editorial-secondary-heading {
+  font-family: var(--font-editorial-secondary);
+  font-weight: var(--weight-editorial-secondary);
+  font-synthesis: none;
+}
+
+.editorial-body {
+  font-family: var(--font-body);
+  font-weight: 400;
+}
