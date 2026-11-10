@@ -68,6 +68,12 @@ async function linkRelations(
     if (error) throw new Error("تعذر ربط المؤلف بالمحتوى.");
   }
 
+  const { data: existingLinks, error: linksError } = await supabase
+    .from("content_source_links")
+    .select("source_id")
+    .eq("content_id", contentId);
+  if (linksError) throw new Error("تعذر قراءة مصادر المادة.");
+
   if (sourceIds.length) {
     const rows = sourceIds.map((source_id, index) => ({
       content_id: contentId,
@@ -81,6 +87,20 @@ async function linkRelations(
     });
     if (error) throw new Error("تعذر ربط المصادر بالمحتوى. تحقق من المصادر المحددة.");
   }
+
+  const keep = new Set(sourceIds);
+  const removeIds = (existingLinks ?? [])
+    .map((link) => link.source_id)
+    .filter((sourceId) => !keep.has(sourceId));
+
+  if (removeIds.length) {
+    const { error } = await supabase
+      .from("content_source_links")
+      .delete()
+      .eq("content_id", contentId)
+      .in("source_id", removeIds);
+    if (error) throw new Error("تعذر تحديث روابط المصادر.");
+  }
 }
 
 export async function createContent(formData: FormData) {
@@ -89,7 +109,7 @@ export async function createContent(formData: FormData) {
 
   try {
     values = readContent(formData);
-  } catch (error) {
+  } catch {
     redirect("/admin/content/new?error=validation");
   }
 
@@ -144,6 +164,23 @@ export async function updateContent(formData: FormData) {
     values = readContent(formData);
   } catch {
     redirect(`/admin/content/${id}?error=validation`);
+  }
+
+  const { data: current } = await supabase
+    .from("content_items")
+    .select("status")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (!current) redirect("/admin/content?error=not-found");
+
+  // Move a published item out of the published state before removing its source links.
+  if (current.status === "published" && values.status !== "published") {
+    const { error: statusError } = await supabase
+      .from("content_items")
+      .update({ status: "draft", updated_by: userId })
+      .eq("id", id);
+    if (statusError) redirect(`/admin/content/${id}?error=save`);
   }
 
   try {
