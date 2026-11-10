@@ -1,7 +1,7 @@
 # SAS Platform — Editorial Database Design
 
-**Status:** Design proposal — not yet approved for migration  
-**Version:** 0.1  
+**Status:** Design proposal — product decisions partially resolved; pending final review  
+**Version:** 0.2  
 **Date:** 2026-11-10  
 **Project:** `SAS_Platform`  
 **Supabase project ref:** `budsfbyrdpjkobqstpyr`
@@ -17,12 +17,22 @@ The following product decisions were explicitly selected:
 | Content architecture | Unified |
 | Publishing workflow | Simple |
 | Authors | Hybrid |
+| Category scope | Global across all four sections |
+| Editing published content | Platform manager only |
+| Archived item public URL | Not accessible; return 404 |
+| Media bucket | Public bucket |
+| Multiple authors | Supported equally; display order only |
 
 Interpretation:
 
 - One central content table will represent all editorial items.
 - The first release will not implement a mandatory editorial-review stage.
 - Authors may be internal or external; an author profile does not require a login account.
+- Categories are global and reusable across all four editorial sections; categories are not owned by a single section.
+- Once an item is published, only the platform manager (`admin` role) may edit it. Authors and editors cannot modify published items.
+- Archived items are not publicly accessible by their direct URL; public requests return HTTP 404.
+- The initial editorial media bucket is public. Public object reads are therefore available to anyone with the object URL; uploads and mutations remain restricted to authorized staff.
+- Content supports multiple authors on equal footing. `author_order` controls display order only and does not imply a primary author.
 - The document is a design proposal. It does not create or modify database objects.
 
 ## 2. Product scope
@@ -138,7 +148,7 @@ Proposed fields:
 - `contribution_label` nullable (e.g. author, presenter, guest)
 - Composite primary key or equivalent uniqueness on content and author.
 
-This avoids embedding author names in content rows and supports co-authorship and presenter/guest attribution.
+This avoids embedding author names in content rows and supports multiple equal co-authors and presenter/guest attribution. `author_order` determines display order only; it does not designate a primary author.
 
 ## 5. Simple publishing workflow
 
@@ -152,15 +162,16 @@ The selected workflow is intentionally simpler than a newsroom approval pipeline
 | `published` | Approved for public display by an authorized publisher | Yes |
 | `archived` | Retained but removed from normal public listings | No, by default |
 
-There is no mandatory `in_review` state in version 1.
+There is no mandatory `in_review` state in version 1. An archived item is not publicly accessible by direct URL; public page requests for archived items return HTTP 404.
 
 ### Roles
 
 Initial application roles:
 
 - `admin`: full platform administration.
-- `editor`: manage and publish editorial content, categories, tags, sources, and media metadata.
-- `author`: create content and edit their own drafts, subject to policy.
+- `editor`: manage and publish editorial content, categories, tags, sources, and media metadata; may edit drafts but cannot edit an item after it is published.
+- `author`: create content and edit their own drafts, subject to policy; cannot edit published items.
+- `admin` (platform manager): may edit published items and has full platform administration privileges.
 
 External author profiles do not receive a login role unless an account is deliberately created and linked.
 
@@ -168,7 +179,8 @@ External author profiles do not receive a login role unless an account is delibe
 
 - Public/anonymous users may read only published content and public supporting metadata.
 - Authenticated authors may create drafts and update only content they are authorized to manage.
-- Only editors and administrators may publish, archive, or modify other contributors' content.
+- Editors and administrators may publish or archive content according to their assigned permissions.
+- Only the platform manager (`admin`) may modify content after it has been published. Editors and authors must request a manager's change.
 - Never trust a role or user ID supplied by the browser; derive identity from the authenticated Supabase session and enforce authorization with Row Level Security (RLS).
 - Use server-side privileged credentials only in trusted server contexts. Never expose a Supabase secret/service-role key in browser code.
 - Define and test RLS policies before enabling public reads or staff writes.
@@ -183,7 +195,7 @@ Use separate concepts:
 - `tags`: flexible subject descriptors.
 - `content_tags`: many-to-many relationship.
 
-A content item may have one primary category in version 1 and multiple tags. Category hierarchy should be implemented only if the editorial team confirms that nested navigation is required; otherwise begin with a flat category list and an optional section association.
+A content item may have one category in version 1 and multiple tags. Categories are global and reusable across all four sections; the category table should not require a section association. Category hierarchy should be implemented only if the editorial team confirms that nested navigation is required; otherwise begin with a flat global category list.
 
 ## 7. Media and file storage
 
@@ -213,10 +225,11 @@ The bucket and object path together identify the file. Do not store expiring sig
 - Use Supabase Storage for images and ordinary editorial attachments.
 - Use optimized WebP/AVIF derivatives for public web delivery where practical.
 - Keep large video files on a dedicated video platform and store embed/provider metadata in the content record or a future media-detail table.
-- Decide public versus private bucket behavior and upload limits before creating Storage policies.
+- Use a public bucket for editorial assets intended for public delivery, as selected.
+- A public bucket permits unauthenticated reads of every object in that bucket when its URL is known; Storage RLS does not make public objects private.
+- Restrict uploads, updates, and deletes to authorized staff.
+- Do not place confidential, embargoed, or otherwise restricted files in the public bucket. If pre-publication assets must remain confidential, introduce a separate private staging bucket and move/copy approved assets to the public bucket on publication.
 - Establish image size limits, accepted MIME types, and naming conventions before implementation.
-
-Storage policies must restrict uploads and mutations to authorized staff. Public delivery should expose only assets intended for publication.
 
 ## 8. Sources and attribution
 
@@ -294,14 +307,9 @@ The initial design should leave room for these capabilities without prematurely 
 
 The following points require a product decision or a final technical review:
 
-1. Should categories be global, section-specific, or both?
-2. Which exact formats are allowed in each section?
-3. Should an author be able to edit a published item, or must an editor take ownership after publication?
-4. Should archived content remain accessible by its direct URL, redirect, or return 404?
-5. Which image types, maximum dimensions, and upload-size limits should be enforced?
-6. Should the initial public media bucket be public, or should all files be delivered through signed URLs?
-7. Which source fields are mandatory for news items?
-8. Should content have one primary author plus optional co-authors, or allow multiple authors equally?
+1. Which exact formats are allowed in each section?
+2. Which image types, maximum dimensions, and upload-size limits should be enforced?
+3. Which source fields are mandatory for news items?
 
 ## 14. Approval gate
 
@@ -309,7 +317,7 @@ This document records the selected product direction and recommended technical d
 
 Before the first migration:
 
-1. Resolve the open questions that affect schema constraints and access control.
+1. Resolve the remaining open questions that affect schema constraints and access control.
 2. Review the exact table and column definitions.
 3. Review RLS policies and Storage policies.
 4. Create the SQL migration on a feature branch.
