@@ -39,7 +39,7 @@ export default function EditorialProductSpecimensPage() {
       <div className="product-specimens-content">
         <section className="product-specimen-block">
           <header className="product-specimen-block-head">
-            <div><SpecimenLabel>01 · الخبر العاجل</SpecimenLabel><h2>الخبر العاجل</h2></div>
+            <div><SpecimenLabel>النموذج 01</SpecimenLabel><h2>الخبر العاجل</h2></div>
             <span>اختبار السرعة والوضوح وكثافة المعلومات</span>
           </header>
           <article className="breaking-news-card">
@@ -63,7 +63,7 @@ export default function EditorialProductSpecimensPage() {
 
         <section className="product-specimen-block">
           <header className="product-specimen-block-head">
-            <div><SpecimenLabel>02 · مقال الرأي والتحليل</SpecimenLabel><h2>مقال الرأي والتحليل</h2></div>
+            <div><SpecimenLabel>النموذج 02</SpecimenLabel><h2>مقال الرأي والتحليل</h2></div>
             <span>اختبار القراءة المتواصلة والتدرج بين العناوين</span>
           </header>
           <article className="opinion-layout">
@@ -94,7 +94,7 @@ export default function EditorialProductSpecimensPage() {
 
         <section className="product-specimen-block">
           <header className="product-specimen-block-head">
-            <div><SpecimenLabel>03 · غلاف الدراسة الاستراتيجية</SpecimenLabel><h2>غلاف الدراسة الاستراتيجية</h2></div>
+            <div><SpecimenLabel>النموذج 03</SpecimenLabel><h2>غلاف الدراسة الاستراتيجية</h2></div>
             <span>اختبار الحضور المؤسسي والعنوان متعدد الأسطر</span>
           </header>
           <article className="research-cover-stage">
