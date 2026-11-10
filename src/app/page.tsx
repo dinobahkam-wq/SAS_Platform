@@ -1,58 +1,94 @@
-import Link from "next/link";
-import { BrandLogo } from "@/components/brand-logo";
+import {
+  ContentCard,
+  EmptyContent,
+  PublicFooter,
+  PublicHeader,
+  SectionHeading,
+} from "@/components/public-site";
+import { getPublishedContent } from "@/lib/public-content";
 
-const sections = [
-  { number: "01", title: "الأخبار والشؤون الجارية", description: "متابعة منظمة للأحداث والتطورات، مع إسناد واضح للمصادر والتوقيت." },
-  { number: "02", title: "التحليل والرأي", description: "قراءات سياسية واستراتيجية تضع الوقائع في سياقاتها الأوسع." },
-  { number: "03", title: "الدراسات والأبحاث", description: "أوراق بحثية ودراسات معمقة تدعم الفهم وصناعة القرار." },
-  { number: "04", title: "البرامج والوسائط", description: "حوارات وبرامج ومحتوى مرئي وصوتي يوسّع نطاق المعرفة." },
-];
+export default async function Home() {
+  const [news, analysis, research, media, featuredAnalysis] = await Promise.all([
+    getPublishedContent({ section: "news", limit: 6 }),
+    getPublishedContent({ section: "analysis", limit: 6 }),
+    getPublishedContent({ section: "research", limit: 4 }),
+    getPublishedContent({ section: "media", limit: 4 }),
+    getPublishedContent({ section: "analysis", featured: true, limit: 1 }),
+  ]);
 
-export default function Home() {
+  const lead = featuredAnalysis[0] || analysis[0] || news[0] || research[0] || media[0] || null;
+
   return (
-    <main className="min-h-screen">
-      <header className="public-header">
-        <div className="public-header-inner">
-          <Link href="/" className="public-brand" aria-label="منصة ساس">
-            <BrandLogo variant="full" priority />
-          </Link>
-          <nav className="public-nav" aria-label="الأقسام">
-            <a href="#news">الأخبار</a><a href="#analysis">التحليل والرأي</a><a href="#research">الدراسات والأبحاث</a><a href="#media">البرامج والوسائط</a>
-          </nav>
-          <Link href="/login" className="public-login-link">دخول الإدارة</Link>
-        </div>
-      </header>
+    <main className="public-site">
+      <PublicHeader />
 
-      <section className="public-hero">
-        <div>
+      <section className="home-hero site-container">
+        <div className="home-hero-copy">
           <span className="eyebrow">منصة للإعلام والمعرفة السياسية</span>
-          <h1>نفهم الأحداث،<br />ونقرأ ما وراءها.</h1>
-          <p>منصة إعلامية وبحثية تُنظّم الأخبار، وتقدم التحليل والرأي، وتنشر الدراسات والأبحاث حول اليمن ومحيطه الإقليمي والدولي.</p>
+          <h1>نفهم الأحداث،<br /><em>ونقرأ ما وراءها.</em></h1>
+          <p>
+            مساحة معرفية تربط الخبر بسياقه، والتحليل بمصادره، والبحث بأسئلة الواقع.
+            نتابع اليمن ومحيطه الإقليمي والدولي، وننظم المعلومات لتصبح أكثر وضوحًا وقابلية للفهم.
+          </p>
+          <div className="home-hero-actions">
+            <a href="/news" className="button button-primary">تابع آخر الأخبار</a>
+            <a href="/research" className="button button-secondary">استكشف الدراسات</a>
+          </div>
         </div>
-        <div className="public-hero-note">
-          <p>نعمل على بناء مساحة معرفية موثوقة، تربط الخبر بسياقه، والتحليل بمصادره، والبحث بأسئلة الواقع.</p>
-          <span className="topbar-kicker">SAS MEDIA AND STUDIES PLATFORM</span>
-        </div>
-      </section>
-
-      <section className="public-sections">
-        <div className="panel-header" style={{ padding: "0 0 18px", background: "transparent", border: 0 }}>
-          <div><span className="eyebrow">أقسام المنصة</span><h2 style={{ margin: "7px 0 0", fontSize: 24 }}>مساحات المحتوى</h2></div>
-          <span className="helper-text">01 — 04</span>
-        </div>
-        <div className="public-section-grid">
-          {sections.map((section) => (
-            <a id={["news", "analysis", "research", "media"][Number(section.number) - 1]} href="#top" key={section.number} className="public-section-card">
-              <span className="helper-text" dir="ltr">{section.number}</span>
-              <h3>{section.title}</h3><p>{section.description}</p>
-            </a>
-          ))}
+        <div className="home-hero-feature">
+          {lead ? <ContentCard item={lead} variant="feature" /> : <EmptyContent message="تُعرض هنا أبرز المواد المنشورة فور اعتمادها في غرفة التحرير." />}
         </div>
       </section>
 
-      <footer className="public-footer">
-        <div className="public-footer-inner"><span>منصة ساس للإعلام والدراسات</span><span dir="ltr" className="topbar-kicker">© SAS MEDIA AND STUDIES PLATFORM</span></div>
-      </footer>
+      {news[0] ? (
+        <section className="home-news-flash site-container" aria-label="أحدث خبر">
+          <span className="home-news-flash-label"><i /> آخر الأخبار</span>
+          <a href={"/content/" + news[0].slug}>{news[0].title}</a>
+          <span className="home-news-flash-date">{news[0].published_at ? new Date(news[0].published_at).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Aden" }) : ""}</span>
+        </section>
+      ) : null}
+
+      <section className="home-section site-container">
+        <SectionHeading eyebrow="متابعة يومية" title="الأخبار والشؤون الجارية" href="/news" />
+        {news.length ? (
+          <div className="home-news-grid">
+            {news.slice(0, 4).map((item, index) => <ContentCard item={item} variant={index === 0 ? "feature" : "standard"} key={item.id} />)}
+          </div>
+        ) : <EmptyContent />}
+      </section>
+
+      <section className="home-section home-analysis-section">
+        <div className="site-container">
+          <SectionHeading eyebrow="قراءة في السياق" title="التحليل والرأي" href="/analysis" />
+          {analysis.length ? (
+            <div className="home-analysis-grid">
+              {analysis.slice(0, 3).map((item, index) => <ContentCard item={item} variant={index === 0 ? "feature" : "standard"} key={item.id} />)}
+            </div>
+          ) : <EmptyContent />}
+        </div>
+      </section>
+
+      <section className="home-section site-container">
+        <SectionHeading eyebrow="معرفة معمقة" title="الدراسات والأبحاث" href="/research" />
+        {research.length ? (
+          <div className="home-research-grid">
+            {research.slice(0, 3).map((item) => <ContentCard item={item} key={item.id} />)}
+          </div>
+        ) : <EmptyContent />}
+      </section>
+
+      <section className="home-section home-media-section">
+        <div className="site-container">
+          <SectionHeading eyebrow="المعرفة متعددة الوسائط" title="البرامج والوسائط" href="/media" />
+          {media.length ? (
+            <div className="home-media-grid">
+              {media.slice(0, 3).map((item) => <ContentCard item={item} key={item.id} />)}
+            </div>
+          ) : <EmptyContent />}
+        </div>
+      </section>
+
+      <PublicFooter />
     </main>
   );
 }
