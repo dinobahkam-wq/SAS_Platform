@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { SectionLanding } from "@/components/section-landing";
 import { getPublishedContent } from "@/lib/public-content";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "التحليل والرأي",
   description: "قراءات سياسية واستراتيجية تضع الوقائع في سياقاتها الأوسع.",
