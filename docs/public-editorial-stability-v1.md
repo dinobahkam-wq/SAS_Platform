@@ -18,8 +18,10 @@ This package stabilizes two confirmed implementation details in the public edito
 ## Verification status
 
 - GitHub source changes: committed on this package branch.
-- TypeScript and production build: pending CI on the package branch.
+- Public routes that read Supabase through the cookie-aware server client now explicitly use request-time rendering (`dynamic = force-dynamic`): home, news, analysis, research, media, and public content detail. This prevents Next.js from attempting static prerendering of routes that call `cookies()`.
+- TypeScript and production build: pending local rerun after syncing the latest branch.
 - Local Windows build and responsive visual review: pending synchronization by the operator.
+- Development environment variables must be pulled from the linked Vercel project (`sas-platform`) into the local review worktree; do not commit `.env.local`.
 - Supabase schema and RLS: unchanged.
 - Vercel deployment: not triggered by this package.
 - Font licence confirmation: still required before public production release.
