@@ -1,34 +1,35 @@
 # SAS Platform
 
-SAS Platform is the digital information and research platform for structured political knowledge, events, issues, sources, documents, maps, and editorial products.
+منصة ساس هي المنصة الرقمية للمعلومات والمعرفة السياسية، وتنتج الأخبار المنظمة والتحليلات والأوراق البحثية والبرامج والوسائط، مع توجه لاحق لبناء قاعدة معرفية مترابطة للأحداث والقضايا والفاعلين والمصادر.
 
-## Planned application stack
+## التقنية
 
-- **Web application:** Next.js and TypeScript
-- **Data platform:** Supabase (PostgreSQL, Auth, Storage, and Edge Functions when required)
-- **Deployment:** Vercel
-- **Version control:** GitHub
+- **واجهة التطبيق:** Next.js App Router وTypeScript.
+- **البيانات والمصادقة والوسائط:** Supabase (PostgreSQL, Auth, Storage).
+- **النشر:** Vercel.
+- **إدارة المصدر:** GitHub.
 
-## Engineering principles
+## الحالة الحالية
 
-1. GitHub is the source of truth for application code and database migration files.
-2. Every application database change must be represented by a reviewed, ordered SQL migration under `supabase/migrations/`.
-3. The hosted Supabase project is an execution and verification target, not an undocumented schema-authoring source.
-4. No migration is considered complete until its application status is reconciled with the remote Supabase migration history.
-5. Never commit credentials, access tokens, database passwords, or service-role keys.
-6. Keep Supabase-managed schemas (such as `auth`, `storage`, and `realtime`) separate from application-owned schema changes.
+- أُنشئ أساس إدارة المحتوى التحريري (CMS v1) مع تسجيل دخول إداري، وإدارة المواد والمصادر والتصنيفات والوسائط.
+- الصفحة الرئيسية العامة موجودة بوصفها واجهة تعريفية أولية؛ صفحات عرض الأخبار والمقالات والدراسات العامة المتصلة بالمحتوى المنشور ما زالت ضمن مراحل التنفيذ.
+- توجد صفحات داخلية لمعاينة الهوية والنظام الطباعي، ولا تُعد جزءًا من واجهة النشر العامة.
+- اعتمد النظام الطباعي B في 10 نوفمبر 2026، وبدأ تطبيقه تدريجيًا على الواجهة العامة.
+- مخطط قاعدة البيانات وسياسات الوصول موثقة في `docs/editorial-database-design.md` وملفات الترحيل في `supabase/migrations/`.
 
-## Development workflow
+## الوثائق المرجعية
 
-- Work on a feature or maintenance branch; do not develop directly on `main`.
-- Pull the branch from GitHub before local work.
-- Make code and migration changes together where applicable.
-- Test locally before opening a pull request.
-- Review the migration files and remote migration history before merging.
-- Merge only after code checks and database reconciliation pass.
+- [أساس التطبيق](docs/application-foundation.md)
+- [إدارة المحتوى CMS v1](docs/admin-cms-v1.md)
+- [تصميم قاعدة البيانات التحريرية](docs/editorial-database-design.md)
+- [سير عمل التطوير](docs/development-workflow.md)
+- [اعتماد النظام الطباعي B وخطة تطبيقه](docs/brand-system-b-adoption-v1.md)
+- [مقارنة النظامين الطباعيين A وB](docs/brand-typography-ab-review.md)
 
-See [Development Workflow](docs/development-workflow.md) for the operational rules.
+## مبادئ التطوير
 
-## Repository status
-
-This repository is being initialized. The application schema is not yet defined; do not create application tables until the data model and access policies have been reviewed.
+1. GitHub هو المصدر المعتمد لكود التطبيق وملفات ترحيل قاعدة البيانات.
+2. كل تغيير في قاعدة البيانات يُمثّل بملف migration مُراجع ومرتب تحت `supabase/migrations/`.
+3. لا تُحفظ كلمات المرور أو مفاتيح الخدمة أو رموز الوصول في المستودع.
+4. تُنفذ الأعمال على فروع مستقلة؛ لا يُطوّر مباشرة على `main`.
+5. لا يُدمج أي تغيير قبل نجاح الفحوصات ومراجعة أثره على التطبيق والبيانات.
