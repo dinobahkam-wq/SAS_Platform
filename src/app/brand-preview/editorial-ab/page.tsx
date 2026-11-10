@@ -21,8 +21,6 @@ const systems = [
     code: "A",
     title: "تجاريب في جميع العناوين",
     subtitle: "TAJARIB DISPLAY + THMANYAH SANS",
-    description:
-      "تجاريب طويل للعناوين الرئيسية والفرعية، وثمانية سانس للنصوص والواجهات.",
     className: "ab-system-a",
     secondaryFont: "Tajarib Taweel",
     secondaryFontLabel: "تجاريب طويل",
@@ -31,8 +29,6 @@ const systems = [
     code: "B",
     title: "تجاريب + ثمانية سيريف",
     subtitle: "TAJARIB DISPLAY + THMANYAH SERIF DISPLAY + SANS",
-    description:
-      "تجاريب طويل للعناوين الرئيسية، وثمانية سيريف ديسبلاي للعناوين الفرعية، وثمانية سانس للنصوص.",
     className: "ab-system-b",
     secondaryFont: "Thmanyah Serif Display",
     secondaryFontLabel: "ثمانية Serif Display",
@@ -67,7 +63,6 @@ function SystemPanel({
   code,
   title,
   subtitle,
-  description,
   className,
   secondaryFont,
   secondaryFontLabel,
