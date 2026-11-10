@@ -205,3 +205,164 @@ button { cursor: pointer; }
   .login-card { padding: 26px 22px; }
   .user-meta { display: none; }
 }
+
+
+/* SAS brand identity: licensed local font families and approved logo assets */
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah-sans/thmanyah-sans-light.otf") format("opentype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah-sans/thmanyah-sans-regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah-sans/thmanyah-sans-medium.otf") format("opentype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah-sans/thmanyah-sans-bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src: url("/fonts/thmanyah-sans/thmanyah-sans-black.otf") format("opentype");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tajarib Taweel";
+  src: url("/fonts/tajarib-taweel/tajarib-taweel-light.otf") format("opentype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tajarib Taweel";
+  src: url("/fonts/tajarib-taweel/tajarib-taweel-regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tajarib Taweel";
+  src: url("/fonts/tajarib-taweel/tajarib-taweel-medium.otf") format("opentype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tajarib Taweel";
+  src: url("/fonts/tajarib-taweel/tajarib-taweel-bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Tajarib Taweel";
+  src: url("/fonts/tajarib-taweel/tajarib-taweel-black.otf") format("opentype");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+:root {
+  --font-arabic: "Thmanyah Sans", Arial, sans-serif;
+  --font-display: "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-arabic);
+}
+
+.public-hero h1,
+.public-section-card h3,
+.page-heading h1,
+.login-heading h1,
+.panel-header h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+.brand-logo-full,
+.brand-logo-compact {
+  display: block;
+  height: auto;
+  object-fit: contain;
+}
+
+.brand-logo-full {
+  width: 142px;
+  max-height: 76px;
+}
+
+.brand-logo-compact {
+  width: 56px;
+  height: 56px;
+}
+
+.public-header-inner {
+  min-height: 82px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.public-brand {
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.login-brand {
+  width: 100%;
+  justify-content: center;
+}
+
+.login-brand .brand-logo-full {
+  width: 160px;
+  max-height: 86px;
+}
+
+.sidebar-brand {
+  gap: 10px;
+  min-height: 62px;
+}
+
+.sidebar-brand strong {
+  font-family: var(--font-display);
+  font-size: 16px;
+}
+
+@media (max-width: 720px) {
+  .public-header-inner {
+    min-height: 70px;
+  }
+
+  .brand-logo-full {
+    width: 120px;
+    max-height: 65px;
+  }
+
+  .login-brand .brand-logo-full {
+    width: 148px;
+    max-height: 80px;
+  }
+
+  .brand-logo-compact {
+    width: 46px;
+    height: 46px;
+  }
+}
