@@ -32,7 +32,7 @@ export async function requireAdmin() {
   return {
     supabase,
     userId,
-    email: typeof claims.email === "string" ? claims.email : "",
+    email: typeof claims?.email === "string" ? claims.email : "",
     displayName: author?.display_name ?? "مدير المنصة",
   };
 }
