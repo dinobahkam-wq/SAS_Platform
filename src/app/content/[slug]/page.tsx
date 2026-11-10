@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { BrandLogo } from "@/components/brand-logo";
 import { notFound } from "next/navigation";
 import {
   ContentBody,
@@ -67,7 +68,7 @@ export default async function PublicContentPage({ params }: PageProps) {
         {isResearch ? (
           <header className="research-public-cover">
             <div className="research-public-brand">
-              <span>منصة ساس للإعلام والدراسات</span>
+              <BrandLogo variant="full" />
               <span className="research-public-label">دراسات وأبحاث</span>
             </div>
             <div className="research-public-rule" />
