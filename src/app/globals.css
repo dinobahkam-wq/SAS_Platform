@@ -11,7 +11,7 @@
   --accent-soft: #eaf1ed;
   --gold: #b39a67;
   --danger: #a33f36;
-  --font-arabic: "Tajarib Taweel", "Noto Sans Arabic", Arial, sans-serif;
+  --font-arabic: "Thmanyah Sans", "Noto Sans Arabic", Arial, sans-serif;
 }
 
 @theme inline {
@@ -1302,7 +1302,7 @@ textarea {
 .content-card-copy h3 { margin: 11px 0 8px; color: var(--foreground); font: var(--weight-editorial-title) 21px/1.6 var(--font-editorial-title); }
 .content-card-copy > p { margin: 0; color: #68766e; font: 400 12px/2 "Thmanyah Sans",sans-serif; }
 .content-card-more { display: inline-flex; gap: 8px; align-items: center; margin-top: auto; padding-top: 17px; color: var(--accent); font: 500 10px/1.6 "Thmanyah Sans",sans-serif; }
-.content-card--news .content-card-copy h3, .content-card--research .content-card-copy h3 { font-family: var(--font-brand-headline); font-weight: 700; }
+.content-card--news .content-card-copy h3, .content-card--research .content-card-copy h3 { font-family: var(--font-brand-headline); font-weight: var(--weight-editorial-headline); }
 .content-card--analysis .content-card-copy h3 { font-family: var(--font-editorial-title); font-weight: var(--weight-editorial-title); }
 .content-card--feature .content-card-copy { padding: 23px; }
 .content-card--feature .content-card-copy h3 { font-size: clamp(24px,2.2vw,32px); line-height: 1.55; }
