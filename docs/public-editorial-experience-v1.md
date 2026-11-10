@@ -51,6 +51,7 @@ The internal typography and product specimen routes remain noindex design-review
 - Detail pages resolve a published item by slug and render its title, excerpt, body, publication date, category, linked authors, and linked sources when available.
 - Cover image metadata is read from \`media_assets\`; public URLs are generated from the configured Supabase Storage bucket.
 - Body rendering supports paragraph, heading, subheading, quote, and list blocks. The current CMS form still writes paragraph blocks only.
+- Public data-access failures are written to server logs; a genuinely empty dataset is rendered as an explicit empty state.
 
 ## 5. CMS integration
 
