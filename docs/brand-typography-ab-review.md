@@ -39,3 +39,19 @@ A/B comparison only. No final selection between A and B is implied by this imple
 ## Font asset and licensing note
 
 The specimen references the font files already present under `public/fonts/`. Before public production deployment, confirm that the applicable font licence permits serving these files from the platform's public asset directory and obtain any required written permission from the rights holder.
+
+
+## Decision update — 10 November 2026
+
+The comparison has now concluded: **System B is selected for gradual adoption on the public interface**.
+
+The initial B specimen mapping above was refined during the later product test. The canonical production mapping is:
+
+- Primary urgent/editorial headline: Tajarib Taweel 900.
+- Article title: Thmanyah Serif Display 700.
+- Main internal heading: Thmanyah Serif Display 500.
+- Secondary internal heading: Tajarib Taweel 500.
+- Strategic report cover title: Tajarib Taweel 900.
+- Body copy, summaries, metadata, and interface labels: Thmanyah Sans 400.
+
+The later product specimen at `/brand-preview/products-b` is the visual reference for this refinement. This historical comparison document records the original A/B test; the canonical adoption specification is [brand-system-b-adoption-v1.md](brand-system-b-adoption-v1.md).
