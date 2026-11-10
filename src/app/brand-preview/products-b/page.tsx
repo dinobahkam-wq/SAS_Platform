@@ -25,7 +25,7 @@ export default function EditorialProductSpecimensPage() {
 
       <section className="product-specimens-intro">
         <span className="eyebrow">ساس · اختبار المنتجات التحريرية</span>
-        <h1>اختبار النظام B على المنتجات التحريرية</h1>
+        <h1>اختبار النظام الثاني على المنتجات التحريرية</h1>
         <p>ثلاث بيئات استخدام مختلفة لاختبار توزيع الخطوط: خبر عاجل سريع الالتقاط، ومقال رأي طويل القراءة، وغلاف دراسة استراتيجية. هذه نماذج تصميمية داخلية.</p>
         <div className="product-specimens-legend">
           <span>العنوان الرئيسي: تجاريب طويل · 900</span>
@@ -89,7 +89,7 @@ export default function EditorialProductSpecimensPage() {
               <div className="opinion-aside-card"><SpecimenLabel>في هذا المقال</SpecimenLabel><h4>في هذا المقال</h4><ul><li>من الاتفاق السياسي إلى القدرة المؤسسية</li><li>المؤسسات بوصفها شرطًا للاستدامة</li></ul></div>
             </aside>
           </article>
-          <p className="product-specimen-caption">ملاحظة الاختبار: السيريف مخصص لعنوان المقال والعنوان الفرعي العنوان الفرعي الأول، ويعود العنوان الفرعي الثاني إلى تجاريب لخلق إيقاع طباعي واضح دون إدخال عائلة ثالثة في النصوص.</p>
+          <p className="product-specimen-caption">ملاحظة الاختبار: السيريف مخصص لعنوان المقال والعنوان الفرعي الأول، ويعود العنوان الفرعي الثاني إلى تجاريب لخلق إيقاع طباعي واضح دون إدخال عائلة ثالثة في النصوص.</p>
         </section>
 
         <section className="product-specimen-block">
