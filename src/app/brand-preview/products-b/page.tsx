@@ -85,8 +85,8 @@ export default function EditorialProductSpecimensPage() {
               </div>
             </div>
             <aside className="opinion-aside">
-              <div className="opinion-aside-card"><SpecimenLabel>بيانات المادة</SpecimenLabel><h4>بيانات المادة</h4><dl><div><dt>القسم</dt><dd>التحليل والرأي</dd></div><div><dt>الموضوع</dt><dd>بناء الدولة</dd></div><div><dt>الحالة</dt><dd>نموذج تصميمي</dd></div></dl></div>
-              <div className="opinion-aside-card"><SpecimenLabel>في هذا المقال</SpecimenLabel><h4>في هذا المقال</h4><ul><li>من الاتفاق السياسي إلى القدرة المؤسسية</li><li>المؤسسات بوصفها شرطًا للاستدامة</li></ul></div>
+              <div className="opinion-aside-card"><h4>بيانات المادة</h4><dl><div><dt>القسم</dt><dd>التحليل والرأي</dd></div><div><dt>الموضوع</dt><dd>بناء الدولة</dd></div><div><dt>الحالة</dt><dd>نموذج تصميمي</dd></div></dl></div>
+              <div className="opinion-aside-card"><h4>في هذا المقال</h4><ul><li>من الاتفاق السياسي إلى القدرة المؤسسية</li><li>المؤسسات بوصفها شرطًا للاستدامة</li></ul></div>
             </aside>
           </article>
           <p className="product-specimen-caption">ملاحظة الاختبار: السيريف مخصص لعنوان المقال والعنوان الفرعي الأول، ويعود العنوان الفرعي الثاني إلى تجاريب لخلق إيقاع طباعي واضح دون إدخال عائلة ثالثة في النصوص.</p>
