@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { signOut } from "@/app/login/actions";
+import { BrandLogo } from "@/components/brand-logo";
 
 const navigation = [
   { href: "/admin", label: "نظرة عامة", symbol: "⌂", exact: true },
@@ -19,11 +20,11 @@ export function AdminShell({
   return (
     <div className="admin-frame">
       <aside className="admin-sidebar">
-        <Link href="/admin" className="sidebar-brand">
-          <span className="brand-symbol">S</span>
+        <Link href="/admin" className="sidebar-brand" aria-label="غرفة تحرير منصة ساس">
+          <BrandLogo variant="compact" priority />
           <span>
-            <strong>منصة ساس</strong>
-            <small>غرفة التحرير الرقمية</small>
+            <strong>غرفة التحرير</strong>
+            <small>منصة ساس</small>
           </span>
         </Link>
 
