@@ -235,13 +235,14 @@ export async function getPublicCategory(categoryId: string | null) {
 
   try {
     const supabase = await createClient();
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("categories")
       .select("name,slug")
       .eq("id", categoryId)
       .eq("is_active", true)
       .maybeSingle();
 
+    if (error) reportPublicDataError("content category query", error);
     return data;
   } catch (error) {
     reportPublicDataError("content category", error);
