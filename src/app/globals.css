@@ -1527,3 +1527,22 @@ textarea {
   font-family: var(--font-body);
   font-weight: 400;
 }
+
+
+/* Package 04 / real-content editorial corrections: avoid lone third-column cards. */
+.content-card-grid--section {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 700px) {
+  .content-card-grid--section {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .content-card, .content-image img {
+    transition: none;
+  }
+  .content-card:hover, .content-card:hover .content-image img {
+    transform: none;
+  }
+}
