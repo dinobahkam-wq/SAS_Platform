@@ -44,7 +44,7 @@ export function PublicFooter() {
         <div className="site-footer-links">
           {navigation.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}
         </div>
-        <span dir="ltr">© SAS MEDIA AND STUDIES PLATFORM</span>
+        <span>© منصة ساس للإعلام والدراسات</span>
       </div>
     </footer>
   );
