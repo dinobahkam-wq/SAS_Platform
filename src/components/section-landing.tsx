@@ -37,14 +37,14 @@ export function SectionLanding({
           <div className="section-lead-layout">
             <ContentCard item={lead} variant="feature" />
             <div className="section-lead-list">
-              {rest.slice(0, 4).map((item) => <ContentCard item={item} variant="compact" key={item.id} />)}
+              {rest.slice(0, 3).map((item) => <ContentCard item={item} variant="compact" key={item.id} />)}
             </div>
           </div>
         ) : <EmptyContent />}
 
-        {rest.length > 4 ? (
-          <div className="content-card-grid">
-            {rest.slice(4).map((item) => <ContentCard item={item} key={item.id} />)}
+        {rest.length > 3 ? (
+          <div className="content-card-grid content-card-grid--section">
+            {rest.slice(3).map((item) => <ContentCard item={item} key={item.id} />)}
           </div>
         ) : null}
       </section>
