@@ -1,25 +1,32 @@
 import Link from "next/link";
 import type { PublicContentItem } from "@/lib/public-content";
-import {
-  ContentCard,
-  EmptyContent,
-  PublicFooter,
-  PublicHeader,
-} from "@/components/public-site";
+import { getPublishedRailSources } from "@/lib/public-content";
+import { formatLabel } from "@/lib/content";
+import { EditorialRail } from "@/components/editorial-rail";
+import { EmptyContent, PublicFooter, PublicHeader } from "@/components/public-site";
 
-export function SectionLanding({
-  title,
-  eyebrow,
-  description,
-  items,
+const newsFormats = [
+  { key: "news_report", label: "التقارير الإخبارية" },
+  { key: "news_brief", label: "الأخبار الموجزة" },
+  { key: "official_statement", label: "البيانات والقرارات الرسمية" },
+];
+
+export async function SectionLanding({
+  title, eyebrow, description, items,
 }: {
   title: string;
   eyebrow: string;
   description: string;
   items: PublicContentItem[];
 }) {
-  const [lead, ...rest] = items;
-
+  const sourceMap = await getPublishedRailSources(items.map((item) => item.id));
+  const grouped = items.reduce<Record<string, PublicContentItem[]>>((groups, item) => {
+    (groups[item.format] ??= []).push(item);
+    return groups;
+  }, {});
+  const configured = items[0]?.section === "news"
+    ? newsFormats
+    : Object.keys(grouped).map((key) => ({ key, label: formatLabel(key) }));
   return (
     <main className="public-site">
       <PublicHeader />
@@ -31,23 +38,14 @@ export function SectionLanding({
         </div>
         <Link href="/" className="section-back-link">العودة إلى الرئيسية</Link>
       </section>
-
-      <section className="section-landing-content site-container">
-        {lead ? (
-          <div className="section-lead-layout">
-            <ContentCard item={lead} variant="feature" />
-            <div className="section-lead-list">
-              {rest.slice(0, 3).map((item) => <ContentCard item={item} variant="compact" key={item.id} />)}
-            </div>
-          </div>
-        ) : <EmptyContent />}
-
-        {rest.length > 3 ? (
-          <div className="content-card-grid content-card-grid--section">
-            {rest.slice(3).map((item) => <ContentCard item={item} key={item.id} />)}
-          </div>
-        ) : null}
-      </section>
+      <div className="section-landing-content site-container">
+        {items.length
+          ? configured.filter((group) => grouped[group.key]?.length).map((group) => (
+            <EditorialRail key={group.key} title={group.label}
+              items={grouped[group.key]} sourcesById={sourceMap} />
+          ))
+          : <EmptyContent />}
+      </div>
       <PublicFooter />
     </main>
   );
