@@ -122,18 +122,19 @@ export function EditorialRail({
               aria-haspopup="dialog" aria-label={"قراءة: " + item.title}>
               <div className="editorial-tile-image">
                 {item.cover_url ? <Image src={item.cover_url} alt={item.cover_alt || item.title}
-                  fill unoptimized sizes="(max-width: 640px) 83vw, 320px" /> : <span>ساس</span>}
+                  fill unoptimized sizes="(max-width: 640px) 78vw, 280px" /> : <span>ساس</span>}
+                <span className="editorial-tile-image-label">{formatLabel(item.format)}</span>
               </div>
               <div className="editorial-tile-copy">
                 <div className="editorial-tile-meta">
-                  <span>{formatLabel(item.format)}</span>
                   <time dateTime={item.published_at ?? undefined}>{displayDate(item.published_at)}</time>
+                  <span className="editorial-tile-category">{sectionLabel(item.section)}</span>
                 </div>
                 <h3>{item.title}</h3>
                 {item.excerpt ? <p>{item.excerpt}</p> : null}
                 <span className="editorial-tile-source">
-                  {sourcesById[item.id]?.[0]?.source_name?.includes("أرشيف") ? "أرشيف ساس" : (sourcesById[item.id]?.[0]?.source_name ?? "منصة ساس")}
-                  <span aria-hidden="true"> · </span>قراءة المادة
+                  <span>{sourcesById[item.id]?.[0]?.source_name?.includes("أرشيف") ? "أرشيف ساس" : (sourcesById[item.id]?.[0]?.source_name ?? "منصة ساس")}</span>
+                  <span className="editorial-tile-read">قراءة المادة <span aria-hidden="true">←</span></span>
                 </span>
               </div>
             </button>
@@ -150,19 +151,24 @@ export function EditorialRail({
               <button type="button" className="editorial-detail-close" onClick={() => setSelected(null)}
                 aria-label="إغلاق التفاصيل">×</button>
             </div>
-            {selected.cover_url ? (
-              <div className="editorial-detail-image">
-                <Image src={selected.cover_url} alt={selected.cover_alt || selected.title}
-                  fill unoptimized sizes="(max-width: 800px) 100vw, 800px" />
+            <div className="editorial-detail-heading">
+              <div className="editorial-detail-heading-meta">
+                <span>{formatLabel(selected.format)}</span>
+                <time dateTime={selected.published_at ?? undefined}>{displayDate(selected.published_at, true)}</time>
               </div>
+              <h2 id={dialogTitle}>{selected.title}</h2>
+              {selected.excerpt ? <p className="editorial-detail-excerpt">{selected.excerpt}</p> : null}
+            </div>
+            {selected.cover_url ? (
+              <figure className="editorial-detail-figure">
+                <div className="editorial-detail-image">
+                  <Image src={selected.cover_url} alt={selected.cover_alt || selected.title}
+                    fill unoptimized sizes="(max-width: 800px) 100vw, 800px" />
+                </div>
+                {selected.cover_caption ? <figcaption className="editorial-detail-caption">{selected.cover_caption}</figcaption> : null}
+              </figure>
             ) : null}
             <div className="editorial-detail-content">
-              <h2 id={dialogTitle}>{selected.title}</h2>
-              <p className="editorial-detail-date">
-                <time dateTime={selected.published_at ?? undefined}>{displayDate(selected.published_at, true)}</time>
-              </p>
-              {selected.excerpt ? <p className="editorial-detail-excerpt">{selected.excerpt}</p> : null}
-              {selected.cover_caption ? <p className="editorial-detail-caption">{selected.cover_caption}</p> : null}
               <div className="editorial-detail-body">
                 {getBlocks(selected.body).map((block, index) => {
                   if (block.type === "heading") return <h3 key={index}>{block.text}</h3>;
