@@ -14,9 +14,17 @@ export type RailSource = {
 
 export type RailSources = Record<string, RailSource[]>;
 
-function displayDate(value: string | null) {
+function displayDate(value: string | null, withTime = false) {
   if (!value) return "";
-  return new Date(value).toLocaleDateString("ar-YE-u-nu-latn", {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  if (withTime) {
+    return date.toLocaleString("ar-YE-u-nu-latn", {
+      day: "numeric", month: "long", year: "numeric",
+      hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Aden",
+    });
+  }
+  return date.toLocaleDateString("ar-YE-u-nu-latn", {
     day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Aden",
   });
 }
@@ -116,9 +124,10 @@ export function EditorialRail({
             <div className="editorial-detail-content">
               <h2 id={dialogTitle}>{selected.title}</h2>
               <p className="editorial-detail-date">
-                <time dateTime={selected.published_at ?? undefined}>{displayDate(selected.published_at)}</time>
+                <time dateTime={selected.published_at ?? undefined}>{displayDate(selected.published_at, true)}</time>
               </p>
               {selected.excerpt ? <p className="editorial-detail-excerpt">{selected.excerpt}</p> : null}
+              {selected.cover_caption ? <p className="editorial-detail-caption">{selected.cover_caption}</p> : null}
               <div className="editorial-detail-body">
                 {getBlocks(selected.body).map((block, index) => {
                   if (block.type === "heading") return <h3 key={index}>{block.text}</h3>;
