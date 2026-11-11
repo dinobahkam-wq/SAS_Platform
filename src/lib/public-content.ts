@@ -272,3 +272,44 @@ export function formatPublishedDate(value: string | null) {
     timeZone: "Asia/Aden",
   });
 }
+
+/** Batch-load source labels and links for public editorial rails. */
+export async function getPublishedRailSources(contentIds: string[]) {
+  const output: Record<string, Array<{ source_name: string; source_url: string | null; source_type: string }>> = {};
+  if (!contentIds.length) return output;
+
+  const supabase = await createClient();
+  const { data: links, error: linksError } = await supabase
+    .from("content_source_links")
+    .select("content_id,source_id,display_order")
+    .in("content_id", contentIds)
+    .order("display_order", { ascending: true });
+
+  if (linksError) {
+    reportPublicDataError("rail source links", linksError);
+    return output;
+  }
+  if (!links?.length) return output;
+
+  const sourceIds = [...new Set(links.map((link) => link.source_id))];
+  const { data: sources, error: sourcesError } = await supabase
+    .from("content_sources")
+    .select("id,source_name,source_url,source_type")
+    .in("id", sourceIds);
+
+  if (sourcesError) {
+    reportPublicDataError("rail source details", sourcesError);
+    return output;
+  }
+  const byId = new Map((sources ?? []).map((source) => [source.id, source]));
+  for (const link of links) {
+    const source = byId.get(link.source_id);
+    if (!source) continue;
+    (output[link.content_id] ??= []).push({
+      source_name: source.source_name,
+      source_url: source.source_url,
+      source_type: source.source_type,
+    });
+  }
+  return output;
+}
