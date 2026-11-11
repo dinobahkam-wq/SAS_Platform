@@ -4,31 +4,31 @@ This is **not** an importer. It makes an offline, inspectable **draft preview** 
 
 ## Usage (Node 22+)
 
-\`\`\`bash
+```bash
 node --test tests/legacy-preview.test.mjs
 node scripts/legacy-preview.mjs reviewed-legacy-articles.json local-draft-preview.json
-\`\`\`
+```
 
 The output file must not already exist; use a new file to prevent accidental overwrites. Review the preview locally. Do not commit original article bodies or personal/secret data into this public repository.
 
 ## Required source fields
 
-Input object \`{"articles":[...]}\`; each article needs:
+Input object `{"articles":[...]}`; each article needs:
 
-- \`legacy_id\` (source numeric ID) and \`legacy_url\` (exact original HTTPS link under \`www.sas-media.net/post/{id}\`).
-- \`title\`, \`section\` and compatible \`format\`.
-- \`disposition: "candidate"\`, \`editorial_review: "approved_for_draft"\`.
-- \`published_at\` in ISO 8601 **with timezone**, e.g. \`2026-11-02T10:45:00+03:00\`.
-- \`body_text\` as manually checked **full plain text**; no raw HTML or fabricated snippets. The tool deliberately rejects obvious HTML.
-- News articles also require \`source_name\` and \`source_url\`.
+- `legacy_id` (source numeric ID) and `legacy_url` (exact original HTTPS link under `www.sas-media.net/post/{id}`).
+- `title`, `section` and compatible `format`.
+- `disposition: "candidate"`, `editorial_review: "approved_for_draft"`.
+- `published_at` in ISO 8601 **with timezone**, e.g. `2026-11-02T10:45:00+03:00`.
+- `body_text` as manually checked **full plain text**; no raw HTML or fabricated snippets. The tool deliberately rejects obvious HTML.
+- News articles also require `source_name` and `source_url`.
 
-Optional: \`excerpt\`, \`author\`, \`cover_url\`, \`cover_rights\`. No media files are copied by this script.
+Optional: `excerpt`, `author`, `cover_url`, `cover_rights`. No media files are copied by this script.
 
-The output keeps the historical publication time in \`legacy.original_published_at\` but sets draft \`published_at\` to null; publication should be a separate reviewed action. Source metadata is attached for **manual review only**, not inserted as a trusted CMS reference automatically.
+The output keeps the historical publication time in `legacy.original_published_at` but sets draft `published_at` to null; publication should be a separate reviewed action. Source metadata is attached for **manual review only**, not inserted as a trusted CMS reference automatically.
 
 ### Why input must be reviewed
 
-The legacy site exposes indexed articles at \`/post/{id}\`, but current WordPress connector posts API returned HTTP 404; origin and complete export are not yet authenticated. Search snippets and page previews **do not** count as full-text exports.
+The legacy site exposes indexed articles at `/post/{id}`, but current WordPress connector posts API returned HTTP 404; origin and complete export are not yet authenticated. Search snippets and page previews **do not** count as full-text exports.
 
 ### Operational gates
 
