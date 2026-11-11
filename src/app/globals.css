@@ -370,43 +370,6 @@ body {
 }
 
 
-/* Thmanyah Serif Display — approved font files */
-@font-face {
-  font-family: "Thmanyah Serif Display";
-  src: url("/fonts/thmanyah-serif-display_all/thmanyah-serif-display-light.otf") format("opentype");
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Thmanyah Serif Display";
-  src: url("/fonts/thmanyah-serif-display_all/thmanyah-serif-display-regular.otf") format("opentype");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Thmanyah Serif Display";
-  src: url("/fonts/thmanyah-serif-display_all/thmanyah-serif-display-medium.otf") format("opentype");
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Thmanyah Serif Display";
-  src: url("/fonts/thmanyah-serif-display_all/thmanyah-serif-display-bold.otf") format("opentype");
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Thmanyah Serif Display";
-  src: url("/fonts/thmanyah-serif-display_all/thmanyah-serif-display-black.otf") format("opentype");
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-}
-
 /* SAS typography system comparison — internal review only */
 .typography-review { min-height: 100vh; background: var(--background); }
 .typography-review-header { max-width: 1480px; margin: auto; padding: 0 28px; }
@@ -418,7 +381,7 @@ body {
 .typography-review-grid { max-width: 1480px; margin: auto; padding: 0 28px 42px; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; align-items: stretch; }
 .typography-option { --specimen-display: "Tajarib Taweel", sans-serif; min-width: 0; background: #fff; border: 1px solid var(--line); display: flex; flex-direction: column; }
 .typography-option--tajarib { --specimen-display: "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
-.typography-option--serif { --specimen-display: "Thmanyah Serif Display", "Thmanyah Sans", sans-serif; }
+.typography-option--serif { --specimen-display: "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .typography-option--sans { --specimen-display: "Thmanyah Sans", Arial, sans-serif; }
 .typography-option-head { padding: 18px 20px 15px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .typography-option-code { color: var(--accent); font: 700 10px Arial,sans-serif; letter-spacing: .12em; direction: ltr; }
@@ -847,7 +810,7 @@ textarea {
   --ab-secondary-font: "Tajarib Taweel", "Thmanyah Sans", sans-serif;
 }
 .ab-system-b {
-  --ab-secondary-font: "Thmanyah Serif Display", "Thmanyah Sans", sans-serif;
+  --ab-secondary-font: "Tajarib Taweel", "Thmanyah Sans", sans-serif;
 }
 .ab-system-header {
   min-height: 88px;
@@ -1141,7 +1104,7 @@ textarea {
 .product-specimens-content { max-width: 1480px; margin: auto; padding: 0 28px 42px; display: grid; gap: 28px; }
 .product-specimen-block { background: #fff; border: 1px solid var(--line); }
 .product-specimen-block-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
-.product-specimen-block-head h2 { margin: 7px 0 0; font: 500 25px/1.5 "Thmanyah Serif Display","Thmanyah Sans",sans-serif; }
+.product-specimen-block-head h2 { margin: 7px 0 0; font: 500 25px/1.5 "Tajarib Taweel","Thmanyah Sans",sans-serif; }
 .product-specimen-block-head > span { color: var(--muted); font: 400 11px/1.8 "Thmanyah Sans",sans-serif; }
 .product-specimen-label { color: #53645a; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; text-align: right; }
 .product-specimen-caption { margin: 0; padding: 13px 22px 16px; border-top: 1px solid var(--line); color: #59675f; font: 400 11px/1.9 "Thmanyah Sans",sans-serif; }
@@ -1158,7 +1121,7 @@ textarea {
 .breaking-news-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--line); color: #59675f; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; }
 .breaking-news-side { align-self: stretch; padding: 18px; background: #f4f6f3; border-right: 2px solid var(--gold); }
 .breaking-side-index { display: block; color: #59675f; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; text-align: right; }
-.breaking-news-side strong { display: block; margin: 20px 0 7px; font: 500 21px/1.5 "Thmanyah Serif Display","Thmanyah Sans",sans-serif; }
+.breaking-news-side strong { display: block; margin: 20px 0 7px; font: 500 21px/1.5 "Tajarib Taweel","Thmanyah Sans",sans-serif; }
 .breaking-news-side p { margin: 0; color: #64736a; font: 400 11px/2 "Thmanyah Sans",sans-serif; }
 .breaking-news-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--line); color: #59675f; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
 
@@ -1166,17 +1129,17 @@ textarea {
 .opinion-layout { display: grid; grid-template-columns: minmax(0,1fr) 250px; gap: 38px; padding: 28px; }
 .opinion-main { min-width: 0; }
 .opinion-header { padding-bottom: 23px; border-bottom: 1px solid var(--line); }
-.opinion-header h3 { max-width: 900px; margin: 12px 0 10px; font: 700 clamp(30px,3.3vw,42px)/1.55 "Thmanyah Serif Display","Thmanyah Sans",serif; letter-spacing: -.02em; }
+.opinion-header h3 { max-width: 900px; margin: 12px 0 10px; font: 700 clamp(30px,3.3vw,42px)/1.55 "Tajarib Taweel", "Thmanyah Sans", sans-serif; letter-spacing: -.02em; }
 .opinion-deck { max-width: 850px; margin: 0; color: #59675f; font: 400 15px/2.15 "Thmanyah Sans",sans-serif; }
 .opinion-byline { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 18px; color: #59675f; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; }
 .opinion-body { max-width: 850px; padding-top: 20px; }
 .opinion-body p { margin: 0 0 17px; color: #34423a; font: 400 15px/2.15 "Thmanyah Sans",sans-serif; }
-.opinion-body h4 { margin: 28px 0 10px; font: 500 25px/1.55 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.opinion-body h4 { margin: 28px 0 10px; font: 500 25px/1.55 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .opinion-body h5 { margin: 24px 0 9px; font: 500 21px/1.55 "Tajarib Taweel","Thmanyah Sans",sans-serif; }
 .opinion-body blockquote { margin: 24px 0; padding: 17px 20px; border-right: 2px solid var(--gold); background: #f4f6f3; color: #34423a; font: 400 14px/2.1 "Thmanyah Sans",sans-serif; }
 .opinion-aside { display: grid; align-content: start; gap: 12px; }
 .opinion-aside-card { padding: 17px; background: #f8faf8; border: 1px solid var(--line); }
-.opinion-aside-card h4 { margin: 12px 0; font: 500 19px/1.5 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.opinion-aside-card h4 { margin: 12px 0; font: 500 19px/1.5 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .opinion-aside-card dl { margin: 0; }
 .opinion-aside-card dl div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); font: 400 12px/1.7 "Thmanyah Sans",sans-serif; }
 .opinion-aside-card dt { color: #59675f; }
@@ -1188,7 +1151,7 @@ textarea {
 .research-cover-sheet { min-height: 660px; padding: 30px 34px 20px; display: flex; flex-direction: column; background: #fff; border: 1px solid #e1e7e1; box-shadow: 0 12px 35px #1c30200a; }
 .research-cover-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .research-cover-top .brand-logo-full { width: 175px; max-height: 94px; }
-.research-cover-top > span { color: var(--accent); font: 500 12px/1.7 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.research-cover-top > span { color: var(--accent); font: 500 12px/1.7 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .research-cover-rule { height: 3px; margin-top: 22px; background: var(--accent); }
 .research-cover-content { padding: 96px 4px 54px; }
 .research-cover-kicker { color: var(--accent); font: 700 11px/1.7 "Thmanyah Sans",sans-serif; }
@@ -1197,10 +1160,10 @@ textarea {
 .research-cover-bottom { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px 22px; margin-top: auto; padding: 22px 0; border-top: 1px solid var(--line); }
 .research-cover-bottom div { display: grid; gap: 5px; }
 .research-cover-bottom span { color: #59675f; font: 400 12px/1.5 "Thmanyah Sans",sans-serif; }
-.research-cover-bottom strong { color: #334239; font: 500 12px/1.7 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.research-cover-bottom strong { color: #334239; font: 500 12px/1.7 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .research-cover-footer { display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--line); color: #59675f; font: 400 11px/1.7 "Thmanyah Sans",sans-serif; letter-spacing: 0; direction: rtl; }
 .research-cover-notes { padding: 20px; background: #fff; border: 1px solid var(--line); }
-.research-cover-notes h4 { margin: 13px 0; font: 500 21px/1.5 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.research-cover-notes h4 { margin: 13px 0; font: 500 21px/1.5 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .research-cover-notes ul { list-style: none; padding: 0; margin: 0; }
 .research-cover-notes li { display: grid; gap: 5px; padding: 13px 0; border-top: 1px solid var(--line); }
 .research-cover-notes li strong { font: 500 13px/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif; }
@@ -1274,7 +1237,7 @@ textarea {
 .home-news-flash { min-height: 58px; display: flex; align-items: center; gap: 22px; margin-bottom: 40px; padding: 13px 18px; border: 1px solid var(--line); background: #fff; }
 .home-news-flash-label { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 8px; color: #9d3932; font: 700 11px/1.6 "Thmanyah Sans",sans-serif; }
 .home-news-flash-label i { width: 7px; height: 7px; border-radius: 50%; background: #b8473d; }
-.home-news-flash > a { min-width: 0; flex: 1; overflow: hidden; color: var(--foreground); font: 500 15px/1.8 "Thmanyah Serif Display","Thmanyah Sans",serif; text-overflow: ellipsis; white-space: nowrap; }
+.home-news-flash > a { min-width: 0; flex: 1; overflow: hidden; color: var(--foreground); font: 500 15px/1.8 "Tajarib Taweel", "Thmanyah Sans", sans-serif; text-overflow: ellipsis; white-space: nowrap; }
 .home-news-flash-date { color: #89958d; font: 10px/1.5 Arial,sans-serif; direction: ltr; }
 .home-section { padding-top: 30px; padding-bottom: 64px; }
 .home-analysis-section, .home-media-section { background: #eef1ed; }
@@ -1295,7 +1258,7 @@ textarea {
 .content-image img { object-fit: cover; transition: transform .35s ease; }
 .content-card:hover .content-image img { transform: scale(1.025); }
 .content-image-placeholder { display: grid; place-items: center; aspect-ratio: 16/9; background: #f1f4f0; color: #9aa89e; }
-.content-image-placeholder span { font: 500 30px/1 "Thmanyah Serif Display",serif; }
+.content-image-placeholder span { font: 500 30px/1 "Tajarib Taweel",serif; }
 .content-card-copy { display: flex; flex-direction: column; align-items: flex-start; padding: 18px 19px 20px; }
 .content-meta { display: flex; flex-wrap: wrap; gap: 6px 13px; color: #7d8a81; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
 .content-meta span:first-child { color: var(--accent); font-weight: 700; }
@@ -1313,7 +1276,7 @@ textarea {
 .content-card--compact .content-card-copy h3 { margin: 5px 0 0; font-size: 16px; line-height: 1.65; }
 .content-card--compact .content-card-copy > p, .content-card--compact .content-card-more { display: none; }
 .public-empty-state { display: grid; place-items: center; min-height: 180px; padding: 28px; border: 1px solid var(--line); background: #fff; color: #7b8980; text-align: center; }
-.public-empty-state > span { color: #b1bdb4; font: 500 27px/1 "Thmanyah Serif Display",serif; }
+.public-empty-state > span { color: #b1bdb4; font: 500 27px/1 "Tajarib Taweel",serif; }
 .public-empty-state p { max-width: 520px; margin: 10px 0 0; font: 400 12px/2 "Thmanyah Sans",sans-serif; }
 
 .section-landing-intro { display: flex; align-items: end; justify-content: space-between; gap: 30px; padding-top: 58px; padding-bottom: 32px; }
@@ -1345,7 +1308,7 @@ textarea {
 .article-byline { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 22px; padding-top: 15px; border-top: 1px solid var(--line); color: #89958d; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
 .article-data-card { align-self: stretch; display: flex; flex-direction: column; justify-content: center; padding: 19px; border-right: 2px solid var(--gold); background: #f4f6f3; }
 .article-data-card > span { color: #7c8981; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
-.article-data-card strong { margin-top: 13px; color: var(--foreground); font: 500 20px/1.6 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.article-data-card strong { margin-top: 13px; color: var(--foreground); font: 500 20px/1.6 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .article-data-card p, .article-data-card time { margin: 6px 0 0; color: #68766e; font: 400 10px/1.8 "Thmanyah Sans",sans-serif; }
 .article-cover-image { position: relative; width: 100%; min-height: 300px; aspect-ratio: 16/7; margin: 22px 0 0; background: #edf0ec; }
 .article-cover-image img { object-fit: cover; }
@@ -1362,11 +1325,11 @@ textarea {
 .article-sidebar { display: grid; gap: 13px; }
 .article-sidebar-card { padding: 18px; border: 1px solid var(--line); background: #fbfcfa; }
 .article-sidebar-card > span { color: var(--accent); font: 700 10px/1.7 "Thmanyah Sans",sans-serif; }
-.article-sidebar-card strong { display: block; margin: 10px 0; color: var(--foreground); font: 500 18px/1.6 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.article-sidebar-card strong { display: block; margin: 10px 0; color: var(--foreground); font: 500 18px/1.6 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .article-sidebar-card p { margin: 0; color: #68766e; font: 400 11px/2 "Thmanyah Sans",sans-serif; }
 .article-back-link { display: block; padding: 13px 16px; border: 1px solid var(--line); background: #fff; color: var(--accent); font: 500 11px/1.7 "Thmanyah Sans",sans-serif; }
 .article-sources { margin-top: 38px; padding-top: 22px; border-top: 1px solid var(--line); }
-.article-sources h2 { margin: 0 0 15px; font: 500 22px/1.6 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.article-sources h2 { margin: 0 0 15px; font: 500 22px/1.6 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .article-sources ol { display: grid; gap: 12px; margin: 0; padding-right: 22px; color: #68766e; font: 400 12px/1.9 "Thmanyah Sans",sans-serif; }
 .article-sources a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 .article-sources small { display: block; color: #89958d; }
@@ -1375,14 +1338,14 @@ textarea {
 .research-public-cover { padding: 38px 42px 32px; border: 1px solid var(--line); border-top: 3px solid var(--accent); background: #fff; }
 .research-public-brand { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .research-public-brand .brand-logo-full { width: 155px; max-height: 82px; }
-.research-public-label { color: var(--accent); font: 500 12px/1.7 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.research-public-label { color: var(--accent); font: 500 12px/1.7 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .research-public-rule { height: 2px; margin-top: 17px; background: var(--accent); }
 .research-public-cover > .article-kicker { display: block; margin-top: 54px; }
 .research-public-cover h1 { max-width: 920px; margin: 15px 0 16px; color: var(--foreground); font: var(--weight-editorial-headline) clamp(36px,4.5vw,58px)/1.5 var(--font-brand-headline); letter-spacing: -.025em; }
 .research-public-meta { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1px; margin-top: 35px; border: 1px solid var(--line); background: var(--line); }
 .research-public-meta > div { display: grid; gap: 5px; padding: 13px 15px; background: #fff; }
 .research-public-meta span { color: #89958d; font: 400 10px/1.7 "Thmanyah Sans",sans-serif; }
-.research-public-meta strong { color: #34423a; font: 500 12px/1.8 "Thmanyah Serif Display","Thmanyah Sans",serif; }
+.research-public-meta strong { color: #34423a; font: 500 12px/1.8 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
 .article-content-layout--research { grid-template-columns: minmax(0,1fr) 245px; }
 
 .site-footer { margin-top: 0; border-top: 1px solid var(--line); background: #fff; }
@@ -1471,12 +1434,12 @@ textarea {
   --font-body: "Thmanyah Sans", Arial, sans-serif;
   --font-interface: "Thmanyah Sans", Arial, sans-serif;
   --font-brand-headline: "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
-  --font-editorial-title: "Thmanyah Serif Display", "Thmanyah Sans", serif;
-  --font-editorial-heading: "Thmanyah Serif Display", "Thmanyah Sans", serif;
+  --font-editorial-title: "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+  --font-editorial-heading: "Tajarib Taweel", "Thmanyah Sans", sans-serif;
   --font-editorial-secondary: "Tajarib Taweel", "Thmanyah Sans", Arial, sans-serif;
   --weight-editorial-headline: 900;
   --weight-editorial-title: 700;
-  --weight-editorial-heading: 500;
+  --weight-editorial-heading: 700;
   --weight-editorial-secondary: 500;
 }
 
@@ -1583,7 +1546,7 @@ textarea {
   border-bottom: 1px solid #d4ddd5; padding-bottom: 11px;
 }
 .editorial-rail-heading h2 {
-  font: 700 clamp(19px, 2vw, 25px)/1.6 "Thmanyah Serif Display", "Thmanyah Sans", serif;
+  font: 700 clamp(19px, 2vw, 25px)/1.6 "Tajarib Taweel", "Thmanyah Sans", sans-serif;
   color: var(--foreground); margin: 0;
 }
 .editorial-rail-controls { display: flex; gap: 7px; direction: ltr; }
@@ -1621,7 +1584,7 @@ textarea {
   position: relative; display: grid; place-items: center;
   width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
   background: #e9efea; color: #8e9c93;
-  font: 700 28px/1 "Thmanyah Serif Display",serif;
+  font: 700 28px/1 "Tajarib Taweel",serif;
 }
 .editorial-tile-image img { object-fit: cover; transition: transform .25s ease; }
 .editorial-tile:hover .editorial-tile-image img { transform: scale(1.025); }
