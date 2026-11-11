@@ -16,6 +16,7 @@ export default async function Home() {
   const research = published.filter((item) => item.section === "research").slice(0, 4);
   const media = published.filter((item) => item.section === "media").slice(0, 4);
   const lead = analysis.find((item) => item.is_featured) || analysis[0] || news[0] || research[0] || media[0] || null;
+  const secondaryNews = news.filter((item) => item.id !== lead?.id).slice(0, 4);
 
   return (
     <main className="public-site">
@@ -49,9 +50,9 @@ export default async function Home() {
 
       <section className="home-section site-container">
         <SectionHeading eyebrow="متابعة يومية" title="الأخبار والشؤون الجارية" href="/news" />
-        {news.length ? (
+        {secondaryNews.length ? (
           <div className="home-news-grid">
-            {news.slice(0, 4).map((item, index) => <ContentCard item={item} variant={index === 0 ? "feature" : "standard"} key={item.id} />)}
+            {secondaryNews.map((item, index) => <ContentCard item={item} variant={index === 0 ? "feature" : "standard"} key={item.id} />)}
           </div>
         ) : <EmptyContent />}
       </section>
