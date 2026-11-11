@@ -265,7 +265,7 @@ export function bodyToBlocks(value: Json | null): BodyBlock[] {
 
 export function formatPublishedDate(value: string | null) {
   if (!value) return "";
-  return new Date(value).toLocaleDateString("en-GB", {
+  return new Date(value).toLocaleDateString("ar-YE-u-nu-latn", {
     day: "2-digit",
     month: "long",
     year: "numeric",
