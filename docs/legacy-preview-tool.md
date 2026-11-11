@@ -36,3 +36,15 @@ The legacy site exposes indexed articles at `/post/{id}`, but current WordPress 
 2. Prepare complete and verified articles in a local private JSON export.
 3. Preview and review: blocked rows, duplicates, Arabic text structure, author/source labels, dates, and image licenses.
 4. Then design an idempotent importer with explicit credentials and user approval. Do not import data from this preliminary preview as-is.
+
+## Windows acceptance evidence — 2026-11-11
+
+Operator-tested on `C:\SAS-PLATFORM-DEV` after checking out `dev/legacy-draft-preview-v1`, tracking `origin/feat/legacy-draft-preview-v1`:
+
+- `node --test tests/legacy-preview.test.mjs`: **5 passed / 0 failed**.
+- `npm run typecheck`: **passed**.
+- `npm run build`: **passed**, including all seven static prerendered routes; public content routes remained dynamic.
+- Two locally modified generated/dependency files were observed: `next-env.d.ts` and `package-lock.json`; do not overwrite these without reviewing them.
+- These checks validate code and build only. **No end-to-end legacy extraction, import or publish has occurred.**
+
+The implementation may proceed to an authenticated export of complete source articles and a dry-run preview, with database writes still blocked pending review.
