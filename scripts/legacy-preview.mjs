@@ -5,6 +5,7 @@
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const formats = {
   news: new Set(['news_brief','news_report','official_statement']),
@@ -94,6 +95,6 @@ async function main() {
   await writeFile(resolve(process.argv[3]),JSON.stringify(output,null,2)+'\n',{flag:'wx'});
   console.log('Preview only: '+output.counts.ready+' drafts ready, '+output.counts.blocked+' blocked. No database writes.');
 }
-if (process.argv[1] && import.meta.url === new URL('file://' + resolve(process.argv[1])).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   main().catch(error=>{console.error(error.message);process.exitCode=1;});
 }
