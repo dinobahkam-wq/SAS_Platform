@@ -56,3 +56,9 @@
 - أثبت المستخدم نجاح **5/5 اختبارات** لأداة `legacy-preview`، وكذلك TypeScript والبناء الإنتاجي.
 - ضمن [PR #11](https://github.com/dinobahkam-wq/SAS_Platform/pull/11) أُضيفت أداة تشخيص عامة `scripts/legacy-origin-probe.mjs` ودليلها، للتحقق من مضيف WordPress و`/wp-json` و`/post/5816` دون بيانات اعتماد أو كتابة.
 - اختبار أداة التشخيص على Windows مطلوب، ولم يُنفذ استيراد فعلي أو تغيير على قاعدة البيانات.
+
+### 2026-11-11 — Legacy REST discovery: live probe and private inventory tool
+
+- أثبت المستخدم أن نقاط `wp-json` و`wp/v2/posts` تُرجع JSON HTTP 200 على كلا النطاقين، رغم فشل موصل WordPress سابقًا.
+- أُضيف إلى [PR #11](https://github.com/dinobahkam-wq/SAS_Platform/pull/11) `scripts/legacy-rest-inventory.mjs` و4 اختبارات ووثيقة إعداد؛ يُخرج JSON محليًا خارج المستودع ويقارن IDs المدوّنة من الموقع العام.
+- **الحالة:** الكود على GitHub؛ تشغيل الجرد الحي ونتائجه غير متحققين بعد. لا ترحيل إلى Supabase.
