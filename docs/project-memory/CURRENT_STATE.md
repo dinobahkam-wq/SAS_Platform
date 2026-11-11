@@ -118,3 +118,10 @@
 - جُهز ملف خاص خارج GitHub يضم 20 معاينة مسودة و94 فقرة نصية دون صور، مع `status=draft` و`published_at=null`. **لا كتابة إلى Supabase بعد**.
 - جميع تواريخ `published_local` و`published_gmt` في الملف متطابقة؛ لا تفترض صحة المنطقة الزمنية. وفّق بيانات المصدر الرسمي قبل نشر مواد الأخبار العسكرية والسياسية القديمة.
 - [تقرير المراجعة والتحويل](PACKAGE_02_38_ITEMS_REVIEW.md).
+
+## 11 نوفمبر 2026 — تسليم SQL خاص للمسودات وخطة ربط الصور
+
+- أُنشئ ملف SQL خاص بالمستخدم `sas_import_20_drafts.sql` خارج مستودع GitHub؛ يجهّز إدخال 20 مادة إلى `content_items` بحالة `draft` دون صور مع حفظ روابط وأرقام WordPress في `content_sources` و`content_source_links`. **لم يُنفّذ SQL بعد؛ لا تُعلن أن المواد موجودة في Supabase**.
+- أُنشئ كشف خاص `sas_image_linking_manifest.csv` يطابق 20 عنوانًا مع مسار صورة `legacy/<wordpress-id>.webp` على سبيل معيار التسمية؛ لا تغيّر امتدادات الملفات المصورة دون تحويل فعلي.
+- يمكن للمستخدم رفع الصور عبر `/admin/media` (يكتب Storage + `media_assets` معًا) أو مباشرة إلى حاوية `sas-public-media` في لوحة Supabase (تستلزم بعدها تسجيل `media_assets` منفصلًا).
+- دليل التشغيل: [PACKAGE_02_IMPORT_RUNBOOK.md](PACKAGE_02_IMPORT_RUNBOOK.md).
