@@ -54,7 +54,31 @@ export function EditorialRail({
   const scrollRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [selected, setSelected] = useState<PublicContentItem | null>(null);
+  const [scrollState, setScrollState] = useState({ previous: false, next: items.length > 1 });
   const dialogTitle = useId();
+
+  useEffect(() => {
+    const track = scrollRef.current;
+    if (!track) return;
+
+    const update = () => {
+      const max = Math.max(0, track.scrollWidth - track.clientWidth);
+      // RTL scrollLeft is negative in current Chromium/Firefox implementations.
+      const progress = Math.max(0, Math.min(max, Math.abs(track.scrollLeft)));
+      const nextState = { previous: progress > 3, next: progress < max - 3 };
+      setScrollState((current) =>
+        current.previous === nextState.previous && current.next === nextState.next
+          ? current : nextState
+      );
+    };
+    update();
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      track.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [items.length]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -65,11 +89,16 @@ export function EditorialRail({
 
   if (!items.length) return null;
 
-  function scroll(direction: number) {
+  function scroll(direction: "previous" | "next") {
     const container = scrollRef.current;
     if (!container) return;
-    const amount = Math.max(260, Math.round(container.clientWidth * 0.74));
-    container.scrollBy({ left: direction * amount, behavior: "smooth" });
+    const card = container.querySelector<HTMLElement>(".editorial-tile");
+    const amount = card ? card.getBoundingClientRect().width + 14 : Math.max(230, container.clientWidth * 0.6);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    container.scrollBy({
+      left: direction === "next" ? -amount : amount,
+      behavior: reduced ? "instant" : "smooth",
+    });
   }
 
   const sources = selected ? (sourcesById[selected.id] ?? []) : [];
@@ -78,12 +107,15 @@ export function EditorialRail({
     <section className="editorial-rail" aria-label={title}>
       <div className="editorial-rail-heading">
         <h2>{title}</h2>
-        <div className="editorial-rail-controls" aria-label={"التنقل في " + title}>
-          <button type="button" onClick={() => scroll(1)} aria-label="تمرير إلى اليمين">→</button>
-          <button type="button" onClick={() => scroll(-1)} aria-label="تمرير إلى اليسار">←</button>
+        <div className="editorial-rail-actions">
+          <span className="editorial-rail-count">{items.length.toLocaleString("en-US")} {items.length === 1 ? "مادة" : "مواد"}</span>
+          <div className="editorial-rail-controls" aria-label={"التنقل في " + title}>
+            <button type="button" onClick={() => scroll("previous")} disabled={!scrollState.previous} aria-label="العودة إلى المواد السابقة">→</button>
+            <button type="button" onClick={() => scroll("next")} disabled={!scrollState.next} aria-label="عرض المواد التالية">←</button>
+          </div>
         </div>
       </div>
-      <div className="editorial-rail-track" ref={scrollRef} tabIndex={0} aria-label={"مواد " + title}>
+      <div className="editorial-rail-track" ref={scrollRef} tabIndex={0} role="region" aria-label={"قائمة قابلة للتمرير: " + title}>
         {items.map((item) => (
           <article className="editorial-tile" key={item.id}>
             <button className="editorial-tile-button" type="button" onClick={() => setSelected(item)}
@@ -99,7 +131,10 @@ export function EditorialRail({
                 </div>
                 <h3>{item.title}</h3>
                 {item.excerpt ? <p>{item.excerpt}</p> : null}
-                <span className="editorial-tile-source">{sourcesById[item.id]?.[0]?.source_name ?? "منصة ساس"}</span>
+                <span className="editorial-tile-source">
+                  {sourcesById[item.id]?.[0]?.source_name?.includes("أرشيف") ? "أرشيف ساس" : (sourcesById[item.id]?.[0]?.source_name ?? "منصة ساس")}
+                  <span aria-hidden="true"> · </span>قراءة المادة
+                </span>
               </div>
             </button>
           </article>
