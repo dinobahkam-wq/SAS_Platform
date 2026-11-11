@@ -1,5 +1,12 @@
 # SAS Platform
 
+## Project memory / الذاكرة التنفيذية
+
+**ابدأ من هنا في كل جلسة تطوير جديدة:** [الذاكرة التنفيذية الرسمية](docs/project-memory/README.md) و[إرشادات الوكلاء](AGENTS.md).
+
+هذا المستودع هو المصدر المعتمد للكود. تُراجع قرارات المشروع والحالة المثبتة في `docs/project-memory/`؛ وتُتحقق حالة الفروع وطلبات الدمج من GitHub مباشرة. الفروع غير المدمجة لا تُعد جزءًا من `main` تلقائيًا.
+
+
 SAS Platform is the digital information and research platform for structured political knowledge, events, issues, sources, documents, maps, and editorial products.
 
 ## Planned application stack
@@ -31,4 +38,4 @@ See [Development Workflow](docs/development-workflow.md) for the operational rul
 
 ## Repository status
 
-This repository is being initialized. The application schema is not yet defined; do not create application tables until the data model and access policies have been reviewed.
+**Historical main-branch status:** this branch does not yet contain the stacked CMS and public editorial feature PRs. The editorial schema was designed and applied in the active SAS_Platform Supabase project on the development branch, with migrations documented there. For the current implementation state and verification gaps, read `docs/project-memory/CURRENT_STATE.md` and inspect open PRs. Do not mistake this main-branch snapshot for the current feature implementation.
