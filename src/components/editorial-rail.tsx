@@ -97,7 +97,7 @@ export function EditorialRail({
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     container.scrollBy({
       left: direction === "next" ? -amount : amount,
-      behavior: reduced ? "instant" : "smooth",
+      behavior: reduced ? "auto" : "smooth",
     });
   }
 
