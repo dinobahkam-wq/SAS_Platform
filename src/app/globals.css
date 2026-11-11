@@ -1546,3 +1546,170 @@ textarea {
     transform: none;
   }
 }
+
+
+/* SAS horizontal political editorial system — genuine article cards. */
+.home-compact-intro {
+  padding-top: clamp(36px, 5vw, 70px);
+  padding-bottom: 34px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.home-compact-intro h1 {
+  margin: 12px 0 8px;
+  font: 900 clamp(30px, 4vw, 54px)/1.55 "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+}
+.home-compact-intro h1 em {
+  color: var(--accent);
+  font-style: normal;
+}
+.home-compact-intro p {
+  margin: 0;
+  max-width: 740px;
+  font: 400 13px/2 "Thmanyah Sans", sans-serif;
+  color: #5f6e64;
+}
+.home-compact-actions { display: flex; gap: 9px; flex: 0 0 auto; }
+.home-compact-actions .button { white-space: nowrap; }
+.home-section .editorial-rail + .editorial-rail { margin-top: 36px; }
+
+.editorial-rail { min-width: 0; margin-block: 22px 10px; }
+.editorial-rail-heading {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 14px; margin-bottom: 16px;
+  border-bottom: 1px solid #d4ddd5; padding-bottom: 11px;
+}
+.editorial-rail-heading h2 {
+  font: 700 clamp(19px, 2vw, 25px)/1.6 "Thmanyah Serif Display", "Thmanyah Sans", serif;
+  color: var(--foreground); margin: 0;
+}
+.editorial-rail-controls { display: flex; gap: 7px; direction: ltr; }
+.editorial-rail-controls button {
+  display: grid; place-items: center; width: 35px; height: 35px;
+  border: 1px solid #cad6ce; background: #fff; color: var(--accent);
+  border-radius: 50%; font: 600 18px/1 Arial,sans-serif;
+}
+.editorial-rail-controls button:hover { background: var(--accent-soft); }
+.editorial-rail-controls button:focus-visible,
+.editorial-tile-button:focus-visible,
+.editorial-detail button:focus-visible,
+.editorial-detail a:focus-visible {
+  outline: 3px solid #60a587; outline-offset: 3px;
+}
+.editorial-rail-track {
+  display: flex; direction: rtl;
+  gap: 15px; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: 2px;
+  scrollbar-width: thin; padding: 1px 1px 13px;
+}
+.editorial-tile {
+  flex: 0 0 clamp(250px, 27%, 315px);
+  scroll-snap-align: start; min-width: 0;
+  border: 1px solid var(--line); background: white;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.editorial-tile:hover { border-color: #a7bcae; transform: translateY(-2px); }
+.editorial-tile-button {
+  all: unset; box-sizing: border-box; display: flex;
+  width: 100%; height: 100%; flex-direction: column;
+  cursor: pointer; text-align: right; color: inherit;
+}
+.editorial-tile-image {
+  position: relative; display: grid; place-items: center;
+  width: 100%; aspect-ratio: 16 / 9; overflow: hidden;
+  background: #e9efea; color: #8e9c93;
+  font: 700 28px/1 "Thmanyah Serif Display",serif;
+}
+.editorial-tile-image img { object-fit: cover; transition: transform .25s ease; }
+.editorial-tile:hover .editorial-tile-image img { transform: scale(1.025); }
+.editorial-tile-copy { display: flex; flex-direction: column; flex: 1; padding: 15px 16px 16px; min-height: 225px; }
+.editorial-tile-meta { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 5px; font: 500 10px/1.6 "Thmanyah Sans",sans-serif; color: #75857b; }
+.editorial-tile-meta span { color: var(--accent); font-weight: 700; }
+.editorial-tile-copy h3 {
+  margin: 11px 0 8px; color: var(--foreground);
+  font: 900 19px/1.65 "Tajarib Taweel", "Thmanyah Sans",sans-serif;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+  line-clamp: 3; overflow: hidden;
+}
+.editorial-tile-copy > p {
+  margin: 0; color: #6e7c73; font: 400 12px/1.95 "Thmanyah Sans",sans-serif;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  line-clamp: 2; overflow: hidden;
+}
+.editorial-tile-source {
+  margin-top: auto; padding-top: 15px;
+  color: #557061; font: 500 11px/1.5 "Thmanyah Sans",sans-serif;
+}
+.editorial-detail {
+  padding: 0; border: 0; border-radius: 12px;
+  width: min(900px, calc(100vw - 28px)); max-height: min(90dvh, 1100px);
+  overflow: auto; background: white; color: var(--foreground); direction: rtl;
+  box-shadow: 0 24px 70px #0e241e3b;
+}
+.editorial-detail::backdrop { background: #071711b8; backdrop-filter: blur(3px); }
+.editorial-detail-inner { min-width: 0; }
+.editorial-detail-topbar {
+  padding: 12px 24px; background: white; display: flex;
+  justify-content: space-between; align-items: center; gap: 16px;
+  position: sticky; top: 0; z-index: 5; border-bottom: 1px solid var(--line);
+  font: 600 12px/1.6 "Thmanyah Sans",sans-serif; color: var(--accent);
+}
+.editorial-detail-close {
+  border: 1px solid #d7e0d9; background: white; width: 36px; height: 36px;
+  border-radius: 50%; color: #23392e; font: 26px/1 Arial, sans-serif; cursor: pointer;
+}
+.editorial-detail-image {
+  width: 100%; aspect-ratio: 16 / 9; background: #e9efea;
+  position: relative; overflow: hidden;
+}
+.editorial-detail-image img { object-fit: contain; }
+.editorial-detail-content { padding: clamp(20px, 4vw, 42px); max-width: 850px; margin: auto; }
+.editorial-detail-content > h2 {
+  font: 900 clamp(26px, 3.2vw, 39px)/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+  margin: 0 0 14px;
+}
+.editorial-detail-date { color: #6b796e; font: 500 12px/1.8 "Thmanyah Sans",sans-serif; }
+.editorial-detail-excerpt {
+  color: #445b4b; border-right: 3px solid var(--accent);
+  padding-right: 17px; font: 500 15px/2 "Thmanyah Sans",sans-serif;
+}
+.editorial-detail-body { padding: 14px 0; font: 400 16px/2.1 "Thmanyah Sans",sans-serif; }
+.editorial-detail-body p { margin: 0 0 22px; }
+.editorial-detail-body h3, .editorial-detail-body h4 { margin: 22px 0 12px; }
+.editorial-detail-body blockquote { margin: 16px 0; padding-right: 22px; border-right: 2px solid var(--accent); }
+.editorial-detail-sources {
+  margin-top: 16px; padding: 16px 18px; background: #f2f5f1;
+  border: 1px solid var(--line);
+  font: 400 13px/2 "Thmanyah Sans",sans-serif;
+}
+.editorial-detail-sources h3 { margin: 0 0 7px; font-size: 14px; font-weight: 700; }
+.editorial-detail-sources p { margin: 0; }
+.editorial-detail-sources a { text-decoration: underline; color: var(--accent); text-underline-offset: 4px; }
+.editorial-detail-permalink {
+  display: inline-flex; margin-top: 25px; padding: 12px 18px;
+  border: 1px solid var(--accent); color: var(--accent); border-radius: 6px;
+  font: 600 12px/1.6 "Thmanyah Sans",sans-serif;
+}
+.section-landing-content > .editorial-rail + .editorial-rail { margin-top: 38px; }
+@media (max-width: 850px) {
+  .home-compact-intro { flex-direction: column; align-items: flex-start; padding-top: 32px; }
+  .home-compact-actions { flex-wrap: wrap; }
+  .editorial-tile { flex-basis: min(78vw, 310px); }
+  .editorial-detail-content { padding: 22px; }
+}
+@media (max-width: 460px) {
+  .editorial-tile { flex-basis: 83vw; }
+  .editorial-rail-heading h2 { font-size: 19px; }
+  .editorial-rail-controls button { width: 32px; height: 32px; }
+  .editorial-tile-copy { min-height: 205px; }
+  .home-compact-intro h1 { font-size: 30px; }
+  .editorial-detail-body { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .editorial-tile, .editorial-tile-image img { transition: none; }
+  .editorial-tile:hover, .editorial-tile:hover .editorial-tile-image img { transform: none; }
+  .editorial-rail-track { scroll-behavior: auto; }
+}
