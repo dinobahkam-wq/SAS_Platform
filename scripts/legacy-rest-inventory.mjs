@@ -10,7 +10,9 @@ import { pathToFileURL } from 'node:url';
 export const HOST = 'https://www.sas-media.net';
 export const AFTER = '2026-09-11T00:00:00';
 export const BEFORE = '2026-11-12T00:00:00';
-const MAX_PAGES = 20;
+const MAX_PAGES = 25;
+const PER_PAGE = 20;
+const REQUEST_TIMEOUT_MS = 45000;
 
 export function isExpectedPost(post) {
   return Boolean(post && Number.isSafeInteger(post.id) &&
@@ -55,7 +57,7 @@ export function summarize(records, totalReported) {
 async function fetchPage(page, signal) {
   const url = new URL('/wp-json/wp/v2/posts',HOST);
   for (const [key,value] of Object.entries({
-    status:'publish',after:AFTER,before:BEFORE,per_page:'100',page:String(page),orderby:'date',order:'desc',
+    status:'publish',after:AFTER,before:BEFORE,per_page:String(PER_PAGE),page:String(page),orderby:'date',order:'desc',
     _fields:'id,date,date_gmt,modified_gmt,link,slug,status,title,excerpt,content,author,categories,tags,featured_media'
   })) url.searchParams.set(key,value);
   const response=await fetch(url,{signal,headers:{Accept:'application/json'}});
@@ -72,17 +74,20 @@ export async function collectInventory(fetcher=fetchPage) {
   let totalReported=null, pageCount=null;
   for(let page=1;page<=MAX_PAGES;page++){
     const controller=new AbortController();
-    const timer=setTimeout(()=>controller.abort(),15000);
+    const timer=setTimeout(()=>controller.abort(),REQUEST_TIMEOUT_MS);
     let result;
     try {result=await fetcher(page,controller.signal);}
-    finally {clearTimeout(timer);}
+    catch(error) {
+      if (error?.name === 'AbortError') throw new Error('WordPress REST request timed out after '+REQUEST_TIMEOUT_MS+'ms on page '+page+'. Retry with a smaller date window or check the canonical host.');
+      throw error;
+    } finally {clearTimeout(timer);}
     if(page===1){totalReported=result.total;pageCount=result.pages;}
     for(const raw of result.data){
       const item=mapPost(raw);
       if(seen.has(item.legacy_id)) throw new Error('Duplicate WP ID: '+item.legacy_id);
       seen.add(item.legacy_id);records.push(item);
     }
-    if(result.data.length===0 || (pageCount!==null && page>=pageCount) || result.data.length<100) break;
+    if(result.data.length===0 || (pageCount!==null && page>=pageCount) || result.data.length<PER_PAGE) break;
   }
   return {generated_at:new Date().toISOString(),source:HOST,window:{after:AFTER,before:BEFORE},
     read_only:true,editorial_approval_required:true,
