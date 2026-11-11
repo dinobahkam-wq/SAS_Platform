@@ -82,3 +82,10 @@
 - **PR #11 (Draft):** `feat/legacy-draft-preview-v1` فوق `fix/public-editorial-stability-v1`، أداة `scripts/legacy-preview.mjs` لتحويل JSON **مُراجع** إلى معاينة مسودات محلية من دون Network أو Supabase writes؛ اختبارات `tests/legacy-preview.test.mjs` ودليل `docs/legacy-preview-tool.md`.
 - **الحالة:** مطبق على GitHub؛ التحقق المحلي على رأس الفرع ما زال مطلوبًا. لم تُسترجع نصوص المقالات القديمة كاملة من CMS؛ لذا لم تنشأ مسودات فعلية، ولم يحدث ترحيل.
 - **التبعية:** PR #11 تابع لمسار الكود PR #7، بينما وثائق الجرد في PR #10 التابع لدراسة PR #9؛ لا تخلط بين سلسلة PRs الوثائق وسلسلة كود الواجهة.
+
+## 11 نوفمبر 2026 — اعتماد الاختبار المحلي لأداة الترحيل
+
+- **أُثبت محليًا على Windows من مخرجات المستخدم:** `node --test tests/legacy-preview.test.mjs` نجح في 5/5، و`npm run typecheck` نجح، و`npm run build` نجح على `dev/legacy-draft-preview-v1` بعد مزامنة `origin/feat/legacy-draft-preview-v1`.
+- ظهر تعديل محلي في `next-env.d.ts` و`package-lock.json`، ويجب الحفاظ عليهما ومراجعتهما، دون `reset`.
+- **إجراء GitHub التالي على PR #11:** أُضيف `scripts/legacy-origin-probe.mjs` لقياس استجابة 12 مسارًا عامًا على `sas-media.net` و`www.sas-media.net` من جهاز المشغّل، دون استخدام حسابات أو جلب متن المقالات. هذا التعديل الأحدث يحتاج مزامنة وفحصًا محليًا مستقلًا.
+- لا توجد بيانات محتوى مستوردة إلى Supabase حتى الآن. 
