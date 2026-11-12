@@ -129,3 +129,8 @@
 
 
 - [PR #32 — Package 1: Data Model & Security (Draft)](https://github.com/dinobahkam-wq/SAS_Platform/pull/32).
+
+
+### Package 1 production migration
+
+- [Migration `20261112211738_daily_briefing_package1`](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/supabase/migrations/20261112211738_daily_briefing_package1.sql).
