@@ -291,3 +291,6 @@
 - No test records inserted; no production content created.
 - Advisor notes: two intentional public SECURITY DEFINER read RPC warnings; one existing Auth leaked-password-protection warning; 13 unindexed FK INFO findings and unused indexes expected for empty new tables.
 - Package remains in open Draft PR #32; no merge or Vercel deployment.
+
+
+- Regenerated `src/types/database.types.ts` from the live Supabase schema after Package 1 migration, including all briefing tables and RPC signatures.
