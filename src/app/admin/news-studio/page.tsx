@@ -666,7 +666,7 @@ export default function Studio(){
 
  <fieldset className="studio-options studio-import">
   <legend>استيراد مادة من ملف</legend>
-  <p className="studio-note">ارفع ملف خبر بصيغة JSON أو Markdown أو TXT. سيملأ الاستوديو حقول العنوان والموجز والمصدر والتاريخ والتصنيف، ثم يعيد رسم المعاينة تلقائيًا باستخدام محرك التصميم الحالي. الصور تضاف من حقل الصورة الرئيسية.</p>
+  <p className="studio-note">ارفع ملف خبر بصيغة JSON أو Markdown أو TXT. سيملأ الاستوديو حقول العنوان والموجز والمصدر والتاريخ والتصنيف، ثم يعيد رسم المعاينة تلقائيًا باستخدام محرك التصميم الحالي. تتم قراءة الملف محليًا داخل المتصفح ولا يُرفع إلى الخادم؛ الصور تضاف من حقل الصورة الرئيسية.</p>
   <label>ملف المادة الإخبارية<input type="file" accept=".json,.md,.markdown,.txt,application/json,text/markdown,text/plain" onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';void importNewsFile(file)}}/></label>
   <div className="studio-layout-templates">
    <button type="button" onClick={()=>downloadNewsTemplate('json')}><strong>تنزيل نموذج JSON</strong><small>بنية منظمة قابلة للتوسعة</small></button>
