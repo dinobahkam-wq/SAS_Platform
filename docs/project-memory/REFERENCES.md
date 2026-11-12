@@ -117,3 +117,12 @@
 - [فرع Package 1](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
 - [PR #32 — Package 1 Data Model & Security Design](https://github.com/dinobahkam-wq/SAS_Platform/pull/32) — Draft، مكدس فوق PR #31.
 - [فرع Package 1](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
+
+
+### Package 1 — Data Model & Security
+
+- [فرع نموذج البيانات والأمان](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
+- [تصميم البيانات والأمان](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/docs/daily-briefing-data-model-security-v1.md).
+- [مسودة SQL للمراجعة](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/docs/sql/daily_briefing_package1.draft.sql).
+- [استعلامات التحقق](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/docs/sql/daily_briefing_package1_verification.sql).
+- الحالة: لم تُطبق Migration محليًا أو بعيدًا حتى إكمال المراجعة والاختبارات.
