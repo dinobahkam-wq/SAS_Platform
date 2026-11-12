@@ -77,6 +77,13 @@ where table_schema='public' and table_name='content_sources'
   and column_name in ('source_title','published_at','language_code','publication_date')
 order by column_name;
 
+-- G2. Public source visibility is opt-in and defaults to false.
+select column_name,data_type,column_default
+from information_schema.columns
+where table_schema='public'
+  and table_name='briefing_development_sources'
+  and column_name='display_publicly';
+
 -- H. No test/sample briefing records should exist after schema-only migration.
 select 'briefing_editions' as table_name,count(*) as row_count from public.briefing_editions
 union all select 'briefing_revisions',count(*) from public.briefing_revisions
@@ -107,3 +114,10 @@ union all select 'briefing_edition_events',count(*) from public.briefing_edition
 --     future grant is accidentally added; audit history is append-only.
 -- 14. current_revision_id cannot be cleared after publication; it can only
 --     move to another published revision through the publish RPC.
+-- 15. A source link defaults to display_publicly=false; private source links
+--     never appear in the published_snapshot, even when the development is
+--     selected in the edition. Only active, explicitly public sources appear.
+-- 16. Publishing must fail if a selected development has no active public
+--     source with a source_url or source_reference.
+-- 17. Existing grants on content_items/content_sources/content_source_links/
+--     user_roles are unchanged by this feature migration.
