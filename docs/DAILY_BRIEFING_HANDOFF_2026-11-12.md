@@ -232,3 +232,13 @@ git fetch origin
   انسخ محتوى ملف `docs/sql/daily_briefing_package1.draft.sql` إلى Migration التي أنشأها CLI، ثم شغّل `supabase start` و`supabase db reset` محليًا. لا تستخدم `--remote` أو `supabase db push`.
 - بعد نجاح التطبيق المحلي، نفّذ `docs/sql/daily_briefing_package1_verification.sql` واختبارات السلوك اليدوية، ثم `npm run typecheck` و`npm run build` إذا أُضيف كود واجهة.
 - **ملاحظة تقنية:** المسودة لا تزال بحاجة إلى اختبار parser فعلي. لا تعتبرها Migration مكتملة ولا تطبقها على Supabase البعيد قبل المراجعة والموافقة الصريحة.
+
+
+### PR #32 — آخر نقطة تحقق
+
+- [PR #32 — Daily Briefing Package 1: Data Model & Security](https://github.com/dinobahkam-wq/SAS_Platform/pull/32): مفتوح Draft وغير مدمج.
+- Base: `feat/daily-briefing-experience-v1` (PR #31)، وHead: `feat/daily-briefing-data-model-security-v1`.
+- GitHub أفاد `mergeable=true`؛ لا يعني ذلك أن SQL اختُبر أو أن PR جاهز للدمج.
+- فحص Vercel فشل بسبب `build-rate-limit`، لا بسبب خطأ بناء مثبت. لا يوجد نجاح Build مثبت.
+- المسودة تشمل 7 جداول و23 سياسة RLS و18 Trigger و18 دالة؛ فحص lexical ناجح فقط.
+- **الخطوة الفعلية التالية:** سحب الفرع على جهاز Windows وتشغيل Migration محليًا بواسطة Supabase CLI. إذا ظهر خطأ parser أو RLS، أصلح المسودة على الفرع ثم أعد الاختبار. لا تنفذ أي Migration بعيدة أو Merge.
