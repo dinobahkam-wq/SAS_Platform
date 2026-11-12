@@ -2152,3 +2152,42 @@ textarea {
   .editorial-rail-controls button { transition: none !important; }
   .editorial-tile:hover { transform: none !important; }
 }
+
+/* SAS Editorial Studio v2 — structured block authoring */
+.sas-editor { border: 1px solid var(--line); border-radius: 12px; background: #fbfcfa; overflow: hidden; }
+.sas-editor-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; background: #f3f7f3; border-bottom: 1px solid var(--line); }
+.sas-editor-toolbar > div:first-child { display: flex; align-items: baseline; gap: 10px; }
+.sas-editor-toolbar strong { color: var(--accent); font-size: 12px; }
+.sas-editor-toolbar span { color: var(--muted); font-size: 10px; }
+.sas-editor-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.sas-editor-tools button, .sas-editor-block-head button, .sas-editor-add-item { border: 1px solid #dce5dc; background: white; color: #355b47; border-radius: 7px; padding: 6px 9px; font: 500 10px/1.5 "Thmanyah Sans", sans-serif; cursor: pointer; }
+.sas-editor-tools button:hover, .sas-editor-block-head button:hover:not(:disabled), .sas-editor-add-item:hover { border-color: #8eae98; background: #f5faf5; }
+.sas-editor-blocks { display: grid; gap: 10px; padding: 14px; }
+.sas-editor-block { min-width: 0; border: 1px solid #e5eae4; border-radius: 9px; background: white; overflow: hidden; }
+.sas-editor-block-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 11px; background: #fafbf9; border-bottom: 1px solid #edf0eb; }
+.sas-editor-block-head > span { color: #78877c; font: 500 10px/1.5 "Thmanyah Sans", sans-serif; }
+.sas-editor-block-head > div { display: flex; gap: 5px; }
+.sas-editor-block-head button { padding: 4px 8px; min-width: 28px; }
+.sas-editor-block-head button:disabled { opacity: .35; cursor: not-allowed; }
+.sas-editor-input { display: block; width: 100%; resize: vertical; border: 0; outline: 0; box-shadow: none; border-radius: 0; padding: 13px 15px; color: #293b30; font: 400 13px/2 "Thmanyah Sans", sans-serif; background: white; }
+.sas-editor-input:focus { outline: 2px solid #9ebba4; outline-offset: -2px; }
+.sas-editor-input--heading { min-height: 65px; font: 700 20px/1.7 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
+.sas-editor-input--subheading { min-height: 58px; font: 700 16px/1.7 "Tajarib Taweel", "Thmanyah Sans", sans-serif; }
+.sas-editor-input--quote { border-right: 3px solid #28614b; background: #f7faf7; font-size: 13px; }
+.sas-editor-list { padding: 12px 14px; display: grid; gap: 8px; }
+.sas-editor-list > div { display: flex; align-items: center; gap: 8px; }
+.sas-editor-list > div > span { color: var(--accent); }
+.sas-editor-list input { flex: 1; min-width: 0; border: 1px solid #e6ebe5; border-radius: 7px; padding: 9px 11px; font: 400 12px/1.6 "Thmanyah Sans", sans-serif; }
+.sas-editor-list > div > button { width: 28px; height: 28px; border: 0; border-radius: 6px; color: #8c5b54; background: #fbf3f1; }
+.sas-editor-add-item { justify-self: start; margin-top: 3px; }
+.sas-editor-preview { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--line); background: #f8faf7; }
+.sas-editor-preview strong { flex: 0 0 auto; color: var(--accent); font-size: 10px; }
+.sas-editor-preview p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.8; }
+@media (max-width: 720px) {
+  .sas-editor-toolbar { align-items: flex-start; flex-direction: column; }
+  .sas-editor-tools { width: 100%; }
+  .sas-editor-tools button { flex: 1 1 auto; }
+  .sas-editor-blocks { padding: 9px; }
+  .sas-editor-preview { display: block; }
+  .sas-editor-preview p { margin-top: 5px; }
+}
