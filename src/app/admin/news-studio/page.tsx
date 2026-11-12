@@ -18,6 +18,101 @@ type StudioPreset={name:string;mode:Mode;format:Format;customWidth?:number;custo
 type NewsGeometry={rows:HeadlineRow[];photo:PhotoRect|null;summaryLines:string[];summaryY:number;summaryRight:number;summaryFont:number;summaryLineHeight:number;source:string;sourceY:number|null;sourceRight:number;locationText:string;locationY:number|null;creditBelowY:number|null};
 type Page={lines:string[];news?:NewsGeometry};
 type KnowledgePath={dossier:string;issue:string;event:string};
+
+type NewsImportDesign={
+ format?:Format;skin?:Skin;photoPosition?:PhotoPosition;photoFit?:PhotoFit;
+ headlineFont?:FontChoice;summaryFont?:FontChoice;metaFont?:FontChoice;logoVariant?:LogoVariant;
+ showWeekday?:boolean;showLocation?:boolean;showSource?:boolean;
+};
+type NewsImportPayload={
+ headline:string;summary:string;sourceName:string;sourceUrl:string;date:string;
+ location:string;category:string;design?:NewsImportDesign;
+};
+type NewsImportField='headline'|'summary'|'sourceName'|'sourceUrl'|'date'|'location'|'category';
+const newsImportLabels:Record<string,NewsImportField>={
+ 'العنوان':'headline','عنوان الخبر':'headline','headline':'headline','title':'headline',
+ 'الموجز':'summary','الملخص':'summary','تفاصيل مختصرة':'summary','summary':'summary','description':'summary',
+ 'المصدر':'sourceName','اسم المصدر':'sourceName','source':'sourceName','source name':'sourceName','sourcename':'sourceName',
+ 'رابط المصدر':'sourceUrl','source url':'sourceUrl','source_url':'sourceUrl','sourceurl':'sourceUrl',
+ 'التاريخ':'date','تاريخ النشر':'date','date':'date','published at':'date','published_at':'date',
+ 'الموقع':'location','المنطقة':'location','المحافظة':'location','location':'location',
+ 'التصنيف':'category','الفئة':'category','category':'category'
+};
+function parseNewsMarkdown(text:string):Record<string,unknown>{
+ const result:Record<string,unknown>={};let current:NewsImportField|null=null;
+ const getKey=(value:string)=>newsImportLabels[value.replace(/[*_`]/g,'').replace(/[:：]$/,'').trim().toLowerCase()];
+ for(const rawLine of text.replace(/\r/g,'').split('\n')){
+  const line=rawLine.trim();if(!line){if(current&&result[current])result[current]=String(result[current])+'\n';continue}
+  const heading=line.match(/^#{1,4}\s*(.+?)\s*#*$/);
+  if(heading){const key=getKey(heading[1]);if(key){current=key;result[key]=result[key]??'';continue}}
+  const pair=line.match(/^(?:[-*]\s*)?([^:：]{1,50})\s*[:：]\s*(.*)$/);
+  if(pair){const key=getKey(pair[1]);if(key){current=key;result[key]=pair[2].trim();continue}}
+  if(current)result[current]=result[current]?String(result[current])+'\n'+rawLine:rawLine.trim();
+ }
+ for(const key of Object.keys(result))if(typeof result[key]==='string')result[key]=(result[key] as string).trim();
+ return result;
+}
+function parseNewsImport(text:string,fileName:string):NewsImportPayload{
+ const extension=fileName.split('.').pop()?.toLowerCase();
+ let parsed:unknown;
+ if(extension==='json'){
+  try{parsed=JSON.parse(text)}catch{throw new Error('ملف JSON غير صالح؛ تحقق من علامات الاقتباس والفواصل')}
+ }else if(extension==='md'||extension==='markdown'||extension==='txt'){
+  parsed=parseNewsMarkdown(text);
+ }else throw new Error('صيغة الملف غير مدعومة؛ استخدم JSON أو Markdown أو TXT');
+ if(!parsed||typeof parsed!=='object'||Array.isArray(parsed))throw new Error('يجب أن يحتوي الملف على كائن بيانات خبر');
+ let record=parsed as Record<string,unknown>;
+ if(record.article&&typeof record.article==='object'&&!Array.isArray(record.article))record=record.article as Record<string,unknown>;
+ if(record.type!==undefined&&record.type!=='news')throw new Error('نوع الملف غير متوافق؛ المطلوب type: news');
+ if(record.schemaVersion!==undefined&&record.schemaVersion!==1)throw new Error('إصدار بنية الملف غير مدعوم؛ استخدم schemaVersion: 1');
+ const textValue=(...values:unknown[])=>{for(const value of values)if(typeof value==='string')return value.trim();return ''};
+ const headline=textValue(record.headline,record.title);
+ if(!headline)throw new Error('حقل العنوان إلزامي');
+ if(headline.length>900)throw new Error('العنوان يتجاوز الحد المسموح (900 حرف)');
+ const summary=textValue(record.summary,record.abstract);
+ if(summary.length>260)throw new Error('الموجز يتجاوز الحد الحالي في الاستوديو (260 حرفًا)؛ اختصره في الملف');
+ const source=record.source;
+ const sourceObject=source&&typeof source==='object'&&!Array.isArray(source)?source as Record<string,unknown>:{};
+ const sourceName=textValue(record.sourceName,record.source_name,typeof source==='string'?source:undefined,sourceObject.name);
+ const sourceUrl=textValue(record.sourceUrl,record.source_url,sourceObject.url);
+ if(sourceName.length>120)throw new Error('اسم المصدر يتجاوز 120 حرفًا');
+ if(sourceUrl){
+  try{const url=new URL(sourceUrl);if(!['http:','https:'].includes(url.protocol))throw new Error()}
+  catch{throw new Error('رابط المصدر غير صالح؛ استخدم رابطًا يبدأ بـ https:// أو http://')}
+ }
+ const rawDate=textValue(record.date,record.publishedAt,record.published_at);
+ const normalizedDate=rawDate.replace(/-/g,'/');
+ const match=/^(\d{4})\/(\d{2})\/(\d{2})$/.exec(normalizedDate);
+ if(!match)throw new Error('التاريخ إلزامي وبالصيغة YYYY-MM-DD أو YYYY/MM/DD');
+ const year=Number(match[1]),month=Number(match[2]),day=Number(match[3]),check=new Date(Date.UTC(year,month-1,day));
+ if(check.getUTCFullYear()!==year||check.getUTCMonth()!==month-1||check.getUTCDate()!==day)throw new Error('تاريخ الخبر غير صحيح');
+ const location=textValue(record.location,record.region);
+ const category=textValue(record.category,record.classification);
+ if(location.length>120)throw new Error('الموقع يتجاوز 120 حرفًا');
+ if(category.length>120)throw new Error('التصنيف يتجاوز 120 حرفًا');
+ let design:NewsImportDesign|undefined;
+ if(record.design!==undefined){
+  if(!record.design||typeof record.design!=='object'||Array.isArray(record.design))throw new Error('قسم design يجب أن يكون كائن إعدادات');
+  const raw=record.design as Record<string,unknown>;design={};
+  const enumField=<T extends string>(key:string,values:readonly T[]):T|undefined=>{
+   const value=raw[key];if(value===undefined||value===null||value==='')return undefined;
+   if(typeof value!=='string'||!values.includes(value as T))throw new Error('قيمة إعداد التصميم غير معروفة: '+key);
+   return value as T;
+  };
+  const boolField=(key:string)=>{const value=raw[key];if(value===undefined)return undefined;if(typeof value!=='boolean')throw new Error('يجب أن تكون قيمة '+key+' صحيحة أو خاطئة');return value};
+  design.format=enumField('format',['square','portrait','landscape','wide','story','custom'] as const);
+  design.skin=enumField('skin',['forest','ink','ivory','navy','olive','stone','rose','charcoal','midnight','burgundy','cobalt','teal','sand','white','slate','plum','emerald','terracotta','custom'] as const);
+  design.photoPosition=enumField('photoPosition',['left','right','top','background'] as const);
+  design.photoFit=enumField('photoFit',['cover','contain'] as const);
+  design.headlineFont=enumField('headlineFont',['tajarib','sans'] as const);
+  design.summaryFont=enumField('summaryFont',['tajarib','sans'] as const);
+  design.metaFont=enumField('metaFont',['tajarib','sans'] as const);
+  design.logoVariant=enumField('logoVariant',['color','dark','light'] as const);
+  design.showWeekday=boolField('showWeekday');design.showLocation=boolField('showLocation');design.showSource=boolField('showSource');
+ }
+ return {headline,summary,sourceName,sourceUrl,date:normalizedDate,location,category,design};
+}
+
 const sizes:Record<Format,{w:number;h:number;label:string}>={square:{w:1080,h:1080,label:'مربع 1080 × 1080'},portrait:{w:1080,h:1350,label:'عمودي 1080 × 1350'},landscape:{w:1200,h:675,label:'أفقي 1200 × 675'},wide:{w:1600,h:900,label:'عريض 1600 × 900'},story:{w:1080,h:1920,label:'ستوري 1080 × 1920'},custom:{w:1080,h:1350,label:'مقاس مخصص'}};
 const skins:Record<Skin,{bg:string,fg:string,accent:string,dim:string}>={forest:{bg:'#092d28',fg:'#fffefa',accent:'#d6ee91',dim:'#d3e3dc'},ink:{bg:'#182730',fg:'#ffffff',accent:'#e8b5a8',dim:'#cbd4d8'},ivory:{bg:'#faf9f3',fg:'#183833',accent:'#396a53',dim:'#526860'},navy:{bg:'#142a42',fg:'#fffdf6',accent:'#b7d3ee',dim:'#cdd9e3'},olive:{bg:'#333d27',fg:'#fffefa',accent:'#d8dd9b',dim:'#e2e4d0'},stone:{bg:'#eeeae1',fg:'#29322c',accent:'#758778',dim:'#505d52'},rose:{bg:'#f6e9e4',fg:'#412e33',accent:'#a85b6d',dim:'#775c63'},charcoal:{bg:'#202326',fg:'#f7f7f2',accent:'#f2c879',dim:'#c4c8c6'},midnight:{bg:'#101b2d',fg:'#f5f7fb',accent:'#79b8d8',dim:'#c0ccd8'},burgundy:{bg:'#421f2b',fg:'#fff8f4',accent:'#e8a6a6',dim:'#dfc9ca'},cobalt:{bg:'#183b78',fg:'#ffffff',accent:'#f6d365',dim:'#d5e1f6'},teal:{bg:'#073f43',fg:'#f4ffff',accent:'#82d8c6',dim:'#c2e5df'},sand:{bg:'#e9dfcb',fg:'#342d25',accent:'#9c6b3f',dim:'#6e6253'},white:{bg:'#ffffff',fg:'#1e2c2a',accent:'#2f765e',dim:'#65736e'},slate:{bg:'#dce2e6',fg:'#26323a',accent:'#587b91',dim:'#53616a'},plum:{bg:'#34213f',fg:'#fff9ff',accent:'#d8b4ec',dim:'#d6c9dc'},emerald:{bg:'#064b3b',fg:'#f5fff9',accent:'#a7efc1',dim:'#c5e6d3'},terracotta:{bg:'#a94f38',fg:'#fff9f1',accent:'#f7d7a8',dim:'#f0d9c8'},custom:{bg:'#092d28',fg:'#fffefa',accent:'#d6ee91',dim:'#d3e3dc'}};
 const modes:Record<Mode,string>={news:'خبر',urgent:'عاجل',statement:'بيان رسمي',quote:'تصريح / اقتباس'};
@@ -440,6 +535,7 @@ export default function Studio(){
  const [presets,setPresets]=useState<StudioPreset[]>([]);
  const [presetError,setPresetError]=useState('');
  const [mediaError,setMediaError]=useState('');
+ const [importFeedback,setImportFeedback]=useState<{kind:'success'|'error';message:string}|null>(null);
  const [issuer,setIssuer]=useState('');
  const [issuerLogo,setIssuerLogo]=useState<HTMLImageElement|null>(null);
  const [issuerLogoError,setIssuerLogoError]=useState('');
@@ -507,6 +603,44 @@ export default function Studio(){
   }catch{setIssuerLogoError('تعذر قراءة الصورة المختارة')}
   finally{URL.revokeObjectURL(url)}
  }
+
+ async function importNewsFile(file:File|undefined){
+  if(!file)return;
+  if(file.size>1024*1024){setImportFeedback({kind:'error',message:'حجم ملف المادة يتجاوز 1MB'});return}
+  try{
+   const imported=parseNewsImport(await file.text(),file.name),design=imported.design;
+   setMode('news');setFormat(design?.format??'portrait');setSkin(design?.skin??'forest');
+   setTitle(imported.headline);setSummary(imported.summary);setSourceName(imported.sourceName);setSourceUrl(imported.sourceUrl);setDate(imported.date);
+   setLocation(imported.location);setShowLocation(design?.showLocation??Boolean(imported.location));
+   setPath({dossier:'',issue:'',event:imported.category});setShowPath(Boolean(imported.category));
+   setShowSource(design?.showSource??Boolean(imported.sourceName||imported.sourceUrl));
+   setShowWeekday(design?.showWeekday??false);
+   setTextSize(78);setTitleSize(60);setSummarySize(32);setSideMargin(76);setMarginLeft(0);setMarginRight(0);setLineSpacing(1.45);
+   setHeadlineFont(design?.headlineFont??'tajarib');setSummaryFont(design?.summaryFont??'sans');setMetaFont(design?.metaFont??'sans');setLogoVariant(design?.logoVariant??'color');
+   setPhotoPosition(design?.photoPosition??'left');setPhotoFit(design?.photoFit??'cover');setPhotoScale(100);setPhotoFrameWidth(100);setPhotoFrameHeight(100);setPhotoZoom(100);setPhotoPanX(0);setPhotoPanY(0);
+   setNewsImage(null);setImageCredit('');setShowImageCredit(false);setMediaError('');
+   setPage(0);setError('');
+   setImportFeedback({kind:'success',message:'تم استيراد «'+file.name+'» وتحديث معاينة الخبر تلقائيًا. أضف صورة الخبر من قسم الصورة الرئيسية إذا لزم.'});
+  }catch(error){
+   setImportFeedback({kind:'error',message:error instanceof Error?error.message:'تعذر قراءة ملف المادة'});
+  }
+ }
+ function downloadNewsTemplate(format:'json'|'md'){
+  const json={
+   schemaVersion:1,type:'news',
+   headline:'عنوان الخبر هنا',
+   summary:'اكتب موجزًا خبريًا واضحًا ومختصرًا لا يتجاوز 260 حرفًا.',
+   source:{name:'اسم المصدر',url:'https://example.com/news'},
+   date:'2026-11-12',
+   location:'المحافظة – المديرية',
+   category:'سياسي وأمني',
+   design:{format:'portrait',skin:'forest',photoPosition:'top',photoFit:'cover',headlineFont:'tajarib',summaryFont:'sans',metaFont:'sans',logoVariant:'color',showWeekday:false}
+  };
+  const markdown='# بطاقة خبر ساس\n\nالعنوان: عنوان الخبر هنا\n\nالموجز:\nاكتب موجزًا خبريًا واضحًا ومختصرًا لا يتجاوز 260 حرفًا.\n\nالمصدر: اسم المصدر\nرابط المصدر: https://example.com/news\nالتاريخ: 2026-11-12\nالموقع: المحافظة – المديرية\nالتصنيف: سياسي وأمني\n';
+  const content=format==='json'?JSON.stringify(json,null,2):markdown;
+  const blob=new Blob([content],{type:format==='json'?'application/json;charset=utf-8':'text/markdown;charset=utf-8'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=format==='json'?'sas-news-import-template.json':'sas-news-import-template.md';a.click();URL.revokeObjectURL(url);
+ }
  async function exportPages(){
   if(exporting||!canvas.current)return;
   setExporting(true);
@@ -529,6 +663,18 @@ export default function Studio(){
  <header className="knowledge-hero"><span className="eyebrow">استوديو ساس · V3-C.3</span><h1>استوديو المنتجات البصرية</h1><p>معاينة وتصدير محلي دون نشر آلي أو تعديل تلقائي للبيان.</p></header>
  <div className="studio-layout"><section className="admin-panel studio-fields">
  <h2>إعداد المادة</h2>
+
+ <fieldset className="studio-options studio-import">
+  <legend>استيراد مادة من ملف</legend>
+  <p className="studio-note">ارفع ملف خبر بصيغة JSON أو Markdown أو TXT. سيملأ الاستوديو حقول العنوان والموجز والمصدر والتاريخ والتصنيف، ثم يعيد رسم المعاينة تلقائيًا باستخدام محرك التصميم الحالي. الصور تضاف من حقل الصورة الرئيسية.</p>
+  <label>ملف المادة الإخبارية<input type="file" accept=".json,.md,.markdown,.txt,application/json,text/markdown,text/plain" onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';void importNewsFile(file)}}/></label>
+  <div className="studio-template-actions">
+   <button type="button" onClick={()=>downloadNewsTemplate('json')}>تنزيل نموذج JSON</button>
+   <button type="button" onClick={()=>downloadNewsTemplate('md')}>تنزيل نموذج Markdown</button>
+  </div>
+  {importFeedback&&<p role={importFeedback.kind==='error'?'alert':'status'} className={importFeedback.kind==='error'?'admin-feedback':'studio-note'}>{importFeedback.message}</p>}
+ </fieldset>
+
  <label>نوع التصميم<select value={mode} onChange={e=>{const next=e.target.value as Mode;setMode(next);setTextSize(next==='statement'?43:78);setSideMargin(next==='statement'?120:76);setLineSpacing(next==='statement'?1.65:1.45);setPage(0)}}>{(Object.keys(modes) as Mode[]).map(k=><option key={k} value={k}>{modes[k]}</option>)}</select></label>
  <fieldset className="studio-options"><legend>مقاس مساحة التصميم</legend>
  <div className="studio-size-grid">{([{value:'portrait',label:'منشور رأسي',dims:'1080 × 1350',ratio:'4 / 5'},{value:'square',label:'مربع',dims:'1080 × 1080',ratio:'1 / 1'},{value:'landscape',label:'أفقي',dims:'1200 × 675',ratio:'16 / 9'},{value:'wide',label:'عريض',dims:'1600 × 900',ratio:'16 / 9'},{value:'story',label:'قصة / ريلز',dims:'1080 × 1920',ratio:'9 / 16'},{value:'custom',label:'مخصص',dims:'عرض وارتفاع',ratio:'1 / 1'}] as const).map(item=><button type="button" key={item.value} className={format===item.value?'studio-size-card selected':'studio-size-card'} onClick={()=>{setFormat(item.value);setPage(0)}}><span className="studio-size-shape" style={{aspectRatio:item.ratio}}/><strong>{item.label}</strong><small>{item.dims}</small></button>)}</div>
