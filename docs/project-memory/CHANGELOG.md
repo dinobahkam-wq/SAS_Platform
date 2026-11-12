@@ -294,3 +294,14 @@
 
 
 - Regenerated `src/types/database.types.ts` from the live Supabase schema after Package 1 migration, including all briefing tables and RPC signatures.
+
+
+### 2026-11-13 — Public Daily Briefing Experience V1
+
+- Added `/briefings` public archive and `/briefings/[slug]` public reader.
+- Added server-side data access through the existing public read RPCs only; no direct public table reads or write operations.
+- Added a source-first development register, evidence type and verification labels, publication/occurrence times, per-development source cards, source index, methodology disclosure, and a collapsed secondary SAS analysis section.
+- Added Daily Briefing to the public navigation and responsive styles.
+- Verified production database currently has zero editions and zero published revisions; archive RPC returns an empty array. Empty state is intentional; no demo content inserted.
+- User's updated editorial direction prioritizes the development ledger and reduces SAS analysis. Package 1 still enforces a required 400–650 word analysis; a follow-up schema amendment is needed and requires approval before production application.
+- Local typecheck/build not yet run. No merge or deployment.
