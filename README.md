@@ -39,3 +39,9 @@ See [Development Workflow](docs/development-workflow.md) for the operational rul
 ## Repository status
 
 **Historical main-branch status:** this branch does not yet contain the stacked CMS and public editorial feature PRs. The editorial schema was designed and applied in the active SAS_Platform Supabase project on the development branch, with migrations documented there. For the current implementation state and verification gaps, read `docs/project-memory/CURRENT_STATE.md` and inspect open PRs. Do not mistake this main-branch snapshot for the current feature implementation.
+
+
+## آخر تحديث للذاكرة التنفيذية — 12 نوفمبر 2026
+
+- راجع [الحالة التنفيذية الحالية](docs/project-memory/CURRENT_STATE.md) وسلسلة PR #15–#18 قبل أي تطوير.
+- راجع [مواصفات صورة الهوية الثابتة للصفحة الرئيسية](docs/project-memory/HOMEPAGE_HERO_VISUAL_DIRECTION_2026-11-12.md)؛ التنفيذ مؤجل حتى التحقق من ملف الصورة في GitHub.
