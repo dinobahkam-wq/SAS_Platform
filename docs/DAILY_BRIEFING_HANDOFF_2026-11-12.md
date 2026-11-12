@@ -286,3 +286,16 @@ Build the private editorial room against the new schema and RPCs. Test with the 
 
 
 - تم تحديث `src/types/database.types.ts` من مخطط Supabase الإنتاجي بعد تطبيق Package 1. عند سحب الفرع، سيحصل التطبيق على أنواع TypeScript الجديدة لجداول الإحاطة ودوال RPC.
+
+
+---
+
+## 13 نوفمبر 2026 — Package 3: Public reader checkpoint
+
+- User clarified the intended product: no public/editorial content engine UI is needed for the daily workflow. The user and assistant prepare and update the daily content through the conversation; the public product is a read-only briefing and archive.
+- User set the editorial priority: development register first, factual reporting and official positions with source attribution; reduce SAS's own analysis and interpretation.
+- Public routes implemented on `feat/daily-briefing-public-experience-v1`: `/briefings` and `/briefings/[slug]`.
+- The public pages use only the existing read RPCs and do not expose draft tables or write actions.
+- Production currently has no published briefing editions; empty archive response verified.
+- Known schema-policy conflict: Package 1 still requires 400–650 words in `analysis_ar`. The public page makes that section collapsed and secondary, but a follow-up migration should make analysis optional or concise. Do not apply it remotely until the user approves the revised policy.
+- No local typecheck/build, merge, or Vercel deployment has been performed.
