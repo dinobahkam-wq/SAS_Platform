@@ -31,6 +31,10 @@ function readContent(formData: FormData) {
     throw new Error("حالة النشر غير صحيحة.");
   }
 
+  if (section === "news" && statusValue === "published" && sourceIds.length === 0) {
+    throw new Error("يجب ربط مصدر واحد على الأقل قبل نشر الخبر.");
+  }
+
   const slug = slugify(slugInput || title);
   if (!slug) throw new Error("تعذر إنشاء رابط صالح للمحتوى.");
 
@@ -82,9 +86,7 @@ async function linkRelations(
       display_order: index,
     }));
     const { error } = await supabase.from("content_source_links").upsert(rows, {
-      onConflict: "content_id,source_id",
-      ignoreDuplicates: true,
-    });
+      onConflict: "content_id,source_id",});
     if (error) throw new Error("تعذر ربط المصادر بالمحتوى. تحقق من المصادر المحددة.");
   }
 
@@ -168,14 +170,14 @@ export async function updateContent(formData: FormData) {
 
   const { data: current } = await supabase
     .from("content_items")
-    .select("status")
+    .select("status, section")
     .eq("id", id)
     .maybeSingle();
 
   if (!current) redirect("/admin/content?error=not-found");
 
   // Move a published item out of the published state before removing its source links.
-  if (current.status === "published" && values.status !== "published") {
+  if (current.status === "published" && (values.status !== "published" || (current.section === "news" && values.section !== "news"))) {
     const { error: statusError } = await supabase
       .from("content_items")
       .update({ status: "draft", updated_by: userId })
