@@ -43,6 +43,7 @@ function parseInitial(value?: string): EditorBlock[] {
 
 export function StructuredContentEditor({ initialBody }: { initialBody?: string }) {
   const [blocks, setBlocks] = useState<EditorBlock[]>(() => parseInitial(initialBody));
+  const [showPreview, setShowPreview] = useState(false);
   const serialized = useMemo(() => JSON.stringify({
     version: 1,
     blocks: blocks.map((block) => block.type === "list"
@@ -115,9 +116,20 @@ export function StructuredContentEditor({ initialBody }: { initialBody?: string 
         ))}
       </div>
       <div className="sas-editor-preview">
-        <strong>معاينة بنية المادة</strong>
-        <p>تُحفظ العناصر بترتيبها، وتُعرض في الموقع وفق نوع كل عنصر. لن تظهر عناصر فارغة في المادة المنشورة.</p>
+        <div><strong>معاينة المادة</strong><p>عرض تقريبي لترتيب العناوين والفقرات والاقتباسات والقوائم كما ستظهر في صفحة القراءة.</p></div>
+        <button type="button" onClick={() => setShowPreview((value) => !value)}>{showPreview ? "إخفاء المعاينة" : "عرض المعاينة"}</button>
       </div>
+      {showPreview ? (
+        <div className="sas-editor-live-preview" dir="rtl">
+          {blocks.map((block) => {
+            if (block.type === "heading") return <h2 key={block.id}>{block.text || "عنوان رئيسي"}</h2>;
+            if (block.type === "subheading") return <h3 key={block.id}>{block.text || "عنوان فرعي"}</h3>;
+            if (block.type === "quote") return <blockquote key={block.id}>{block.text || "نص الاقتباس"}</blockquote>;
+            if (block.type === "list") return <ul key={block.id}>{(block.items ?? []).filter(Boolean).map((item, index) => <li key={index}>{item}</li>)}</ul>;
+            return <p key={block.id}>{block.text || "ستظهر الفقرة هنا بعد إدخال النص."}</p>;
+          })}
+        </div>
+      ) : null}
     </section>
   );
 }
