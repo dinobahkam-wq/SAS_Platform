@@ -249,3 +249,16 @@
 
 - **PR #32:** [مراجعة Package 1](https://github.com/dinobahkam-wq/SAS_Platform/pull/32) — مفتوح Draft، غير مدمج؛ مكدس فوق PR #31.
 - **حالة الفحص:** GitHub compare: ahead 13 / behind 0 وmergeable=true. Vercel status: failure على رأس PR وقت الفحص؛ لم يُستنتج السبب ولم يُنفذ نشر.
+
+
+### 2026-11-12 — Package 1: Daily Briefing Data Model & Security (Draft)
+
+- **فرع التنفيذ:** `feat/daily-briefing-data-model-security-v1`، متفرع من رأس PR #31 `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef`.
+- **الوثائق:** `docs/daily-briefing-data-model-security-v1.md`.
+- **SQL:** `docs/sql/daily_briefing_package1.draft.sql` — مسودة مراجعة وليست Migration قابلة للتطبيق.
+- **التحقق:** `docs/sql/daily_briefing_package1_verification.sql`.
+- **ما يغطيه التصميم:** 7 جداول جديدة، توسيع مكتبة المصادر بثلاثة حقول، دورة مراجعة واعتماد ونشر، تصحيحات بإصدارات مستقلة، snapshot ثابت، سجل تدقيق، RLS وواجهات قراءة عامة محدودة.
+- **فحص قاعدة البيانات:** استعلامات قراءة فقط على مشروع Supabase لتأكيد أسماء الأعمدة والأدوار والدالة المساعدة والامتيازات. لم تتغير قاعدة البيانات.
+- **الاختبارات:** فحص lexical لنص SQL فقط؛ لا PostgreSQL parser، ولا db reset محلي، ولا RLS behavior tests. لا TypeScript/Build لأن الحزمة لا تغيّر التطبيق.
+- **الحالة:** مرفوعة على فرع مستقل؛ بانتظار المراجعة واختبار Windows المحلي. لم تُدمج ولم تُطبق على Supabase البعيد ولم تُنشر.
+- **الخطوة التالية:** توليد Migration محلية من CLI، تطبيقها على Supabase المحلي، إصلاح أخطاء parser/constraints/RLS، ثم إعادة توثيق النتائج قبل أي قرار تطبيق بعيد.
