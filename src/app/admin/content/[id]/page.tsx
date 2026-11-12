@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { ContentForm } from "@/components/content-form";
 import { updateContent } from "../actions";
 import { requireAdmin } from "@/lib/admin";
-import { bodyToText } from "@/lib/content";
 
 export default async function EditContentPage({
   params,
@@ -28,7 +27,7 @@ export default async function EditContentPage({
   return (
     <>
       <div className="page-heading">
-        <div><span className="eyebrow">غرفة التحرير / تحرير</span><h1>تحرير المادة</h1><p>راجع البيانات والمصادر وحالة النشر قبل الحفظ.</p></div>
+        <div><span className="eyebrow">غرفة التحرير / تحرير</span><h1>تحرير المادة</h1><p>راجع البيانات والمصادر وبنية المادة وحالة النشر قبل الحفظ.</p></div>
         <span className={`pill ${item.status === "published" ? "pill-green" : "pill-gold"}`}>{item.status === "published" ? "منشور" : item.status === "archived" ? "مؤرشف" : "مسودة"}</span>
       </div>
       <ContentForm
@@ -44,7 +43,7 @@ export default async function EditContentPage({
           title: item.title,
           slug: item.slug,
           excerpt: item.excerpt ?? "",
-          body: bodyToText(item.body),
+          body: JSON.stringify(item.body ?? { version: 1, blocks: [] }),
           status: item.status,
           category_id: item.category_id ?? "",
           is_featured: item.is_featured,
