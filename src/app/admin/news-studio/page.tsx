@@ -699,8 +699,10 @@ export default function Studio(){
   if(active.id==='headline')setTitleScale(clamp(active.titleScale*factor,55,180));
   else if(active.id==='summary')setSummarySize(clamp(active.summarySize*factor,18,72));
   else{
-   if(xSign)setPhotoFrameWidth(clamp(active.photoFrameWidth*horizontal,55,150));
-   if(ySign)setPhotoFrameHeight(clamp(active.photoFrameHeight*vertical,55,150));
+   const requestedScale=xSign&&ySign?(horizontal+vertical)/2:xSign?horizontal:vertical;
+   const minScale=Math.max(55/active.photoFrameWidth,55/active.photoFrameHeight),maxScale=Math.min(150/active.photoFrameWidth,150/active.photoFrameHeight);
+   const photoScale=clamp(requestedScale,minScale,maxScale);
+   setPhotoFrameWidth(active.photoFrameWidth*photoScale);setPhotoFrameHeight(active.photoFrameHeight*photoScale);
   }
  }
  function endGesture(){gesture.current=null}
