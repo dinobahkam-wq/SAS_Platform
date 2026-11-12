@@ -2700,3 +2700,108 @@ textarea {
     max-height: 42vh;
   }
 }
+
+/* SAS News Studio: direct manipulation layer for canvas elements */
+.studio-preview {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.studio-canvas-stage {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f3f5f2;
+  touch-action: none;
+  user-select: none;
+}
+.studio-canvas-stage > canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  object-fit: fill;
+}
+.studio-interaction-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  touch-action: none;
+  user-select: none;
+}
+.studio-interaction-target {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 2;
+  pointer-events: all;
+  cursor: move;
+}
+.studio-interaction-target:hover {
+  fill: rgba(65, 133, 93, .055);
+  stroke: rgba(65, 133, 93, .72);
+  stroke-dasharray: 10 8;
+}
+.studio-interaction-target.is-selected {
+  fill: rgba(65, 133, 93, .025);
+  stroke: #367b51;
+  stroke-width: 3;
+  stroke-dasharray: 10 7;
+}
+.studio-resize-handle {
+  fill: #fff;
+  stroke: #286a45;
+  stroke-width: 3;
+  pointer-events: all;
+}
+.studio-resize-handle.handle-nw,
+.studio-resize-handle.handle-se { cursor: nwse-resize; }
+.studio-resize-handle.handle-ne,
+.studio-resize-handle.handle-sw { cursor: nesw-resize; }
+.studio-resize-handle.handle-n,
+.studio-resize-handle.handle-s { cursor: ns-resize; }
+.studio-resize-handle.handle-e,
+.studio-resize-handle.handle-w { cursor: ew-resize; }
+.studio-selection-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 38px;
+  margin-top: 9px;
+  padding: 7px 10px;
+  border: 1px solid #e0e8e1;
+  border-radius: 7px;
+  background: #f8faf8;
+  color: #53675a;
+  font: 500 11px/1.7 var(--font-body);
+}
+.studio-selection-status button {
+  flex: 0 0 auto;
+  min-height: 28px;
+  padding: 4px 9px;
+  border: 1px solid #d6e2d8;
+  border-radius: 6px;
+  background: #fff;
+  color: #315c43;
+  font: 600 10px/1.5 var(--font-body);
+  cursor: pointer;
+}
+@media (max-width: 720px) {
+  .studio-preview {
+    overflow: auto;
+  }
+  .studio-selection-status {
+    font-size: 10px;
+  }
+}
