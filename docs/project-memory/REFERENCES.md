@@ -35,3 +35,39 @@
 ## قاعدة الاستعادة
 
 ابدأ بهذا الدليل، ثم افتح ملفات Github الحالية حسب روابطها، ولا تستنتج وجود الملف على `main` لمجرد وروده هنا. عند اختلاف GitHub الفعلي مع هذه الصفحات، اذكر الاختلاف وحدّث الوثائق في فرع الحزمة.
+
+
+---
+
+## تحديث المراجع — 12 نوفمبر 2026
+
+### أحدث سلسلة واجهة ومحرر
+
+- [PR #15 — بطاقات الأخبار والنافذة المنبثقة ورأس الهاتف](https://github.com/dinobahkam-wq/SAS_Platform/pull/15)
+- [PR #16 — نظام الخطين Tajarib + Thmanyah Sans](https://github.com/dinobahkam-wq/SAS_Platform/pull/16)
+- [PR #17 — غرفة التحرير البنيوية v2](https://github.com/dinobahkam-wq/SAS_Platform/pull/17)
+- [PR #18 — هرم الصفحة الرئيسية التحريري v2](https://github.com/dinobahkam-wq/SAS_Platform/pull/18)
+- [الفرع الحالي للصفحة الرئيسية](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/public-homepage-editorial-v2)
+- [توثيق تنفيذ الصفحة الرئيسية v2 داخل فرع PR #18](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/public-homepage-editorial-v2/docs/project-memory/PUBLIC_HOMEPAGE_EDITORIAL_V2_2026-11-12.md)
+- [توثيق نظام الخطين داخل سلسلة التطوير](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/public-homepage-editorial-v2/docs/project-memory/ARABIC_TWO_FONT_SYSTEM_2026-11-11.md)
+
+### ملفات مهمة في أحدث الواجهة
+
+- `src/app/page.tsx`: تركيب الصفحة الرئيسية واختيار الخبر الرئيسي والمواد المساندة.
+- `src/components/homepage-lead.tsx`: مكون الخبر الرئيسي والمواد المساندة.
+- `src/components/editorial-rail.tsx`: صفوف المواد الأفقية والنافذة التفصيلية.
+- `src/app/globals.css`: قواعد الخطوط والبطاقات والصفوف والنافذة والواجهة المتجاوبة.
+- `src/components/content-form.tsx` و`src/app/admin/content/actions.ts`: محرر المادة وحفظ بنية المتن.
+- `docs/project-memory/HOMEPAGE_HERO_VISUAL_DIRECTION_2026-11-12.md`: مواصفات صورة الهوية الثابتة؛ التنفيذ ما زال معلقًا إلى حين التحقق من مسار الصورة.
+
+### حالة الذاكرة بين الفروع
+
+- ملفات الذاكرة التنفيذية الأساسية موجودة في `main` منذ PR #8، عند الرأس `c7e6a04bc5623457889cbbd9c8563ce05d900370`.
+- سلسلة PR #15–#18 متتابعة فوق فروع ميزات أقدم، ولا تفترض أن كل وثائق `main` انتقلت تلقائيًا إلى فرع PR #18.
+- عند بدء محادثة جديدة، اقرأ ملفات الذاكرة من `main` أو أحدث PR توثيق مدمج، ثم اقرأ وثائق التنفيذ من فرع PR #18، وتحقق من SHA الحالي مباشرة.
+
+
+### تحديث الذاكرة الحالية
+
+- [PR #19 — تحديث الذاكرة التنفيذية ومواصفات صورة الهوية](https://github.com/dinobahkam-wq/SAS_Platform/pull/19)
+- [فرع تحديث الذاكرة](https://github.com/dinobahkam-wq/SAS_Platform/tree/docs/project-memory-refresh-2026-11-12)
