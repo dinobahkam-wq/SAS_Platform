@@ -71,3 +71,30 @@
 
 - [PR #19 — تحديث الذاكرة التنفيذية ومواصفات صورة الهوية](https://github.com/dinobahkam-wq/SAS_Platform/pull/19)
 - [فرع تحديث الذاكرة](https://github.com/dinobahkam-wq/SAS_Platform/tree/docs/project-memory-refresh-2026-11-12)
+
+
+---
+
+## تحديث المراجع — 12 نوفمبر 2026: استوديو الصور والإحاطة اليومية
+
+### استوديو الصور الإخبارية
+
+- [PR #28 — دمج محرك التخطيط ومساحة العمل التفاعلية](https://github.com/dinobahkam-wq/SAS_Platform/pull/28) — مدمج في فرع التكامل.
+- [Commit دمج PR #28](https://github.com/dinobahkam-wq/SAS_Platform/commit/20f57b10df1c3712d572de832b94bde71f7c4235).
+- [PR #29 — مزامنة أصل الشعار من main إلى التكامل](https://github.com/dinobahkam-wq/SAS_Platform/pull/29) — مدمج.
+- [توثيق قبول الاستوديو](../news-studio-completion-2026-11-12.md).
+
+### الإحاطة اليومية V1
+
+- [مواصفات المنتج وخطة النقل](../daily-briefing-v1.md).
+- [الفرع النشط](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-v1).
+- [النموذج القديم في مستودع SAS](https://github.com/dinobahkam-wq/SAS/tree/feature/daily-briefing-v1) — مرجع فقط، وليس مصدرًا للكود أو المخطط الجديد.
+- [الصفحة العامة القديمة](https://github.com/dinobahkam-wq/SAS/blob/feature/daily-briefing-v1/app/briefings/page.tsx).
+- [محرر الإحاطة القديم](https://github.com/dinobahkam-wq/SAS/blob/feature/daily-briefing-v1/app/admin/briefings/page.tsx).
+- [SQL القراءة العامة القديم](https://github.com/dinobahkam-wq/SAS/blob/feature/daily-briefing-v1/docs/database/sas_public_briefing_latest_v1.sql).
+
+### نقطة التنفيذ الحالية
+
+- لا يوجد في فرع تكامل SAS_Platform مسارا `/briefings` أو `/admin/briefings` حتى تاريخ هذا التحديث.
+- لا توجد Migrations خاصة بالإحاطة في `supabase/migrations/`.
+- يجب تدقيق مخطط `public.content_items` و`public.content_sources` وعلاقاتها قبل تقرير نموذج البيانات.
