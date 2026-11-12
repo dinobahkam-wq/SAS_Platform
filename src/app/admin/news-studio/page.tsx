@@ -12,7 +12,7 @@ type SourcePlacement='before-summary'|'after-summary';
 type PhotoCreditPlacement='inside'|'below';
 type HeadlineRow={text:string;left:number;right:number;y:number};
 type PhotoRect={x:number;y:number;w:number;h:number};
-type StudioPreset={name:string;mode:Mode;format:Format;skin:Skin;customBg?:string;customFg?:string;customAccent?:string;customDim?:string;photoPosition:PhotoPosition;photoFit:PhotoFit;imageShape:PhotoShape;photoScale:number;imageRadius:number;imageBorder:number;photoOpacity:number;titleScale:number;textSize:number;lineSpacing:number;summaryLineSpacing:number;detailSpacing:number;headlineInset:number;headlineDX:number;headlineDY:number;summarySize:number;summaryInset:number;summaryDX:number;summaryDY:number;imageInset:number;imageDX:number;imageDY:number;sourcePlacement:SourcePlacement;sourceDX:number;sourceDY:number;wrapHeadline:boolean;showWeekday:boolean;showPath:boolean;sideMargin:number;topPadding:number;bottomPadding:number};
+type StudioPreset={name:string;mode:Mode;format:Format;customWidth?:number;customHeight?:number;titleSize?:number;bodyWeight?:300|400;textWeight?:Weight;align?:Align;underline?:boolean;vertical?:'top'|'center'|'bottom';skin:Skin;customBg?:string;customFg?:string;customAccent?:string;customDim?:string;photoPosition:PhotoPosition;photoFit:PhotoFit;imageShape:PhotoShape;photoScale:number;imageRadius:number;imageBorder:number;photoOpacity:number;titleScale:number;textSize:number;lineSpacing:number;summaryLineSpacing:number;detailSpacing:number;headlineInset:number;headlineDX:number;headlineDY:number;summarySize:number;summaryInset:number;summaryDX:number;summaryDY:number;imageInset:number;imageDX:number;imageDY:number;sourcePlacement:SourcePlacement;sourceDX:number;sourceDY:number;wrapHeadline:boolean;showWeekday:boolean;showPath:boolean;sideMargin:number;topPadding:number;bottomPadding:number};
 type NewsGeometry={rows:HeadlineRow[];photo:PhotoRect|null;summaryLines:string[];summaryY:number;summaryRight:number;summaryFont:number;summaryLineHeight:number;source:string;sourceY:number|null;sourceRight:number;locationText:string;locationY:number|null;creditBelowY:number|null};
 type Page={lines:string[];news?:NewsGeometry};
 type KnowledgePath={dossier:string;issue:string;event:string};
@@ -443,10 +443,10 @@ export default function Studio(){
   }catch{setPresetError('تعذر قراءة قوالبك المحفوظة؛ لم تُحذف')}
  },[]);
  function snapshot(name:string):StudioPreset{
-  return {name,mode,format,skin,customBg,customFg,customAccent,customDim,photoPosition,photoFit,imageShape,photoScale,imageRadius,imageBorder,photoOpacity,titleScale,textSize,lineSpacing,summaryLineSpacing,detailSpacing,headlineInset,headlineDX,headlineDY,summarySize,summaryInset,summaryDX,summaryDY,imageInset,imageDX,imageDY,sourcePlacement,sourceDX,sourceDY,wrapHeadline,showWeekday,showPath,sideMargin,topPadding,bottomPadding};
+  return {name,mode,format,customWidth,customHeight,titleSize,bodyWeight,textWeight,align,underline,vertical,skin,customBg,customFg,customAccent,customDim,photoPosition,photoFit,imageShape,photoScale,imageRadius,imageBorder,photoOpacity,titleScale,textSize,lineSpacing,summaryLineSpacing,detailSpacing,headlineInset,headlineDX,headlineDY,summarySize,summaryInset,summaryDX,summaryDY,imageInset,imageDX,imageDY,sourcePlacement,sourceDX,sourceDY,wrapHeadline,showWeekday,showPath,sideMargin,topPadding,bottomPadding};
  }
  function applyPreset(p:StudioPreset){
-  setMode(p.mode);setFormat(p.format);setSkin(p.skin);setCustomBg(p.customBg||'#092d28');setCustomFg(p.customFg||'#fffefa');setCustomAccent(p.customAccent||'#d6ee91');setCustomDim(p.customDim||'#d3e3dc');setPhotoPosition(p.photoPosition);setPhotoFit(p.photoFit);setImageShape(p.imageShape);
+  setMode(p.mode);setFormat(p.format);setCustomWidth(p.customWidth||1080);setCustomHeight(p.customHeight||1350);setTitleSize(p.titleSize||60);setBodyWeight(p.bodyWeight||300);setTextWeight(p.textWeight||700);setAlign(p.align||'right');setUnderline(p.underline||false);setVertical(p.vertical||'center');setSkin(p.skin);setCustomBg(p.customBg||'#092d28');setCustomFg(p.customFg||'#fffefa');setCustomAccent(p.customAccent||'#d6ee91');setCustomDim(p.customDim||'#d3e3dc');setPhotoPosition(p.photoPosition);setPhotoFit(p.photoFit);setImageShape(p.imageShape);
   setPhotoScale(p.photoScale);setImageRadius(p.imageRadius);setImageBorder(p.imageBorder);setPhotoOpacity(p.photoOpacity);
   setTitleScale(p.titleScale);setTextSize(p.textSize);setLineSpacing(p.lineSpacing);setSummaryLineSpacing(p.summaryLineSpacing);
   setDetailSpacing(p.detailSpacing);setHeadlineInset(p.headlineInset);setHeadlineDX(p.headlineDX);setHeadlineDY(p.headlineDY);
@@ -533,6 +533,19 @@ export default function Studio(){
  </fieldset>
  <fieldset className="studio-options"><legend>قوالبك المحفوظة</legend><div className="studio-saved-presets">{presets.length?presets.map(p=><div key={p.name}><button type="button" onClick={()=>applyPreset(p)}>{p.name}</button><button type="button" className="studio-delete-preset" aria-label={'حذف '+p.name} onClick={()=>deletePreset(p.name)}>×</button></div>):<p className="studio-note">لم تحفظ قوالب بعد. اضبط التصميم ثم احفظه باسم.</p>}</div><label>اسم القالب<input value={presetName} maxLength={40} placeholder="مثلاً: خبر حضرموت – أخضر" onChange={e=>setPresetName(e.target.value)}/></label><button type="button" onClick={savePreset}>حفظ إعدادات التصميم الحالية</button>{presetError&&<p role="alert" className="studio-note">{presetError}</p>}</fieldset>
 
+ <fieldset className="studio-options"><legend>ضبط النص والمساحات</legend>
+ <label>حجم العنوان: {textSize}px<input type="range" min={32} max={120} step={2} value={textSize} onChange={e=>setTextSize(Number(e.target.value))}/></label>
+ <label>حجم عنوان البيان: {titleSize}px<input type="range" min={36} max={100} step={2} value={titleSize} onChange={e=>setTitleSize(Number(e.target.value))}/></label>
+ <label>حجم الملخص: {summarySize}px<input type="range" min={18} max={48} step={1} value={summarySize} onChange={e=>setSummarySize(Number(e.target.value))}/></label>
+ <label>الهوامش الجانبية: {sideMargin}px<input type="range" min={30} max={220} step={2} value={sideMargin} onChange={e=>setSideMargin(Number(e.target.value))}/></label>
+ <label>تباعد الأسطر: {lineSpacing.toFixed(2)}<input type="range" min={1.1} max={2.1} step={0.05} value={lineSpacing} onChange={e=>setLineSpacing(Number(e.target.value))}/></label>
+ <label>المسافة بين العنوان والتفاصيل: {detailSpacing}px<input type="range" min={0} max={110} step={2} value={detailSpacing} onChange={e=>setDetailSpacing(Number(e.target.value))}/></label>
+ <label>محاذاة العنوان<select value={align} onChange={e=>setAlign(e.target.value as Align)}><option value="right">يمين</option><option value="center">وسط</option></select></label>
+ <label>موضع المحتوى رأسيًا<select value={vertical} onChange={e=>setVertical(e.target.value as 'top'|'center'|'bottom')}><option value="top">أعلى</option><option value="center">وسط</option><option value="bottom">أسفل</option></select></label>
+ <label>وزن الخط<select value={textWeight} onChange={e=>setTextWeight(Number(e.target.value) as Weight)}><option value={300}>نحيف</option><option value={400}>عادي</option><option value={500}>متوسط</option><option value={700}>عريض</option></select></label>
+ <label><input type="checkbox" checked={underline} onChange={e=>setUnderline(e.target.checked)}/> وضع خط تحت العنوان</label>
+ <label>موضع المصدر<select value={sourcePlacement} onChange={e=>setSourcePlacement(e.target.value as SourcePlacement)}><option value="after-summary">بعد الملخص</option><option value="before-summary">قبل الملخص</option></select></label>
+ </fieldset>
  <label>{mode==='statement'?'عنوان البيان (حتى 120 حرفًا)':mode==='quote'?'نص التصريح أو الاقتباس':'عنوان الخبر'}<textarea rows={3} maxLength={mode==='statement'?120:900} value={title} onChange={e=>{setTitle(e.target.value);setPage(0)}}/></label>
  {(mode==='news'||mode==='urgent')&&<><label>تفاصيل مختصرة للخبر<textarea rows={4} maxLength={260} value={summary} onChange={e=>{setSummary(e.target.value);setPage(0)}} placeholder="موجز تكميلي يظهر أسفل العنوان في مساحة مستقلة"/></label></>}
  {(mode==='news'||mode==='urgent')&&<fieldset className="studio-options"><legend>الصورة الرئيسية للخبر أو العاجل</legend>
