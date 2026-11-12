@@ -29,11 +29,7 @@ begin
 end;
 $$;
 
--- These privileges are not governed by RLS and are unnecessary for app users.
-revoke truncate, references, trigger
-  on table public.content_items, public.content_sources,
-             public.content_source_links, public.user_roles
-  from authenticated;
+-- Existing editorial-core table grants are intentionally unchanged by this feature migration.
 
 -- 2. Stable edition identity and immutable editorial revisions.
 create table public.briefing_editions (
@@ -166,6 +162,8 @@ create table public.briefing_development_sources (
     references public.content_sources(id) on delete restrict,
   source_role text not null default 'supporting'
     check (source_role in ('primary','supporting','context')),
+  -- Evidence may remain internal; public display requires an explicit editorial choice.
+  display_publicly boolean not null default false,
   source_excerpt text,
   attribution_note text,
   accessed_at timestamptz not null default now(),
@@ -802,7 +800,7 @@ as $$
           ) order by ds.display_order,s.source_name),'[]'::jsonb)
           from public.briefing_development_sources ds
           join public.content_sources s on s.id=ds.source_id
-          where ds.development_id=d.id
+          where ds.development_id=d.id and ds.display_publicly = true and s.is_active = true and ds.display_publicly = true and s.is_active = true
         )
       ) order by i.display_order)
       from public.briefing_edition_items i
@@ -1017,6 +1015,8 @@ begin
         select 1 from public.briefing_development_sources ds
         join public.content_sources s on s.id=ds.source_id
         where ds.development_id=d.id
+          and ds.display_publicly = true
+          and s.is_active = true
           and (nullif(btrim(s.source_url),'') is not null
             or nullif(btrim(s.source_reference),'') is not null)
       ))
