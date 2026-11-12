@@ -280,3 +280,14 @@
 - قصر Snapshot العام على المصادر النشطة التي اختيرت للعرض، وفرض وجود مصدر عام صالح عند النشر.
 - إزالة تعديل امتيازات الجداول الأساسية من Migration لتضييق نطاق التغيير.
 - التحديثات على فرع الحزمة فقط؛ لا DDL على Supabase البعيد.
+
+
+### 2026-11-13 — Package 1 applied to production
+
+- Applied Supabase migration `20261112211738_daily_briefing_package1` to project `budsfbyrdpjkobqstpyr`.
+- Created canonical migration file `supabase/migrations/20261112211738_daily_briefing_package1.sql` on the package branch.
+- Verified seven briefing tables with RLS enabled, 23 RLS policies, no direct anon SELECT grants, audit table SELECT-only for authenticated, and public read RPC behavior on empty/unknown editions.
+- Verified `content_sources` metadata fields and opt-in public source visibility defaulting false.
+- No test records inserted; no production content created.
+- Advisor notes: two intentional public SECURITY DEFINER read RPC warnings; one existing Auth leaked-password-protection warning; 13 unindexed FK INFO findings and unused indexes expected for empty new tables.
+- Package remains in open Draft PR #32; no merge or Vercel deployment.
