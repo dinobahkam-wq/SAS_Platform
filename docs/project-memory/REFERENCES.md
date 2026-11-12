@@ -100,3 +100,11 @@
 - يجب تدقيق مخطط `public.content_items` و`public.content_sources` وعلاقاتها قبل تقرير نموذج البيانات.
 
 - [PR #30 — تجهيز مرحلة الإحاطة اليومية V1 (Draft، توثيق فقط)](https://github.com/dinobahkam-wq/SAS_Platform/pull/30).
+
+
+### تسليم الإحاطة اليومية — 12 نوفمبر 2026
+
+- [وثيقة استئناف العمل والخطة التنفيذية](../DAILY_BRIEFING_HANDOFF_2026-11-12.md).
+- [PR #31 — تجربة الإحاطة والتدقيق المعماري](https://github.com/dinobahkam-wq/SAS_Platform/pull/31) — Draft.
+- [فرع تجربة الإحاطة](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-experience-v1).
+- [PR #30 — تأسيس مواصفات الإحاطة](https://github.com/dinobahkam-wq/SAS_Platform/pull/30) — Draft.
