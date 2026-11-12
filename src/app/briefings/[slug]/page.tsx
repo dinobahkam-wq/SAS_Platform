@@ -19,13 +19,6 @@ export const metadata: Metadata = {
   description: "سجل موثق للتطورات والبيانات والمواقف المرتبطة باليمن ومحيطه.",
 };
 
-const timePrecisionLabels: Record<string, string> = {
-  exact: "وقت محدد",
-  approximate: "وقت تقريبي",
-  date_only: "التاريخ فقط",
-  unknown: "وقت غير محدد",
-};
-
 function uniqueSources(developments: BriefingDevelopment[]) {
   const seen = new Set<string>();
   return developments.flatMap((development) => development.sources).filter((source) => {
