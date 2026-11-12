@@ -9,6 +9,7 @@ const navigation = [
   { href: "/admin/categories", label: "التصنيفات", symbol: "▦" },
   { href: "/admin/media", label: "مكتبة الوسائط", symbol: "▧" },
   { href: "/admin/news-studio", label: "استوديو الصور الإخبارية", symbol: "✦" },
+  { href: "/briefing-room", label: "الإحاطة اليومية", symbol: "◷" },
 ];
 
 export function AdminShell({
