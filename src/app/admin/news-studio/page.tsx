@@ -65,7 +65,7 @@ function parseNewsImport(text:string,fileName:string):NewsImportPayload{
  if(record.article&&typeof record.article==='object'&&!Array.isArray(record.article))record=record.article as Record<string,unknown>;
  if(record.type!==undefined&&record.type!=='news')throw new Error('نوع الملف غير متوافق؛ المطلوب type: news');
  if(record.schemaVersion!==undefined&&record.schemaVersion!==1)throw new Error('إصدار بنية الملف غير مدعوم؛ استخدم schemaVersion: 1');
- const textValue=(...values:unknown[])=>{for(const value of values)if(typeof value==='string')return value.trim();return ''};
+ const textValue=(...values:unknown[])=>{for(const value of values)if(typeof value==='string'&&value.trim())return value.trim();return ''};
  const headline=textValue(record.headline,record.title);
  if(!headline)throw new Error('حقل العنوان إلزامي');
  if(headline.length>900)throw new Error('العنوان يتجاوز الحد المسموح (900 حرف)');
@@ -615,7 +615,7 @@ export default function Studio(){
    setPath({dossier:'',issue:'',event:imported.category});setShowPath(Boolean(imported.category));
    setShowSource(design?.showSource??Boolean(imported.sourceName||imported.sourceUrl));
    setShowWeekday(design?.showWeekday??false);
-   setTextSize(78);setTitleSize(60);setSummarySize(32);setSideMargin(76);setMarginLeft(0);setMarginRight(0);setLineSpacing(1.45);
+   setTextSize(78);setTextWeight(700);setAlign('right');setVertical('top');setTitleSize(60);setSummarySize(32);setSideMargin(76);setMarginLeft(0);setMarginRight(0);setLineSpacing(1.45);
    setHeadlineFont(design?.headlineFont??'tajarib');setSummaryFont(design?.summaryFont??'sans');setMetaFont(design?.metaFont??'sans');setLogoVariant(design?.logoVariant??'color');
    setPhotoPosition(design?.photoPosition??'left');setPhotoFit(design?.photoFit??'cover');setPhotoScale(100);setPhotoFrameWidth(100);setPhotoFrameHeight(100);setPhotoZoom(100);setPhotoPanX(0);setPhotoPanY(0);
    setNewsImage(null);setImageCredit('');setShowImageCredit(false);setMediaError('');
@@ -639,7 +639,7 @@ export default function Studio(){
   const markdown='# بطاقة خبر ساس\n\nالعنوان: عنوان الخبر هنا\n\nالموجز:\nاكتب موجزًا خبريًا واضحًا ومختصرًا لا يتجاوز 260 حرفًا.\n\nالمصدر: اسم المصدر\nرابط المصدر: https://example.com/news\nالتاريخ: 2026-11-12\nالموقع: المحافظة – المديرية\nالتصنيف: سياسي وأمني\n';
   const content=format==='json'?JSON.stringify(json,null,2):markdown;
   const blob=new Blob([content],{type:format==='json'?'application/json;charset=utf-8':'text/markdown;charset=utf-8'});
-  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=format==='json'?'sas-news-import-template.json':'sas-news-import-template.md';a.click();URL.revokeObjectURL(url);
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=format==='json'?'sas-news-import-template.json':'sas-news-import-template.md';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
  }
  async function exportPages(){
   if(exporting||!canvas.current)return;
