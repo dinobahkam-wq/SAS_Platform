@@ -14,7 +14,7 @@
 | SHA الحالي لفرع PR #30 عند التحقق | `729738eef6774ccb7d2b56d9bb6be8906287b1bc` |
 | PR #31 — تجربة الإحاطة والتدقيق المعماري | مفتوح، Draft، غير مدمج |
 | فرع PR #31 | `feat/daily-briefing-experience-v1` |
-| SHA الحالي لرأس PR #31 عند التحقق | `2e0537ac04cdef1e2a8b60b4b71174972f6a8cf1` |
+| SHA الحالي لرأس PR #31 عند التحقق | `5632e01eca6104483c265a6d7505ff2a3fa0d543` |
 | Base فرع PR #31 | `feat/daily-briefing-v1` |
 | فرع التكامل السابق | `integration/sas-mainline-2026-11-12` |
 | SHA المعروف لفرع التكامل بعد PR #29 | `d06f769db0e76cecb2e315dc535c8cc1b9a4ea92` |
@@ -24,7 +24,7 @@
 - [PR #31 — Daily Briefing Experience & Architecture Audit](https://github.com/dinobahkam-wq/SAS_Platform/pull/31)
 - [فرع تجربة الإحاطة](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-experience-v1)
 
-**تنبيه:** PR #31 مكدس فوق فرع PR #30، وكلاهما Draft. في آخر تحقق كان PR #31 `mergeable=true` لكنه لا يزال غير مدمج. لا تدمج أيًا منهما ولا تغيّر قاعدة PR أو تعِد تأسيس الفروع قبل مراجعة المستخدم وفحص الحالة الحية.
+**تنبيه:** PR #31 مكدس فوق فرع PR #30، وكلاهما Draft. قيمة SHA أعلاه هي لقطة تحقق قبل آخر تحديث توثيقي؛ يجب دائمًا جلب رأس الفرع الحالي من GitHub عند بدء جلسة جديدة. في آخر تحقق كان PR #31 `mergeable=false`، ولا يزال Draft وغير مدمج؛ لا تفترض أن السبب تعارض فعلي قبل إعادة فحص تفاصيل GitHub. لا تدمج أيًا منهما ولا تغيّر قاعدة PR أو تعِد تأسيس الفروع قبل مراجعة المستخدم وفحص الحالة الحية.
 
 ## 2. ما أُنجز
 
