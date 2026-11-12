@@ -140,6 +140,9 @@ function Icon({ name, size = 18 }: { name: string; size?: number }) {
   if (name === "economy") {
     return <svg {...common}><path d="M3 20h18M5 16l4-4 3 2 7-8" /><path d="M15 6h4v4" /></svg>;
   }
+  if (name === "shield") {
+    return <svg {...common}><path d="M12 3 20 6v5c0 5-3.3 8.4-8 10-4.7-1.6-8-5-8-10V6l8-3Z" /></svg>;
+  }
   if (name === "source") {
     return <svg {...common}><path d="M6 3h9l4 4v14H6z" /><path d="M14 3v5h5M9 12h7M9 16h7" /></svg>;
   }

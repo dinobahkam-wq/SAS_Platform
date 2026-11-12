@@ -3265,3 +3265,13 @@ textarea {
   .briefing-filters button, .briefing-source-button { transition: none; }
 }
 
+
+
+.briefing-preview-root button:focus-visible,
+.briefing-preview-root a:focus-visible,
+.briefing-preview-root input:focus-visible,
+.briefing-preview-root textarea:focus-visible {
+  outline: 2px solid #9a7b42;
+  outline-offset: 3px;
+}
+.briefing-source-panel:focus { outline: none; }
