@@ -10,7 +10,7 @@ import {
   formatBriefingDate,
   formatBriefingDateOnly,
 } from "@/components/briefing-public";
-import { getPublicBriefing } from "@/lib/public-briefing";
+import { getPublicBriefing, type BriefingDevelopment } from "@/lib/public-briefing";
 
 export const dynamic = "force-dynamic";
 
@@ -26,11 +26,7 @@ const timePrecisionLabels: Record<string, string> = {
   unknown: "وقت غير محدد",
 };
 
-function uniqueSources(
-  developments: Awaited<ReturnType<typeof getPublicBriefing>> extends infer T
-    ? NonNullable<T>["developments"]
-    : never,
-) {
+function uniqueSources(developments: BriefingDevelopment[]) {
   const seen = new Set<string>();
   return developments.flatMap((development) => development.sources).filter((source) => {
     const key = source.source_url || source.source_reference || source.source_name;
