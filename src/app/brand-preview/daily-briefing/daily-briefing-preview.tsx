@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BrandLogo } from "@/components/brand-logo";
 
 type ViewMode = "reader" | "workspace";
@@ -188,6 +188,26 @@ function ReaderView() {
   const [filter, setFilter] = useState("all");
   const [expanded, setExpanded] = useState<string | null>("upd-01");
   const [selectedSource, setSelectedSource] = useState<BriefingSource | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+  const openSource = (source: BriefingSource) => {
+    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setSelectedSource(source);
+  };
+
+  useEffect(() => {
+    if (!selectedSource) return;
+    closeButtonRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedSource(null);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      previousFocusRef.current?.focus();
+    };
+  }, [selectedSource]);
+
   const visibleUpdates = useMemo(
     () => updates.filter((item) => filter === "all" || item.category === filter),
     [filter],
@@ -287,7 +307,7 @@ function ReaderView() {
                 </div>
                 <h3>{item.title}</h3>
                 <p className="briefing-update-summary">{item.summary}</p>
-                <SourceButton source={item.source} onOpen={setSelectedSource} />
+                <SourceButton source={item.source} onOpen={openSource} />
                 <button
                   type="button"
                   className="briefing-update-expand"
@@ -301,7 +321,7 @@ function ReaderView() {
                   <div className="briefing-update-details">
                     <div><strong>ما الذي تغيّر؟</strong><p>{item.whatChanged}</p></div>
                     <div><strong>لماذا يهم؟</strong><p>{item.whyItMatters}</p></div>
-                    <button type="button" onClick={() => setSelectedSource(item.source)}>فحص المصدر وتفاصيله <span aria-hidden="true">←</span></button>
+                    <button type="button" onClick={() => openSource(item.source)}>فحص المصدر وتفاصيله <span aria-hidden="true">←</span></button>
                   </div>
                 ) : null}
               </div>
@@ -335,7 +355,7 @@ function ReaderView() {
           <aside className="briefing-source-panel" role="dialog" aria-modal="true" aria-label="تفاصيل المصدر" onClick={(event) => event.stopPropagation()}>
             <div className="briefing-source-panel-head">
               <span className="briefing-panel-kicker">سجل المصدر</span>
-              <button type="button" onClick={() => setSelectedSource(null)} aria-label="إغلاق">×</button>
+              <button ref={closeButtonRef} type="button" onClick={() => setSelectedSource(null)} aria-label="إغلاق">×</button>
             </div>
             <div className="briefing-source-panel-icon"><Icon name="source" size={23} /></div>
             <span className="briefing-source-role">{selectedSource.role} · {selectedSource.kind}</span>
@@ -386,7 +406,7 @@ function WorkspaceView() {
           <div className="briefing-workspace-sidebar-note"><Icon name="info" size={15} /><p>هذه القائمة توضيحية. لن تظهر المصادر في الواجهة العامة إلا من خلال سجلات مرتبطة بتطور منشور.</p></div>
         </aside>
 
-        <main className="briefing-editor-canvas">
+        <section className="briefing-editor-canvas">
           <div className="briefing-editor-topline"><div><span className="briefing-panel-kicker">تحرير العدد / 001</span><h1>إعداد الإحاطة</h1></div><span className="briefing-editor-version">نسخة تصميمية 0.1</span></div>
           <div className="briefing-editor-metadata">
             <label><span>تاريخ الإصدار</span><input value="12 نوفمبر 2026" readOnly /></label>
@@ -415,7 +435,7 @@ function WorkspaceView() {
             <button className="briefing-add-update" type="button" disabled>＋ إضافة تطور من السجل</button>
           </section>
           <div className="briefing-editor-footer-actions"><button type="button" disabled>حفظ المسودة</button><button type="button" disabled>إرسال للمراجعة</button><span>الأزرار غير مفعّلة حتى اكتمال نموذج البيانات والصلاحيات.</span></div>
-        </main>
+        </section>
 
         <aside className="briefing-ai-panel">
           <div className="briefing-ai-panel-head"><span className="briefing-ai-mark"><Icon name="message" size={19} /></span><div><strong>مساعد ساس التحريري</strong><small>مخصص لهيئة التحرير</small></div></div>
