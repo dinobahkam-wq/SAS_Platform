@@ -1,0 +1,56 @@
+import { notFound } from "next/navigation";
+import { ContentForm } from "@/components/content-form";
+import { updateContent } from "../actions";
+import { requireAdmin } from "@/lib/admin";
+
+export default async function EditContentPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { id } = await params;
+  const search = await searchParams;
+  const { supabase } = await requireAdmin();
+
+  const [{ data: item, error }, { data: categories }, { data: sources }, { data: links }, { data: mediaAssets }] = await Promise.all([
+    supabase.from("content_items").select("*").eq("id", id).maybeSingle(),
+    supabase.from("categories").select("*").order("display_order"),
+    supabase.from("content_sources").select("*").order("source_name"),
+    supabase.from("content_source_links").select("source_id").eq("content_id", id),
+    supabase.from("media_assets").select("id,file_name,alt_text,caption,mime_type").order("created_at", { ascending: false }).limit(100),
+  ]);
+
+  if (error || !item) notFound();
+
+  return (
+    <>
+      <div className="page-heading">
+        <div><span className="eyebrow">غرفة التحرير / تحرير</span><h1>تحرير المادة</h1><p>راجع البيانات والمصادر وبنية المادة وحالة النشر قبل الحفظ.</p></div>
+        <span className={`pill ${item.status === "published" ? "pill-green" : "pill-gold"}`}>{item.status === "published" ? "منشور" : item.status === "archived" ? "مؤرشف" : "مسودة"}</span>
+      </div>
+      <ContentForm
+        action={updateContent}
+        categories={categories ?? []}
+        sources={sources ?? []}
+        mediaAssets={mediaAssets ?? []}
+        selectedSourceIds={(links ?? []).map((link) => link.source_id)}
+        initial={{
+          id: item.id,
+          section: item.section,
+          format: item.format,
+          title: item.title,
+          slug: item.slug,
+          excerpt: item.excerpt ?? "",
+          body: JSON.stringify(item.body ?? { version: 1, blocks: [] }),
+          status: item.status,
+          category_id: item.category_id ?? "",
+          is_featured: item.is_featured,
+          cover_asset_id: item.cover_asset_id ?? "",
+        }}
+        error={search.error ? "تعذر الحفظ. تحقق من الحقول والمصادر، وتأكد من إسناد مصدر واحد على الأقل عند نشر الخبر." : undefined}
+      />
+    </>
+  );
+}

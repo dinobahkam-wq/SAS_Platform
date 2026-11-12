@@ -1,41 +1,93 @@
 # SAS Platform
 
+منصة ساس هي المنصة الرقمية للمعلومات والمعرفة السياسية، وتنتج الأخبار المنظمة والتحليلات والأوراق البحثية والبرامج والوسائط، مع توجه لبناء قاعدة معرفية مترابطة للأحداث والقضايا والفاعلين والمصادر والوثائق والخرائط.
+
 ## Project memory / الذاكرة التنفيذية
 
-**ابدأ من هنا في كل جلسة تطوير جديدة:** [الذاكرة التنفيذية الرسمية](docs/project-memory/README.md) و[إرشادات الوكلاء](AGENTS.md).
+**ابدأ من هنا في كل جلسة تطوير جديدة:**
+- [الذاكرة التنفيذية الرسمية](docs/project-memory/README.md)
+- [إرشادات الوكلاء](AGENTS.md)
 
-هذا المستودع هو المصدر المعتمد للكود. تُراجع قرارات المشروع والحالة المثبتة في `docs/project-memory/`؛ وتُتحقق حالة الفروع وطلبات الدمج من GitHub مباشرة. الفروع غير المدمجة لا تُعد جزءًا من `main` تلقائيًا.
+هذا المستودع هو المصدر المعتمد لكود التطبيق وملفات ترحيل قاعدة البيانات. تُراجع قرارات المشروع وحالته المثبتة في `docs/project-memory/`، وتُتحقق حالة الفروع وطلبات الدمج من GitHub مباشرة. الفروع غير المدمجة لا تُعد جزءًا من `main` تلقائيًا.
 
+## التقنية
 
-SAS Platform is the digital information and research platform for structured political knowledge, events, issues, sources, documents, maps, and editorial products.
+- **واجهة التطبيق:** Next.js App Router وTypeScript.
+- **البيانات والمصادقة والوسائط:** Supabase (PostgreSQL, Auth, Storage).
+- **النشر:** Vercel.
+- **إدارة المصدر:** GitHub.
 
-## Planned application stack
+## الحالة الحالية للمنتج
 
-- **Web application:** Next.js and TypeScript
-- **Data platform:** Supabase (PostgreSQL, Auth, Storage, and Edge Functions when required)
-- **Deployment:** Vercel
-- **Version control:** GitHub
+### إدارة المحتوى CMS v1
+- تسجيل دخول إداري.
+- إدارة المواد التحريرية.
+- إدارة المصادر والتصنيفات.
+- إدارة مكتبة الوسائط.
+- ربط المواد بمصادرها ومؤلفيها.
 
-## Engineering principles
+### الواجهة العامة
+- الصفحة الرئيسية التحريرية.
+- صفحات الأخبار والتحليل والدراسات والوسائط.
+- صفحات تفاصيل المواد.
+- عرض المتون والمصادر والمؤلفين وبيانات النشر عند توفرها.
+- اختيار الصورة الرئيسية من مكتبة الوسائط.
+- عرض حالات خلو صريحة عند عدم توفر محتوى منشور.
+- عدم عرض بيانات تجريبية باعتبارها محتوى حقيقيًا.
 
-1. GitHub is the source of truth for application code and database migration files.
-2. Every application database change must be represented by a reviewed, ordered SQL migration under `supabase/migrations/`.
-3. The hosted Supabase project is an execution and verification target, not an undocumented schema-authoring source.
-4. No migration is considered complete until its application status is reconciled with the remote Supabase migration history.
-5. Never commit credentials, access tokens, database passwords, or service-role keys.
-6. Keep Supabase-managed schemas (such as `auth`, `storage`, and `realtime`) separate from application-owned schema changes.
+### الهوية والنظام الطباعي
+- الشعار الرسمي لمنصة ساس وأصول الهوية البصرية ضمن `public/brand/`.
+- الخطوط المعتمدة وملفاتها ضمن `public/fonts/`.
+- النظام الطباعي العربي موثق في ملفات الهوية والتحرير.
+- صفحات معاينة الهوية والنظام الطباعي أدوات داخلية وليست صفحات نشر عامة.
 
-## Development workflow
+### قاعدة البيانات
+- مخطط البيانات التحريرية موثق في `docs/editorial-database-design.md`.
+- ملفات الترحيل المنظمة موجودة تحت `supabase/migrations/`.
+- GitHub هو المصدر المعتمد لتغييرات المخطط والسياسات.
 
-- Work on a feature or maintenance branch; do not develop directly on `main`.
-- Pull the branch from GitHub before local work.
-- Make code and migration changes together where applicable.
-- Test locally before opening a pull request.
-- Review the migration files and remote migration history before merging.
-- Merge only after code checks and database reconciliation pass.
+## الوثائق المرجعية
 
-See [Development Workflow](docs/development-workflow.md) for the operational rules.
+### التأسيس والإدارة
+- [أساس التطبيق](docs/application-foundation.md)
+- [إدارة المحتوى CMS v1](docs/admin-cms-v1.md)
+- [سير عمل التطوير](docs/development-workflow.md)
+- [تنفيذ قاعدة البيانات التحريرية](docs/editorial-database-implementation-v1.md)
+- [تصميم قاعدة البيانات](docs/editorial-database-design.md)
 
-## Repository status
+### التحرير والهوية
+- [النظام الطباعي المعتمد](docs/brand-system-b-adoption-v1.md)
+- [دليل التحرير والتشكيل العربي](docs/editorial-arabic-style-v1.md)
+- [مقارنة النظامين الطباعيين](docs/brand-typography-ab-review.md)
+- [تنفيذ الواجهة التحريرية العامة](docs/public-editorial-experience-v1.md)
+- [استقرار الواجهة العامة](docs/public-editorial-stability-v1.md)
+- [تأسيس الاستوديو التحريري](docs/editorial-studio-v2-foundation.md)
 
-**Historical main-branch status:** this branch does not yet contain the stacked CMS and public editorial feature PRs. The editorial schema was designed and applied in the active SAS_Platform Supabase project on the development branch, with migrations documented there. For the current implementation state and verification gaps, read `docs/project-memory/CURRENT_STATE.md` and inspect open PRs. Do not mistake this main-branch snapshot for the current feature implementation.
+### الذاكرة التنفيذية
+- [الصفحة الرئيسية التحريرية v2](docs/project-memory/PUBLIC_HOMEPAGE_EDITORIAL_V2_2026-11-12.md)
+- [النظام الطباعي العربي](docs/project-memory/ARABIC_TWO_FONT_SYSTEM_2026-11-11.md)
+- [تحسينات المسارات التحريرية](docs/project-memory/EDITORIAL_HORIZONTAL_RAILS_2026-11-11.md)
+
+## مبادئ التطوير
+
+1. GitHub هو المصدر المعتمد لكود التطبيق وملفات ترحيل قاعدة البيانات.
+2. كل تغيير في قاعدة البيانات يجب أن يكون ممثلًا بملف SQL migration مُراجع ومرتب.
+3. المشروع المستضاف على Supabase هدف للتنفيذ والتحقق، وليس مصدرًا لتغييرات غير موثقة.
+4. لا يُعتبر أي ترحيل مكتملًا قبل مطابقة حالته مع سجل الترحيلات البعيد.
+5. لا تُحفظ كلمات المرور أو مفاتيح الخدمة أو رموز الوصول في المستودع.
+6. تُفصل مخططات Supabase المُدارة مثل auth وstorage وrealtime عن تغييرات مخطط التطبيق.
+
+## سير العمل
+
+- العمل على فروع مستقلة وعدم التطوير مباشرة على `main`.
+- تحديث الفرع من GitHub قبل العمل.
+- إجراء التغييرات واختبارها محليًا.
+- مراجعة ملفات الترحيل وأثرها على قاعدة البيانات.
+- فتح طلب دمج للمراجعة.
+- عدم الدمج قبل نجاح الفحوصات ومراجعة التغييرات.
+
+راجع [دليل سير عمل التطوير](docs/development-workflow.md) للقواعد التشغيلية التفصيلية.
+
+## نطاق المشروع
+
+منصة ساس ليست موقع أخبار تقليديًا؛ بل بنية معلومات ومعرفة سياسية تنتج منها منتجات إعلامية وبحثية منظمة، مع تطوير تدريجي لأدوات استكشاف وتحليل البيانات والوثائق.

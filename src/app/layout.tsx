@@ -1,0 +1,25 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: {
+    default: "منصة ساس للإعلام والدراسات",
+    template: "%s | منصة ساس",
+  },
+  description:
+    "منصة إعلامية وبحثية تُنظّم الأخبار وتقدم التحليل والدراسات حول اليمن ومحيطه الإقليمي والدولي.",
+  applicationName: "SAS Platform",
+  metadataBase: new URL("https://www.sas-media.net"),
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="ar" dir="rtl">
+      <body>{children}</body>
+    </html>
+  );
+}
