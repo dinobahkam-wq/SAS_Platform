@@ -254,7 +254,7 @@
 - **الحالة:** Open / Draft / Not merged.
 - **الفرع:** `feat/daily-briefing-public-experience-v1`.
 - **Base:** `feat/daily-briefing-data-model-security-v1` (رأس الأساس المتحقق عند فتح PR: `00a8a1ee1773d11e995f408bce2d2c0761fc611b`).
-- **Head SHA:** `a178b8a7782f67fbaa38005f8c279913ea7fce95`.
+- **آخر commit للكود قبل تحديثات التوثيق:** `a178b8a7782f67fbaa38005f8c279913ea7fce95`؛ تلت ذلك commits توثيقية، لذا افحص رأس PR الحالي مباشرة قبل متابعة العمل.
 - **Mergeable:** true عند آخر فحص.
 - **CI:** لا توجد GitHub Actions runs لهذا الرأس. حالة Vercel أبلغت failure مع رابط `upgradeToPro=build-rate-limit`؛ هذا حد بناء/خطة لدى Vercel وليس دليلًا على فشل TypeScript أو بناء الكود. لم يُنفذ نشر يدوي.
 - **الاختبارات المحلية:** لم تُجر بعد؛ ينتظر الفرع `typecheck` و`build` على Windows.
