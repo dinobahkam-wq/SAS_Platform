@@ -22,12 +22,15 @@ export default async function BriefingRoomPage({
     .order("edition_no", { ascending: false })
     .limit(50);
 
-  const revisionIds = (editions ?? []).map((edition) => edition.current_revision_id).filter((id): id is string => Boolean(id));
-  const { data: revisions } = revisionIds.length
-    ? await supabase.from("briefing_revisions").select("id,edition_id,revision_no,status,title_ar,updated_at").in("id", revisionIds)
+  const editionIds = (editions ?? []).map((edition) => edition.id);
+  const { data: revisions } = editionIds.length
+    ? await supabase.from("briefing_revisions").select("id,edition_id,revision_no,status,title_ar,updated_at").in("edition_id", editionIds).order("revision_no", { ascending: false })
     : { data: [] };
 
-  const revisionById = new Map((revisions ?? []).map((revision) => [revision.id, revision]));
+  const revisionByEdition = new Map<string, NonNullable<typeof revisions>[number]>();
+  for (const revision of revisions ?? []) {
+    if (!revisionByEdition.has(revision.edition_id)) revisionByEdition.set(revision.edition_id, revision);
+  }
 
   return (
     <>
@@ -45,9 +48,9 @@ export default async function BriefingRoomPage({
 
       <div className="briefing-stats">
         <div><span>الأعداد المسجلة</span><strong>{editions?.length ?? 0}</strong></div>
-        <div><span>المسودات</span><strong>{(revisions ?? []).filter((revision) => revision.status === "draft").length}</strong></div>
-        <div><span>قيد المراجعة</span><strong>{(revisions ?? []).filter((revision) => revision.status === "in_review").length}</strong></div>
-        <div><span>المنشورة</span><strong>{(revisions ?? []).filter((revision) => revision.status === "published").length}</strong></div>
+        <div><span>المسودات</span><strong>{[...revisionByEdition.values()].filter((revision) => revision.status === "draft").length}</strong></div>
+        <div><span>قيد المراجعة</span><strong>{[...revisionByEdition.values()].filter((revision) => revision.status === "in_review").length}</strong></div>
+        <div><span>المنشورة</span><strong>{[...revisionByEdition.values()].filter((revision) => revision.status === "published").length}</strong></div>
       </div>
 
       <section className="briefing-panel">
@@ -61,7 +64,7 @@ export default async function BriefingRoomPage({
               <thead><tr><th>العدد</th><th>التاريخ</th><th>النسخة</th><th>الحالة</th><th /></tr></thead>
               <tbody>
                 {editions.map((edition) => {
-                  const revision = edition.current_revision_id ? revisionById.get(edition.current_revision_id) : null;
+                  const revision = revisionByEdition.get(edition.id) ?? null;
                   return (
                     <tr key={edition.id}>
                       <td><strong>{revision?.title_ar ?? edition.slug}</strong><small>#{edition.edition_no} · {edition.edition_type === "daily" ? "يومي" : "خاص"}</small></td>
