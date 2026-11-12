@@ -72,7 +72,7 @@ export default async function LoginPage({
             />
           </label>
           <button className="button button-primary button-full" type="submit">
-            دخول لوحة الإدارة
+            دخول مساحة العمل
             <span aria-hidden="true">←</span>
           </button>
         </form>
