@@ -111,14 +111,23 @@ export default async function BriefingEditionPage({
   const { data: links } = developmentIds.length
     ? await supabase.from("briefing_development_sources").select("*").in("development_id", developmentIds)
     : { data: [] };
-  const sourceById = new Map((sources ?? []).map((source) => [source.id, source]));
+  const linkedSourceIds = [...new Set((links ?? []).map((link) => link.source_id))];
+  const { data: linkedSources } = linkedSourceIds.length
+    ? await supabase.from("content_sources").select("id,source_name,source_title,source_type,organization_name,source_url,source_reference,is_active").in("id", linkedSourceIds)
+    : { data: [] };
+  const allDevelopmentIds = [...new Set([...(developments ?? []).map((d) => d.id), ...(items ?? []).map((i) => i.development_id)])];
+  const missingDevelopmentIds = allDevelopmentIds.filter((id) => !(developments ?? []).some((d) => d.id === id));
+  const { data: olderDevelopments } = missingDevelopmentIds.length
+    ? await supabase.from("briefing_developments").select("*").in("id", missingDevelopmentIds)
+    : { data: [] };
+  const sourceById = new Map((linkedSources ?? []).map((source) => [source.id, source]));
   const linksByDevelopment = new Map<string, typeof links>();
   for (const link of links ?? []) {
     const list = linksByDevelopment.get(link.development_id) ?? [];
     list.push(link);
     linksByDevelopment.set(link.development_id, list);
   }
-  const developmentById = new Map((developments ?? []).map((development) => [development.id, development]));
+  const developmentById = new Map([...(developments ?? []), ...(olderDevelopments ?? [])].map((development) => [development.id, development]));
   const isDraft = revision?.status === "draft";
 
   return (
