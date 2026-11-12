@@ -68,6 +68,10 @@ function readContent(formData: FormData) {
   if (coverAssetValue && !/^[0-9a-f-]{36}$/i.test(coverAssetValue)) throw new Error("الصورة الرئيسية غير صالحة.");
   if (![ "draft", "published", "archived" ].includes(statusValue)) throw new Error("حالة النشر غير صحيحة.");
 
+  if (section === "news" && statusValue === "published" && sourceIds.length === 0) {
+    throw new Error("يجب ربط مصدر واحد على الأقل قبل نشر الخبر.");
+  }
+
   const slug = slugify(slugInput || title);
   if (!slug) throw new Error("تعذر إنشاء رابط صالح للمحتوى.");
 
@@ -109,7 +113,7 @@ async function linkRelations(
       display_order: index,
     }));
     const { error } = await supabase.from("content_source_links").upsert(rows, {
-      onConflict: "content_id,source_id", ignoreDuplicates: true,
+      onConflict: "content_id,source_id",
     });
     if (error) throw new Error("تعذر ربط المصادر بالمحتوى. تحقق من المصادر المحددة.");
   }
@@ -161,10 +165,10 @@ export async function updateContent(formData: FormData) {
   let values: ReturnType<typeof readContent>;
   try { values = readContent(formData); } catch { redirect(`/admin/content/${id}?error=validation`); }
 
-  const { data: current } = await supabase.from("content_items").select("status").eq("id", id).maybeSingle();
+  const { data: current } = await supabase.from("content_items").select("status, section").eq("id", id).maybeSingle();
   if (!current) redirect("/admin/content?error=not-found");
 
-  if (current.status === "published" && values.status !== "published") {
+  if (current.status === "published" && (values.status !== "published" || (current.section === "news" && values.section !== "news"))) {
     const { error: statusError } = await supabase.from("content_items")
       .update({ status: "draft", updated_by: userId }).eq("id", id);
     if (statusError) redirect(`/admin/content/${id}?error=save`);
