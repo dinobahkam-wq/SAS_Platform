@@ -668,6 +668,31 @@ create trigger briefing_development_sources_guard_locked
   before insert or update or delete on public.briefing_development_sources
   for each row execute function private.briefing_guard_locked_development();
 
+-- The shared source registry is mutable elsewhere in the platform. Freeze a
+-- source row while any briefing revision using it is under review or approved,
+-- so the reviewer cannot approve one evidence record and publish another.
+create or replace function private.briefing_guard_locked_source_registry()
+returns trigger language plpgsql security invoker set search_path = ''
+as $
+begin
+  if exists (
+    select 1
+    from public.briefing_development_sources ds
+    join public.briefing_edition_items i on i.development_id = ds.development_id
+    join public.briefing_revisions r on r.id = i.revision_id
+    where ds.source_id = old.id
+      and r.status in ('in_review','approved')
+  ) then
+    raise exception 'Source registry record is locked by a briefing revision under review or approved';
+  end if;
+  if tg_op = 'DELETE' then return old; else return new; end if;
+end;
+$;
+
+create trigger content_sources_guard_briefing_locked
+  before update or delete on public.content_sources
+  for each row execute function private.briefing_guard_locked_source_registry();
+
 -- Make audit append-only even if table grants are broadened accidentally later.
 create or replace function private.briefing_reject_event_mutation()
 returns trigger language plpgsql security invoker set search_path = ''
@@ -755,11 +780,7 @@ revoke all on function private.briefing_guard_revision() from public,anon,authen
 revoke all on function private.briefing_guard_edition_insert() from public,anon,authenticated;
 revoke all on function private.briefing_guard_edition() from public,anon,authenticated;
 revoke all on function private.briefing_guard_locked_development() from public,anon,authenticated;
-revoke all on function private.briefing_audit_revision() from public,anon,authenticated;
-revoke all on function private.briefing_audit_edition() from public,anon,authenticated;
-revoke all on function private.briefing_guard_revision() from public,anon,authenticated;
-revoke all on function private.briefing_guard_edition() from public,anon,authenticated;
-revoke all on function private.briefing_guard_locked_development() from public,anon,authenticated;
+revoke all on function private.briefing_guard_locked_source_registry() from public,anon,authenticated;
 revoke all on function private.briefing_audit_revision() from public,anon,authenticated;
 revoke all on function private.briefing_audit_edition() from public,anon,authenticated;
 
