@@ -91,7 +91,7 @@ Migration Package 1 الحالية تفرض على قاعدة البيانات �
 ## 8. PR وحالة المراجعة
 
 - Draft PR #33: https://github.com/dinobahkam-wq/SAS_Platform/pull/33
-- Head: `a178b8a7782f67fbaa38005f8c279913ea7fce95`
+- آخر commit للكود قبل تحديثات التوثيق: `a178b8a7782f67fbaa38005f8c279913ea7fce95`؛ رأس PR الحالي يُتحقق منه مباشرة من GitHub.
 - Base: `feat/daily-briefing-data-model-security-v1`
 - Mergeable at last check; not merged.
 - No local typecheck/build yet. GitHub Actions returned no workflow runs; Vercel check returned `build-rate-limit`, which is a plan/build quota issue, not a successful or failed application build.
