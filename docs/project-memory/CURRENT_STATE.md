@@ -246,3 +246,16 @@
 - **تعارض معروف:** Package 1 تفرض `analysis_ar` غير فارغ و400–650 كلمة عند النشر. هذا لا يطابق التوجيه التحريري الجديد. الواجهة تخفي التحليل في قسم مغلق، لكن يلزم اعتماد Migration منفصلة لجعله اختياريًا أو مختصرًا قبل أول نشر. لم تُطبق أي Migration جديدة.
 - **الاختبارات:** لم يُنفذ `npm run typecheck` أو `npm run build` محليًا بعد التغييرات. لا دمج ولا نشر Vercel.
 - **الخطوة التالية:** مراجعة الكود على Windows، تشغيل typecheck/build، اختبار حالة الأرشيف الفارغ ثم اختبار عرض أول عدد حقيقي بعد إعداده واعتماده. لا تُنشأ بيانات وهمية.
+
+
+### حالة PR #33 — تحقق 13 نوفمبر 2026
+
+- **PR:** [#33 — Public source-first Daily Briefing reader](https://github.com/dinobahkam-wq/SAS_Platform/pull/33).
+- **الحالة:** Open / Draft / Not merged.
+- **الفرع:** `feat/daily-briefing-public-experience-v1`.
+- **Base:** `feat/daily-briefing-data-model-security-v1` (رأس الأساس المتحقق عند فتح PR: `00a8a1ee1773d11e995f408bce2d2c0761fc611b`).
+- **Head SHA:** `a178b8a7782f67fbaa38005f8c279913ea7fce95`.
+- **Mergeable:** true عند آخر فحص.
+- **CI:** لا توجد GitHub Actions runs لهذا الرأس. حالة Vercel أبلغت failure مع رابط `upgradeToPro=build-rate-limit`؛ هذا حد بناء/خطة لدى Vercel وليس دليلًا على فشل TypeScript أو بناء الكود. لم يُنفذ نشر يدوي.
+- **الاختبارات المحلية:** لم تُجر بعد؛ ينتظر الفرع `typecheck` و`build` على Windows.
+- **الحدود:** لا دمج، لا Migration جديدة، لا بيانات تجريبية، ولا نشر إنتاجي.
