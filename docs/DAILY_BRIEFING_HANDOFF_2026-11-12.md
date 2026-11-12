@@ -251,3 +251,35 @@ git fetch origin
 - لذلك أضيف `briefing_development_sources.display_publicly` (افتراضيًا false). Snapshot لا يعرض إلا المصادر التي اختيرت صراحة وكانت نشطة، وبوابة النشر تشترط مصدرًا عامًا صالحًا لكل تطور.
 - أزيلت أوامر سحب امتيازات الجداول التحريرية الأساسية من مسودة الحزمة.
 - لا تنسخ المسودة القديمة إلى Migration المحلية؛ حدّث فرع Git أولًا قبل نسخ النسخة المنقحة.
+
+
+---
+
+## 13 نوفمبر 2026 — Package 1 production checkpoint
+
+Migration `20261112211738_daily_briefing_package1` has been applied successfully to the production Supabase project `budsfbyrdpjkobqstpyr`.
+
+### Verified
+- Seven briefing tables exist; RLS is enabled on all seven.
+- 23 RLS policies are present.
+- `anon` has no direct SELECT privilege on briefing tables.
+- Authenticated users can SELECT audit events but cannot INSERT/UPDATE/DELETE them.
+- Public archive RPC returns an empty array; unknown edition slug returns null.
+- `display_publicly` defaults to false; published source snapshots only include explicitly public active sources.
+- No sample/test records were inserted; briefing tables remain empty.
+- Source registry rows are protected from mutation while used by revisions in review/approved.
+
+### Advisor observations
+- Two SECURITY DEFINER warnings correspond to intentional public read-only RPCs.
+- Leaked password protection warning is an existing project Auth setting.
+- Performance advisor reports 13 unindexed foreign keys (INFO); revisit before substantial data volume. Unused-index notices are expected before usage.
+
+### Local repository synchronization
+The developer previously generated an empty untracked migration file:
+`supabase/migrations/20261112205516_daily_briefing_package1.sql`.
+Keep it; move it outside `supabase/migrations` to a local backup folder before using CLI migration commands. The canonical applied migration is:
+`supabase/migrations/20261112211738_daily_briefing_package1.sql`.
+Do not delete local `next-env.d.ts` changes.
+
+### Next work
+Build the private editorial room against the new schema and RPCs. Test with the real signed-in admin/editor account; do not insert fictional news or publish without explicit editorial approval.
