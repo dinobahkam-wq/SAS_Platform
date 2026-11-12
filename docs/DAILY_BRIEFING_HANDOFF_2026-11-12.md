@@ -14,7 +14,7 @@
 | SHA الحالي لفرع PR #30 عند التحقق | `729738eef6774ccb7d2b56d9bb6be8906287b1bc` |
 | PR #31 — تجربة الإحاطة والتدقيق المعماري | مفتوح، Draft، غير مدمج |
 | فرع PR #31 | `feat/daily-briefing-experience-v1` |
-| SHA الحالي لرأس PR #31 عند التحقق | `581ae36cc387dcf10c275768f857f641713f8bf9` |
+| SHA الحالي لرأس PR #31 عند التحقق | `2e0537ac04cdef1e2a8b60b4b71174972f6a8cf1` |
 | Base فرع PR #31 | `feat/daily-briefing-v1` |
 | فرع التكامل السابق | `integration/sas-mainline-2026-11-12` |
 | SHA المعروف لفرع التكامل بعد PR #29 | `d06f769db0e76cecb2e315dc535c8cc1b9a4ea92` |
