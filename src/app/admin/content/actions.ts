@@ -29,16 +29,15 @@ function readStructuredBody(formData: FormData): Json {
   if (parsed.blocks.length > 250) throw new Error("تجاوزت المادة الحد الأقصى للعناصر التحريرية.");
 
   const blocks: Array<Record<string, Json>> = [];
-  for (const candidate of parsed.blocks) {
+  for (const candidate of parsed.blocks as unknown[]) {
     if (!candidate || typeof candidate !== "object" || !("type" in candidate)) continue;
     const type = String(candidate.type);
     if (!allowedBlockTypes.includes(type as (typeof allowedBlockTypes)[number])) {
       throw new Error("نوع عنصر تحريري غير مسموح.");
     }
     if (type === "list") {
-      const items = "items" in candidate && Array.isArray(candidate.items)
-        ? candidate.items.filter((item): item is string => typeof item === "string").map((item) => item.trim()).filter(Boolean).slice(0, 50)
-        : [];
+      const rawItems: unknown[] = "items" in candidate && Array.isArray(candidate.items) ? candidate.items : [];
+      const items = rawItems.filter((item): item is string => typeof item === "string").map((item) => item.trim()).filter(Boolean).slice(0, 50);
       if (items.length) blocks.push({ type, items });
       continue;
     }

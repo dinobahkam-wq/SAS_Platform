@@ -49,7 +49,7 @@ export function StructuredContentEditor({ initialBody }: { initialBody?: string 
     blocks: blocks.map((block) => block.type === "list"
       ? { type: "list", items: (block.items ?? []).map((item) => item.trim()).filter(Boolean) }
       : { type: block.type, text: block.text.trim() }).filter((block) =>
-        "items" in block ? block.items.length > 0 : block.text.length > 0),
+        "items" in block ? (block.items?.length ?? 0) > 0 : block.text.length > 0),
   }), [blocks]);
 
   function addBlock(type: BlockType) {
