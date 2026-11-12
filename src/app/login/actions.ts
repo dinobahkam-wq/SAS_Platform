@@ -24,12 +24,12 @@ export async function signIn(formData: FormData) {
     .eq("user_id", data.user.id)
     .maybeSingle();
 
-  if (roleError || !role || role.role !== "admin" || !role.is_active) {
+  if (roleError || !role || !["admin", "editor"].includes(role.role) || !role.is_active) {
     await supabase.auth.signOut();
     redirect("/login?error=unauthorized");
   }
 
-  redirect("/admin");
+  redirect(role.role === "admin" ? "/admin" : "/briefing-room");
 }
 
 export async function signOut() {
