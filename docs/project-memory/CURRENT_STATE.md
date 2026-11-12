@@ -5,7 +5,7 @@
 **المستودع:** `dinobahkam-wq/SAS_Platform`  
 **المجلد المحلي:** `C:\SAS-PLATFORM-DEV`  
 **التقنية:** Next.js 16.4.5 + React + TypeScript + Supabase + Vercel.  
-**الفرع النشط للمرحلة الجديدة:** `feat/daily-briefing-v1`.  
+**الفرع النشط للمرحلة الجديدة:** `feat/daily-briefing-v1` — [PR #30](https://github.com/dinobahkam-wq/SAS_Platform/pull/30)، Draft توثيقي.  
 **فرع التكامل:** `integration/sas-mainline-2026-11-12`.  
 **آخر رأس معروف للتكامل:** `d06f769db0e76cecb2e315dc535c8cc1b9a4ea92` (بعد PR #29).
 
