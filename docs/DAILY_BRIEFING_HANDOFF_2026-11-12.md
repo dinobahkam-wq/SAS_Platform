@@ -14,7 +14,7 @@
 | SHA الحالي لفرع PR #30 عند التحقق | `729738eef6774ccb7d2b56d9bb6be8906287b1bc` |
 | PR #31 — تجربة الإحاطة والتدقيق المعماري | مفتوح، Draft، غير مدمج |
 | فرع PR #31 | `feat/daily-briefing-experience-v1` |
-| SHA الحالي لرأس PR #31 عند التحقق | `731678065e068c8d82b3a883957108f9aa57df7f` |
+| SHA الحالي لرأس PR #31 عند التحقق | `581ae36cc387dcf10c275768f857f641713f8bf9` |
 | Base فرع PR #31 | `feat/daily-briefing-v1` |
 | فرع التكامل السابق | `integration/sas-mainline-2026-11-12` |
 | SHA المعروف لفرع التكامل بعد PR #29 | `d06f769db0e76cecb2e315dc535c8cc1b9a4ea92` |
@@ -24,7 +24,7 @@
 - [PR #31 — Daily Briefing Experience & Architecture Audit](https://github.com/dinobahkam-wq/SAS_Platform/pull/31)
 - [فرع تجربة الإحاطة](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-experience-v1)
 
-**تنبيه:** PR #31 مكدس فوق فرع PR #30، وكلاهما Draft. لا تدمج أيًا منهما ولا تغيّر قاعدة PR أو تعِد تأسيس الفروع قبل فحص الحالة الحية ومراجعة المستخدم. حالة `mergeable` لم تكن محسومة في آخر استعلام؛ لا تفترض أنها قابلة للدمج.
+**تنبيه:** PR #31 مكدس فوق فرع PR #30، وكلاهما Draft. في آخر تحقق كان PR #31 `mergeable=true` لكنه لا يزال غير مدمج. لا تدمج أيًا منهما ولا تغيّر قاعدة PR أو تعِد تأسيس الفروع قبل مراجعة المستخدم وفحص الحالة الحية.
 
 ## 2. ما أُنجز
 
