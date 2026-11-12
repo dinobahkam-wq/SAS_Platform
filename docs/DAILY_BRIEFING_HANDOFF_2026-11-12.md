@@ -299,3 +299,11 @@ Build the private editorial room against the new schema and RPCs. Test with the 
 - Production currently has no published briefing editions; empty archive response verified.
 - Known schema-policy conflict: Package 1 still requires 400–650 words in `analysis_ar`. The public page makes that section collapsed and secondary, but a follow-up migration should make analysis optional or concise. Do not apply it remotely until the user approves the revised policy.
 - No local typecheck/build, merge, or Vercel deployment has been performed.
+
+
+### PR #33 — الواجهة العامة
+
+- https://github.com/dinobahkam-wq/SAS_Platform/pull/33
+- Draft / Open / Not merged; head `a178b8a7782f67fbaa38005f8c279913ea7fce95`, base `feat/daily-briefing-data-model-security-v1`.
+- GitHub reports mergeable=true at last check.
+- Vercel status is `build-rate-limit`; no GitHub Actions workflow run was reported. No local typecheck/build or manual deployment yet.
