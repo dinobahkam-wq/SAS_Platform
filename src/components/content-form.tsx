@@ -1,5 +1,6 @@
 import type { Database } from "@/types/database.types";
 import { formats, sections } from "@/lib/content";
+import { StructuredContentEditor } from "@/components/structured-content-editor";
 
 type Category = Database["public"]["Tables"]["categories"]["Row"];
 type Source = Database["public"]["Tables"]["content_sources"]["Row"];
@@ -89,11 +90,11 @@ export function ContentForm({
             <span>الموجز / المقدمة</span>
             <textarea name="excerpt" defaultValue={initial?.excerpt ?? ""} rows={3} placeholder="ملخص قصير يظهر في بطاقات المحتوى..." />
           </label>
-          <label className="field field-full">
+          <div className="field field-full">
             <span>متن المادة</span>
-            <textarea name="body" defaultValue={initial?.body ?? ""} rows={14} placeholder="اكتب النص. افصل بين الفقرات بسطر فارغ." required />
-            <small className="helper-text">يُحفظ النص حاليًا في بنية فقرات منظمة داخل JSONB. سنضيف محررًا بصريًا متقدمًا في مرحلة لاحقة.</small>
-          </label>
+            <StructuredContentEditor initialBody={initial?.body} />
+            <small className="helper-text">رتّب المادة إلى فقرات وعناوين واقتباسات وقوائم. تُحفظ البنية المنظمة في قاعدة البيانات دون HTML حر.</small>
+          </div>
           <div className="field field-full">
             <span>المصادر المرتبطة</span>
             {sources.length ? (
