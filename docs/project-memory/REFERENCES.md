@@ -108,3 +108,10 @@
 - [PR #31 — تجربة الإحاطة والتدقيق المعماري](https://github.com/dinobahkam-wq/SAS_Platform/pull/31) — Draft.
 - [فرع تجربة الإحاطة](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-experience-v1).
 - [PR #30 — تأسيس مواصفات الإحاطة](https://github.com/dinobahkam-wq/SAS_Platform/pull/30) — Draft.
+
+### Package 1 — Data Model & Security Design
+
+- [وثيقة نموذج البيانات والأمن](../daily-briefing-data-model-security-v1.md).
+- [مسودة SQL للمراجعة فقط](../sql/daily_briefing_package1.draft.sql) — ليست Migration مطبقة.
+- [استعلامات التحقق المحلي](../sql/daily_briefing_package1_verification.sql).
+- [فرع Package 1](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
