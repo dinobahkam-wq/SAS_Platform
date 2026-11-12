@@ -2542,3 +2542,33 @@ textarea {
 .studio-saved-presets button{min-height:30px!important;padding:5px 8px!important;font:500 10px/1.5 var(--font-body)!important}
 .studio-saved-presets .studio-delete-preset{min-width:26px;padding-inline:5px!important;color:#a04b55!important}
 @media(max-width:520px){.studio-size-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-palette-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* SAS News Studio: persistent live preview and compact, collapsible controls */
+.studio-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.92fr);align-items:start;gap:18px}
+.studio-fields{grid-column:2;max-height:calc(100vh - 148px);overflow-y:auto;overscroll-behavior:contain;scrollbar-gutter:stable;align-content:start}
+.studio-preview{grid-column:1;position:sticky;top:18px;align-self:start;max-height:calc(100vh - 148px);overflow:auto;z-index:3;background:#fff;box-shadow:0 8px 28px rgba(24,45,34,.08)}
+.studio-preview canvas{max-height:calc(100vh - 230px);width:100%;height:auto;object-fit:contain}
+.studio-options{padding:0;gap:0}
+.studio-options>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:42px;padding:9px 12px;cursor:pointer;list-style:none;color:#30483a;font:700 12px/1.6 var(--font-body)}
+.studio-options>summary::-webkit-details-marker{display:none}
+.studio-options>summary::after{content:"＋";color:var(--accent);font:700 15px Arial,sans-serif}
+.studio-options[open]>summary::after{content:"−"}
+.studio-options[open]>summary{border-bottom:1px solid #e7ede8;margin-bottom:10px}
+.studio-options>*:not(summary){margin-inline:10px}
+.studio-options>*:last-child{margin-bottom:10px}
+.studio-summary-editor{display:grid;gap:4px}
+.studio-summary-editor textarea{min-height:150px}
+.studio-word-count{margin:0;text-align:left;color:#607267;font:600 11px/1.6 var(--font-body);direction:rtl}
+@media(max-width:1050px){
+ .studio-layout{grid-template-columns:minmax(0,1fr) minmax(300px,.8fr);gap:12px}
+ .studio-fields{max-height:calc(100vh - 126px)}
+ .studio-preview{top:12px;max-height:calc(100vh - 126px)}
+ .studio-preview canvas{max-height:calc(100vh - 220px)}
+}
+@media(max-width:720px){
+ .studio-layout{display:flex;flex-direction:column;gap:12px}
+ .studio-preview{position:sticky;top:6px;order:0;width:100%;max-height:46vh;padding:10px;z-index:8}
+ .studio-preview canvas{max-height:34vh;width:auto;max-width:100%;margin-inline:auto}
+ .studio-fields{order:1;width:100%;max-height:none;overflow:visible}
+ .studio-summary-editor textarea{min-height:125px}
+}
