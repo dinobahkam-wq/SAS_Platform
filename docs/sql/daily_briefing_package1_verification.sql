@@ -121,3 +121,6 @@ union all select 'briefing_edition_events',count(*) from public.briefing_edition
 --     source with a source_url or source_reference.
 -- 17. Existing grants on content_items/content_sources/content_source_links/
 --     user_roles are unchanged by this feature migration.
+-- 18. Updating/deleting a content_sources row linked to a development in an
+--     in_review or approved revision must fail; it is allowed after publication
+--     because the published snapshot is immutable.
