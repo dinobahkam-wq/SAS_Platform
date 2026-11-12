@@ -9,6 +9,7 @@ import { formatLabel, sectionLabel } from "@/lib/content";
 import { BrandLogo } from "@/components/brand-logo";
 
 const navigation = [
+  { href: "/briefings", label: "الإحاطة اليومية" },
   { href: "/news", label: "الأخبار" },
   { href: "/analysis", label: "التحليل والرأي" },
   { href: "/research", label: "الدراسات والأبحاث" },
