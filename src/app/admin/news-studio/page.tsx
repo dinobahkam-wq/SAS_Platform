@@ -1,5 +1,5 @@
 'use client';
-import {useEffect,useMemo,useRef,useState} from 'react';
+import {useEffect,useMemo,useRef,useState,type PointerEvent as ReactPointerEvent} from 'react';
 type Format='square'|'portrait'|'landscape'|'wide'|'story'|'custom';
 type Skin='forest'|'ink'|'ivory'|'navy'|'olive'|'stone'|'rose'|'charcoal'|'midnight'|'burgundy'|'cobalt'|'teal'|'sand'|'white'|'slate'|'plum'|'emerald'|'terracotta'|'custom';
 type Mode='news'|'urgent'|'statement'|'quote';
@@ -14,8 +14,12 @@ type FontChoice='tajarib'|'sans';
 type LogoVariant='color'|'dark'|'light';
 type HeadlineRow={text:string;left:number;right:number;y:number};
 type PhotoRect={x:number;y:number;w:number;h:number};
+type StudioElementId='headline'|'summary'|'photo';
+type StudioElement={id:StudioElementId;label:string;x:number;y:number;width:number;height:number};
+type ResizeHandle='nw'|'n'|'ne'|'e'|'se'|'s'|'sw'|'w';
+type StudioGesture={id:StudioElementId;mode:'move'|'resize';handle?:ResizeHandle;startX:number;startY:number;element:StudioElement;headlineDX:number;headlineDY:number;summaryDX:number;summaryDY:number;imageDX:number;imageDY:number;titleScale:number;summarySize:number;photoFrameWidth:number;photoFrameHeight:number};
 type StudioPreset={name:string;mode:Mode;format:Format;customWidth?:number;customHeight?:number;titleSize?:number;bodyWeight?:300|400;textWeight?:Weight;align?:Align;underline?:boolean;vertical?:'top'|'center'|'bottom';skin:Skin;customBg?:string;customFg?:string;customAccent?:string;customDim?:string;marginLeft?:number;marginRight?:number;photoZoom?:number;photoPanX?:number;photoPanY?:number;photoFrameWidth?:number;photoFrameHeight?:number;headlineFont?:FontChoice;summaryFont?:FontChoice;metaFont?:FontChoice;logoVariant?:LogoVariant;photoPosition:PhotoPosition;photoFit:PhotoFit;imageShape:PhotoShape;photoScale:number;imageRadius:number;imageBorder:number;photoOpacity:number;titleScale:number;textSize:number;lineSpacing:number;summaryLineSpacing:number;detailSpacing:number;headlineInset:number;headlineDX:number;headlineDY:number;summarySize:number;summaryInset:number;summaryDX:number;summaryDY:number;imageInset:number;imageDX:number;imageDY:number;sourcePlacement:SourcePlacement;sourceDX:number;sourceDY:number;wrapHeadline:boolean;showWeekday:boolean;showPath:boolean;sideMargin:number;topPadding:number;bottomPadding:number};
-type NewsGeometry={rows:HeadlineRow[];photo:PhotoRect|null;summaryLines:string[];summaryY:number;summaryRight:number;summaryFont:number;summaryLineHeight:number;source:string;sourceY:number|null;sourceRight:number;locationText:string;locationY:number|null;creditBelowY:number|null;continuationTitle?:string};
+type NewsGeometry={rows:HeadlineRow[];photo:PhotoRect|null;summaryLines:string[];summaryY:number;summaryRight:number;summaryWidth:number;summaryFont:number;summaryLineHeight:number;source:string;sourceY:number|null;sourceRight:number;locationText:string;locationY:number|null;creditBelowY:number|null;continuationTitle?:string};
 type Page={lines:string[];news?:NewsGeometry};
 type KnowledgePath={dossier:string;issue:string;event:string};
 const sizes:Record<Format,{w:number;h:number;label:string}>={square:{w:1080,h:1080,label:'مربع 1080 × 1080'},portrait:{w:1080,h:1350,label:'عمودي 1080 × 1350'},landscape:{w:1200,h:675,label:'أفقي 1200 × 675'},wide:{w:1600,h:900,label:'عريض 1600 × 900'},story:{w:1080,h:1920,label:'ستوري 1080 × 1920'},custom:{w:1080,h:1350,label:'مقاس مخصص'}};
@@ -128,7 +132,7 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
    ...layout!,
    rows:continued?[]:layout!.rows,
    photo:continued?null:layout!.photo,
-   summaryLines:chunk,summaryY,summaryRight,summaryFont,summaryLineHeight,
+   summaryLines:chunk,summaryY,summaryRight,summaryWidth,summaryFont,summaryLineHeight,
    source:sourceY!==null?source:'',
    sourceY,sourceRight:layout!.sourceRight,
    locationText:last?locationText:'',locationY,
@@ -293,7 +297,7 @@ function newsGeometry(cfg:Config,ctx:CanvasRenderingContext2D,top:number,bottom:
  const imageRect=frame?background
  ?{x:clamp(frame.x+cfg.imageDX,leftMargin+pad,w-rightMargin-pad-frame.w),y:clamp(top+10+cfg.imageDY,top,bottom-95),w:frame.w,h:Math.max(80,bottom-clamp(top+10+cfg.imageDY,top,bottom-95)-12)}
  :{x:photoX,y:origin+photoY,w:frame.w,h:photoH}:null;
- return {rows,photo:imageRect,summaryLines,summaryY:origin+summaryY,summaryRight,summaryFont,summaryLineHeight,
+ return {rows,photo:imageRect,summaryLines,summaryY:origin+summaryY,summaryRight,summaryWidth,summaryFont,summaryLineHeight,
  source,sourceY:sourceY===null?null:origin+sourceY,sourceRight:clamp(w-rightMargin-40+cfg.sourceDX,leftMargin+150,w-rightMargin),
  locationText,locationY:locationY===null?null:origin+locationY,
  creditBelowY:creditBelow&&imageRect?imageRect.y+imageRect.h+5:null};
@@ -316,7 +320,7 @@ function drawText(ctx:CanvasRenderingContext2D,line:string,x:number,y:number,und
  ctx.fillText(line,x,y);
  if(underlined&&line){const width=ctx.measureText(line).width;const from=ctx.textAlign==='center'?x-width/2:x-width;ctx.beginPath();ctx.moveTo(from,y+Number.parseInt(ctx.font.match(/(\d+)px/)?.[1]??'40',10)*1.09);ctx.lineTo(from+width,y+Number.parseInt(ctx.font.match(/(\d+)px/)?.[1]??'40',10)*1.09);ctx.lineWidth=2;ctx.strokeStyle=ctx.fillStyle as string;ctx.stroke()}
 }
-function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;error:string}{
+function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;error:string;elements?:StudioElement[]}{
  const {w,h}=dimensions(cfg);canvas.width=w;canvas.height=h;
  const ctx=canvas.getContext('2d');if(!ctx)return {total:0,error:'تعذر فتح محرك الرسم'};
  const {pages,font,lineHeight,error,top,heading,taxonomy}=plan(cfg,ctx);
@@ -370,6 +374,16 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   if(cfg.quoteRole){ctx.fillStyle=c.dim;ctx.font='400 24px '+sans;const roles=toLines(ctx,cfg.quoteRole,quoteWidth).slice(0,2);roles.forEach((line,j)=>ctx.fillText(line,right,qBottom+68+j*34))}
  }else{
   const news=p.news;if(!news)return {total:0,error:'فشل تخطيط الخبر'};
+  const sceneElements:StudioElement[]=[];
+  if(news.photo)sceneElements.push({id:'photo',label:'الصورة',x:news.photo.x,y:news.photo.y,width:news.photo.w,height:news.photo.h});
+  if(news.rows.length){
+   ctx.direction='rtl';ctx.font=cfg.textWeight+' '+font+'px '+fontStack(cfg.headlineFont);
+   const bounds=news.rows.map(row=>{const width=ctx.measureText(row.text).width,anchor=cfg.align==='center'?(row.left+row.right)/2:row.right;return {x:cfg.align==='center'?anchor-width/2:anchor-width,y:row.y,width,height:font*cfg.lineSpacing}});
+   const left=Math.min(...bounds.map(item=>item.x)),top=Math.min(...bounds.map(item=>item.y));
+   const right=Math.max(...bounds.map(item=>item.x+item.width)),bottom=Math.max(...bounds.map(item=>item.y+item.height));
+   sceneElements.push({id:'headline',label:'العنوان',x:left,y:top,width:right-left,height:bottom-top});
+  }
+  if(news.summaryLines.length)sceneElements.push({id:'summary',label:'الموجز',x:news.summaryRight-news.summaryWidth,y:news.summaryY,width:news.summaryWidth,height:news.summaryLines.length*news.summaryLineHeight});
   if(news.continuationTitle){
    ctx.direction='rtl';ctx.textAlign='right';ctx.fillStyle=c.accent;ctx.font='500 26px '+fontStack(cfg.metaFont);
    ctx.fillText('استكمال الموجز',w-margin-cfg.marginRight,cfg.topPadding+100);
@@ -422,7 +436,7 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   ctx.fillStyle=c.accent;ctx.font='500 24px '+serif;ctx.direction='rtl';ctx.textAlign='right';
   ctx.fillText(ellipsis(ctx,sourceText(cfg),w-margin*2),w-margin,foot-68);
  }
- return {total:pages.length,error:''};
+ return {total:pages.length,error:'',elements:cfg.mode==='news'||cfg.mode==='urgent'?sceneElements:[]};
 }
 async function getLogo(variant:LogoVariant):Promise<HTMLImageElement|null>{
  const sources:Record<LogoVariant,string>={color:'/brand/logos/sas-logo-1.svg',dark:'/brand/logos/sas-logo.svg',light:'/brand/logos/sas-logo-for%20white%20background.png'};
@@ -498,6 +512,7 @@ export default function Studio(){
  const [date,setDate]=useState(()=>{const p=new Intl.DateTimeFormat('en-GB-u-ca-gregory-nu-latn',{timeZone:'Asia/Aden',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const get=(type:string)=>p.find(x=>x.type===type)?.value??'';return get('year')+'/'+get('month')+'/'+get('day')});
  const [page,setPage]=useState(0);const [count,setCount]=useState(0);
  const [error,setError]=useState('');const [logo,setLogo]=useState<HTMLImageElement|null>(null);
+ const [scene,setScene]=useState<StudioElement[]>([]);const [selectedElement,setSelectedElement]=useState<StudioElementId|null>(null);const gesture=useRef<StudioGesture|null>(null);
  const [exporting,setExporting]=useState(false);const canvas=useRef<HTMLCanvasElement>(null);
  const cfg=useMemo(()=>({mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline}),[mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline]);
  useEffect(()=>{
@@ -538,7 +553,7 @@ export default function Studio(){
   if(!canvas.current)return;
   try{const headlineFace=fontStack(cfg.headlineFont),summaryFace=fontStack(cfg.summaryFont),metaFace=fontStack(cfg.metaFont);await Promise.all([document.fonts.load('300 43px '+headlineFace),document.fonts.load('500 51px '+headlineFace),document.fonts.load('700 86px '+headlineFace),document.fonts.load('400 43px '+summaryFace),document.fonts.load('500 27px '+metaFace)]);
    if(!live)return;const result=draw(canvas.current,cfg,page);
-   if(live){setError(result.error);setCount(result.total);if(page>=result.total&&result.total>0)setPage(result.total-1)}
+   if(live){setError(result.error);setCount(result.total);setScene(result.elements??[]);setSelectedElement(current=>(result.elements??[]).some(item=>item.id===current)?current:null);if(page>=result.total&&result.total>0)setPage(result.total-1)}
   }catch{if(live)setError('فشل تحميل الخطوط أو الرسم')}
  })()},120);return()=>{live=false;clearTimeout(id)}},[cfg,page]);
  async function loadMedia(file:File|undefined,kind:'person'|'map'|'news'){
@@ -558,6 +573,41 @@ export default function Studio(){
   }catch{setIssuerLogoError('تعذر قراءة الصورة المختارة')}
   finally{URL.revokeObjectURL(url)}
  }
+ function pointerPoint(event:ReactPointerEvent<SVGSVGElement>){
+  const rect=event.currentTarget.getBoundingClientRect(),size=dimensions(cfg);
+  return {x:(event.clientX-rect.left)*(size.w/Math.max(1,rect.width)),y:(event.clientY-rect.top)*(size.h/Math.max(1,rect.height))};
+ }
+ function beginGesture(event:ReactPointerEvent<SVGRectElement>,element:StudioElement,mode:'move'|'resize',handle?:ResizeHandle){
+  event.preventDefault();event.stopPropagation();
+  const svg=event.currentTarget.ownerSVGElement;if(!svg)return;
+  const rect=svg.getBoundingClientRect(),size=dimensions(cfg);
+  const startX=(event.clientX-rect.left)*(size.w/Math.max(1,rect.width)),startY=(event.clientY-rect.top)*(size.h/Math.max(1,rect.height));
+  gesture.current={id:element.id,mode,handle,startX,startY,element,headlineDX,headlineDY,summaryDX,summaryDY,imageDX,imageDY,titleScale,summarySize,photoFrameWidth,photoFrameHeight};
+  setSelectedElement(element.id);svg.setPointerCapture(event.pointerId);
+ }
+ function moveGesture(event:ReactPointerEvent<SVGSVGElement>){
+  const active=gesture.current;if(!active)return;
+  const point=pointerPoint(event),dx=point.x-active.startX,dy=point.y-active.startY;
+  if(active.mode==='move'){
+   if(active.id==='headline'){setHeadlineDX(active.headlineDX+dx);setHeadlineDY(active.headlineDY+dy)}
+   else if(active.id==='summary'){setSummaryDX(active.summaryDX+dx);setSummaryDY(active.summaryDY+dy)}
+   else{setImageDX(active.imageDX+dx);setImageDY(active.imageDY+dy)}
+   return;
+  }
+  const handle=active.handle??'se';
+  const xSign=handle.includes('e')?1:handle.includes('w')?-1:0;
+  const ySign=handle.includes('s')?1:handle.includes('n')?-1:0;
+  const horizontal=xSign?Math.max(.35,1+(dx*xSign)/Math.max(60,active.element.width)):1;
+  const vertical=ySign?Math.max(.35,1+(dy*ySign)/Math.max(60,active.element.height)):1;
+  const factor=xSign&&ySign?(horizontal+vertical)/2:xSign?horizontal:vertical;
+  if(active.id==='headline')setTitleScale(clamp(active.titleScale*factor,55,180));
+  else if(active.id==='summary')setSummarySize(clamp(active.summarySize*factor,18,72));
+  else{
+   if(xSign)setPhotoFrameWidth(clamp(active.photoFrameWidth*horizontal,55,150));
+   if(ySign)setPhotoFrameHeight(clamp(active.photoFrameHeight*vertical,55,150));
+  }
+ }
+ function endGesture(){gesture.current=null}
  async function exportPages(){
   if(exporting||!canvas.current)return;
   setExporting(true);
@@ -576,6 +626,8 @@ export default function Studio(){
    }
   }catch{setError('تعذر التصدير؛ تحقق من إعدادات تنزيل الملفات المتعددة')}finally{setExporting(false)}
  }
+ const activeSceneElement=scene.find(item=>item.id===selectedElement)??null;
+ const resizeHandles:ResizeHandle[]=['nw','n','ne','e','se','s','sw','w'];
  return <div className="studio-page">
  <header className="knowledge-hero"><span className="eyebrow">استوديو ساس · V3-C.3</span><h1>استوديو المنتجات البصرية</h1><p>معاينة وتصدير محلي دون نشر آلي أو تعديل تلقائي للبيان.</p></header>
  <div className="studio-layout"><section className="admin-panel studio-fields">
@@ -662,7 +714,16 @@ export default function Studio(){
  <p className="studio-note">الشعار دائمًا على أرضية فاتحة. في البيان الرسمي يُقسّم المتن تلقائيًا مع بقاء النص كاملًا في المحرر. راجع ترتيب الصفحات قبل النشر.</p>
  </section>
  <section className="studio-preview"><div className="studio-preview-header"><h2>معاينة التصميم</h2><span>{count>0?'صفحة '+(page+1)+' من '+count:'بانتظار النص'}</span></div>
- <canvas ref={canvas} role="img" aria-label="معاينة صفحة صورة الخبر" style={{aspectRatio:dimensions(cfg).w+'/'+dimensions(cfg).h}}/>
+ <div className="studio-canvas-stage" style={{aspectRatio:dimensions(cfg).w+'/'+dimensions(cfg).h}}>
+  <canvas ref={canvas} role="img" aria-label="معاينة صفحة صورة الخبر"/>
+  {(mode==='news'||mode==='urgent')&&scene.length>0&&<svg className="studio-interaction-layer" viewBox={'0 0 '+dimensions(cfg).w+' '+dimensions(cfg).h} preserveAspectRatio="none" role="group" aria-label="تحديد عناصر التصميم" onPointerMove={moveGesture} onPointerUp={endGesture} onPointerCancel={endGesture}>
+   {scene.map(element=>{const selected=selectedElement===element.id,points:Record<ResizeHandle,{x:number;y:number}>={nw:{x:element.x,y:element.y},n:{x:element.x+element.width/2,y:element.y},ne:{x:element.x+element.width,y:element.y},e:{x:element.x+element.width,y:element.y+element.height/2},se:{x:element.x+element.width,y:element.y+element.height},s:{x:element.x+element.width/2,y:element.y+element.height},sw:{x:element.x,y:element.y+element.height},w:{x:element.x,y:element.y+element.height/2}};return <g key={element.id}>
+    <rect className={selected?'studio-interaction-target is-selected':'studio-interaction-target'} x={element.x} y={element.y} width={Math.max(1,element.width)} height={Math.max(1,element.height)} onPointerDown={event=>beginGesture(event,element,'move')}><title>{element.label} – انقر للتحديد واسحب للتحريك</title></rect>
+    {selected&&resizeHandles.map(handle=>{const point=points[handle],size=18;return <rect key={handle} className={'studio-resize-handle handle-'+handle} x={point.x-size/2} y={point.y-size/2} width={size} height={size} rx={3} onPointerDown={event=>beginGesture(event,element,'resize',handle)}><title>تحجيم {element.label}</title></rect>})}
+   </g>})}
+  </svg>}
+ </div>
+ <div className="studio-selection-status"><span>{activeSceneElement?'العنصر المحدد: '+activeSceneElement.label:'انقر على العنوان أو الموجز أو الصورة لتحديده، ثم اسحبه للتحريك'}</span>{activeSceneElement&&<button type="button" onClick={()=>setSelectedElement(null)}>إلغاء التحديد</button>}</div>
  {count>1&&<div className="studio-pager"><button type="button" disabled={page===0} onClick={()=>setPage(v=>v-1)}>السابقة</button><span>{page+1} / {count}</span><button type="button" disabled={page===count-1} onClick={()=>setPage(v=>v+1)}>التالية</button></div>}
  </section></div></div>;
 }
