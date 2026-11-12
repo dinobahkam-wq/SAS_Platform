@@ -80,7 +80,7 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
   const qwidth=cfg.personImage?Math.floor(width*.58):width;
   font=Math.min(font,57);ctx.font=cfg.textWeight+' '+font+'px '+fontStack(cfg.headlineFont);
   let lines=toLines(ctx,cfg.title.trim(),qwidth);lineHeight=font*cfg.lineSpacing;
-  while(font>30&&lines.length*lineHeight>bottom-top-90){font-=2;ctx.font=cfg.textWeight+' '+font+'px '+serif;lines=toLines(ctx,cfg.title.trim(),qwidth);lineHeight=font*cfg.lineSpacing}
+  while(font>30&&lines.length*lineHeight>bottom-top-90){font-=2;ctx.font=cfg.textWeight+' '+font+'px '+fontStack(cfg.headlineFont);lines=toLines(ctx,cfg.title.trim(),qwidth);lineHeight=font*cfg.lineSpacing}
   if(lines.length*lineHeight>bottom-top-90)return {...empty,error:'الاقتباس طويل جدًا؛ اختصره ليناسب البطاقة'};
   return {pages:[{lines}],font,lineHeight,error:'',top,heading,taxonomy};
  }
@@ -88,7 +88,7 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
  let layout:NewsGeometry|null=null;
  font=Math.min(font,Math.round(((cfg.newsImage&&(cfg.photoPosition==='left'||cfg.photoPosition==='right'))?Math.max(32,w*.046):cfg.newsImage&&cfg.photoPosition==='background'?Math.max(36,w*.057):Math.max(42,w*.065))*cfg.titleScale/100));
  while(font>=26){
-  ctx.font=cfg.textWeight+' '+font+'px '+serif;lineHeight=font*cfg.lineSpacing;
+  ctx.font=cfg.textWeight+' '+font+'px '+fontStack(cfg.headlineFont);lineHeight=font*cfg.lineSpacing;
   layout=newsGeometry({...cfg,summary:''},ctx,top,bottom,font);
   if(layout)break;font-=2;
  }
@@ -362,7 +362,7 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   }
   const right=w-margin;const quoteWidth=cfg.personImage?(w-margin*2)*.58:w-margin*2;
   ctx.fillStyle=c.accent;ctx.font='700 35px '+serif;ctx.fillText('❝',right,top-20);
-  ctx.fillStyle=c.fg;ctx.font=cfg.textWeight+' '+font+'px '+serif;
+  ctx.fillStyle=c.fg;ctx.font=cfg.textWeight+' '+font+'px '+fontStack(cfg.headlineFont);
   p.lines.forEach((line,j)=>drawText(ctx,line,right,top+35+j*lineHeight,cfg.underline));
   const qBottom=top+40+p.lines.length*lineHeight;
   ctx.fillStyle=c.accent;ctx.fillRect(right-110,qBottom+5,110,5);
@@ -384,7 +384,7 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   }
   if(news.photo&&cfg.newsImage&&cfg.photoPosition!=='background')
    paintPhoto(ctx,cfg.newsImage,news.photo,cfg.photoFit,cfg.photoRounded,1,cfg.imageShape,cfg.imageRadius,cfg.imageBorder,c.accent,cfg.photoZoom,cfg.photoPanX,cfg.photoPanY);
-  ctx.font=cfg.textWeight+' '+font+'px '+serif;ctx.direction='rtl';ctx.fillStyle=c.fg;ctx.textAlign=cfg.align;
+  ctx.font=cfg.textWeight+' '+font+'px '+fontStack(cfg.headlineFont);ctx.direction='rtl';ctx.fillStyle=c.fg;ctx.textAlign=cfg.align;
   for(const line of news.rows){
    const x=cfg.align==='center'?(line.left+line.right)/2:line.right;
    drawText(ctx,line.text,x,line.y,cfg.underline);
@@ -536,7 +536,7 @@ export default function Studio(){
  useEffect(()=>{let live=true;void getLogo(logoVariant).then(img=>{if(live)setLogo(img)});return()=>{live=false}},[logoVariant]);
  useEffect(()=>{let live=true;const id=setTimeout(()=>{void (async()=>{
   if(!canvas.current)return;
-  try{await Promise.all([document.fonts.load('300 43px '+serif),document.fonts.load('500 51px '+serif),document.fonts.load('400 43px '+serif),document.fonts.load('700 86px '+serif)]);
+  try{const headlineFace=fontStack(cfg.headlineFont),summaryFace=fontStack(cfg.summaryFont),metaFace=fontStack(cfg.metaFont);await Promise.all([document.fonts.load('300 43px '+headlineFace),document.fonts.load('500 51px '+headlineFace),document.fonts.load('700 86px '+headlineFace),document.fonts.load('400 43px '+summaryFace),document.fonts.load('500 27px '+metaFace)]);
    if(!live)return;const result=draw(canvas.current,cfg,page);
    if(live){setError(result.error);setCount(result.total);if(page>=result.total&&result.total>0)setPage(result.total-1)}
   }catch{if(live)setError('فشل تحميل الخطوط أو الرسم')}
