@@ -185,3 +185,12 @@
 - **فحص نص SQL:** فحص lexical بسيط للأقواس والاقتباسات وعلامات dollar-quote؛ لا أخطاء Lexical مكتشفة. هذا ليس PostgreSQL parser ولا يثبت صلاحية التنفيذ.
 - **ما لم يحدث:** لا Migration مولدة من Supabase CLI؛ لا تشغيل على PostgreSQL محلي؛ لا اختبارات RLS فعلية؛ لا تطبيق على Supabase البعيد؛ لا صفحات React؛ لا نشر.
 - **الخطوة التالية:** مراجعة بشرية للمخطط وSQL، ثم سحب الفرع على Windows وتوليد Migration محلية وتشغيل `supabase db reset` واستعلامات التحقق وTypeScript/Build إذا تغير التطبيق. لا تستخدم `db push` أو `--remote` قبل موافقة منفصلة.
+
+
+### حالة PR #32 — آخر تحقق
+
+- [PR #32 — Daily Briefing Package 1: Data Model & Security](https://github.com/dinobahkam-wq/SAS_Platform/pull/32) مفتوح Draft وغير مدمج، وBase هو فرع PR #31 `feat/daily-briefing-experience-v1`.
+- رأس الفرع عند آخر تحقق قبل تحديث الذاكرة: `3fa0cdbbd1d205316dab1fec6793ca1822c5a2b3`؛ أعد فحص SHA الحي بعد أي تحديث.
+- PR #32 قابل للدمج تقنيًا وفق GitHub (`mergeable=true`) لكنه Draft ولا يعني ذلك اجتياز الاختبارات.
+- فحص Vercel ظهر `failure` مع رابط يوضح `build-rate-limit`; لا توجد نتيجة Build ناجحة ولا فشل مثبت في كود التطبيق.
+- لا توجد تغييرات على Supabase أو Vercel deployment أو main.
