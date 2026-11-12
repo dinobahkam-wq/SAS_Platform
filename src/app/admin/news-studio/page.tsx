@@ -325,6 +325,7 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
  const ctx=canvas.getContext('2d');if(!ctx)return {total:0,error:'تعذر فتح محرك الرسم'};
  const {pages,font,lineHeight,error,top,heading,taxonomy}=plan(cfg,ctx);
  const margin=cfg.sideMargin;
+ const sceneElements:StudioElement[]=[];
  if(error)return {total:0,error};
  const p=pages[Math.min(index,pages.length-1)];const c=cfg.skin==='custom'?{bg:cfg.customBg,fg:cfg.customFg,accent:cfg.customAccent,dim:cfg.customDim}:skins[cfg.skin];
  ctx.fillStyle=c.bg;ctx.fillRect(0,0,w,h);
@@ -374,7 +375,6 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   if(cfg.quoteRole){ctx.fillStyle=c.dim;ctx.font='400 24px '+sans;const roles=toLines(ctx,cfg.quoteRole,quoteWidth).slice(0,2);roles.forEach((line,j)=>ctx.fillText(line,right,qBottom+68+j*34))}
  }else{
   const news=p.news;if(!news)return {total:0,error:'فشل تخطيط الخبر'};
-  const sceneElements:StudioElement[]=[];
   if(news.photo)sceneElements.push({id:'photo',label:'الصورة',x:news.photo.x,y:news.photo.y,width:news.photo.w,height:news.photo.h});
   if(news.rows.length){
    ctx.direction='rtl';ctx.font=cfg.textWeight+' '+font+'px '+fontStack(cfg.headlineFont);
