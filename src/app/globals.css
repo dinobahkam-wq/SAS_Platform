@@ -2572,3 +2572,131 @@ textarea {
  .studio-fields{order:1;width:100%;max-height:none;overflow:visible}
  .studio-summary-editor textarea{min-height:125px}
 }
+
+
+/* SAS News Studio: persistent preview workspace refinement v2 */
+.studio-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, .9fr) minmax(0, 1.1fr);
+  grid-template-areas: "fields preview";
+  align-items: start;
+  gap: 16px;
+  direction: ltr;
+}
+.studio-fields {
+  grid-area: fields;
+  direction: rtl;
+  min-height: 0;
+  max-height: calc(100dvh - 190px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.studio-preview {
+  grid-area: preview;
+  direction: rtl;
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  min-width: 0;
+  max-height: calc(100dvh - 170px);
+  overflow: visible;
+  z-index: 5;
+}
+.studio-preview canvas {
+  display: block;
+  width: 100%;
+  max-height: calc(100dvh - 285px);
+  height: auto;
+  margin-inline: auto;
+  object-fit: contain;
+}
+.studio-options[open] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 9px 12px;
+  padding: 0 10px 10px;
+}
+.studio-options[open] > summary {
+  grid-column: 1 / -1;
+  margin: 0 -10px 2px;
+}
+.studio-options[open] > *:not(summary) {
+  min-width: 0;
+  margin-inline: 0;
+}
+.studio-options[open] > .studio-size-grid,
+.studio-options[open] > .studio-layout-templates,
+.studio-options[open] > .studio-palette-grid,
+.studio-options[open] > .studio-custom-colors,
+.studio-options[open] > .studio-custom-size,
+.studio-options[open] > .studio-note,
+.studio-options[open] > p,
+.studio-options[open] > details,
+.studio-options[open] > label:has(input[type="checkbox"]) {
+  grid-column: 1 / -1;
+}
+.studio-options[open] > label {
+  align-content: start;
+}
+.studio-summary-editor textarea {
+  min-height: 170px;
+  max-height: 38vh;
+}
+@media (max-width: 1050px) and (min-width: 721px) {
+  .studio-layout {
+    grid-template-columns: minmax(270px, .82fr) minmax(0, 1.18fr);
+    gap: 12px;
+  }
+  .studio-fields {
+    max-height: calc(100dvh - 160px);
+  }
+  .studio-preview {
+    top: 10px;
+    max-height: calc(100dvh - 140px);
+  }
+  .studio-preview canvas {
+    max-height: calc(100dvh - 255px);
+  }
+}
+@media (max-width: 720px) {
+  .studio-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    direction: rtl;
+  }
+  .studio-preview {
+    position: sticky;
+    top: 6px;
+    order: 0;
+    width: 100%;
+    max-height: 48dvh;
+    padding: 10px;
+    overflow: visible;
+    z-index: 8;
+  }
+  .studio-preview canvas {
+    width: auto;
+    max-width: 100%;
+    max-height: 34dvh;
+  }
+  .studio-fields {
+    order: 1;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+  }
+  .studio-options[open] {
+    grid-template-columns: 1fr;
+  }
+  .studio-options[open] > summary,
+  .studio-options[open] > * {
+    grid-column: 1;
+  }
+  .studio-summary-editor textarea {
+    min-height: 125px;
+    max-height: 42vh;
+  }
+}
