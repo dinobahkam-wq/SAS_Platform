@@ -200,3 +200,5 @@ git fetch origin
 - **التحقق:** فحص ساكن للبنية النصية لمسودة SQL فقط؛ لم يُشغّل PostgreSQL محليًا ولم تُختبر Migration على قاعدة محلية بعد.
 - **Supabase البعيد:** لا تغييرات، لا Migration مطبقة، ولا بيانات تجريبية.
 - **الخطوة التالية:** مراجعة PR الخاص بالحزمة، ثم توليد اسم Migration محليًا عبر `supabase migration new daily_briefing_package1` ونقل المسودة إليه واختبار `supabase db reset` محليًا.
+- **PR الحزمة:** [PR #32 — Data Model & Security Design](https://github.com/dinobahkam-wq/SAS_Platform/pull/32)، Draft، غير مدمج، base هو فرع PR #31.
+- **الحالة الحية عند آخر فحص:** PR #32 mergeable=true، ahead 13 / behind 0؛ فحص Vercel أظهر failure ولم يُشخّص أو يُنشر.
