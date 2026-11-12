@@ -160,3 +160,10 @@
 - **التحقق الفعلي:** استعلامات قراءة على Supabase أكدت المخطط الأساسي، الأعمدة، الأدوار، صلاحيات الجداول، ووجود helper. فحص ساكن لمسودة SQL: 7 جداول، 23 سياسة RLS، 12 trigger في اللقطة قبل إضافة حراس metadata؛ توازن الأقواس وعلامات dollar quotes سليم. هذا ليس اختبار PostgreSQL أو Migration.
 - **غير منفذ:** لا Migration محلية مولدة، لا `supabase db reset`، لا تطبيق بعيد، لا نشر، ولا تعديل على PR #30/#31.
 - **المطلوب:** مراجعة SQL محليًا بعد توليد اسم Migration عبر CLI، وتشغيل اختبارات PostgreSQL/RLS قبل اعتبار Package 1 مكتملة.
+
+### حالة PR #32 — Package 1
+
+- **PR #32:** [Data Model & Security Design](https://github.com/dinobahkam-wq/SAS_Platform/pull/32)، مفتوح Draft وغير مدمج.
+- **الفرع:** `feat/daily-briefing-data-model-security-v1`؛ أساسه الحالي رأس PR #31 `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef`.
+- **مقارنة الفرع:** ahead 13 / behind 0 عن PR #31؛ GitHub أكد `mergeable=true`.
+- **CI:** حالة Vercel على الرأس وقت الفحص `failure`. لم يُشخّص السبب ولم يُنفذ نشر.
