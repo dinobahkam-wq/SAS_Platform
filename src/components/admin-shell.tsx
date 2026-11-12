@@ -8,6 +8,7 @@ const navigation = [
   { href: "/admin/sources", label: "المصادر", symbol: "◎" },
   { href: "/admin/categories", label: "التصنيفات", symbol: "▦" },
   { href: "/admin/media", label: "مكتبة الوسائط", symbol: "▧" },
+  { href: "/admin/news-studio", label: "استوديو الصور الإخبارية", symbol: "✦" },
 ];
 
 export function AdminShell({
