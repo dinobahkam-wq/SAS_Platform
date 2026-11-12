@@ -286,3 +286,15 @@ Build the private editorial room against the new schema and RPCs. Test with the 
 
 
 - تم تحديث `src/types/database.types.ts` من مخطط Supabase الإنتاجي بعد تطبيق Package 1. عند سحب الفرع، سيحصل التطبيق على أنواع TypeScript الجديدة لجداول الإحاطة ودوال RPC.
+
+
+---
+
+## 13 نوفمبر 2026 — Package 2 editorial room checkpoint
+
+- Branch: `feat/daily-briefing-editorial-room-v1`, based on Package 1 branch.
+- Specification: `docs/daily-briefing-editorial-room-v1.md`.
+- First implementation includes private admin/editor route, edition register/create/edit, development/source workflow, executive-summary/development item insertion, review queue, admin approval/return/publish, and correction creation.
+- No local typecheck/build has been run. No PR has been opened and no Vercel deployment has been triggered.
+- Before local sync, preserve the previously generated empty migration file `20261112205516_daily_briefing_package1.sql` by moving it outside `supabase/migrations`. Keep local `next-env.d.ts` modifications.
+- Run typecheck/build/dev locally and send the output. Do not create test/fake news or publish a first edition before editorial review.
