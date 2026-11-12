@@ -673,7 +673,7 @@ create trigger briefing_development_sources_guard_locked
 -- so the reviewer cannot approve one evidence record and publish another.
 create or replace function private.briefing_guard_locked_source_registry()
 returns trigger language plpgsql security invoker set search_path = ''
-as $
+as $$
 begin
   if exists (
     select 1
@@ -687,7 +687,7 @@ begin
   end if;
   if tg_op = 'DELETE' then return old; else return new; end if;
 end;
-$;
+$$;
 
 create trigger content_sources_guard_briefing_locked
   before update or delete on public.content_sources
