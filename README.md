@@ -27,6 +27,7 @@
 - [دليل التحرير والتشكيل العربي](docs/editorial-arabic-style-v1.md)
 - [تنفيذ الواجهة التحريرية العامة v1](docs/public-editorial-experience-v1.md)
 - [مقارنة النظامين الطباعيين A وB](docs/brand-typography-ab-review.md)
+- [تنفيذ الصفحة الرئيسية التحريرية v2](docs/project-memory/PUBLIC_HOMEPAGE_EDITORIAL_V2_2026-11-12.md)
 
 ## حالة التطبيق العام
 
