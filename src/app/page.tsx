@@ -5,6 +5,7 @@ import {
   SectionHeading,
 } from "@/components/public-site";
 import { EditorialRail } from "@/components/editorial-rail";
+import { HomepageLead } from "@/components/homepage-lead";
 import { getPublishedContent, getPublishedRailSources } from "@/lib/public-content";
 
 export const dynamic = "force-dynamic";
@@ -17,11 +18,19 @@ export default async function Home() {
   const research = published.filter((item) => item.section === "research");
   const media = published.filter((item) => item.section === "media");
 
+  // The lead is chosen from published news only. Prefer an explicitly featured
+  // item; otherwise use the newest published news item.
+  const lead = news.find((item) => item.is_featured) ?? news[0] ?? null;
+  const supporting = lead ? news.filter((item) => item.id !== lead.id).slice(0, 2) : [];
+  const leadIds = new Set([lead?.id, ...supporting.map((item) => item.id)].filter(Boolean));
+  const remainingNews = news.filter((item) => !leadIds.has(item.id));
+
   return (
     <main className="public-site">
       <PublicHeader />
+
       <section className="home-compact-intro site-container">
-        <div>
+        <div className="home-intro-copy">
           <span className="eyebrow">منصة للإعلام والمعرفة السياسية</span>
           <h1>نفهم الأحداث، <em>ونقرأ ما وراءها.</em></h1>
           <p>أخبار موثقة، وقراءات سياسية، ودراسات تستكشف اليمن ومحيطه الإقليمي والدولي.</p>
@@ -32,21 +41,20 @@ export default async function Home() {
         </div>
       </section>
 
-      {news[0] ? (
-        <section className="home-news-flash site-container" aria-label="أحدث مادة منشورة">
-          <span className="home-news-flash-label"><i /> أحدث المواد</span>
-          <a href={"/content/" + news[0].slug}>{news[0].title}</a>
-        </section>
+      {lead ? (
+        <HomepageLead featured={lead} supporting={supporting} sourcesById={sourcesById} />
       ) : null}
 
-      <section className="home-section site-container">
+      <section className="home-section site-container home-news-section">
         <SectionHeading eyebrow="متابعة يومية" title="الأخبار والشؤون الجارية" href="/news" />
-        {news.length ? (
+        {remainingNews.length ? (
           <>
-            <EditorialRail title="التقارير الإخبارية" items={news.filter((item) => item.format === "news_report")} sourcesById={sourcesById} />
-            <EditorialRail title="الأخبار الموجزة" items={news.filter((item) => item.format === "news_brief")} sourcesById={sourcesById} />
-            <EditorialRail title="البيانات والقرارات الرسمية" items={news.filter((item) => item.format === "official_statement")} sourcesById={sourcesById} />
+            <EditorialRail title="التقارير الإخبارية" items={remainingNews.filter((item) => item.format === "news_report")} sourcesById={sourcesById} />
+            <EditorialRail title="الأخبار الموجزة" items={remainingNews.filter((item) => item.format === "news_brief")} sourcesById={sourcesById} />
+            <EditorialRail title="البيانات والقرارات الرسمية" items={remainingNews.filter((item) => item.format === "official_statement")} sourcesById={sourcesById} />
           </>
+        ) : news.length ? (
+          <p className="home-section-note">تظهر أحدث المواد في واجهة المشهد أعلاه. <a href="/news">استعرض أرشيف الأخبار كاملًا</a>.</p>
         ) : <EmptyContent />}
       </section>
 
@@ -57,7 +65,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="home-section site-container">
+      <section className="home-section site-container home-research-section">
         <SectionHeading eyebrow="معرفة معمقة" title="الدراسات والأبحاث" href="/research" />
         {research.length ? <EditorialRail title="أوراق ودراسات" items={research} sourcesById={sourcesById} /> : <EmptyContent />}
       </section>
