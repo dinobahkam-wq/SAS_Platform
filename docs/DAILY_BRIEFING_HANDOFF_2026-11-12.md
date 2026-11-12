@@ -304,6 +304,6 @@ Build the private editorial room against the new schema and RPCs. Test with the 
 ### PR #33 — الواجهة العامة
 
 - https://github.com/dinobahkam-wq/SAS_Platform/pull/33
-- Draft / Open / Not merged; head `a178b8a7782f67fbaa38005f8c279913ea7fce95`, base `feat/daily-briefing-data-model-security-v1`.
+- Draft / Open / Not merged; آخر commit للكود `a178b8a7782f67fbaa38005f8c279913ea7fce95`, base `feat/daily-briefing-data-model-security-v1`. تلت ذلك تحديثات توثيقية؛ افحص الرأس الحالي من GitHub.
 - GitHub reports mergeable=true at last check.
 - Vercel status is `build-rate-limit`; no GitHub Actions workflow run was reported. No local typecheck/build or manual deployment yet.
