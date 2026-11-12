@@ -68,7 +68,6 @@ export async function saveRevisionAction(formData: FormData) {
     coverage_note_ar: textField(formData, "coverage_note_ar"),
     window_start: windowStart,
     window_end: windowEnd,
-    checked_at: new Date().toISOString(),
   }).eq("id", revisionId).eq("status", "draft");
   if (error) redirect(`/briefing-room/${editionId}?error=revision-save`);
   revalidatePath(`/briefing-room/${editionId}`);
