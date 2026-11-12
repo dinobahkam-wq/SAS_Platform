@@ -471,11 +471,11 @@ begin
   if new.status = old.status
      and row(new.submitted_by,new.submitted_at,new.reviewed_by,new.reviewed_at,
              new.approved_by,new.approved_at,new.published_by,new.published_at,
-             new.published_snapshot)
+             new.published_snapshot,new.review_note_ar)
        is distinct from
          row(old.submitted_by,old.submitted_at,old.reviewed_by,old.reviewed_at,
              old.approved_by,old.approved_at,old.published_by,old.published_at,
-             old.published_snapshot) then
+             old.published_snapshot,old.review_note_ar) then
     raise exception 'Workflow metadata can only change through lifecycle transitions';
   end if;
 
@@ -512,11 +512,63 @@ create trigger briefing_revisions_guard
   before insert or update on public.briefing_revisions
   for each row execute function private.briefing_guard_revision();
 
+create or replace function private.briefing_guard_created_metadata()
+returns trigger language plpgsql security invoker set search_path = ''
+as $
+begin
+  if tg_table_name = 'briefing_editions' then
+    if new.created_by is distinct from old.created_by
+       or new.created_at is distinct from old.created_at then
+      raise exception 'Edition creator metadata is immutable';
+    end if;
+  elsif tg_table_name = 'briefing_developments' then
+    if new.created_by is distinct from old.created_by
+       or new.created_at is distinct from old.created_at then
+      raise exception 'Development creator metadata is immutable';
+    end if;
+  elsif tg_table_name = 'briefing_development_sources' then
+    if new.created_by is distinct from old.created_by
+       or new.created_at is distinct from old.created_at then
+      raise exception 'Development-source creator metadata is immutable';
+    end if;
+  elsif tg_table_name = 'briefing_edition_items' then
+    if new.created_at is distinct from old.created_at then
+      raise exception 'Edition-item creation timestamp is immutable';
+    end if;
+  elsif tg_table_name = 'briefing_development_relations' then
+    if new.created_by is distinct from old.created_by
+       or new.created_at is distinct from old.created_at then
+      raise exception 'Development-relation creator metadata is immutable';
+    end if;
+  end if;
+  return new;
+end;
+$;
+
+create trigger briefing_editions_guard_created_metadata
+  before update on public.briefing_editions
+  for each row execute function private.briefing_guard_created_metadata();
+create trigger briefing_developments_guard_created_metadata
+  before update on public.briefing_developments
+  for each row execute function private.briefing_guard_created_metadata();
+create trigger briefing_development_sources_guard_created_metadata
+  before update on public.briefing_development_sources
+  for each row execute function private.briefing_guard_created_metadata();
+create trigger briefing_edition_items_guard_created_metadata
+  before update on public.briefing_edition_items
+  for each row execute function private.briefing_guard_created_metadata();
+create trigger briefing_development_relations_guard_created_metadata
+  before update on public.briefing_development_relations
+  for each row execute function private.briefing_guard_created_metadata();
+
 create or replace function private.briefing_guard_edition()
 returns trigger language plpgsql security invoker set search_path = ''
 as $$
 begin
   if new.current_revision_id is distinct from old.current_revision_id then
+    if new.current_revision_id is null then
+      raise exception 'Current published revision pointer cannot be cleared';
+    end if;
     if not private.has_any_role(array['admin'])
        or current_setting('sas.briefing_publish_revision_id',true)
           is distinct from new.current_revision_id::text then
@@ -678,6 +730,7 @@ create trigger briefing_editions_audit_update
   for each row execute function private.briefing_audit_edition();
 
 revoke all on function private.briefing_touch_updated_at() from public,anon,authenticated;
+revoke all on function private.briefing_guard_created_metadata() from public,anon,authenticated;
 revoke all on function private.briefing_guard_revision() from public,anon,authenticated;
 revoke all on function private.briefing_guard_edition() from public,anon,authenticated;
 revoke all on function private.briefing_guard_locked_development() from public,anon,authenticated;
