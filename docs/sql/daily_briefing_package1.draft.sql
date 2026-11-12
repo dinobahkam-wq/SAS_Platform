@@ -596,6 +596,21 @@ create trigger briefing_development_sources_guard_locked
   before insert or update or delete on public.briefing_development_sources
   for each row execute function private.briefing_guard_locked_development();
 
+-- Make audit append-only even if table grants are broadened accidentally later.
+create or replace function private.briefing_reject_event_mutation()
+returns trigger language plpgsql security invoker set search_path = ''
+as $
+begin
+  raise exception 'Briefing audit events are append-only';
+end;
+$;
+
+create trigger briefing_edition_events_append_only
+  before update or delete on public.briefing_edition_events
+  for each row execute function private.briefing_reject_event_mutation();
+
+revoke all on function private.briefing_reject_event_mutation() from public,anon,authenticated;
+
 -- Append-only audit events are written by definer-owned triggers, not app DML.
 create or replace function private.briefing_audit_revision()
 returns trigger language plpgsql security definer set search_path = ''
