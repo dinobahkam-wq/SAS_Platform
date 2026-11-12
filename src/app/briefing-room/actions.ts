@@ -155,8 +155,10 @@ export async function addEditionItemAction(formData: FormData) {
   const revisionId = textField(formData, "revision_id");
   const developmentId = textField(formData, "development_id");
   const section = textField(formData, "display_section");
+  const summaryText = textField(formData, "summary_text_ar");
   const order = Number(textField(formData, "display_order"));
-  if (!editionId || !revisionId || !developmentId || !Number.isInteger(order) || order < 0) {
+  if (!editionId || !revisionId || !developmentId || !Number.isInteger(order) || order < 0
+    || (section === "executive_summary" && !summaryText)) {
     redirect(`/briefing-room/${editionId}?error=item-validation`);
   }
   const { error } = await supabase.from("briefing_edition_items").insert({
@@ -164,7 +166,7 @@ export async function addEditionItemAction(formData: FormData) {
     development_id: developmentId,
     display_section: section,
     display_order: order,
-    summary_text_ar: textField(formData, "summary_text_ar") || null,
+    summary_text_ar: summaryText || null,
     headline_override_ar: textField(formData, "headline_override_ar") || null,
     what_changed_ar: textField(formData, "what_changed_ar") || null,
     why_it_matters_ar: textField(formData, "why_it_matters_ar") || null,
