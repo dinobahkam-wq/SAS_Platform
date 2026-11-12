@@ -668,6 +668,11 @@ revoke all on function private.briefing_guard_edition() from public,anon,authent
 revoke all on function private.briefing_guard_locked_development() from public,anon,authenticated;
 revoke all on function private.briefing_audit_revision() from public,anon,authenticated;
 revoke all on function private.briefing_audit_edition() from public,anon,authenticated;
+revoke all on function private.briefing_guard_revision() from public,anon,authenticated;
+revoke all on function private.briefing_guard_edition() from public,anon,authenticated;
+revoke all on function private.briefing_guard_locked_development() from public,anon,authenticated;
+revoke all on function private.briefing_audit_revision() from public,anon,authenticated;
+revoke all on function private.briefing_audit_edition() from public,anon,authenticated;
 
 -- 7. Snapshot builder; invoker rights keep staff RLS in force.
 create or replace function private.build_briefing_snapshot(p_revision_id uuid)
@@ -891,6 +896,21 @@ begin
   select count(*) into v_summary from public.briefing_edition_items
   where revision_id=p_revision_id and display_section='executive_summary';
   if v_summary < 3 or v_summary > 5 then raise exception 'Executive summary must contain 3-5 items'; end if;
+
+  if exists (
+    select 1
+    from public.briefing_edition_items s
+    where s.revision_id=p_revision_id
+      and s.display_section='executive_summary'
+      and not exists (
+        select 1 from public.briefing_edition_items d
+        where d.revision_id=s.revision_id
+          and d.display_section='developments'
+          and d.development_id=s.development_id
+      )
+  ) then
+    raise exception 'Every executive-summary item must reference a development listed in the development ledger';
+  end if;
 
   select count(*) into v_developments from public.briefing_edition_items
   where revision_id=p_revision_id and display_section='developments';
