@@ -514,7 +514,7 @@ create trigger briefing_revisions_guard
 
 create or replace function private.briefing_guard_created_metadata()
 returns trigger language plpgsql security invoker set search_path = ''
-as $
+as $$
 begin
   if tg_table_name = 'briefing_editions' then
     if new.created_by is distinct from old.created_by
@@ -543,7 +543,7 @@ begin
   end if;
   return new;
 end;
-$;
+$$;
 
 create trigger briefing_editions_guard_created_metadata
   before update on public.briefing_editions
@@ -563,7 +563,7 @@ create trigger briefing_development_relations_guard_created_metadata
 
 create or replace function private.briefing_guard_edition_insert()
 returns trigger language plpgsql security invoker set search_path = ''
-as $
+as $$
 begin
   if new.status <> 'active' or new.current_revision_id is not null then
     raise exception 'New editions must start active without a published revision';
@@ -573,7 +573,7 @@ begin
   end if;
   return new;
 end;
-$;
+$$;
 
 create trigger briefing_editions_guard_insert
   before insert on public.briefing_editions
@@ -671,11 +671,11 @@ create trigger briefing_development_sources_guard_locked
 -- Make audit append-only even if table grants are broadened accidentally later.
 create or replace function private.briefing_reject_event_mutation()
 returns trigger language plpgsql security invoker set search_path = ''
-as $
+as $$
 begin
   raise exception 'Briefing audit events are append-only';
 end;
-$;
+$$;
 
 create trigger briefing_edition_events_append_only
   before update or delete on public.briefing_edition_events
@@ -1063,7 +1063,7 @@ create or replace function public.get_public_briefing_archive(
   p_before_edition_no bigint default null
 )
 returns jsonb language sql stable security definer set search_path = ''
-as $
+as $$
   select coalesce(jsonb_agg(to_jsonb(q) order by q.edition_date desc,q.edition_no desc),'[]'::jsonb)
   from (
     select e.edition_no,e.slug,e.edition_date,e.edition_type,r.published_at,r.title_ar
@@ -1085,7 +1085,7 @@ as $
     order by e.edition_date desc,e.edition_no desc
     limit greatest(1,least(coalesce(p_limit,20),50))
   ) q;
-$;
+$$;
 
 comment on function public.get_public_briefing(text)
   is 'Intentional read-only public endpoint. Returns only the current published snapshot for a non-withdrawn edition.';
