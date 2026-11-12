@@ -968,10 +968,11 @@ as $$
 $$;
 
 create or replace function public.get_public_briefing_archive(
-  p_limit integer default 20,p_before date default null
+  p_limit integer default 20,p_before_date date default null,
+  p_before_edition_no bigint default null
 )
 returns jsonb language sql stable security definer set search_path = ''
-as $$
+as $
   select coalesce(jsonb_agg(to_jsonb(q) order by q.edition_date desc,q.edition_no desc),'[]'::jsonb)
   from (
     select e.edition_no,e.slug,e.edition_date,e.edition_type,r.published_at,r.title_ar
@@ -980,17 +981,31 @@ as $$
       on r.id=e.current_revision_id and r.edition_id=e.id
     where e.status in ('active','archived') and r.status='published'
       and r.published_snapshot is not null
-      and (p_before is null or e.edition_date < p_before)
+      and (
+        p_before_date is null
+        or (
+          p_before_edition_no is null and e.edition_date < p_before_date
+        )
+        or (
+          p_before_edition_no is not null
+          and (e.edition_date,e.edition_no) < (p_before_date,p_before_edition_no)
+        )
+      )
     order by e.edition_date desc,e.edition_no desc
     limit greatest(1,least(coalesce(p_limit,20),50))
   ) q;
-$$;
+$;
+
+comment on function public.get_public_briefing(text)
+  is 'Intentional read-only public endpoint. Returns only the current published snapshot for a non-withdrawn edition.';
+comment on function public.get_public_briefing_archive(integer,date,bigint)
+  is 'Intentional read-only public endpoint. Returns bounded metadata for current published editions only.';
 
 -- Explicit function ACLs: public read only; lifecycle functions authenticated only.
 revoke all on function public.get_public_briefing(text) from public,anon,authenticated;
-revoke all on function public.get_public_briefing_archive(integer,date) from public,anon,authenticated;
+revoke all on function public.get_public_briefing_archive(integer,date,bigint) from public,anon,authenticated;
 grant execute on function public.get_public_briefing(text) to anon,authenticated;
-grant execute on function public.get_public_briefing_archive(integer,date) to anon,authenticated;
+grant execute on function public.get_public_briefing_archive(integer,date,bigint) to anon,authenticated;
 
 revoke all on function public.create_briefing_edition(text,date,text,text,text,text,text,timestamptz,timestamptz) from public,anon,authenticated;
 revoke all on function public.submit_briefing_revision(uuid) from public,anon,authenticated;
