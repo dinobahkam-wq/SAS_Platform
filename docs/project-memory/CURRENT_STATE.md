@@ -139,7 +139,7 @@
 
 - **وثيقة التسليم:** [DAILY_BRIEFING_HANDOFF_2026-11-12.md](../DAILY_BRIEFING_HANDOFF_2026-11-12.md).
 - **PR #30:** مفتوح Draft وغير مدمج؛ الفرع `feat/daily-briefing-v1`، SHA المتحقق عند إعداد التسليم `729738eef6774ccb7d2b56d9bb6be8906287b1bc`.
-- **PR #31:** مفتوح Draft وغير مدمج؛ الفرع `feat/daily-briefing-experience-v1`، SHA المتحقق قبل إضافة وثيقة التسليم `731678065e068c8d82b3a883957108f9aa57df7f`. سيحدث الرأس بإضافات هذا التسليم؛ افحصه حيًا عند الاستئناف.
+- **PR #31:** مفتوح Draft وغير مدمج؛ الفرع `feat/daily-briefing-experience-v1`، SHA النهائي بعد تحديث وثائق التسليم `581ae36cc387dcf10c275768f857f641713f8bf9`. آخر حالة PR #31: `mergeable=true`، لكنه لا يزال Draft وغير مدمج؛ افحص الحالة الحية عند الاستئناف.
 - **التسلسل:** PR #31 مكدس فوق فرع PR #30؛ لا دمج أو تغيير base أو إعادة تأسيس للفروع دون موافقة.
 - **المرحلة التالية:** Package 1 — Data Model & Security Design: ERD، مصفوفة الصلاحيات، دورة الحالات، سياسة التصحيح، عقد القراءة العامة، وMigration للمراجعة فقط.
 - **بيئة Windows:** `C:\\SAS-PLATFORM-DEV`؛ افحص `git status` قبل أي انتقال، واحفظ تعديل `next-env.d.ts` وStash السابق دون حذف أو استعادة تلقائية.
