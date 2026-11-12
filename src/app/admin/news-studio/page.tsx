@@ -45,7 +45,7 @@ function toLines(ctx:CanvasRenderingContext2D,text:string,maxWidth:number):strin
  return output;
 }
 function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number;lineHeight:number;error:string;top:number;heading:string[];taxonomy:string[]}{
- const {w,h}=dimensions(cfg);const statement=cfg.mode==='statement';const margin=cfg.sideMargin;const width=w-margin*2-cfg.marginLeft-cfg.marginRight;const leftMargin=margin+cfg.marginLeft,rightMargin=margin+cfg.marginRight;const empty={pages:[] as Page[],font:0,lineHeight:0,error:'',top:0,heading:[] as string[],taxonomy:[] as string[]};
+ const {w,h}=dimensions(cfg);const statement=cfg.mode==='statement';const margin=cfg.sideMargin;const width=w-margin*2-cfg.marginLeft-cfg.marginRight;const empty={pages:[] as Page[],font:0,lineHeight:0,error:'',top:0,heading:[] as string[],taxonomy:[] as string[]};
  if(w<600||h<600||w>2400||h>3000)return {...empty,error:'الأبعاد المطلوبة خارج النطاق المسموح (600–2400 عرضًا، 600–3000 ارتفاعًا)'};
  if(!cfg.title.trim()||(statement&&!cfg.body.trim()))return {...empty,error:'أدخل العنوان والنص المطلوب'};
  if(/https?:\/\/|www\./i.test(cfg.title))return {...empty,error:'العنوان يحتوي على رابط إلكتروني. انقل الرابط إلى حقل المصدر، واترك العنوان نصًا خبريًا فقط.'};
@@ -78,7 +78,7 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
  }
  if(cfg.mode==='quote'){
   const qwidth=cfg.personImage?Math.floor(width*.58):width;
-  font=Math.min(font,57);ctx.font=cfg.textWeight+' '+font+'px '+serif;
+  font=Math.min(font,57);ctx.font=cfg.textWeight+' '+font+'px '+fontStack(cfg.headlineFont);
   let lines=toLines(ctx,cfg.title.trim(),qwidth);lineHeight=font*cfg.lineSpacing;
   while(font>30&&lines.length*lineHeight>bottom-top-90){font-=2;ctx.font=cfg.textWeight+' '+font+'px '+serif;lines=toLines(ctx,cfg.title.trim(),qwidth);lineHeight=font*cfg.lineSpacing}
   if(lines.length*lineHeight>bottom-top-90)return {...empty,error:'الاقتباس طويل جدًا؛ اختصره ليناسب البطاقة'};
@@ -284,7 +284,7 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
  ctx.fillStyle=c.accent;ctx.fillRect(w-12,0,12,h);
  ctx.direction='rtl';ctx.textAlign='right';ctx.textBaseline='top';
  ctx.fillStyle=c.accent;ctx.font='700 34px '+fontStack(cfg.metaFont);
- ctx.fillText(modes[cfg.mode],w-margin,cfg.topPadding);
+ ctx.fillText(modes[cfg.mode],w-margin-cfg.marginRight,cfg.topPadding);
  ctx.strokeStyle=c.accent;ctx.globalAlpha=.52;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(margin+cfg.marginLeft,cfg.topPadding+74);ctx.lineTo(w-margin-cfg.marginRight,cfg.topPadding+74);ctx.stroke();ctx.globalAlpha=1;
  let yy=cfg.topPadding+100;
  if(taxonomy.length){
@@ -302,12 +302,12 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   }
   const headY=cfg.issuerLogo?taxEnd+180:taxEnd+18;
   ctx.fillStyle=c.fg;ctx.font='700 '+cfg.titleSize+'px '+fontStack(cfg.headlineFont);
-  heading.forEach((line,j)=>ctx.fillText(line,w-margin,headY+j*cfg.titleSize*1.32));
+  heading.forEach((line,j)=>ctx.fillText(line,w-margin-cfg.marginRight,headY+j*cfg.titleSize*1.32));
   const issuerY=headY+heading.length*cfg.titleSize*1.32+14;
   ctx.fillStyle=c.dim;ctx.font='500 27px '+fontStack(cfg.metaFont);
   const issuerLines=toLines(ctx,cfg.issuer||'الجهة المصدرة غير محددة',w-margin*2-cfg.marginLeft-cfg.marginRight);
   if(issuerLines.length>2)return {total:pages.length,error:'اسم الجهة طويل؛ اختصر الاسم'};
-  issuerLines.forEach((line,j)=>ctx.fillText(line,w-margin,issuerY+j*38));
+  issuerLines.forEach((line,j)=>ctx.fillText(line,w-margin-cfg.marginRight,issuerY+j*38));
   ctx.fillStyle=c.fg;ctx.font=cfg.bodyWeight+' '+font+'px '+fontStack(cfg.summaryFont);ctx.textAlign=cfg.align;
   const x=cfg.align==='center'?(margin+cfg.marginLeft+w-margin-cfg.marginRight)/2:w-margin-cfg.marginRight;
   p.lines.forEach((line,j)=>{if(line)drawText(ctx,line,x,top+j*lineHeight,cfg.underline)});ctx.textAlign='right';
@@ -347,7 +347,7 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
    ctx.direction='rtl';ctx.textAlign='right';ctx.font='500 25px '+sans;ctx.fillStyle=c.accent;
    ctx.fillText(ellipsis(ctx,news.source,Math.max(120,news.sourceRight-margin-15)),news.sourceRight,news.sourceY);
   }
-  if(news.locationY!==null){ctx.fillStyle=c.accent;ctx.font='500 23px '+sans;ctx.direction='rtl';ctx.textAlign='right';ctx.fillText(ellipsis(ctx,news.locationText,w-2*margin),w-margin-20,news.locationY)}
+  if(news.locationY!==null){ctx.fillStyle=c.accent;ctx.font='500 23px '+sans;ctx.direction='rtl';ctx.textAlign='right';ctx.fillText(ellipsis(ctx,news.locationText,w-2*margin-cfg.marginLeft-cfg.marginRight),w-margin-cfg.marginRight-20,news.locationY)}
   if(news.photo&&cfg.newsImage)photoCredit(ctx,cfg,news.photo,news.creditBelowY,c.dim);
  }
 
