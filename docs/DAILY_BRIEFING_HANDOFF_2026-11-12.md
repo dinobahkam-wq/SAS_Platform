@@ -283,3 +283,6 @@ Do not delete local `next-env.d.ts` changes.
 
 ### Next work
 Build the private editorial room against the new schema and RPCs. Test with the real signed-in admin/editor account; do not insert fictional news or publish without explicit editorial approval.
+
+
+- تم تحديث `src/types/database.types.ts` من مخطط Supabase الإنتاجي بعد تطبيق Package 1. عند سحب الفرع، سيحصل التطبيق على أنواع TypeScript الجديدة لجداول الإحاطة ودوال RPC.
