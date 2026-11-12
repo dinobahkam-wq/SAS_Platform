@@ -115,3 +115,5 @@
 - [مسودة SQL للمراجعة فقط](../sql/daily_briefing_package1.draft.sql) — ليست Migration مطبقة.
 - [استعلامات التحقق المحلي](../sql/daily_briefing_package1_verification.sql).
 - [فرع Package 1](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
+- [PR #32 — Package 1 Data Model & Security Design](https://github.com/dinobahkam-wq/SAS_Platform/pull/32) — Draft، مكدس فوق PR #31.
+- [فرع Package 1](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
