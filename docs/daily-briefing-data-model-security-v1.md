@@ -89,6 +89,7 @@ erDiagram
 ### `briefing_development_sources` — إسناد التطور
 - `development_id`, `source_id`.
 - `source_role`: primary / supporting / context.
+- `display_publicly boolean default false`: مصدر داخلي افتراضيًا، ولا يظهر في النسخة العامة إلا باختيار تحريري صريح.
 - `source_excerpt`, `attribution_note`, `accessed_at`, `display_order`.
 - علاقة many-to-many بمفتاح مركب يمنع تكرار المصدر داخل التطور.
 
@@ -156,9 +157,9 @@ published --(correction request)--> new draft revision
 5. دوال دورة العمل `SECURITY INVOKER`؛ تظل RLS فعالة.
 6. دالتا القراءة العامة فقط `SECURITY DEFINER`، مع `search_path = ''` ومراجع مؤهلة بالكامل، وإرجاع Snapshot منشور فقط.
 7. تسحب EXECUTE من PUBLIC صراحة، ثم تمنح القراءة العامة لـ anon/authenticated، ودوال التحرير لـ authenticated فقط.
-8. دوال triggers الخاصة لا تُتاح للتنفيذ المباشر من أدوار API.
-9. التصحيح لا يغيّر Snapshot منشورًا سابقًا.
-10. لا تغييرات على default privileges العامة في هذه الحزمة؛ فهي تؤثر على كامل المنصة وتحتاج حزمة أمنية منفصلة.
+9. دوال triggers الخاصة لا تُتاح للتنفيذ المباشر من أدوار API.
+10. التصحيح لا يغيّر Snapshot منشورًا سابقًا.
+11. لا تغييرات على امتيازات الجداول الأساسية القائمة (`content_items`, `content_sources`, `content_source_links`, `user_roles`) ضمن هذه الحزمة؛ نطاقها يقتصر على جداول الإحاطة وإضافة حقول وصفية للمصادر.
 
 **ملاحظة Advisor:** قد يظهر تحذير SECURITY DEFINER على دالتي القراءة العامتين؛ هذا تعريض مقصود ومحدود لواجهتي قراءة فقط. يجب مراجعة نص التحذير بعد الاختبار المحلي وعدم تجاهل أي دوال أخرى تظهر.
 
@@ -224,3 +225,14 @@ npm run build
 - مؤشر أرشيف الأعداد يستخدم زوج التاريخ/رقم العدد لتصفح ثابت عند وجود أكثر من عدد في اليوم.
 - فحص SQL النصي الأخير: 7 جداول، 23 سياسة، 18 Trigger، 18 دالة، ولا أخطاء lexical مكتشفة. هذا إحصاء وفحص نصي وليس تحققًا من PostgreSQL parser أو RLS runtime.
 - PR #32 مفتوح Draft فوق PR #31. فحص Vercel المرفق أظهر فشلًا مرتبطًا بحد معدل البناء في الحساب (build-rate-limit)، وليس نتيجة فشل TypeScript أو اختبار SQL. لا يوجد ادعاء باجتياز Build.
+
+
+## 13. نتيجة مطابقة مكتبة المصادر الفعلية
+
+أعيد فحص قاعدة Supabase للقراءة فقط بعد مراجعة الحزمة:
+- `content_sources` تحتوي حاليًا على `id, source_type, source_name, organization_name, source_url, source_reference, publication_date, attribution_note, is_active, created_by, created_at, updated_at`.
+- `publication_date` من النوع `date`، ولذلك بقيت دون تغيير؛ أضيف `published_at timestamptz` لوقت النشر الدقيق.
+- سياسة القراءة العامة الحالية للمصادر لا تسمح بقراءة المصدر المجهول إلا إذا ارتبط بمادة منشورة في `content_items`. لذلك لا يصح افتراض أن كل سجل مصدر في المكتبة عام.
+- عولج ذلك في نموذج الإحاطة بحقل `briefing_development_sources.display_publicly`، وقيمته الافتراضية `false`. تعرض لقطة النشر فقط المصادر التي اختيرت صراحة للعرض وكانت نشطة، كما تشترط بوابة النشر مصدرًا عامًا واحدًا صالحًا على الأقل لكل تطور.
+- أزيل من مسودة SQL سحب امتيازات `TRUNCATE/REFERENCES/TRIGGER` عن الجداول الأساسية القائمة؛ الحزمة لا تغيّر صلاحياتها.
+- استعلامات الفحص كانت للقراءة فقط؛ لم تُنفذ أي تغييرات على قاعدة Supabase.
