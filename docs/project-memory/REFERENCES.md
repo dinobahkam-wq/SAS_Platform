@@ -98,3 +98,5 @@
 - لا يوجد في فرع تكامل SAS_Platform مسارا `/briefings` أو `/admin/briefings` حتى تاريخ هذا التحديث.
 - لا توجد Migrations خاصة بالإحاطة في `supabase/migrations/`.
 - يجب تدقيق مخطط `public.content_items` و`public.content_sources` وعلاقاتها قبل تقرير نموذج البيانات.
+
+- [PR #30 — تجهيز مرحلة الإحاطة اليومية V1 (Draft، توثيق فقط)](https://github.com/dinobahkam-wq/SAS_Platform/pull/30).
