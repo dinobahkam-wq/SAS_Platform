@@ -307,3 +307,8 @@ Build the private editorial room against the new schema and RPCs. Test with the 
 - Draft / Open / Not merged; آخر commit للكود `a178b8a7782f67fbaa38005f8c279913ea7fce95`, base `feat/daily-briefing-data-model-security-v1`. تلت ذلك تحديثات توثيقية؛ افحص الرأس الحالي من GitHub.
 - GitHub reports mergeable=true at last check.
 - Vercel status is `build-rate-limit`; no GitHub Actions workflow run was reported. No local typecheck/build or manual deployment yet.
+
+
+### توضيح نطاق الفروع
+
+الفرع `feat/daily-briefing-editorial-room-v1` ناتج عن فهم سابق غير صحيح للحاجة إلى محرر داخلي. لا تتابع تطويره ولا تحذفه؛ لم يُدمج وليس جزءًا من مسار المنتج المعتمد. المسار الحالي هو الواجهة العامة للقراءة والأرشيف في PR #33، وتحديث المحتوى يتم من المحادثة.
