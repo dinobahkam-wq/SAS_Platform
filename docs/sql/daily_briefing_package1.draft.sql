@@ -285,6 +285,8 @@ create policy briefing_editions_staff_insert on public.briefing_editions
   for insert to authenticated
   with check (
     created_by = (select auth.uid())
+    and status = 'active'
+    and current_revision_id is null
     and (select private.has_any_role(array['admin','editor']))
   );
 create policy briefing_editions_staff_update on public.briefing_editions
@@ -561,6 +563,24 @@ create trigger briefing_development_relations_guard_created_metadata
   before update on public.briefing_development_relations
   for each row execute function private.briefing_guard_created_metadata();
 
+create or replace function private.briefing_guard_edition_insert()
+returns trigger language plpgsql security invoker set search_path = ''
+as $
+begin
+  if new.status <> 'active' or new.current_revision_id is not null then
+    raise exception 'New editions must start active without a published revision';
+  end if;
+  if new.created_by is distinct from auth.uid() then
+    raise exception 'Edition creator must be the authenticated user';
+  end if;
+  return new;
+end;
+$;
+
+create trigger briefing_editions_guard_insert
+  before insert on public.briefing_editions
+  for each row execute function private.briefing_guard_edition_insert();
+
 create or replace function private.briefing_guard_edition()
 returns trigger language plpgsql security invoker set search_path = ''
 as $$
@@ -583,10 +603,12 @@ begin
     end if;
   end if;
 
-  if old.current_revision_id is not null
-     and row(new.slug,new.edition_date,new.edition_type)
+  if exists (
+    select 1 from public.briefing_revisions r
+    where r.edition_id = old.id
+  ) and row(new.slug,new.edition_date,new.edition_type)
        is distinct from row(old.slug,old.edition_date,old.edition_type) then
-    raise exception 'Published edition identity is immutable';
+    raise exception 'Edition identity is immutable once its first revision exists';
   end if;
 
   if new.status is distinct from old.status then
@@ -732,6 +754,7 @@ create trigger briefing_editions_audit_update
 revoke all on function private.briefing_touch_updated_at() from public,anon,authenticated;
 revoke all on function private.briefing_guard_created_metadata() from public,anon,authenticated;
 revoke all on function private.briefing_guard_revision() from public,anon,authenticated;
+revoke all on function private.briefing_guard_edition_insert() from public,anon,authenticated;
 revoke all on function private.briefing_guard_edition() from public,anon,authenticated;
 revoke all on function private.briefing_guard_locked_development() from public,anon,authenticated;
 revoke all on function private.briefing_audit_revision() from public,anon,authenticated;
