@@ -2483,3 +2483,36 @@ textarea {
   .home-lead-main:hover .home-lead-image img,
   .home-support-item:hover .home-lead-image img { transform: none !important; }
 }
+/* SAS News Studio — migrated from the legacy SAS studio, adapted to the current platform identity */
+.studio-page { min-width: 0; padding: 8px 0 28px; }
+.studio-page .knowledge-hero { margin-bottom: 22px; padding: 24px 28px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.studio-page .knowledge-hero .eyebrow { color: var(--accent); font: 700 10px/1.7 var(--font-body); }
+.studio-page .knowledge-hero h1 { margin: 8px 0; color: var(--foreground); font: 500 clamp(27px,3vw,38px)/1.5 var(--font-display); }
+.studio-page .knowledge-hero p { margin: 0; color: var(--muted); font: 400 12px/1.9 var(--font-body); }
+.studio-layout { display: grid; grid-template-columns: minmax(300px, 390px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.studio-fields { min-width: 0; display: grid; gap: 15px; padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.studio-fields h2 { margin: 0; color: var(--foreground); font: 700 20px/1.6 var(--font-interface); }
+.studio-fields label { display: grid; gap: 7px; color: #33443a; font: 600 12px/1.7 var(--font-body); }
+.studio-fields input, .studio-fields textarea, .studio-fields select { width: 100%; min-width: 0; padding: 10px 11px; border: 1px solid #dce4de; border-radius: 8px; background: #fff; color: var(--foreground); font: 400 13px/1.8 var(--font-body); }
+.studio-fields textarea { resize: vertical; line-height: 1.9; }
+.studio-fields input[type="file"] { padding: 8px; }
+.studio-fields input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); }
+.studio-fields input[type="range"] { padding: 0; accent-color: var(--accent); }
+.studio-fields button { min-height: 38px; padding: 9px 13px; border: 1px solid #d8e3dc; border-radius: 8px; background: #f4f7f3; color: #234537; font: 600 12px/1.6 var(--font-body); cursor: pointer; }
+.studio-fields button:disabled { opacity: .5; cursor: not-allowed; }
+.studio-fields button:hover { background: #eaf1eb; }
+.studio-options { min-width: 0; display: grid; gap: 10px; padding: 12px; border: 1px solid #dce5df; border-radius: 10px; }
+.studio-options legend, .studio-taxonomy legend { padding: 0 7px; color: #234537; font: 700 12px/1.6 var(--font-body); }
+.studio-options label:has(input[type="checkbox"]) { display: flex; align-items: center; gap: 9px; }
+.studio-options small { color: #68786f; font: 400 11px/1.8 var(--font-body); }
+.studio-options details { display: grid; gap: 10px; padding: 11px; border: 1px solid #dce5df; border-radius: 8px; background: #fbfcfa; }
+.studio-options details > summary { color: #234537; font: 700 12px/1.7 var(--font-body); cursor: pointer; }
+.studio-note { margin: 0; color: #65756b; font: 400 11px/1.9 var(--font-body); }
+.studio-preview { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.studio-preview-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; color: var(--muted); font: 500 12px/1.7 var(--font-body); }
+.studio-preview-header h2 { margin: 0; color: var(--foreground); font: 700 17px/1.7 var(--font-interface); }
+.studio-preview canvas { display: block; width: 100%; max-height: 780px; object-fit: contain; border: 1px solid var(--line); border-radius: 6px; background: #092d28; }
+.studio-pager { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 15px; color: var(--muted); font: 500 12px var(--font-body); }
+.studio-custom-size { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 1050px) { .studio-layout { grid-template-columns: 1fr; } .studio-preview canvas { max-height: 680px; } }
+@media (max-width: 720px) { .studio-fields, .studio-preview { padding: 14px; } .studio-custom-size { grid-template-columns: 1fr; } }
