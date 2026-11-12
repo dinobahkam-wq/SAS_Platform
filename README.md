@@ -38,10 +38,10 @@ See [Development Workflow](docs/development-workflow.md) for the operational rul
 
 ## Repository status
 
-**Historical main-branch status:** this branch does not yet contain the stacked CMS and public editorial feature PRs. The editorial schema was designed and applied in the active SAS_Platform Supabase project on the development branch, with migrations documented there. For the current implementation state and verification gaps, read `docs/project-memory/CURRENT_STATE.md` and inspect open PRs. Do not mistake this main-branch snapshot for the current feature implementation.
+**Current development status (12 November 2026):** `main` contains the PR #20 integration baseline and the subsequently uploaded white-background SAS logo. The active integration branch `integration/sas-mainline-2026-11-12` additionally contains the consolidated News Studio from PR #28 and the main-only logo synchronized through PR #29. The News Studio consolidation is not yet merged into `main`. The next development line is `feat/daily-briefing-v1`; it begins with product and handoff documentation only. Read `docs/project-memory/CURRENT_STATE.md` and `docs/daily-briefing-v1.md` before implementation.
 
 
 ## آخر تحديث للذاكرة التنفيذية — 12 نوفمبر 2026
 
 - راجع [الحالة التنفيذية الحالية](docs/project-memory/CURRENT_STATE.md) وسلسلة PR #15–#18 قبل أي تطوير.
-- راجع [مواصفات صورة الهوية الثابتة للصفحة الرئيسية](docs/project-memory/HOMEPAGE_HERO_VISUAL_DIRECTION_2026-11-12.md)؛ التنفيذ مؤجل حتى التحقق من ملف الصورة في GitHub.
+- راجع [تسليم استوديو الصور الإخبارية](docs/news-studio-completion-2026-11-12.md) و[مواصفات الإحاطة اليومية V1](docs/daily-briefing-v1.md) قبل بدء المرحلة الجديدة.
