@@ -294,3 +294,12 @@
 
 
 - Regenerated `src/types/database.types.ts` from the live Supabase schema after Package 1 migration, including all briefing tables and RPC signatures.
+
+
+### 2026-11-13 — Editorial Room Package first pass
+
+- Added private `/briefing-room` workspace for admin/editor roles without broadening the existing admin guard.
+- Added edition register, new edition form, edition editor, development ledger, source linking with explicit public visibility, review queue, approval/return/publish actions, and correction workflow.
+- Updated login routing and admin navigation; added responsive workspace styling.
+- Generated DB types already include Package 1 schema and RPCs.
+- Not locally typechecked/built yet; no PR, no Vercel deployment, no sample content.
