@@ -2487,7 +2487,10 @@ textarea {
 
 /* SAS News Studio — migrated from the legacy SAS studio, adapted to the current platform identity */
 .studio-page { min-width: 0; padding: 8px 0 28px; }
-.studio-page .knowledge-hero { margin-bottom: 22px; }
+.studio-page .knowledge-hero { margin-bottom: 22px; padding: 24px 28px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.studio-page .knowledge-hero .eyebrow { color: var(--accent); font: 700 10px/1.7 var(--font-body); }
+.studio-page .knowledge-hero h1 { margin: 8px 0; color: var(--foreground); font: 500 clamp(27px,3vw,38px)/1.5 var(--font-display); }
+.studio-page .knowledge-hero p { margin: 0; color: var(--muted); font: 400 12px/1.9 var(--font-body); }
 .studio-layout { display: grid; grid-template-columns: minmax(300px, 390px) minmax(0, 1fr); gap: 24px; align-items: start; }
 .studio-fields { min-width: 0; display: grid; gap: 15px; padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
 .studio-fields h2 { margin: 0; color: var(--foreground); font: 700 20px/1.6 var(--font-interface); }
