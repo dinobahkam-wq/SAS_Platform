@@ -15,7 +15,7 @@ type LogoVariant='color'|'dark'|'light';
 type HeadlineRow={text:string;left:number;right:number;y:number};
 type PhotoRect={x:number;y:number;w:number;h:number};
 type StudioPreset={name:string;mode:Mode;format:Format;customWidth?:number;customHeight?:number;titleSize?:number;bodyWeight?:300|400;textWeight?:Weight;align?:Align;underline?:boolean;vertical?:'top'|'center'|'bottom';skin:Skin;customBg?:string;customFg?:string;customAccent?:string;customDim?:string;marginLeft?:number;marginRight?:number;photoZoom?:number;photoPanX?:number;photoPanY?:number;photoFrameWidth?:number;photoFrameHeight?:number;headlineFont?:FontChoice;summaryFont?:FontChoice;metaFont?:FontChoice;logoVariant?:LogoVariant;photoPosition:PhotoPosition;photoFit:PhotoFit;imageShape:PhotoShape;photoScale:number;imageRadius:number;imageBorder:number;photoOpacity:number;titleScale:number;textSize:number;lineSpacing:number;summaryLineSpacing:number;detailSpacing:number;headlineInset:number;headlineDX:number;headlineDY:number;summarySize:number;summaryInset:number;summaryDX:number;summaryDY:number;imageInset:number;imageDX:number;imageDY:number;sourcePlacement:SourcePlacement;sourceDX:number;sourceDY:number;wrapHeadline:boolean;showWeekday:boolean;showPath:boolean;sideMargin:number;topPadding:number;bottomPadding:number};
-type NewsGeometry={rows:HeadlineRow[];photo:PhotoRect|null;summaryLines:string[];summaryY:number;summaryRight:number;summaryFont:number;summaryLineHeight:number;source:string;sourceY:number|null;sourceRight:number;locationText:string;locationY:number|null;creditBelowY:number|null};
+type NewsGeometry={rows:HeadlineRow[];photo:PhotoRect|null;summaryLines:string[];summaryY:number;summaryRight:number;summaryFont:number;summaryLineHeight:number;source:string;sourceY:number|null;sourceRight:number;locationText:string;locationY:number|null;creditBelowY:number|null;continuationTitle?:string};
 type Page={lines:string[];news?:NewsGeometry};
 type KnowledgePath={dossier:string;issue:string;event:string};
 const sizes:Record<Format,{w:number;h:number;label:string}>={square:{w:1080,h:1080,label:'مربع 1080 × 1080'},portrait:{w:1080,h:1350,label:'عمودي 1080 × 1350'},landscape:{w:1200,h:675,label:'أفقي 1200 × 675'},wide:{w:1600,h:900,label:'عريض 1600 × 900'},story:{w:1080,h:1920,label:'ستوري 1080 × 1920'},custom:{w:1080,h:1350,label:'مقاس مخصص'}};
@@ -84,16 +84,59 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
   if(lines.length*lineHeight>bottom-top-90)return {...empty,error:'الاقتباس طويل جدًا؛ اختصره ليناسب البطاقة'};
   return {pages:[{lines}],font,lineHeight,error:'',top,heading,taxonomy};
  }
- // One geometry is shared between rendering and export; never silently discard text.
+ // Build headline/photo geometry once, then paginate long summaries without dropping text.
  let layout:NewsGeometry|null=null;
  font=Math.min(font,Math.round(((cfg.newsImage&&(cfg.photoPosition==='left'||cfg.photoPosition==='right'))?Math.max(32,w*.046):cfg.newsImage&&cfg.photoPosition==='background'?Math.max(36,w*.057):Math.max(42,w*.065))*cfg.titleScale/100));
  while(font>=26){
   ctx.font=cfg.textWeight+' '+font+'px '+serif;lineHeight=font*cfg.lineSpacing;
-  layout=newsGeometry(cfg,ctx,top,bottom,font);
+  layout=newsGeometry({...cfg,summary:''},ctx,top,bottom,font);
   if(layout)break;font-=2;
  }
- if(!layout)return {...empty,error:'عناصر البطاقة لا تتسع للمقاس الحالي. زد الارتفاع أو خفّف حجم الصورة والنص والهوامش.'};
- return {pages:[{lines:layout.rows.map(row=>row.text),news:layout}],font,lineHeight,error:'',top,heading,taxonomy};
+ if(!layout)return {...empty,error:'العنوان أو الصورة لا يتسعان للمقاس الحالي. زد الارتفاع أو خفف حجم الصورة والهوامش.'};
+ if(!cfg.summary.trim())return {pages:[{lines:layout.rows.map(row=>row.text),news:layout}],font,lineHeight,error:'',top,heading,taxonomy};
+
+ const summaryWidth=w-2*(margin+cfg.marginLeft+cfg.marginRight+Math.abs(cfg.summaryDX)+cfg.summaryInset);
+ if(summaryWidth<100)return {...empty,error:'عرض الموجز غير كافٍ؛ خفف الهوامش.'};
+ const summaryFont=Math.max(18,cfg.summarySize);
+ ctx.font='400 '+summaryFont+'px '+fontStack(cfg.summaryFont);
+ const allSummaryLines=toLines(ctx,cfg.summary.trim(),summaryWidth);
+ const summaryLineHeight=summaryFont*cfg.summaryLineSpacing;
+ const titleBottom=layout.rows.length?layout.rows[layout.rows.length-1].y+lineHeight:top;
+ const photoBottom=layout.photo?layout.photo.y+layout.photo.h+(cfg.showImageCredit&&cfg.imageCredit.trim()&&cfg.imageCreditPlacement==='below'?31:0):0;
+ const mediaBottom=Math.max(titleBottom,photoBottom);
+ const source=sourceText(cfg);
+ const locationText=cfg.showLocation&&cfg.location.trim()?'الموقع: '+cfg.location.trim():'';
+ const summaryRight=w-margin-cfg.marginRight-Math.abs(cfg.summaryDX)-cfg.summaryInset+cfg.summaryDX;
+ const firstSummaryY=mediaBottom+cfg.detailSpacing+(source&&cfg.sourcePlacement==='before-summary'?44:0);
+ const continuationY=top+112;
+ const reserve=90+(locationText?34:0);
+ const firstCapacity=Math.floor((bottom-firstSummaryY-(source&&cfg.sourcePlacement==='before-summary'?0:reserve))/summaryLineHeight);
+ const continuationCapacity=Math.floor((bottom-continuationY-reserve)/summaryLineHeight);
+ if(firstCapacity<1||continuationCapacity<1)return {...empty,error:'المساحة المتاحة للموجز غير كافية. اختر مقاسًا أطول أو خفف حجم الصورة والهوامش.'};
+ const chunks:string[][]=[];let offset=0;
+ const firstChunk=allSummaryLines.slice(0,firstCapacity);chunks.push(firstChunk);offset=firstChunk.length;
+ while(offset<allSummaryLines.length){const chunk=allSummaryLines.slice(offset,offset+continuationCapacity);chunks.push(chunk);offset+=chunk.length;}
+ const pages:Page[]=chunks.map((chunk,index)=>{
+  const last=index===chunks.length-1,continued=index>0,summaryY=continued?continuationY:firstSummaryY;
+  let sourceY:number|null=null,locationY:number|null=null;
+  if(source&&((cfg.sourcePlacement==='before-summary'&&index===0)||(cfg.sourcePlacement==='after-summary'&&last))){
+   sourceY=cfg.sourcePlacement==='before-summary'?mediaBottom+cfg.detailSpacing:summaryY+chunk.length*summaryLineHeight+18;
+  }
+  if(locationText&&last)locationY=sourceY!==null?sourceY+42:summaryY+chunk.length*summaryLineHeight+18;
+  const news:NewsGeometry={
+   ...layout!,
+   rows:continued?[]:layout!.rows,
+   photo:continued?null:layout!.photo,
+   summaryLines:chunk,summaryY,summaryRight,summaryFont,summaryLineHeight,
+   source:sourceY!==null?source:'',
+   sourceY,sourceRight:layout!.sourceRight,
+   locationText:last?locationText:'',locationY,
+   creditBelowY:continued?null:layout!.creditBelowY,
+   continuationTitle:continued?cfg.title:'',
+  };
+  return {lines:news.rows.map(row=>row.text),news};
+ });
+ return {pages,font,lineHeight,error:'',top,heading,taxonomy};
 }
 function photoBox(cfg:Config,w:number,h:number,margin:number){
  if(!cfg.newsImage)return null;
@@ -326,6 +369,13 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   if(cfg.quoteRole){ctx.fillStyle=c.dim;ctx.font='400 24px '+sans;const roles=toLines(ctx,cfg.quoteRole,quoteWidth).slice(0,2);roles.forEach((line,j)=>ctx.fillText(line,right,qBottom+68+j*34))}
  }else{
   const news=p.news;if(!news)return {total:0,error:'فشل تخطيط الخبر'};
+  if(news.continuationTitle){
+   ctx.direction='rtl';ctx.textAlign='right';ctx.fillStyle=c.accent;ctx.font='500 26px '+fontStack(cfg.metaFont);
+   ctx.fillText('استكمال الموجز',w-margin-cfg.marginRight,cfg.topPadding+100);
+   ctx.fillStyle=c.fg;ctx.font='700 34px '+fontStack(cfg.headlineFont);
+   ctx.fillText(ellipsis(ctx,news.continuationTitle,w-2*margin-cfg.marginLeft-cfg.marginRight),w-margin-cfg.marginRight,cfg.topPadding+145);
+   ctx.strokeStyle=c.accent;ctx.globalAlpha=.45;ctx.beginPath();ctx.moveTo(margin+cfg.marginLeft,cfg.topPadding+198);ctx.lineTo(w-margin-cfg.marginRight,cfg.topPadding+198);ctx.stroke();ctx.globalAlpha=1;
+  }
   if(news.photo&&cfg.newsImage&&cfg.photoPosition==='background'){
    paintPhoto(ctx,cfg.newsImage,news.photo,cfg.photoFit,cfg.photoRounded,cfg.photoOpacity/100,cfg.imageShape,cfg.imageRadius,cfg.imageBorder,c.accent,cfg.photoZoom,cfg.photoPanX,cfg.photoPanY);
    ctx.fillStyle=c.bg;ctx.globalAlpha=(cfg.skin==='ivory'||cfg.skin==='stone'||cfg.skin==='rose') ? .62 : .52;
@@ -530,25 +580,27 @@ export default function Studio(){
  <div className="studio-layout"><section className="admin-panel studio-fields">
  <h2>إعداد المادة</h2>
  <label>نوع التصميم<select value={mode} onChange={e=>{const next=e.target.value as Mode;setMode(next);setTextSize(next==='statement'?43:78);setSideMargin(next==='statement'?120:76);setLineSpacing(next==='statement'?1.65:1.45);setPage(0)}}>{(Object.keys(modes) as Mode[]).map(k=><option key={k} value={k}>{modes[k]}</option>)}</select></label>
- <fieldset className="studio-options"><legend>مقاس مساحة التصميم</legend>
+ <label>{mode==='statement'?'عنوان البيان (حتى 120 حرفًا)':mode==='quote'?'نص التصريح أو الاقتباس':'عنوان الخبر'}<textarea rows={3} maxLength={mode==='statement'?120:900} value={title} onChange={e=>{setTitle(e.target.value);setPage(0)}}/></label>
+ {(mode==='news'||mode==='urgent')&&<div className="studio-summary-editor"><label>موجز الخبر — حتى 250 كلمة<textarea rows={7} value={summary} onChange={e=>{const next=e.target.value;const words=next.trim().match(/\S+/g)||[];setSummary(words.length<=250?next:words.slice(0,250).join(' '));setPage(0)}} placeholder="اكتب موجزًا تحريريًا مفصلًا. سيُوزع تلقائيًا على صفحات متتابعة عند الحاجة."/></label><p className="studio-word-count">{(summary.trim().match(/\S+/g)||[]).length} / 250 كلمة</p><p className="studio-note">لن يُحذف النص عند زيادة المحتوى على مساحة البطاقة؛ سيُستكمل في صفحات إضافية تحمل العنوان والهوية نفسيهما.</p></div>}
+ <details className="studio-options" open><summary>مقاس مساحة التصميم</summary>
  <div className="studio-size-grid">{([{value:'portrait',label:'منشور رأسي',dims:'1080 × 1350',ratio:'4 / 5'},{value:'square',label:'مربع',dims:'1080 × 1080',ratio:'1 / 1'},{value:'landscape',label:'أفقي',dims:'1200 × 675',ratio:'16 / 9'},{value:'wide',label:'عريض',dims:'1600 × 900',ratio:'16 / 9'},{value:'story',label:'قصة / ريلز',dims:'1080 × 1920',ratio:'9 / 16'},{value:'custom',label:'مخصص',dims:'عرض وارتفاع',ratio:'1 / 1'}] as const).map(item=><button type="button" key={item.value} className={format===item.value?'studio-size-card selected':'studio-size-card'} onClick={()=>{setFormat(item.value);setPage(0)}}><span className="studio-size-shape" style={{aspectRatio:item.ratio}}/><strong>{item.label}</strong><small>{item.dims}</small></button>)}</div>
  {format==='custom'&&<div className="studio-custom-size"><label>العرض بالبكسل<input type="number" min={600} max={2400} step={10} value={customWidth} onChange={e=>setCustomWidth(Math.max(600,Math.min(2400,Number(e.target.value)||600)))}/></label><label>الارتفاع بالبكسل<input type="number" min={600} max={3000} step={10} value={customHeight} onChange={e=>setCustomHeight(Math.max(600,Math.min(3000,Number(e.target.value)||600)))}/></label></div>}
  <p className="studio-note">المقاسات مخصصة للتصدير النهائي بالبكسل. يمكنك تغييرها في أي وقت دون إعادة كتابة المحتوى.</p>
- </fieldset>
- <fieldset className="studio-options"><legend>قوالب التكوين السريعة</legend><div className="studio-layout-templates">
+ </details>
+ <details className="studio-options"><summary>قوالب التكوين السريعة</summary><div className="studio-layout-templates">
  <button type="button" onClick={()=>{setMode('news');setFormat('portrait');setSkin('forest');setPhotoPosition('left');setTextSize(78);setSideMargin(76);setPage(0)}}><strong>خبر تحريري</strong><small>عنوان وموجز وصورة جانبية</small></button>
  <button type="button" onClick={()=>{setMode('news');setFormat('portrait');setSkin('ivory');setPhotoPosition('top');setTextSize(72);setSideMargin(76);setPage(0)}}><strong>خبر بصري</strong><small>صورة علوية ومساحة نص</small></button>
  <button type="button" onClick={()=>{setMode('urgent');setFormat('landscape');setSkin('burgundy');setPhotoPosition('background');setTextSize(88);setSideMargin(72);setPage(0)}}><strong>عاجل</strong><small>مساحة أفقية وخلفية قوية</small></button>
  <button type="button" onClick={()=>{setMode('quote');setFormat('square');setSkin('ivory');setTextSize(70);setSideMargin(76);setPage(0)}}><strong>اقتباس</strong><small>بطاقة مربعة هادئة</small></button>
  <button type="button" onClick={()=>{setMode('statement');setFormat('portrait');setSkin('white');setTextSize(43);setSideMargin(120);setLineSpacing(1.65);setPage(0)}}><strong>بيان رسمي</strong><small>نص متعدد الصفحات</small></button>
- </div></fieldset>
- <fieldset className="studio-options"><legend>لوحات الألوان</legend><div className="studio-palette-grid">{(Object.keys(skins) as Skin[]).filter(k=>k!=='custom').map(k=><button type="button" key={k} className={skin===k?'studio-palette-swatch selected':'studio-palette-swatch'} onClick={()=>setSkin(k)} title={k} aria-label={'اختيار لوحة '+k}><span style={{background:skins[k].bg}}/><span style={{background:skins[k].accent}}/><small>{({forest:'أخضر ساس',ink:'حبر',ivory:'عاجي',navy:'كحلي',olive:'زيتي',stone:'حجري',rose:'وردي',charcoal:'فحمي',midnight:'ليل',burgundy:'خمري',cobalt:'أزرق ملكي',teal:'فيروزي',sand:'رملي',white:'أبيض',slate:'رمادي مزرق',plum:'برقوقي',emerald:'زمردي',terracotta:'طوبي'} as Record<string,string>)[k]}</small></button>)}
+ </div></details>
+ <details className="studio-options"><summary>لوحات الألوان</summary><div className="studio-palette-grid">{(Object.keys(skins) as Skin[]).filter(k=>k!=='custom').map(k=><button type="button" key={k} className={skin===k?'studio-palette-swatch selected':'studio-palette-swatch'} onClick={()=>setSkin(k)} title={k} aria-label={'اختيار لوحة '+k}><span style={{background:skins[k].bg}}/><span style={{background:skins[k].accent}}/><small>{({forest:'أخضر ساس',ink:'حبر',ivory:'عاجي',navy:'كحلي',olive:'زيتي',stone:'حجري',rose:'وردي',charcoal:'فحمي',midnight:'ليل',burgundy:'خمري',cobalt:'أزرق ملكي',teal:'فيروزي',sand:'رملي',white:'أبيض',slate:'رمادي مزرق',plum:'برقوقي',emerald:'زمردي',terracotta:'طوبي'} as Record<string,string>)[k]}</small></button>)}
  <button type="button" className={skin==='custom'?'studio-palette-swatch selected':'studio-palette-swatch'} onClick={()=>setSkin('custom')}><span style={{background:customBg}}/><span style={{background:customAccent}}/><small>ألوان مخصصة</small></button></div>
  {skin==='custom'&&<div className="studio-custom-colors"><label>لون الخلفية<input type="color" value={customBg} onChange={e=>setCustomBg(e.target.value)}/></label><label>لون النص<input type="color" value={customFg} onChange={e=>setCustomFg(e.target.value)}/></label><label>اللون المميز<input type="color" value={customAccent} onChange={e=>setCustomAccent(e.target.value)}/></label><label>لون النص الثانوي<input type="color" value={customDim} onChange={e=>setCustomDim(e.target.value)}/></label></div>}
- </fieldset>
- <fieldset className="studio-options"><legend>قوالبك المحفوظة</legend><div className="studio-saved-presets">{presets.length?presets.map(p=><div key={p.name}><button type="button" onClick={()=>applyPreset(p)}>{p.name}</button><button type="button" className="studio-delete-preset" aria-label={'حذف '+p.name} onClick={()=>deletePreset(p.name)}>×</button></div>):<p className="studio-note">لم تحفظ قوالب بعد. اضبط التصميم ثم احفظه باسم.</p>}</div><label>اسم القالب<input value={presetName} maxLength={40} placeholder="مثلاً: خبر حضرموت – أخضر" onChange={e=>setPresetName(e.target.value)}/></label><button type="button" onClick={savePreset}>حفظ إعدادات التصميم الحالية</button>{presetError&&<p role="alert" className="studio-note">{presetError}</p>}</fieldset>
+ </details>
+ <details className="studio-options"><summary>قوالبك المحفوظة</summary><div className="studio-saved-presets">{presets.length?presets.map(p=><div key={p.name}><button type="button" onClick={()=>applyPreset(p)}>{p.name}</button><button type="button" className="studio-delete-preset" aria-label={'حذف '+p.name} onClick={()=>deletePreset(p.name)}>×</button></div>):<p className="studio-note">لم تحفظ قوالب بعد. اضبط التصميم ثم احفظه باسم.</p>}</div><label>اسم القالب<input value={presetName} maxLength={40} placeholder="مثلاً: خبر حضرموت – أخضر" onChange={e=>setPresetName(e.target.value)}/></label><button type="button" onClick={savePreset}>حفظ إعدادات التصميم الحالية</button>{presetError&&<p role="alert" className="studio-note">{presetError}</p>}</details>
 
- <fieldset className="studio-options"><legend>ضبط النص والمساحات</legend>
+ <details className="studio-options"><summary>ضبط النص والمساحات</summary>
  <label>حجم العنوان: {textSize}px<input type="range" min={32} max={120} step={2} value={textSize} onChange={e=>setTextSize(Number(e.target.value))}/></label>
  <label>حجم عنوان البيان: {titleSize}px<input type="range" min={36} max={100} step={2} value={titleSize} onChange={e=>setTitleSize(Number(e.target.value))}/></label>
  <label>حجم الملخص: {summarySize}px<input type="range" min={18} max={48} step={1} value={summarySize} onChange={e=>setSummarySize(Number(e.target.value))}/></label>
@@ -566,10 +618,9 @@ export default function Studio(){
  <label>وزن الخط<select value={textWeight} onChange={e=>setTextWeight(Number(e.target.value) as Weight)}><option value={300}>نحيف</option><option value={400}>عادي</option><option value={500}>متوسط</option><option value={700}>عريض</option></select></label>
  <label><input type="checkbox" checked={underline} onChange={e=>setUnderline(e.target.checked)}/> وضع خط تحت العنوان</label>
  <label>موضع المصدر<select value={sourcePlacement} onChange={e=>setSourcePlacement(e.target.value as SourcePlacement)}><option value="after-summary">بعد الملخص</option><option value="before-summary">قبل الملخص</option></select></label>
- </fieldset>
- <label>{mode==='statement'?'عنوان البيان (حتى 120 حرفًا)':mode==='quote'?'نص التصريح أو الاقتباس':'عنوان الخبر'}<textarea rows={3} maxLength={mode==='statement'?120:900} value={title} onChange={e=>{setTitle(e.target.value);setPage(0)}}/></label>
- {(mode==='news'||mode==='urgent')&&<><label>تفاصيل مختصرة للخبر<textarea rows={4} maxLength={260} value={summary} onChange={e=>{setSummary(e.target.value);setPage(0)}} placeholder="موجز تكميلي يظهر أسفل العنوان في مساحة مستقلة"/></label></>}
- {(mode==='news'||mode==='urgent')&&<fieldset className="studio-options"><legend>الصورة الرئيسية للخبر أو العاجل</legend>
+ </details>
+
+ {(mode==='news'||mode==='urgent')&&<details className="studio-options"><summary>الصورة الرئيسية للخبر أو العاجل</summary>
  <label>إضافة صورة رئيسية<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>void loadMedia(e.target.files?.[0],'news')}/></label>
  {newsImage&&<><button type="button" onClick={()=>setNewsImage(null)}>حذف الصورة الرئيسية</button>
  <label>موضع الصورة<select value={photoPosition} onChange={e=>setPhotoPosition(e.target.value as PhotoPosition)}><option value="left">يسار النص</option><option value="right">يمين النص</option><option value="top">أعلى العنوان</option><option value="background">خلفية خافتة</option></select></label>
@@ -590,9 +641,9 @@ export default function Studio(){
  <label><input type="checkbox" checked={showImageCredit} onChange={e=>setShowImageCredit(e.target.checked)}/> إظهار حقوق الصورة</label>
  {showImageCredit&&imageCredit.trim()&&<label>مكان حقوق الصورة<select value={imageCreditPlacement} onChange={e=>setImageCreditPlacement(e.target.value as PhotoCreditPlacement)}><option value="inside">داخل الصورة</option><option value="below">أسفل الصورة</option></select></label>}
  </>}
- </fieldset>}
+ </details>}
  {mode==='quote'&&<><label>اسم المتحدث<input value={quoteName} maxLength={100} onChange={e=>setQuoteName(e.target.value)}/></label><label>صفة المتحدث<input value={quoteRole} maxLength={150} onChange={e=>setQuoteRole(e.target.value)}/></label><label>صورة المتحدث (اختيارية، حتى 5MB)<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>void loadMedia(e.target.files?.[0],'person')}/></label>{personImage&&<button type="button" onClick={()=>setPersonImage(null)}>حذف صورة المتحدث</button>}</>}
- {(mode==='news'||mode==='urgent'||mode==='quote')&&<fieldset className="studio-options"><legend>السياق الجغرافي (تمهيد لمحرك الخرائط)</legend><label>المنطقة أو المحافظة<input value={location} maxLength={120} placeholder="حضرموت" onChange={e=>setLocation(e.target.value)}/></label><label><input type="checkbox" checked={showLocation} onChange={e=>setShowLocation(e.target.checked)}/> إظهار اسم الموقع في البطاقة</label></fieldset>}
+ {(mode==='news'||mode==='urgent'||mode==='quote')&&<details className="studio-options"><summary>السياق الجغرافي (تمهيد لمحرك الخرائط)</summary><label>المنطقة أو المحافظة<input value={location} maxLength={120} placeholder="حضرموت" onChange={e=>setLocation(e.target.value)}/></label><label><input type="checkbox" checked={showLocation} onChange={e=>setShowLocation(e.target.checked)}/> إظهار اسم الموقع في البطاقة</label></details>}
  {mediaError&&<p role="alert" className="admin-feedback">{mediaError}</p>}
  <label>اسم المصدر (اختياري)<input value={sourceName} maxLength={120} placeholder="وكيل حضرموت الإخباري" onChange={e=>setSourceName(e.target.value)}/></label>
  <label>رابط المصدر (اختياري)<input dir="ltr" type="url" placeholder="https://..." value={sourceUrl} onChange={e=>setSourceUrl(e.target.value)}/></label>
