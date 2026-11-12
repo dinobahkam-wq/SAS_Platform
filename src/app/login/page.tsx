@@ -27,6 +27,7 @@ export default async function LoginPage({
       .maybeSingle();
 
     if (role?.role === "admin" && role.is_active) redirect("/admin");
+    if (role?.role === "editor" && role.is_active) redirect("/briefing-room");
   }
 
   return (
