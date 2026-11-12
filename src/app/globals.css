@@ -2874,7 +2874,7 @@ textarea {
 .briefing-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .briefing-form-stack{display:grid;gap:15px;padding:20px}
 .briefing-form-stack .field textarea{min-height:100px;line-height:2}
-.briefing-form-stack .field:nth-of-type(4) textarea{min-height:280px}
+.briefing-form-stack .field:nth-of-type(2) textarea{min-height:280px}
 .briefing-form-stack .field small,.briefing-form .field small{color:var(--muted);font-weight:400}
 .briefing-form-actions{display:flex;justify-content:flex-start;align-items:center;gap:10px;padding:0 20px 20px}
 .briefing-form>.briefing-form-actions{padding:0}
@@ -2939,7 +2939,7 @@ textarea {
  .briefing-form-grid{grid-template-columns:1fr}
  .briefing-panel-heading{padding:14px}
  .briefing-form-stack{padding:14px}
- .briefing-form-stack .field:nth-of-type(4) textarea{min-height:220px}
+ .briefing-form-stack .field:nth-of-type(2) textarea{min-height:220px}
  .briefing-form-actions{padding-inline:14px;flex-wrap:wrap}
  .briefing-workflow{padding-inline:14px}
  .briefing-development-grid{padding:10px}
