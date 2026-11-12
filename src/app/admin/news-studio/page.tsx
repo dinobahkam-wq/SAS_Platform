@@ -99,7 +99,7 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
  if(!layout)return {...empty,error:'العنوان أو الصورة لا يتسعان للمقاس الحالي. زد الارتفاع أو خفف حجم الصورة والهوامش.'};
  if(!cfg.summary.trim())return {pages:[{lines:layout.rows.map(row=>row.text),news:layout}],font,lineHeight,error:'',top,heading,taxonomy};
 
- const summaryWidth=w-2*(margin+cfg.marginLeft+cfg.marginRight+Math.abs(cfg.summaryDX)+cfg.summaryInset);
+ const summaryWidth=w-2*(margin+cfg.marginLeft+cfg.marginRight+cfg.summaryInset);
  if(summaryWidth<100)return {...empty,error:'عرض الموجز غير كافٍ؛ خفف الهوامش.'};
  const summaryFont=Math.max(18,cfg.summarySize);
  ctx.font='400 '+summaryFont+'px '+fontStack(cfg.summaryFont);
@@ -110,7 +110,7 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
  const mediaBottom=Math.max(headlineBottom,photoBottom);
  const source=sourceText(cfg);
  const locationText=cfg.showLocation&&cfg.location.trim()?'الموقع: '+cfg.location.trim():'';
- const summaryRight=w-margin-cfg.marginRight-Math.abs(cfg.summaryDX)-cfg.summaryInset+cfg.summaryDX;
+ const summaryRight=w-margin-cfg.marginRight-cfg.summaryInset+cfg.summaryDX;
  const firstSummaryY=mediaBottom+cfg.detailSpacing+(source&&cfg.sourcePlacement==='before-summary'?44:0);
  const continuationY=top+112;
  const firstReserve=(source&&cfg.sourcePlacement==='before-summary'?0:source?90:0)+(locationText?34:0);
@@ -231,7 +231,7 @@ function newsGeometry(cfg:Config,ctx:CanvasRenderingContext2D,top:number,bottom:
  const dy=topPhoto?Math.max(cfg.headlineDY+photoH+cfg.detailSpacing,photoY+photoH+creditH+20):cfg.headlineDY;
  const words=cfg.title.trim().match(/\S+/g)??[];
  const rows:HeadlineRow[]=[];
- const spare=Math.abs(cfg.headlineDX)+cfg.headlineInset;
+ const spare=cfg.headlineInset;
  const baseLeft=leftMargin+spare,baseRight=w-rightMargin-spare;
  const photoRight=cfg.photoPosition==='right';
  for(let index=0;words.length&&index<90;index++){
@@ -266,7 +266,7 @@ function newsGeometry(cfg:Config,ctx:CanvasRenderingContext2D,top:number,bottom:
  const source=sourceText(cfg);
  const sourceH=source?32:0;
  let summaryFont=cfg.summarySize,summaryLineHeight=summaryFont*cfg.summaryLineSpacing;
- const sumSpace=Math.abs(cfg.summaryDX)+cfg.summaryInset;
+ const sumSpace=cfg.summaryInset;
  const summaryRight=w-rightMargin-sumSpace+cfg.summaryDX;
  const summaryWidth=fullWidth-2*sumSpace;
  if(summaryWidth<100)return null;
@@ -589,9 +589,10 @@ export default function Studio(){
   const active=gesture.current;if(!active)return;
   const point=pointerPoint(event),dx=point.x-active.startX,dy=point.y-active.startY;
   if(active.mode==='move'){
-   if(active.id==='headline'){setHeadlineDX(active.headlineDX+dx);setHeadlineDY(active.headlineDY+dy)}
-   else if(active.id==='summary'){setSummaryDX(active.summaryDX+dx);setSummaryDY(active.summaryDY+dy)}
-   else{setImageDX(active.imageDX+dx);setImageDY(active.imageDY+dy)}
+   const size=dimensions(cfg),moveX=clamp(dx,-active.element.x,size.w-active.element.x-active.element.width),moveY=clamp(dy,-active.element.y,size.h-active.element.y-active.element.height);
+   if(active.id==='headline'){setHeadlineDX(active.headlineDX+moveX);setHeadlineDY(active.headlineDY+moveY)}
+   else if(active.id==='summary'){setSummaryDX(active.summaryDX+moveX);setSummaryDY(active.summaryDY+moveY)}
+   else{setImageDX(active.imageDX+moveX);setImageDY(active.imageDY+moveY)}
    return;
   }
   const handle=active.handle??'se';
