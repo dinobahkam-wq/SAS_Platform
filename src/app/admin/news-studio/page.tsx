@@ -668,9 +668,9 @@ export default function Studio(){
   <legend>استيراد مادة من ملف</legend>
   <p className="studio-note">ارفع ملف خبر بصيغة JSON أو Markdown أو TXT. سيملأ الاستوديو حقول العنوان والموجز والمصدر والتاريخ والتصنيف، ثم يعيد رسم المعاينة تلقائيًا باستخدام محرك التصميم الحالي. الصور تضاف من حقل الصورة الرئيسية.</p>
   <label>ملف المادة الإخبارية<input type="file" accept=".json,.md,.markdown,.txt,application/json,text/markdown,text/plain" onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';void importNewsFile(file)}}/></label>
-  <div className="studio-template-actions">
-   <button type="button" onClick={()=>downloadNewsTemplate('json')}>تنزيل نموذج JSON</button>
-   <button type="button" onClick={()=>downloadNewsTemplate('md')}>تنزيل نموذج Markdown</button>
+  <div className="studio-layout-templates">
+   <button type="button" onClick={()=>downloadNewsTemplate('json')}><strong>تنزيل نموذج JSON</strong><small>بنية منظمة قابلة للتوسعة</small></button>
+   <button type="button" onClick={()=>downloadNewsTemplate('md')}><strong>تنزيل نموذج Markdown</strong><small>ملف نصي سهل التحرير</small></button>
   </div>
   {importFeedback&&<p role={importFeedback.kind==='error'?'alert':'status'} className={importFeedback.kind==='error'?'admin-feedback':'studio-note'}>{importFeedback.message}</p>}
  </fieldset>
