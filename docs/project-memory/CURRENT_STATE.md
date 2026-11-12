@@ -167,3 +167,21 @@
 - **الفرع:** `feat/daily-briefing-data-model-security-v1`؛ أساسه الحالي رأس PR #31 `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef`.
 - **مقارنة الفرع:** ahead 13 / behind 0 عن PR #31؛ GitHub أكد `mergeable=true`.
 - **CI:** حالة Vercel على الرأس وقت الفحص `failure`. لم يُشخّص السبب ولم يُنفذ نشر.
+
+
+---
+
+## 12 نوفمبر 2026 — Package 1: نموذج البيانات والأمان للإحاطة اليومية
+
+- **فرع الحزمة:** `feat/daily-briefing-data-model-security-v1`.
+- **الفرع الأساس:** رأس PR #31 الحالي عند بدء الحزمة: `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef`.
+- **PR #31:** مفتوح Draft وغير مدمج؛ فرع الحزمة الجديدة مكدس فوقه ولا يغيره.
+- **المخرجات:**
+  - `docs/daily-briefing-data-model-security-v1.md`: ERD، قاموس الكيانات، دورة الحالات، مصفوفة الأدوار، بوابة النشر وقرارات الأمان.
+  - `docs/sql/daily_briefing_package1.draft.sql`: مسودة SQL تشمل 7 جداول جديدة، توسيعًا محدودًا لمكتبة المصادر، RLS، triggers، سجل تدقيق append-only، RPCs لدورة العمل والقراءة العامة.
+  - `docs/sql/daily_briefing_package1_verification.sql`: استعلامات تحقق بنيوية وأمنية واختبارات سلوكية يدوية.
+- **فحص Supabase للقراءة فقط:** أُعيد فحص بنية `content_sources` و`user_roles`، الدالة `private.has_any_role`، امتيازات الجداول، والمخطط. لا يوجد محرر نشط ضمن الأدوار وقت الفحص؛ يوجد admin نشط واحد.
+- **تحسينات أمنية في المسودة:** RLS على كل الجداول الجديدة؛ حجب DML المباشر على سجل التدقيق؛ منع تعديل النسخ المنشورة؛ دورة حالات عبر RPC؛ منع تحرير التطور ومصادره أثناء المراجعة/الاعتماد؛ snapshot مستقل عند النشر؛ تصحيح بإصدار جديد؛ RPC عامة لا تعيد إلا النسخ المنشورة.
+- **فحص نص SQL:** فحص lexical بسيط للأقواس والاقتباسات وعلامات dollar-quote؛ لا أخطاء Lexical مكتشفة. هذا ليس PostgreSQL parser ولا يثبت صلاحية التنفيذ.
+- **ما لم يحدث:** لا Migration مولدة من Supabase CLI؛ لا تشغيل على PostgreSQL محلي؛ لا اختبارات RLS فعلية؛ لا تطبيق على Supabase البعيد؛ لا صفحات React؛ لا نشر.
+- **الخطوة التالية:** مراجعة بشرية للمخطط وSQL، ثم سحب الفرع على Windows وتوليد Migration محلية وتشغيل `supabase db reset` واستعلامات التحقق وTypeScript/Build إذا تغير التطبيق. لا تستخدم `db push` أو `--remote` قبل موافقة منفصلة.
