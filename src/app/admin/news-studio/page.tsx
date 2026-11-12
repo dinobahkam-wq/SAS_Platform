@@ -109,9 +109,10 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
  const summaryRight=w-margin-cfg.marginRight-Math.abs(cfg.summaryDX)-cfg.summaryInset+cfg.summaryDX;
  const firstSummaryY=mediaBottom+cfg.detailSpacing+(source&&cfg.sourcePlacement==='before-summary'?44:0);
  const continuationY=top+112;
- const reserve=90+(locationText?34:0);
- const firstCapacity=Math.floor((bottom-firstSummaryY-(source&&cfg.sourcePlacement==='before-summary'?0:reserve))/summaryLineHeight);
- const continuationCapacity=Math.floor((bottom-continuationY-reserve)/summaryLineHeight);
+ const firstReserve=(source&&cfg.sourcePlacement==='before-summary'?0:source?90:0)+(locationText?34:0);
+ const continuationReserve=(source?90:0)+(locationText?34:0);
+ const firstCapacity=Math.floor((bottom-firstSummaryY-firstReserve)/summaryLineHeight);
+ const continuationCapacity=Math.floor((bottom-continuationY-continuationReserve)/summaryLineHeight);
  if(firstCapacity<1||continuationCapacity<1)return {...empty,error:'المساحة المتاحة للموجز غير كافية. اختر مقاسًا أطول أو خفف حجم الصورة والهوامش.'};
  const chunks:string[][]=[];let offset=0;
  const firstChunk=allSummaryLines.slice(0,firstCapacity);chunks.push(firstChunk);offset=firstChunk.length;
