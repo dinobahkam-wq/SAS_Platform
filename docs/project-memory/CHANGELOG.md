@@ -231,3 +231,18 @@
 - **الحالة الحية وقت التوثيق:** PR #30 وPR #31 مفتوحان Draft وغير مدمجين؛ PR #31 مكدس فوق فرع PR #30.
 - **التالي:** Package 1 — Data Model & Security Design قبل أي واجهة أو Migration.
 - **لا تغيير:** لا Supabase، لا كود تشغيل، لا GPT، لا نشر.
+
+---
+
+### 2026-11-12 — Package 1: Daily Briefing Data Model & Security Design
+
+- **الفرع:** `feat/daily-briefing-data-model-security-v1`.
+- **الأصل:** رأس PR #31 `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef)، مع الحفاظ على تكديس PR #30 وPR #31 كما هو.
+- **المخرجات:** `docs/daily-briefing-data-model-security-v1.md`، `docs/sql/daily_briefing_package1.draft.sql`، `docs/sql/daily_briefing_package1_verification.sql`.
+- **التصميم:** هوية عدد مستقلة، نسخ تحريرية وتصحيحات منفصلة، سجل تطورات مستقل، ربط مصادر مشترك، عناصر لكل نسخة، علاقات سياقية، وسجل تدقيق append-only.
+- **الأمن:** RLS للجداول الجديدة؛ عدم منح anon وصولًا مباشرًا؛ RPCs قراءة عامة محدودة؛ RPCs دورة العمل SECURITY INVOKER؛ قيود على الانتقالات والنسخ المنشورة وهوية العدد؛ حراس بيانات الإنشاء وسجل التدقيق.
+- **تحسينات على المسودة الأولية:** إضافة checked_at؛ ضمان أن نقاط الموجز التنفيذي مرتبطة بتطورات سجل التطورات؛ مؤشر أرشيف مركب يدعم الإصدارات الخاصة في التاريخ نفسه؛ منع مسح مؤشر النسخة المنشورة؛ منع تعديل metadata الإنشاء وملاحظات المراجعة خارج انتقال الحالة.
+- **مراجعة قاعدة البيانات:** تأكيد وجود private.has_any_role(text[]) وأنها تتحقق من المستخدم النشط؛ تأكيد أن public.user_roles يحتوي admin/editor/author وأن admin واحدًا نشط وقت الفحص؛ لم تكن هناك أدوار editor نشطة.
+- **اختبارات:** فحص ساكن للبنية النصية لمسودة SQL فقط. لا ادعاء باجتياز PostgreSQL parser أو تطبيق Migration أو اختبار RLS محلي.
+- **الحدود:** لا كتابة إلى Supabase البعيد؛ لا بيانات اختبار؛ لا نشر Vercel؛ لا دمج PRs السابقة.
+- **التالي:** مراجعة PR الحزمة، ثم توليد ملف Migration بواسطة `supabase migration new daily_briefing_package1` محليًا، واختباره عبر `supabase db reset` واستعلامات التحقق قبل طلب موافقة منفصلة على أي تطبيق بعيد.
