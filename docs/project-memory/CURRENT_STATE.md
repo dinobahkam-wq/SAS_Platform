@@ -144,3 +144,19 @@
 - **المرحلة التالية:** Package 1 — Data Model & Security Design: ERD، مصفوفة الصلاحيات، دورة الحالات، سياسة التصحيح، عقد القراءة العامة، وMigration للمراجعة فقط.
 - **بيئة Windows:** `C:\\SAS-PLATFORM-DEV`؛ افحص `git status` قبل أي انتقال، واحفظ تعديل `next-env.d.ts` وStash السابق دون حذف أو استعادة تلقائية.
 - **حدود التنفيذ:** لم تُنشأ صفحات أو Migrations ولم يحدث تغيير Supabase أو GPT أو نشر. لا تزال هذه المرحلة تصميمًا وتوثيقًا.
+
+---
+
+## 12 نوفمبر 2026 — Package 1: Data Model & Security Design
+
+- **فرع الحزمة:** `feat/daily-briefing-data-model-security-v1`، متفرع من رأس PR #31 المتحقق `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef`.
+- **الوثيقة:** [تصميم نموذج البيانات والأمن](../daily-briefing-data-model-security-v1.md).
+- **مسودة SQL:** [daily_briefing_package1.draft.sql](../sql/daily_briefing_package1.draft.sql) — ملف مراجعة في docs، وليس Migration مطبقة.
+- **اختبارات التحقق:** [daily_briefing_package1_verification.sql](../sql/daily_briefing_package1_verification.sql).
+- **الكيانات:** editions, revisions, developments, development_sources, edition_items, development_relations, edition_events.
+- **القرارات:** نسخ تصحيح مستقلة، Snapshot ثابت، سجل تطورات مستقل، إعادة استخدام content_sources، checked_at، وفصل نوع المعلومة عن حالة التحقق.
+- **الأمان:** RLS على الجداول السبعة، لا grants مباشرة لـ anon، RPC عامة للقراءة المنشورة فقط، دوال دورة العمل SECURITY INVOKER، حراسة انتقالات الحالة وهوية العدد، وسجل تدقيق append-only.
+- **تضييق الصلاحيات:** إزالة TRUNCATE/REFERENCES/TRIGGER من authenticated على content_items/content_sources/content_source_links/user_roles؛ لا تعديل على default privileges العامة.
+- **التحقق الفعلي:** استعلامات قراءة على Supabase أكدت المخطط الأساسي، الأعمدة، الأدوار، صلاحيات الجداول، ووجود helper. فحص ساكن لمسودة SQL: 7 جداول، 23 سياسة RLS، 12 trigger في اللقطة قبل إضافة حراس metadata؛ توازن الأقواس وعلامات dollar quotes سليم. هذا ليس اختبار PostgreSQL أو Migration.
+- **غير منفذ:** لا Migration محلية مولدة، لا `supabase db reset`، لا تطبيق بعيد، لا نشر، ولا تعديل على PR #30/#31.
+- **المطلوب:** مراجعة SQL محليًا بعد توليد اسم Migration عبر CLI، وتشغيل اختبارات PostgreSQL/RLS قبل اعتبار Package 1 مكتملة.
