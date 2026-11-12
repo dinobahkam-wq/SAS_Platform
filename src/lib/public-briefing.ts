@@ -223,8 +223,6 @@ export async function getPublicBriefingArchive(limit = 24): Promise<BriefingArch
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("get_public_briefing_archive", {
     p_limit: Math.min(Math.max(limit, 1), 50),
-    p_before_date: null,
-    p_before_edition_no: null,
   });
   if (error) {
     console.error("[SAS daily briefing] public archive", error);
