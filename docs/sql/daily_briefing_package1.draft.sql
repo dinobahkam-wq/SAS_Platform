@@ -800,7 +800,7 @@ as $$
           ) order by ds.display_order,s.source_name),'[]'::jsonb)
           from public.briefing_development_sources ds
           join public.content_sources s on s.id=ds.source_id
-          where ds.development_id=d.id and ds.display_publicly = true and s.is_active = true and ds.display_publicly = true and s.is_active = true
+          where ds.development_id=d.id and ds.display_publicly = true and s.is_active = true
         )
       ) order by i.display_order)
       from public.briefing_edition_items i
@@ -833,7 +833,7 @@ as $$
           ) order by ds.display_order,s.source_name),'[]'::jsonb)
           from public.briefing_development_sources ds
           join public.content_sources s on s.id=ds.source_id
-          where ds.development_id=d.id
+          where ds.development_id=d.id and ds.display_publicly = true and s.is_active = true
         )
       ) order by i.display_order)
       from public.briefing_edition_items i
