@@ -100,3 +100,10 @@ union all select 'briefing_edition_events',count(*) from public.briefing_edition
 -- 9. withdrawn editions are not returned by public read RPCs or the archive.
 -- 10. no workflow RPC is executable by anon; public readers are executable by
 --     anon and authenticated.
+-- 11. direct INSERT of an edition with archived/withdrawn status or a
+--     non-null current_revision_id must fail; new editions start active.
+-- 12. edition slug/date/type become immutable once its first revision exists.
+-- 13. direct UPDATE/DELETE of briefing_edition_events must fail even if a
+--     future grant is accidentally added; audit history is append-only.
+-- 14. current_revision_id cannot be cleared after publication; it can only
+--     move to another published revision through the publish RPC.
