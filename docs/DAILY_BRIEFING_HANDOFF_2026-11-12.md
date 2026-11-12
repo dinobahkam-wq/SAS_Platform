@@ -202,3 +202,33 @@ git fetch origin
 - **الخطوة التالية:** مراجعة PR الخاص بالحزمة، ثم توليد اسم Migration محليًا عبر `supabase migration new daily_briefing_package1` ونقل المسودة إليه واختبار `supabase db reset` محليًا.
 - **PR الحزمة:** [PR #32 — Data Model & Security Design](https://github.com/dinobahkam-wq/SAS_Platform/pull/32)، Draft، غير مدمج، base هو فرع PR #31.
 - **الحالة الحية عند آخر فحص:** PR #32 mergeable=true، ahead 13 / behind 0؛ فحص Vercel أظهر failure ولم يُشخّص أو يُنشر.
+
+
+---
+
+## 12 نوفمبر 2026 — تحديث استئناف Package 1
+
+**الحالة الأحدث:** تصميم البيانات والأمان ومسودة SQL أُعدت على فرع مستقل؛ الاختبار المحلي لم يبدأ بعد.
+
+- **فرع الحزمة:** `feat/daily-briefing-data-model-security-v1`.
+- **Base:** رأس PR #31 الذي تم التحقق منه عند إنشاء الفرع: `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef`.
+- **PR #31:** مفتوح Draft وغير مدمج؛ لا تغيّر base ولا تدمجه ضمن هذه الخطوة.
+- **الملفات:**
+  1. `docs/daily-briefing-data-model-security-v1.md`
+  2. `docs/sql/daily_briefing_package1.draft.sql`
+  3. `docs/sql/daily_briefing_package1_verification.sql`
+  4. تحديثات ذاكرة المشروع.
+- **قاعدة البيانات:** استعلامات فحص metadata وgrants تمت للقراءة فقط. لم يتم تشغيل `apply_migration` ولم يتم تنفيذ أي DDL/DML على المشروع البعيد.
+- **فحص SQL:** توازن الاقتباسات والأقواس وعلامات dollar-quote سليم في الفحص النصي. هذا لا يعادل parser PostgreSQL.
+- **الخطوة المحلية المطلوبة على Windows:**
+  ```powershell
+  cd C:\SAS-PLATFORM-DEV
+  git status --short --branch
+  git fetch origin
+  git switch feat/daily-briefing-data-model-security-v1
+  git pull --ff-only
+  supabase migration new daily_briefing_package1
+  ```
+  انسخ محتوى ملف `docs/sql/daily_briefing_package1.draft.sql` إلى Migration التي أنشأها CLI، ثم شغّل `supabase start` و`supabase db reset` محليًا. لا تستخدم `--remote` أو `supabase db push`.
+- بعد نجاح التطبيق المحلي، نفّذ `docs/sql/daily_briefing_package1_verification.sql` واختبارات السلوك اليدوية، ثم `npm run typecheck` و`npm run build` إذا أُضيف كود واجهة.
+- **ملاحظة تقنية:** المسودة لا تزال بحاجة إلى اختبار parser فعلي. لا تعتبرها Migration مكتملة ولا تطبقها على Supabase البعيد قبل المراجعة والموافقة الصريحة.
