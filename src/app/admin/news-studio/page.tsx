@@ -101,9 +101,9 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
  ctx.font='400 '+summaryFont+'px '+fontStack(cfg.summaryFont);
  const allSummaryLines=toLines(ctx,cfg.summary.trim(),summaryWidth);
  const summaryLineHeight=summaryFont*cfg.summaryLineSpacing;
- const titleBottom=layout.rows.length?layout.rows[layout.rows.length-1].y+lineHeight:top;
+ const headlineBottom=layout.rows.length?layout.rows[layout.rows.length-1].y+lineHeight:top;
  const photoBottom=layout.photo?layout.photo.y+layout.photo.h+(cfg.showImageCredit&&cfg.imageCredit.trim()&&cfg.imageCreditPlacement==='below'?31:0):0;
- const mediaBottom=Math.max(titleBottom,photoBottom);
+ const mediaBottom=Math.max(headlineBottom,photoBottom);
  const source=sourceText(cfg);
  const locationText=cfg.showLocation&&cfg.location.trim()?'الموقع: '+cfg.location.trim():'';
  const summaryRight=w-margin-cfg.marginRight-Math.abs(cfg.summaryDX)-cfg.summaryInset+cfg.summaryDX;
