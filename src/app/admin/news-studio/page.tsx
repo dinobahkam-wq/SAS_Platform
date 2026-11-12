@@ -10,18 +10,21 @@ type PhotoFit='cover'|'contain';
 type PhotoShape='square'|'rounded'|'circle'|'oval'|'hexagon'|'angled'|'mixed'|'fade';
 type SourcePlacement='before-summary'|'after-summary';
 type PhotoCreditPlacement='inside'|'below';
+type FontChoice='tajarib'|'sans';
+type LogoVariant='color'|'dark'|'light';
 type HeadlineRow={text:string;left:number;right:number;y:number};
 type PhotoRect={x:number;y:number;w:number;h:number};
-type StudioPreset={name:string;mode:Mode;format:Format;customWidth?:number;customHeight?:number;titleSize?:number;bodyWeight?:300|400;textWeight?:Weight;align?:Align;underline?:boolean;vertical?:'top'|'center'|'bottom';skin:Skin;customBg?:string;customFg?:string;customAccent?:string;customDim?:string;photoPosition:PhotoPosition;photoFit:PhotoFit;imageShape:PhotoShape;photoScale:number;imageRadius:number;imageBorder:number;photoOpacity:number;titleScale:number;textSize:number;lineSpacing:number;summaryLineSpacing:number;detailSpacing:number;headlineInset:number;headlineDX:number;headlineDY:number;summarySize:number;summaryInset:number;summaryDX:number;summaryDY:number;imageInset:number;imageDX:number;imageDY:number;sourcePlacement:SourcePlacement;sourceDX:number;sourceDY:number;wrapHeadline:boolean;showWeekday:boolean;showPath:boolean;sideMargin:number;topPadding:number;bottomPadding:number};
+type StudioPreset={name:string;mode:Mode;format:Format;customWidth?:number;customHeight?:number;titleSize?:number;bodyWeight?:300|400;textWeight?:Weight;align?:Align;underline?:boolean;vertical?:'top'|'center'|'bottom';skin:Skin;customBg?:string;customFg?:string;customAccent?:string;customDim?:string;marginLeft?:number;marginRight?:number;photoZoom?:number;photoPanX?:number;photoPanY?:number;photoFrameWidth?:number;photoFrameHeight?:number;headlineFont?:FontChoice;summaryFont?:FontChoice;metaFont?:FontChoice;logoVariant?:LogoVariant;photoPosition:PhotoPosition;photoFit:PhotoFit;imageShape:PhotoShape;photoScale:number;imageRadius:number;imageBorder:number;photoOpacity:number;titleScale:number;textSize:number;lineSpacing:number;summaryLineSpacing:number;detailSpacing:number;headlineInset:number;headlineDX:number;headlineDY:number;summarySize:number;summaryInset:number;summaryDX:number;summaryDY:number;imageInset:number;imageDX:number;imageDY:number;sourcePlacement:SourcePlacement;sourceDX:number;sourceDY:number;wrapHeadline:boolean;showWeekday:boolean;showPath:boolean;sideMargin:number;topPadding:number;bottomPadding:number};
 type NewsGeometry={rows:HeadlineRow[];photo:PhotoRect|null;summaryLines:string[];summaryY:number;summaryRight:number;summaryFont:number;summaryLineHeight:number;source:string;sourceY:number|null;sourceRight:number;locationText:string;locationY:number|null;creditBelowY:number|null};
 type Page={lines:string[];news?:NewsGeometry};
 type KnowledgePath={dossier:string;issue:string;event:string};
 const sizes:Record<Format,{w:number;h:number;label:string}>={square:{w:1080,h:1080,label:'مربع 1080 × 1080'},portrait:{w:1080,h:1350,label:'عمودي 1080 × 1350'},landscape:{w:1200,h:675,label:'أفقي 1200 × 675'},wide:{w:1600,h:900,label:'عريض 1600 × 900'},story:{w:1080,h:1920,label:'ستوري 1080 × 1920'},custom:{w:1080,h:1350,label:'مقاس مخصص'}};
 const skins:Record<Skin,{bg:string,fg:string,accent:string,dim:string}>={forest:{bg:'#092d28',fg:'#fffefa',accent:'#d6ee91',dim:'#d3e3dc'},ink:{bg:'#182730',fg:'#ffffff',accent:'#e8b5a8',dim:'#cbd4d8'},ivory:{bg:'#faf9f3',fg:'#183833',accent:'#396a53',dim:'#526860'},navy:{bg:'#142a42',fg:'#fffdf6',accent:'#b7d3ee',dim:'#cdd9e3'},olive:{bg:'#333d27',fg:'#fffefa',accent:'#d8dd9b',dim:'#e2e4d0'},stone:{bg:'#eeeae1',fg:'#29322c',accent:'#758778',dim:'#505d52'},rose:{bg:'#f6e9e4',fg:'#412e33',accent:'#a85b6d',dim:'#775c63'},charcoal:{bg:'#202326',fg:'#f7f7f2',accent:'#f2c879',dim:'#c4c8c6'},midnight:{bg:'#101b2d',fg:'#f5f7fb',accent:'#79b8d8',dim:'#c0ccd8'},burgundy:{bg:'#421f2b',fg:'#fff8f4',accent:'#e8a6a6',dim:'#dfc9ca'},cobalt:{bg:'#183b78',fg:'#ffffff',accent:'#f6d365',dim:'#d5e1f6'},teal:{bg:'#073f43',fg:'#f4ffff',accent:'#82d8c6',dim:'#c2e5df'},sand:{bg:'#e9dfcb',fg:'#342d25',accent:'#9c6b3f',dim:'#6e6253'},white:{bg:'#ffffff',fg:'#1e2c2a',accent:'#2f765e',dim:'#65736e'},slate:{bg:'#dce2e6',fg:'#26323a',accent:'#587b91',dim:'#53616a'},plum:{bg:'#34213f',fg:'#fff9ff',accent:'#d8b4ec',dim:'#d6c9dc'},emerald:{bg:'#064b3b',fg:'#f5fff9',accent:'#a7efc1',dim:'#c5e6d3'},terracotta:{bg:'#a94f38',fg:'#fff9f1',accent:'#f7d7a8',dim:'#f0d9c8'},custom:{bg:'#092d28',fg:'#fffefa',accent:'#d6ee91',dim:'#d3e3dc'}};
 const modes:Record<Mode,string>={news:'خبر',urgent:'عاجل',statement:'بيان رسمي',quote:'تصريح / اقتباس'};
-type Config={mode:Mode;format:Format;customWidth:number;customHeight:number;customBg:string;customFg:string;customAccent:string;customDim:string;topPadding:number;bottomPadding:number;detailSpacing:number;summaryLineSpacing:number;skin:Skin;title:string;body:string;issuer:string;date:string;logo:HTMLImageElement|null;issuerLogo:HTMLImageElement|null;path:KnowledgePath;bodyWeight:300|400;titleSize:number;showPath:boolean;sourceUrl:string;sourceName:string;showSource:boolean;textSize:number;textWeight:Weight;align:Align;underline:boolean;sideMargin:number;lineSpacing:number;vertical:'top'|'center'|'bottom';summary:string;location:string;showLocation:boolean;quoteName:string;quoteRole:string;personImage:HTMLImageElement|null;mapImage:HTMLImageElement|null;newsImage:HTMLImageElement|null;photoPosition:PhotoPosition;photoFit:PhotoFit;photoScale:number;photoOpacity:number;photoRounded:boolean;titleScale:number;hidePathOnBackground:boolean;showWeekday:boolean;sourcePlacement:SourcePlacement;sourcePrefix:string;headlineDX:number;headlineDY:number;headlineInset:number;summaryDX:number;summaryDY:number;summaryInset:number;summarySize:number;sourceDX:number;sourceDY:number;imageDX:number;imageDY:number;imageInset:number;imageShape:PhotoShape;imageRadius:number;imageBorder:number;imageCredit:string;showImageCredit:boolean;imageCreditPlacement:PhotoCreditPlacement;wrapHeadline:boolean};
+type Config={mode:Mode;format:Format;customWidth:number;customHeight:number;customBg:string;customFg:string;customAccent:string;customDim:string;marginLeft:number;marginRight:number;photoZoom:number;photoPanX:number;photoPanY:number;photoFrameWidth:number;photoFrameHeight:number;headlineFont:FontChoice;summaryFont:FontChoice;metaFont:FontChoice;logoVariant:LogoVariant;topPadding:number;bottomPadding:number;detailSpacing:number;summaryLineSpacing:number;skin:Skin;title:string;body:string;issuer:string;date:string;logo:HTMLImageElement|null;issuerLogo:HTMLImageElement|null;path:KnowledgePath;bodyWeight:300|400;titleSize:number;showPath:boolean;sourceUrl:string;sourceName:string;showSource:boolean;textSize:number;textWeight:Weight;align:Align;underline:boolean;sideMargin:number;lineSpacing:number;vertical:'top'|'center'|'bottom';summary:string;location:string;showLocation:boolean;quoteName:string;quoteRole:string;personImage:HTMLImageElement|null;mapImage:HTMLImageElement|null;newsImage:HTMLImageElement|null;photoPosition:PhotoPosition;photoFit:PhotoFit;photoScale:number;photoOpacity:number;photoRounded:boolean;titleScale:number;hidePathOnBackground:boolean;showWeekday:boolean;sourcePlacement:SourcePlacement;sourcePrefix:string;headlineDX:number;headlineDY:number;headlineInset:number;summaryDX:number;summaryDY:number;summaryInset:number;summarySize:number;sourceDX:number;sourceDY:number;imageDX:number;imageDY:number;imageInset:number;imageShape:PhotoShape;imageRadius:number;imageBorder:number;imageCredit:string;showImageCredit:boolean;imageCreditPlacement:PhotoCreditPlacement;wrapHeadline:boolean};
 function dimensions(cfg:Config){return cfg.format==='custom'?{w:cfg.customWidth,h:cfg.customHeight}:sizes[cfg.format]}
-const serif='"Tajarib Taweel","Thmanyah Sans",sans-serif';
+function fontStack(choice:FontChoice){return choice==='tajarib'?'"Tajarib Taweel",sans-serif':'"Thmanyah Sans",sans-serif'}
+const serif='"Tajarib Taweel",sans-serif';
 const sans='"Thmanyah Sans",sans-serif';
 function toLines(ctx:CanvasRenderingContext2D,text:string,maxWidth:number):string[]{
  const output:string[]=[];
@@ -42,17 +45,17 @@ function toLines(ctx:CanvasRenderingContext2D,text:string,maxWidth:number):strin
  return output;
 }
 function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number;lineHeight:number;error:string;top:number;heading:string[];taxonomy:string[]}{
- const {w,h}=dimensions(cfg);const statement=cfg.mode==='statement';const margin=cfg.sideMargin;const width=w-margin*2;const empty={pages:[] as Page[],font:0,lineHeight:0,error:'',top:0,heading:[] as string[],taxonomy:[] as string[]};
+ const {w,h}=dimensions(cfg);const statement=cfg.mode==='statement';const margin=cfg.sideMargin;const width=w-margin*2-cfg.marginLeft-cfg.marginRight;const leftMargin=margin+cfg.marginLeft,rightMargin=margin+cfg.marginRight;const empty={pages:[] as Page[],font:0,lineHeight:0,error:'',top:0,heading:[] as string[],taxonomy:[] as string[]};
  if(w<600||h<600||w>2400||h>3000)return {...empty,error:'الأبعاد المطلوبة خارج النطاق المسموح (600–2400 عرضًا، 600–3000 ارتفاعًا)'};
  if(!cfg.title.trim()||(statement&&!cfg.body.trim()))return {...empty,error:'أدخل العنوان والنص المطلوب'};
  if(/https?:\/\/|www\./i.test(cfg.title))return {...empty,error:'العنوان يحتوي على رابط إلكتروني. انقل الرابط إلى حقل المصدر، واترك العنوان نصًا خبريًا فقط.'};
  const showClassification=cfg.showPath&&!(cfg.newsImage&&cfg.photoPosition==='background'&&cfg.hidePathOnBackground&&(cfg.mode==='news'||cfg.mode==='urgent'));
  const categories=(showClassification?[cfg.path.dossier,cfg.path.issue,cfg.path.event]:[]).map(x=>x.trim()).filter(Boolean);
- ctx.font='500 27px '+sans;
+ ctx.font='500 27px '+fontStack(cfg.metaFont);
  const taxonomy=categories.length?toLines(ctx,categories.join(' ← '),width):[];
  if(taxonomy.length>3)return {...empty,error:'مسار التصنيف طويل؛ اختصر التسميات إلى ثلاثة أسطر كحد أقصى'};
  const taxBottom=taxonomy.length?cfg.topPadding+100+taxonomy.length*40+28:cfg.topPadding+93;
- ctx.font='700 '+cfg.titleSize+'px '+serif;
+ ctx.font='700 '+cfg.titleSize+'px '+fontStack(cfg.headlineFont);
  const heading=statement?toLines(ctx,cfg.title,width):[];
  if(heading.length>2)return {...empty,error:'عنوان البيان أطول من سطرين؛ اختصر العنوان فقط'};
  const issuerArea=statement?(cfg.issuerLogo?185:55):0;
@@ -65,7 +68,7 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
  let lineHeight=font*cfg.lineSpacing;
  if(bottom-top<36)return {...empty,error:'المساحة المتاحة ضيقة؛ خفف الهوامش أو اختر ارتفاعًا أكبر'};
  if(statement){
-   ctx.font=cfg.bodyWeight+' '+font+'px '+sans;
+   ctx.font=cfg.bodyWeight+' '+font+'px '+fontStack(cfg.summaryFont);
    const lines=toLines(ctx,cfg.body.trim(),width);
    const capacity=Math.floor((bottom-top)/lineHeight);
    if(capacity<2)return {...empty,error:'المساحة المتاحة للبيان غير كافية'};
@@ -94,12 +97,13 @@ function plan(cfg:Config,ctx:CanvasRenderingContext2D):{pages:Page[];font:number
 }
 function photoBox(cfg:Config,w:number,h:number,margin:number){
  if(!cfg.newsImage)return null;
- const width=w-2*margin;
- const scale=cfg.photoScale/100;
- if(cfg.photoPosition==='background')return {x:margin+cfg.imageInset,y:cfg.topPadding+105,w:width-2*cfg.imageInset,h:Math.max(100,h-cfg.topPadding-cfg.bottomPadding-310)};
- if(cfg.photoPosition==='top')return {x:margin+cfg.imageInset,y:0,w:width-2*cfg.imageInset,h:Math.max(115,Math.min(280,Math.round(h*.22*scale)))};
- const photoW=Math.round(Math.min(width*.46,width*.38*scale));
- return {x:cfg.photoPosition==='left'?margin:w-margin-photoW,y:0,w:photoW,h:Math.max(110,Math.min(470,Math.round(h*.36*scale)))};
+ const width=w-2*margin-cfg.marginLeft-cfg.marginRight;
+ const scale=cfg.photoScale/100;const frameW=cfg.photoFrameWidth/100,frameH=cfg.photoFrameHeight/100;
+ if(cfg.photoPosition==='background')return {x:margin+cfg.marginLeft+cfg.imageInset,y:cfg.topPadding+105,w:(width-2*cfg.imageInset)*frameW,h:Math.max(100,h-cfg.topPadding-cfg.bottomPadding-310)*frameH};
+ if(cfg.photoPosition==='top')return {x:margin+cfg.marginLeft+cfg.imageInset,y:0,w:(width-2*cfg.imageInset)*frameW,h:Math.max(115,Math.min(280,Math.round(h*.22*scale)))*frameH};
+ const photoW=Math.round(Math.min(width*.46,width*.38*scale)*frameW);
+ const photoH=Math.max(110,Math.min(470,Math.round(h*.36*scale)))*frameH;
+ return {x:cfg.photoPosition==='left'?margin+cfg.marginLeft:w-margin-cfg.marginRight-photoW,y:0,w:photoW,h:photoH};
 }
 function photoPath(ctx:CanvasRenderingContext2D,box:PhotoRect,shape:PhotoShape,radius:number){
  const {x,y,w,h}=box;ctx.beginPath();
@@ -114,22 +118,24 @@ function photoPath(ctx:CanvasRenderingContext2D,box:PhotoRect,shape:PhotoShape,r
  }else if(shape==='mixed')ctx.roundRect(x,y,w,h,[Math.min(radius,Math.min(w,h)/2),0,Math.min(radius,Math.min(w,h)/2),0]);
  else ctx.roundRect(x,y,w,h,shape==='square'?0:radius);
 }
-function paintPhoto(ctx:CanvasRenderingContext2D,img:HTMLImageElement,box:PhotoRect,fit:PhotoFit,rounded:boolean,opacity:number,shape:PhotoShape='rounded',radius=18,border=0,color='#fff'){
+function paintPhoto(ctx:CanvasRenderingContext2D,img:HTMLImageElement,box:PhotoRect,fit:PhotoFit,rounded:boolean,opacity:number,shape:PhotoShape='rounded',radius=18,border=0,color='#fff',zoom=100,panX=0,panY=0){
  const {x,y,w,h}=box;if(w<=0||h<=0)return;
  const actualShape=shape==='rounded'&&!rounded?'square':shape;
  ctx.save();ctx.globalAlpha=opacity;
  if(actualShape!=='fade'){photoPath(ctx,box,actualShape,radius);ctx.clip()}
  ctx.fillStyle='#faf9f3';if(actualShape!=='fade')ctx.fillRect(x,y,w,h);
- const factor=fit==='cover'?Math.max(w/img.width,h/img.height):Math.min(w/img.width,h/img.height);
+ const factor=(fit==='cover'?Math.max(w/img.width,h/img.height):Math.min(w/img.width,h/img.height))*zoom/100;
  const iw=img.width*factor,ih=img.height*factor;
+ const drawX=x+(w-iw)/2+(iw>w?(iw-w)*panX/200:0);
+ const drawY=y+(h-ih)/2+(ih>h?(ih-h)*panY/200:0);
  if(actualShape==='fade'){
   const layer=document.createElement('canvas');layer.width=Math.ceil(w);layer.height=Math.ceil(h);
   const p=layer.getContext('2d');
-  if(p){p.drawImage(img,(w-iw)/2,(h-ih)/2,iw,ih);p.globalCompositeOperation='destination-in';
+  if(p){p.drawImage(img,drawX-x,drawY-y,iw,ih);p.globalCompositeOperation='destination-in';
    const gradient=p.createRadialGradient(w/2,h/2,Math.min(w,h)*.15,w/2,h/2,Math.max(w,h)*.68);
    gradient.addColorStop(0,'rgba(0,0,0,1)');gradient.addColorStop(.70,'rgba(0,0,0,1)');gradient.addColorStop(1,'rgba(0,0,0,0)');
    p.fillStyle=gradient;p.fillRect(0,0,w,h);ctx.drawImage(layer,x,y)}
- }else ctx.drawImage(img,x+(w-iw)/2,y+(h-ih)/2,iw,ih);
+ }else ctx.drawImage(img,drawX,drawY,iw,ih);
  ctx.restore();
  if(border>0&&actualShape!=='fade'){ctx.save();photoPath(ctx,box,actualShape,radius);ctx.strokeStyle=color;ctx.lineWidth=border;ctx.stroke();ctx.restore()}
 }
@@ -160,7 +166,7 @@ function calendarDate(value:string,showWeekday:boolean){
  return showWeekday?['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'][d.getUTCDay()]+'  '+value:value;
 }
 function newsGeometry(cfg:Config,ctx:CanvasRenderingContext2D,top:number,bottom:number,font:number):NewsGeometry|null{
- const {w,h}=dimensions(cfg),margin=cfg.sideMargin,fullWidth=w-2*margin;
+ const {w,h}=dimensions(cfg),margin=cfg.sideMargin,leftMargin=margin+cfg.marginLeft,rightMargin=margin+cfg.marginRight,fullWidth=w-leftMargin-rightMargin;
  const hasPhoto=Boolean(cfg.newsImage),background=hasPhoto&&cfg.photoPosition==='background';
  const side=hasPhoto&&(cfg.photoPosition==='left'||cfg.photoPosition==='right');
  const topPhoto=hasPhoto&&cfg.photoPosition==='top';
@@ -171,14 +177,14 @@ function newsGeometry(cfg:Config,ctx:CanvasRenderingContext2D,top:number,bottom:
  const photoW=frame&&!background?Math.min(frame.w,fullWidth-pad*2):0;
  const photoH=frame&&!background?frame.h:0;
  const gap=36;
- const photoX=frame?clamp(frame.x+cfg.imageDX,margin+pad,w-margin-pad-frame.w):0;
+ const photoX=frame?clamp(frame.x+cfg.imageDX,leftMargin+pad,w-rightMargin-pad-frame.w):0;
  const photoY=cfg.imageDY;
  const titleFont=font,lh=titleFont*cfg.lineSpacing;
  const dy=topPhoto?Math.max(cfg.headlineDY+photoH+cfg.detailSpacing,photoY+photoH+creditH+20):cfg.headlineDY;
  const words=cfg.title.trim().match(/\S+/g)??[];
  const rows:HeadlineRow[]=[];
  const spare=Math.abs(cfg.headlineDX)+cfg.headlineInset;
- const baseLeft=margin+spare,baseRight=w-margin-spare;
+ const baseLeft=leftMargin+spare,baseRight=w-rightMargin-spare;
  const photoRight=cfg.photoPosition==='right';
  for(let index=0;words.length&&index<90;index++){
   const lineY=dy+index*lh;
@@ -211,26 +217,28 @@ function newsGeometry(cfg:Config,ctx:CanvasRenderingContext2D,top:number,bottom:
  const mediaBottom=Math.max(titleBottom,photoBottom);
  const source=sourceText(cfg);
  const sourceH=source?32:0;
- const summaryFont=cfg.summarySize,summaryLineHeight=summaryFont*cfg.summaryLineSpacing;
+ let summaryFont=cfg.summarySize,summaryLineHeight=summaryFont*cfg.summaryLineSpacing;
  const sumSpace=Math.abs(cfg.summaryDX)+cfg.summaryInset;
- const summaryRight=w-margin-sumSpace+cfg.summaryDX;
+ const summaryRight=w-rightMargin-sumSpace+cfg.summaryDX;
  const summaryWidth=fullWidth-2*sumSpace;
  if(summaryWidth<100)return null;
- ctx.font='400 '+summaryFont+'px '+sans;
- const summaryLines=cfg.summary.trim()?toLines(ctx,cfg.summary.trim(),summaryWidth):[];
- const summaryH=summaryLines.length*summaryLineHeight;
- let next=mediaBottom+(summaryLines.length||source?cfg.detailSpacing:0);
- let sourceY:number|null=null,summaryY=0;
- if(source&&cfg.sourcePlacement==='before-summary'){
-  sourceY=next+Math.max(-12,cfg.sourceDY);next=Math.max(next,sourceY)+sourceH+12;
- }
- if(summaryLines.length){summaryY=next+Math.max(-12,cfg.summaryDY);next=Math.max(next,summaryY)+summaryH}
- if(source&&cfg.sourcePlacement==='after-summary'){
-  sourceY=next+(summaryLines.length?18:0)+Math.max(-12,cfg.sourceDY);next=Math.max(next,sourceY)+sourceH;
- }
+ let summaryLines:string[]=[],summaryY=0,sourceY:number|null=null,next=0,locationY:number|null=null;
  const locationText=cfg.showLocation&&cfg.location.trim()?'الموقع: '+cfg.location.trim():'';
- const locationY=locationText?next+18:null;
- if(locationY!==null)next=locationY+30;
+ for(;summaryFont>=14;summaryFont-=2){
+  ctx.font='400 '+summaryFont+'px '+fontStack(cfg.summaryFont);
+  summaryLines=cfg.summary.trim()?toLines(ctx,cfg.summary.trim(),summaryWidth):[];
+  summaryLineHeight=summaryFont*cfg.summaryLineSpacing;
+  const summaryH=summaryLines.length*summaryLineHeight;
+  next=mediaBottom+(summaryLines.length||source?cfg.detailSpacing:0);sourceY=null;summaryY=0;locationY=null;
+  if(source&&cfg.sourcePlacement==='before-summary'){sourceY=next+Math.max(-12,cfg.sourceDY);next=Math.max(next,sourceY)+sourceH+12;}
+  if(summaryLines.length){summaryY=next+Math.max(-12,cfg.summaryDY);next=Math.max(next,summaryY)+summaryH;}
+  if(source&&cfg.sourcePlacement==='after-summary'){sourceY=next+(summaryLines.length?18:0)+Math.max(-12,cfg.sourceDY);next=Math.max(next,sourceY)+sourceH;}
+  locationY=locationText?next+18:null;if(locationY!==null)next=locationY+30;
+  const lowTry=Math.min(0,dy,frame&&!background?photoY:0,summaryLines.length?summaryY:0,sourceY??0);
+  const highTry=Math.max(titleBottom,photoBottom,next,0);
+  if(highTry-lowTry+12<=bottom-top)break;
+ }
+ if(summaryFont<14)return null;
  const low=Math.min(0,dy,frame&&!background?photoY:0,summaryLines.length?summaryY:0,sourceY??0);
  const high=Math.max(titleBottom,photoBottom,next,0);
  const total=high-low+12;
@@ -239,10 +247,10 @@ function newsGeometry(cfg:Config,ctx:CanvasRenderingContext2D,top:number,bottom:
  const origin=cfg.vertical==='top'?top-low:cfg.vertical==='bottom'?top+free-low:top+free/2-low;
  for(const row of rows)row.y+=origin;
  const imageRect=frame?background
- ?{x:clamp(frame.x+cfg.imageDX,margin+pad,w-margin-pad-frame.w),y:clamp(top+10+cfg.imageDY,top,bottom-95),w:frame.w,h:Math.max(80,bottom-clamp(top+10+cfg.imageDY,top,bottom-95)-12)}
+ ?{x:clamp(frame.x+cfg.imageDX,leftMargin+pad,w-rightMargin-pad-frame.w),y:clamp(top+10+cfg.imageDY,top,bottom-95),w:frame.w,h:Math.max(80,bottom-clamp(top+10+cfg.imageDY,top,bottom-95)-12)}
  :{x:photoX,y:origin+photoY,w:frame.w,h:photoH}:null;
  return {rows,photo:imageRect,summaryLines,summaryY:origin+summaryY,summaryRight,summaryFont,summaryLineHeight,
- source,sourceY:sourceY===null?null:origin+sourceY,sourceRight:clamp(w-margin-40+cfg.sourceDX,margin+150,w-margin),
+ source,sourceY:sourceY===null?null:origin+sourceY,sourceRight:clamp(w-rightMargin-40+cfg.sourceDX,leftMargin+150,w-rightMargin),
  locationText,locationY:locationY===null?null:origin+locationY,
  creditBelowY:creditBelow&&imageRect?imageRect.y+imageRect.h+5:null};
 }
@@ -275,13 +283,13 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
  // A restrained editorial accent, not a wide decorative stripe.
  ctx.fillStyle=c.accent;ctx.fillRect(w-12,0,12,h);
  ctx.direction='rtl';ctx.textAlign='right';ctx.textBaseline='top';
- ctx.fillStyle=c.accent;ctx.font='700 34px '+sans;
+ ctx.fillStyle=c.accent;ctx.font='700 34px '+fontStack(cfg.metaFont);
  ctx.fillText(modes[cfg.mode],w-margin,cfg.topPadding);
- ctx.strokeStyle=c.accent;ctx.globalAlpha=.52;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(margin,cfg.topPadding+74);ctx.lineTo(w-margin,cfg.topPadding+74);ctx.stroke();ctx.globalAlpha=1;
+ ctx.strokeStyle=c.accent;ctx.globalAlpha=.52;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(margin+cfg.marginLeft,cfg.topPadding+74);ctx.lineTo(w-margin-cfg.marginRight,cfg.topPadding+74);ctx.stroke();ctx.globalAlpha=1;
  let yy=cfg.topPadding+100;
  if(taxonomy.length){
-  ctx.fillStyle=c.dim;ctx.font='500 27px '+sans;
-  for(const line of taxonomy){ctx.fillText(line,w-margin,yy);yy+=40}
+  ctx.fillStyle=c.dim;ctx.font='500 27px '+fontStack(cfg.metaFont);
+  for(const line of taxonomy){ctx.fillText(line,w-margin-cfg.marginRight,yy);yy+=40}
  }
  if(cfg.mode==='statement'){
   const taxEnd=taxonomy.length?yy+28:cfg.topPadding+93;
@@ -293,15 +301,15 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
    ctx.drawImage(cfg.issuerLogo,bx+(bw-iw)/2,by+(bh-ih)/2,iw,ih);
   }
   const headY=cfg.issuerLogo?taxEnd+180:taxEnd+18;
-  ctx.fillStyle=c.fg;ctx.font='700 '+cfg.titleSize+'px '+serif;
+  ctx.fillStyle=c.fg;ctx.font='700 '+cfg.titleSize+'px '+fontStack(cfg.headlineFont);
   heading.forEach((line,j)=>ctx.fillText(line,w-margin,headY+j*cfg.titleSize*1.32));
   const issuerY=headY+heading.length*cfg.titleSize*1.32+14;
-  ctx.fillStyle=c.dim;ctx.font='500 27px '+sans;
-  const issuerLines=toLines(ctx,cfg.issuer||'الجهة المصدرة غير محددة',w-margin*2);
+  ctx.fillStyle=c.dim;ctx.font='500 27px '+fontStack(cfg.metaFont);
+  const issuerLines=toLines(ctx,cfg.issuer||'الجهة المصدرة غير محددة',w-margin*2-cfg.marginLeft-cfg.marginRight);
   if(issuerLines.length>2)return {total:pages.length,error:'اسم الجهة طويل؛ اختصر الاسم'};
   issuerLines.forEach((line,j)=>ctx.fillText(line,w-margin,issuerY+j*38));
-  ctx.fillStyle=c.fg;ctx.font=cfg.bodyWeight+' '+font+'px '+sans;ctx.textAlign=cfg.align;
-  const x=cfg.align==='center'?w/2:w-margin;
+  ctx.fillStyle=c.fg;ctx.font=cfg.bodyWeight+' '+font+'px '+fontStack(cfg.summaryFont);ctx.textAlign=cfg.align;
+  const x=cfg.align==='center'?(margin+cfg.marginLeft+w-margin-cfg.marginRight)/2:w-margin-cfg.marginRight;
   p.lines.forEach((line,j)=>{if(line)drawText(ctx,line,x,top+j*lineHeight,cfg.underline)});ctx.textAlign='right';
  }else if(cfg.mode==='quote'){
   if(cfg.personImage){
@@ -319,20 +327,21 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
  }else{
   const news=p.news;if(!news)return {total:0,error:'فشل تخطيط الخبر'};
   if(news.photo&&cfg.newsImage&&cfg.photoPosition==='background'){
-   paintPhoto(ctx,cfg.newsImage,news.photo,cfg.photoFit,cfg.photoRounded,cfg.photoOpacity/100,cfg.imageShape,cfg.imageRadius,cfg.imageBorder,c.accent);
+   paintPhoto(ctx,cfg.newsImage,news.photo,cfg.photoFit,cfg.photoRounded,cfg.photoOpacity/100,cfg.imageShape,cfg.imageRadius,cfg.imageBorder,c.accent,cfg.photoZoom,cfg.photoPanX,cfg.photoPanY);
    ctx.fillStyle=c.bg;ctx.globalAlpha=(cfg.skin==='ivory'||cfg.skin==='stone'||cfg.skin==='rose') ? .62 : .52;
    ctx.fillRect(news.photo.x,news.photo.y,news.photo.w,news.photo.h);ctx.globalAlpha=1;
   }
   if(news.photo&&cfg.newsImage&&cfg.photoPosition!=='background')
-   paintPhoto(ctx,cfg.newsImage,news.photo,cfg.photoFit,cfg.photoRounded,1,cfg.imageShape,cfg.imageRadius,cfg.imageBorder,c.accent);
+   paintPhoto(ctx,cfg.newsImage,news.photo,cfg.photoFit,cfg.photoRounded,1,cfg.imageShape,cfg.imageRadius,cfg.imageBorder,c.accent,cfg.photoZoom,cfg.photoPanX,cfg.photoPanY);
   ctx.font=cfg.textWeight+' '+font+'px '+serif;ctx.direction='rtl';ctx.fillStyle=c.fg;ctx.textAlign=cfg.align;
   for(const line of news.rows){
    const x=cfg.align==='center'?(line.left+line.right)/2:line.right;
    drawText(ctx,line.text,x,line.y,cfg.underline);
   }
   if(news.summaryLines.length){
-   ctx.direction='rtl';ctx.textAlign='right';ctx.font='400 '+news.summaryFont+'px '+serif;ctx.fillStyle=c.dim;
-   for(let j=0;j<news.summaryLines.length;j++)ctx.fillText(news.summaryLines[j],news.summaryRight,news.summaryY+j*news.summaryLineHeight);
+   ctx.direction='rtl';ctx.textAlign='right';ctx.font='400 '+news.summaryFont+'px '+fontStack(cfg.summaryFont);ctx.fillStyle=c.dim;
+   ctx.save();ctx.beginPath();ctx.rect(margin+cfg.marginLeft,news.summaryY-2,w-2*margin-cfg.marginLeft-cfg.marginRight,Math.max(0,h-cfg.bottomPadding-150-news.summaryY));ctx.clip();
+   for(let j=0;j<news.summaryLines.length;j++)ctx.fillText(news.summaryLines[j],news.summaryRight,news.summaryY+j*news.summaryLineHeight);ctx.restore();
   }
   if(news.source&&news.sourceY!==null){
    ctx.direction='rtl';ctx.textAlign='right';ctx.font='500 25px '+sans;ctx.fillStyle=c.accent;
@@ -364,8 +373,9 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
  }
  return {total:pages.length,error:''};
 }
-async function getLogo():Promise<HTMLImageElement|null>{
- return await new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src='/brand/logos/sas-logo-for%20white%20background.png'});
+async function getLogo(variant:LogoVariant):Promise<HTMLImageElement|null>{
+ const sources:Record<LogoVariant,string>={color:'/brand/logos/sas-logo-1.svg',dark:'/brand/logos/sas-logo.svg',light:'/brand/logos/sas-logo-for%20white%20background.png'};
+ return await new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=sources[variant]});
 }
 export default function Studio(){
  const [mode,setMode]=useState<Mode>('news');
@@ -381,6 +391,11 @@ export default function Studio(){
  const [customFg,setCustomFg]=useState('#fffefa');
  const [customAccent,setCustomAccent]=useState('#d6ee91');
  const [customDim,setCustomDim]=useState('#d3e3dc');
+ const [marginLeft,setMarginLeft]=useState(0),[marginRight,setMarginRight]=useState(0);
+ const [photoZoom,setPhotoZoom]=useState(100),[photoPanX,setPhotoPanX]=useState(0),[photoPanY,setPhotoPanY]=useState(0);
+ const [photoFrameWidth,setPhotoFrameWidth]=useState(100),[photoFrameHeight,setPhotoFrameHeight]=useState(100);
+ const [headlineFont,setHeadlineFont]=useState<FontChoice>('tajarib'),[summaryFont,setSummaryFont]=useState<FontChoice>('sans'),[metaFont,setMetaFont]=useState<FontChoice>('sans');
+ const [logoVariant,setLogoVariant]=useState<LogoVariant>('color');
  const [bodyWeight,setBodyWeight]=useState<300|400>(300);
  const [titleSize,setTitleSize]=useState(60);
  const [showPath,setShowPath]=useState(true);
@@ -433,7 +448,7 @@ export default function Studio(){
  const [page,setPage]=useState(0);const [count,setCount]=useState(0);
  const [error,setError]=useState('');const [logo,setLogo]=useState<HTMLImageElement|null>(null);
  const [exporting,setExporting]=useState(false);const canvas=useRef<HTMLCanvasElement>(null);
- const cfg=useMemo(()=>({mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline}),[mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline]);
+ const cfg=useMemo(()=>({mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline}),[mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline]);
  useEffect(()=>{
   try{const parsed:unknown=JSON.parse(window.localStorage.getItem('sas-studio-presets-v3')||'[]');
    if(Array.isArray(parsed))setPresets(parsed.filter((item:unknown):item is StudioPreset=>
@@ -443,10 +458,10 @@ export default function Studio(){
   }catch{setPresetError('تعذر قراءة قوالبك المحفوظة؛ لم تُحذف')}
  },[]);
  function snapshot(name:string):StudioPreset{
-  return {name,mode,format,customWidth,customHeight,titleSize,bodyWeight,textWeight,align,underline,vertical,skin,customBg,customFg,customAccent,customDim,photoPosition,photoFit,imageShape,photoScale,imageRadius,imageBorder,photoOpacity,titleScale,textSize,lineSpacing,summaryLineSpacing,detailSpacing,headlineInset,headlineDX,headlineDY,summarySize,summaryInset,summaryDX,summaryDY,imageInset,imageDX,imageDY,sourcePlacement,sourceDX,sourceDY,wrapHeadline,showWeekday,showPath,sideMargin,topPadding,bottomPadding};
+  return {name,mode,format,customWidth,customHeight,titleSize,bodyWeight,textWeight,align,underline,vertical,skin,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,photoPosition,photoFit,imageShape,photoScale,imageRadius,imageBorder,photoOpacity,titleScale,textSize,lineSpacing,summaryLineSpacing,detailSpacing,headlineInset,headlineDX,headlineDY,summarySize,summaryInset,summaryDX,summaryDY,imageInset,imageDX,imageDY,sourcePlacement,sourceDX,sourceDY,wrapHeadline,showWeekday,showPath,sideMargin,topPadding,bottomPadding};
  }
  function applyPreset(p:StudioPreset){
-  setMode(p.mode);setFormat(p.format);setCustomWidth(p.customWidth||1080);setCustomHeight(p.customHeight||1350);setTitleSize(p.titleSize||60);setBodyWeight(p.bodyWeight||300);setTextWeight(p.textWeight||700);setAlign(p.align||'right');setUnderline(p.underline||false);setVertical(p.vertical||'center');setSkin(p.skin);setCustomBg(p.customBg||'#092d28');setCustomFg(p.customFg||'#fffefa');setCustomAccent(p.customAccent||'#d6ee91');setCustomDim(p.customDim||'#d3e3dc');setPhotoPosition(p.photoPosition);setPhotoFit(p.photoFit);setImageShape(p.imageShape);
+  setMode(p.mode);setFormat(p.format);setCustomWidth(p.customWidth||1080);setMarginLeft(p.marginLeft||0);setMarginRight(p.marginRight||0);setPhotoZoom(p.photoZoom||100);setPhotoPanX(p.photoPanX||0);setPhotoPanY(p.photoPanY||0);setPhotoFrameWidth(p.photoFrameWidth||100);setPhotoFrameHeight(p.photoFrameHeight||100);setHeadlineFont(p.headlineFont||'tajarib');setSummaryFont(p.summaryFont||'sans');setMetaFont(p.metaFont||'sans');setLogoVariant(p.logoVariant||'color');setCustomHeight(p.customHeight||1350);setTitleSize(p.titleSize||60);setBodyWeight(p.bodyWeight||300);setTextWeight(p.textWeight||700);setAlign(p.align||'right');setUnderline(p.underline||false);setVertical(p.vertical||'center');setSkin(p.skin);setCustomBg(p.customBg||'#092d28');setCustomFg(p.customFg||'#fffefa');setCustomAccent(p.customAccent||'#d6ee91');setCustomDim(p.customDim||'#d3e3dc');setPhotoPosition(p.photoPosition);setPhotoFit(p.photoFit);setImageShape(p.imageShape);
   setPhotoScale(p.photoScale);setImageRadius(p.imageRadius);setImageBorder(p.imageBorder);setPhotoOpacity(p.photoOpacity);
   setTitleScale(p.titleScale);setTextSize(p.textSize);setLineSpacing(p.lineSpacing);setSummaryLineSpacing(p.summaryLineSpacing);
   setDetailSpacing(p.detailSpacing);setHeadlineInset(p.headlineInset);setHeadlineDX(p.headlineDX);setHeadlineDY(p.headlineDY);
@@ -467,7 +482,7 @@ export default function Studio(){
   try{window.localStorage.setItem('sas-studio-presets-v3',JSON.stringify(list));setPresets(list);setPresetName('');setPresetError('')}
   catch{setPresetError('تعذر تعديل القوالب المحفوظة')}
  }
- useEffect(()=>{let live=true;void getLogo().then(img=>{if(live)setLogo(img)});return()=>{live=false}},[]);
+ useEffect(()=>{let live=true;void getLogo(logoVariant).then(img=>{if(live)setLogo(img)});return()=>{live=false}},[logoVariant]);
  useEffect(()=>{let live=true;const id=setTimeout(()=>{void (async()=>{
   if(!canvas.current)return;
   try{await Promise.all([document.fonts.load('300 43px '+serif),document.fonts.load('500 51px '+serif),document.fonts.load('400 43px '+serif),document.fonts.load('700 86px '+serif)]);
@@ -537,7 +552,13 @@ export default function Studio(){
  <label>حجم العنوان: {textSize}px<input type="range" min={32} max={120} step={2} value={textSize} onChange={e=>setTextSize(Number(e.target.value))}/></label>
  <label>حجم عنوان البيان: {titleSize}px<input type="range" min={36} max={100} step={2} value={titleSize} onChange={e=>setTitleSize(Number(e.target.value))}/></label>
  <label>حجم الملخص: {summarySize}px<input type="range" min={18} max={48} step={1} value={summarySize} onChange={e=>setSummarySize(Number(e.target.value))}/></label>
- <label>الهوامش الجانبية: {sideMargin}px<input type="range" min={30} max={220} step={2} value={sideMargin} onChange={e=>setSideMargin(Number(e.target.value))}/></label>
+ <label>الهامش الأساسي: {sideMargin}px<input type="range" min={30} max={220} step={2} value={sideMargin} onChange={e=>setSideMargin(Number(e.target.value))}/></label>
+ <label>هامش إضافي يمينًا: {marginRight}px<input type="range" min={0} max={240} step={4} value={marginRight} onChange={e=>setMarginRight(Number(e.target.value))}/></label>
+ <label>هامش إضافي يسارًا: {marginLeft}px<input type="range" min={0} max={240} step={4} value={marginLeft} onChange={e=>setMarginLeft(Number(e.target.value))}/></label>
+ <label>خط العنوان<select value={headlineFont} onChange={e=>setHeadlineFont(e.target.value as FontChoice)}><option value="tajarib">تجاريب طويل</option><option value="sans">ثمانية سانس</option></select></label>
+ <label>خط الملخص<select value={summaryFont} onChange={e=>setSummaryFont(e.target.value as FontChoice)}><option value="sans">ثمانية سانس</option><option value="tajarib">تجاريب طويل</option></select></label>
+ <label>خط البيانات والتصنيف<select value={metaFont} onChange={e=>setMetaFont(e.target.value as FontChoice)}><option value="sans">ثمانية سانس</option><option value="tajarib">تجاريب طويل</option></select></label>
+ <label>نسخة شعار ساس<select value={logoVariant} onChange={e=>setLogoVariant(e.target.value as LogoVariant)}><option value="color">النسخة الملونة</option><option value="dark">النسخة الداكنة</option><option value="light">النسخة الفاتحة</option></select></label>
  <label>تباعد الأسطر: {lineSpacing.toFixed(2)}<input type="range" min={1.1} max={2.1} step={0.05} value={lineSpacing} onChange={e=>setLineSpacing(Number(e.target.value))}/></label>
  <label>المسافة بين العنوان والتفاصيل: {detailSpacing}px<input type="range" min={0} max={110} step={2} value={detailSpacing} onChange={e=>setDetailSpacing(Number(e.target.value))}/></label>
  <label>محاذاة العنوان<select value={align} onChange={e=>setAlign(e.target.value as Align)}><option value="right">يمين</option><option value="center">وسط</option></select></label>
@@ -553,7 +574,12 @@ export default function Studio(){
  {newsImage&&<><button type="button" onClick={()=>setNewsImage(null)}>حذف الصورة الرئيسية</button>
  <label>موضع الصورة<select value={photoPosition} onChange={e=>setPhotoPosition(e.target.value as PhotoPosition)}><option value="left">يسار النص</option><option value="right">يمين النص</option><option value="top">أعلى العنوان</option><option value="background">خلفية خافتة</option></select></label>
  <label>طريقة العرض<select value={photoFit} onChange={e=>setPhotoFit(e.target.value as PhotoFit)}><option value="cover">قص لملء المساحة</option><option value="contain">احتواء الصورة كاملة</option></select></label>
- <label>حجم الصورة: {photoScale}%<input type="range" min={45} max={130} step={5} value={photoScale} onChange={e=>setPhotoScale(Number(e.target.value))}/></label>
+ <label>حجم إطار الصورة: {photoScale}%<input type="range" min={45} max={130} step={5} value={photoScale} onChange={e=>setPhotoScale(Number(e.target.value))}/></label>
+ <label>عرض الإطار: {photoFrameWidth}%<input type="range" min={55} max={150} step={5} value={photoFrameWidth} onChange={e=>setPhotoFrameWidth(Number(e.target.value))}/></label>
+ <label>ارتفاع الإطار: {photoFrameHeight}%<input type="range" min={55} max={150} step={5} value={photoFrameHeight} onChange={e=>setPhotoFrameHeight(Number(e.target.value))}/></label>
+ <label>تكبير الصورة داخل الإطار: {photoZoom}%<input type="range" min={70} max={220} step={5} value={photoZoom} onChange={e=>setPhotoZoom(Number(e.target.value))}/></label>
+ <label>تحريك الصورة أفقيًا: {photoPanX}<input type="range" min={-100} max={100} step={2} value={photoPanX} onChange={e=>setPhotoPanX(Number(e.target.value))}/></label>
+ <label>تحريك الصورة رأسيًا: {photoPanY}<input type="range" min={-100} max={100} step={2} value={photoPanY} onChange={e=>setPhotoPanY(Number(e.target.value))}/></label>
  {photoPosition==='background'&&<label><input type="checkbox" checked={hidePathOnBackground} onChange={e=>setHidePathOnBackground(e.target.checked)}/> إخفاء مسار التصنيف فوق الصورة الخلفية</label>}
  {photoPosition==='background'&&<label>شفافية الخلفية: {photoOpacity}%<input type="range" min={15} max={80} step={5} value={photoOpacity} onChange={e=>setPhotoOpacity(Number(e.target.value))}/></label>}
  <label><input type="checkbox" checked={photoRounded} onChange={e=>setPhotoRounded(e.target.checked)}/> تفعيل الاستدارة عند اختيار إطار مستدير</label> <label>شكل إطار الصورة<select value={imageShape} onChange={e=>setImageShape(e.target.value as PhotoShape)}>
