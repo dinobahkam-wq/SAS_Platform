@@ -246,3 +246,6 @@
 - **اختبارات:** فحص ساكن للبنية النصية لمسودة SQL فقط. لا ادعاء باجتياز PostgreSQL parser أو تطبيق Migration أو اختبار RLS محلي.
 - **الحدود:** لا كتابة إلى Supabase البعيد؛ لا بيانات اختبار؛ لا نشر Vercel؛ لا دمج PRs السابقة.
 - **التالي:** مراجعة PR الحزمة، ثم توليد ملف Migration بواسطة `supabase migration new daily_briefing_package1` محليًا، واختباره عبر `supabase db reset` واستعلامات التحقق قبل طلب موافقة منفصلة على أي تطبيق بعيد.
+
+- **PR #32:** [مراجعة Package 1](https://github.com/dinobahkam-wq/SAS_Platform/pull/32) — مفتوح Draft، غير مدمج؛ مكدس فوق PR #31.
+- **حالة الفحص:** GitHub compare: ahead 13 / behind 0 وmergeable=true. Vercel status: failure على رأس PR وقت الفحص؛ لم يُستنتج السبب ولم يُنفذ نشر.
