@@ -1,8 +1,7 @@
--- SAS Daily Briefing V1 — Package 1 draft migration
--- Draft for review only. Do not apply to the hosted Supabase project.
--- Generate the final migration filename locally with:
---   supabase migration new daily_briefing_package1
--- Then copy this reviewed draft into the generated file.
+-- SAS Daily Briefing V1 — Package 1 migration reference copy
+-- Applied to Supabase production as migration 20261112211738_daily_briefing_package1.
+-- Canonical repository migration: supabase/migrations/20261112211738_daily_briefing_package1.sql
+-- This copy is retained for design review and traceability.
 -- Preconditions: public.content_sources/content_items/user_roles and
 -- private.has_any_role(text[]) already exist.
 
