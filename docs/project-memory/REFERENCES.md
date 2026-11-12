@@ -126,3 +126,6 @@
 - [مسودة SQL للمراجعة](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/docs/sql/daily_briefing_package1.draft.sql).
 - [استعلامات التحقق](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/docs/sql/daily_briefing_package1_verification.sql).
 - الحالة: لم تُطبق Migration محليًا أو بعيدًا حتى إكمال المراجعة والاختبارات.
+
+
+- [PR #32 — Package 1: Data Model & Security (Draft)](https://github.com/dinobahkam-wq/SAS_Platform/pull/32).
