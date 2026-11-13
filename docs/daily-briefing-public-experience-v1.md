@@ -96,3 +96,15 @@ Migration Package 1 الحالية تفرض على قاعدة البيانات �
 - Mergeable at last check; not merged.
 - No local typecheck/build yet. GitHub Actions returned no workflow runs; Vercel check returned `build-rate-limit`, which is a plan/build quota issue, not a successful or failed application build.
 - No Vercel deployment was manually initiated.
+
+
+## 9. اختبار العدد الأول الحقيقي — 13 نوفمبر 2026
+
+نُشر العدد الأول تاريخ 12 نوفمبر 2026، والـ slug `daily-briefing-2026-11-12`. يتكون من 24 تطورًا موثقًا و24 إحالة عامة و5 نقاط في الموجز التنفيذي.
+
+- تمت مطابقة عدد التطورات وروابط المصادر مع Snapshot المنشور من `get_public_briefing`.
+- تمت مطابقة الأرشيف مع `get_public_briefing_archive`.
+- اختبارات الامتيازات وبوابة نشر المصدر أُجريت بنيويًا؛ لم يتم اختبار واجهة المتصفح مباشرة من جلسة GitHub.
+- تم تطبيق Migration `20261113074127_briefing_analysis_optional_source_first_v1` لجعل تحليل ساس اختياريًا، بدل النص الطويل المفروض سابقًا.
+- مصدر بيانات العدد المنظم `docs/briefings/2026-11-12.verified.json`؛ لا صور إخبارية ولا حشو تحليلي.
+- لا دمج لـ PR #33 ولا نشر Vercel. لعرض العدد محليًا افتح `http://localhost:3000/briefings/daily-briefing-2026-11-12` بعد تشغيل فرع الواجهة العامة.
