@@ -334,3 +334,13 @@
 
 
 - Opened Draft PR #34 (https://github.com/dinobahkam-wq/SAS_Platform/pull/34), stacked on PR #33. GitHub reported mergeable=true at last check. Code presence checks passed; local typecheck/build not yet run.
+
+
+### 2026-11-13 — Briefing V2.1 editorial layout and tab filters
+
+- Removed static public disclaimer notice and decorative English section overlines, including archive headings.
+- Removed executive summary card background/border to create a formal continuous text block; retained inline citation disclosures.
+- Strengthened inter-development separators and changed the numbered-event connector into a dotted vertical flow.
+- Added interactive in-edition filters (All/Yemen/International/Official Statements/Economy/Sports/Trending Tweets), with per-filter counts and explicit empty states.
+- Clarified the filters use existing published snapshot data only; Trending Tweets is currently based on X/Twitter source URLs, **not** actual trending analytics.
+- No content/SQL changes, no Vercel deployment. Local typecheck/build and mobile UX verification pending.
