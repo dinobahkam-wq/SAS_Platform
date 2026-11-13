@@ -3253,3 +3253,89 @@ textarea {
  .briefing-context{break-inside:avoid}
  .briefing-public-site .briefing-topic-tabs{display:none}
 }
+
+
+/* SAS Briefing V4 — compact intelligence header, monochrome */
+.briefing-public-site .material-symbols-rounded{font-family:"Material Symbols Rounded";font-size:18px;font-weight:normal;font-style:normal;line-height:1;display:inline-block;white-space:nowrap;letter-spacing:normal;direction:ltr;font-feature-settings:"liga";-webkit-font-feature-settings:"liga";-webkit-font-smoothing:antialiased}
+.briefing-public-site .briefing-public-container{padding-top:23px}
+.briefing-public-site .briefing-breadcrumb{margin-bottom:8px}
+.briefing-public-site .briefing-title-hierarchy{margin:0 0 5px;gap:0}
+.briefing-public-site .briefing-title-primary{font-size:clamp(32px,5vw,48px);line-height:1.3}
+.briefing-public-site .briefing-title-secondary{font-size:clamp(16px,2vw,21px);line-height:1.45}
+.briefing-public-site .briefing-edition-date{margin-top:5px}
+.briefing-intelligence{margin:14px 0 6px;background:#fff;border:1px solid #d8d8d8;border-radius:9px;overflow:hidden}
+.briefing-intelligence-head{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f8f8f8;border-bottom:1px solid #ececec}
+.briefing-intelligence-head h2{font-size:13px;margin:0;font-weight:700;display:flex;align-items:center;gap:7px}
+.briefing-intelligence-head>span{font-size:10px;color:#999}
+.briefing-intelligence-market{display:grid;grid-template-columns:142px minmax(0,1fr);align-items:stretch;border-bottom:1px solid #eee}
+.briefing-intelligence-label{display:flex;gap:6px;flex-wrap:wrap;align-content:center;padding:12px 13px;border-left:1px solid #eee;font-size:12px;font-weight:650}
+.briefing-intelligence-label small{display:block;width:100%;font-size:10px;color:#999;font-weight:400}
+.briefing-intelligence-market-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));min-width:0}
+.briefing-market-item{display:grid;grid-template-columns:auto 1fr;align-content:center;gap:3px 9px;padding:9px 15px;border-left:1px solid #eee;min-width:0}
+.briefing-market-item:last-child{border-left:0}
+.briefing-market-name{display:inline-flex;align-items:center;gap:5px;color:#777;font-size:11px;grid-column:1/-1}
+.briefing-market-name .material-symbols-rounded{font-size:15px}
+.briefing-market-item strong{font:700 22px/1.2 Arial,sans-serif;color:#191919;direction:ltr;text-align:right}
+.briefing-market-item small{align-self:end;justify-self:end;font-size:9px;color:#888;white-space:nowrap}
+.briefing-market-item a{grid-column:1/-1;display:inline-flex;align-items:center;gap:3px;color:#777;font-size:10px;white-space:nowrap}
+.briefing-market-item a:hover{text-decoration:underline}
+.briefing-market-item a .material-symbols-rounded{font-size:12px}
+.briefing-empty-metric{margin:0;padding:13px;color:#888;font-size:11px}
+.briefing-intelligence-weather{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid #eee;flex-wrap:wrap}
+.briefing-weather-title{display:inline-flex;align-items:center;gap:5px;font-weight:650;font-size:12px;white-space:nowrap}
+.briefing-weather-title small{font-size:9px;font-weight:400;color:#999}
+.briefing-weather-chips{display:flex;align-items:center;gap:6px;flex:1;flex-wrap:wrap}
+.briefing-weather-chip{display:flex;align-items:center;gap:6px;border:1px solid #e8e8e8;background:#fafafa;padding:5px 8px;border-radius:6px;min-width:0}
+.briefing-weather-chip span{font-size:10px;color:#666}
+.briefing-weather-chip strong{font:700 15px/1 Arial,sans-serif}
+.briefing-weather-credit{font-size:9px;color:#999;display:inline-flex;gap:5px;align-items:center}
+.briefing-weather-credit a{text-decoration:underline;text-underline-offset:2px}
+.briefing-fronts{display:grid;grid-template-columns:98px minmax(0,1fr);align-items:start;gap:8px;padding:9px 14px 8px}
+.briefing-fronts-title{font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding-top:7px}
+.briefing-fronts-title small{font-size:9px;color:#999;line-height:1.5;font-weight:400}
+.briefing-front-strip{display:flex;flex-wrap:wrap;gap:5px}
+.briefing-front-chip{display:flex;align-items:center;gap:7px;border:1px solid #ddd;border-radius:5px;padding:6px 8px;font-size:11px}
+.briefing-front-chip strong{font-size:10px;color:#777;font-weight:500}
+.briefing-front-map-disclosure{grid-column:1/-1;margin-top:2px}
+.briefing-front-map-disclosure>summary{cursor:pointer;display:flex;align-items:center;gap:5px;width:max-content;list-style:none;font-size:10px;color:#666;padding:5px 2px}
+.briefing-front-map-disclosure>summary::-webkit-details-marker{display:none}
+.briefing-front-map-disclosure>summary .material-symbols-rounded{font-size:15px}
+.briefing-mini-map{width:min(350px,100%);margin:8px auto}
+.briefing-mini-map svg{width:100%;height:auto}
+.briefing-front-sources{padding:8px;border-top:1px solid #eee;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 12px}
+.briefing-front-sources p{margin:0;font-size:10px;color:#666;line-height:1.9}
+.briefing-front-sources a{text-decoration:underline;display:inline-flex;gap:2px;align-items:center}
+.briefing-front-sources .material-symbols-rounded{font-size:12px}
+.briefing-intelligence-foot{margin:0;border-top:1px solid #eee;background:#fcfcfc;padding:7px 14px;color:#999;font-size:9px;line-height:1.65}
+.briefing-public-site .briefing-topic-tabs{margin-top:14px;margin-bottom:18px}
+@media(max-width:680px){
+ .briefing-public-site .briefing-public-container{padding-top:13px}
+ .briefing-public-site .briefing-breadcrumb{margin-bottom:6px}
+ .briefing-public-site .briefing-title-primary{font-size:clamp(32px,9vw,40px)}
+ .briefing-public-site .briefing-title-secondary{font-size:17px}
+ .briefing-intelligence{margin-top:12px}
+ .briefing-intelligence-head{padding:8px 11px}
+ .briefing-intelligence-market{grid-template-columns:1fr}
+ .briefing-intelligence-label{border-left:0;border-bottom:1px solid #eee;padding:7px 10px;align-items:center}
+ .briefing-intelligence-label small{width:auto}
+ .briefing-market-item{padding:8px 10px}
+ .briefing-market-item strong{font-size:19px}
+ .briefing-market-item small{font-size:8px}
+ .briefing-intelligence-weather{gap:6px;padding:8px 10px}
+ .briefing-weather-title{width:100%;font-size:11px}
+ .briefing-weather-chips{gap:4px}
+ .briefing-weather-chip{padding:5px 7px;gap:4px}
+ .briefing-weather-credit{width:100%;justify-content:flex-end}
+ .briefing-fronts{grid-template-columns:1fr;gap:6px;padding:8px 10px}
+ .briefing-fronts-title{font-size:11px;padding-top:0}
+ .briefing-fronts-title small{margin-right:4px}
+ .briefing-front-chip{padding:5px 7px;font-size:10px}
+ .briefing-front-chip strong{font-size:9px}
+ .briefing-front-sources{grid-template-columns:1fr}
+ .briefing-intelligence-foot{padding:7px 10px}
+ .briefing-public-site .briefing-topic-tabs{margin-top:11px;margin-bottom:16px}
+}
+@media print{
+ .briefing-intelligence{break-inside:avoid}
+ .briefing-front-map-disclosure:not([open]) .briefing-mini-map{display:none}
+}
