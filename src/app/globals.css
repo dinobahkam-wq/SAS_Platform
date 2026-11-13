@@ -3076,3 +3076,53 @@ textarea {
  .briefing-executive-prose{break-inside:avoid}
  .briefing-event{break-inside:avoid}
 }
+
+
+/* SAS Daily Briefing V2.1 — restrained document layout and topic navigation */
+.briefing-edition-header{padding-bottom:24px}
+.briefing-topic-tabs{
+ display:flex;align-items:center;gap:7px;overflow-x:auto;scrollbar-width:thin;
+ margin:26px 0 30px;padding:0 0 12px;border-bottom:1px solid #cddbd0;
+ -webkit-overflow-scrolling:touch;
+}
+.briefing-topic-tab{
+ flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;
+ min-height:42px;padding:8px 13px;border:1px solid transparent;
+ border-radius:7px;background:transparent;color:#53675a;
+ font:600 13px/1.45 var(--font-body),sans-serif;cursor:pointer;
+ white-space:nowrap;
+}
+.briefing-topic-tab:hover{background:#edf3ee;color:#27583e}
+.briefing-topic-tab.is-active{background:#285d47;color:#fff;border-color:#285d47}
+.briefing-topic-tab:focus-visible{outline:3px solid #85ac90;outline-offset:2px}
+.briefing-topic-tab-count{display:grid;place-items:center;min-width:21px;height:21px;padding:1px 5px;border-radius:5px;background:#e8eee8;color:#5e7464;font:700 10px/1 Arial,sans-serif}
+.briefing-topic-tab.is-active .briefing-topic-tab-count{background:#ffffff28;color:#fff}
+.briefing-summary-section{margin-bottom:38px}
+.briefing-executive-prose{
+ padding:0 0 17px;background:transparent;border:0;border-radius:0;
+}
+.briefing-executive-prose>p{font-size:clamp(16px,1.5vw,18px);line-height:2.25;color:#2f4235}
+.briefing-executive-foot{margin-top:12px;padding-top:12px;border-top:1px solid #d2ded5}
+.briefing-developments-section{padding-top:12px;border-top:2px solid #b8cbbd}
+.briefing-event-index:after{
+ top:41px;bottom:0;left:50%;width:5px;transform:translateX(-50%);
+ background:radial-gradient(circle,#81a48a 1.7px,transparent 2px) center top / 5px 11px repeat-y;
+}
+.briefing-event-index span{border:1.5px solid #8eac96;background:#fff;color:#2e6448}
+.briefing-event-content{padding-bottom:29px;margin-bottom:26px;border-bottom:1.5px solid #cad7cd}
+.briefing-event:last-child .briefing-event-content{border-bottom:0}
+.briefing-empty-inline{font-size:13px;line-height:1.9}
+@media(max-width:680px){
+ .briefing-topic-tabs{margin:20px -1px 26px;padding-bottom:11px;gap:5px}
+ .briefing-topic-tab{min-height:44px;padding:9px 12px;font-size:13px}
+ .briefing-summary-section{margin-bottom:29px}
+ .briefing-executive-prose{padding:0 0 12px}
+ .briefing-executive-prose>p{font-size:16px;line-height:2.2}
+ .briefing-developments-section{padding-top:17px}
+ .briefing-event-index:after{top:36px}
+ .briefing-event-content{padding-bottom:26px;margin-bottom:23px;border-bottom-width:1.5px}
+}
+@media print{
+ .briefing-topic-tabs{display:none}
+ .briefing-event-index:after{background:radial-gradient(circle,#81a48a 1.7px,transparent 2px) center top / 5px 11px repeat-y}
+}
