@@ -36,5 +36,11 @@ export type HistoricBriefingContext = {
 export async function getDatedBriefingContext(editionDate: string): Promise<HistoricBriefingContext | null> {
   // Only recorded, reviewed dates are eligible. Do not substitute today's values.
   if (editionDate !== "2026-11-12") return null;
-  return nov12 as HistoricBriefingContext;
+  const fronts: BriefingFront[] = nov12.fronts.map((front) => ({
+    ...front,
+    change: front.change === "advance" || front.change === "retreat" || front.change === "stable_verified"
+      ? front.change
+      : "unverified",
+  }));
+  return { edition_date: nov12.edition_date, market: nov12.market, fronts, methodology: nov12.methodology };
 }
