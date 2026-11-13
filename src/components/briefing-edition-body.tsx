@@ -79,30 +79,30 @@ export function BriefingEditionBody({
       </nav>
 
       {activeTab === "all" && executiveSummary.length > 0 ? (
-        <section className="briefing-summary-section" aria-labelledby="briefing-summary-title">
-          <div className="briefing-section-heading">
-            <div><h2 id="briefing-summary-title">الملخص التنفيذي</h2></div>
-          </div>
-          <div className="briefing-executive-prose">
-            <p>
-              {executiveSummary.map((item, index) => {
-                const transitions = ["", "وفي تطور آخر، ", "أما ميدانيًا، ", "وعلى المستوى الإنساني، ", "وفي السياق الدولي، "];
-                return (
-                  <span key={index} className="briefing-executive-clause">
-                    {index > 0 ? " " : ""}{transitions[index] ?? "كذلك، "}
-                    <BriefingEmphasis text={item.text_ar.trim()} />
-                  </span>
-                );
-              })}
-            </p>
-            <div className="briefing-executive-foot">
-              <div className="briefing-executive-references">
-                {executiveSummary.map((item, index) => (
-                  <BriefingSourcesPopover key={index} sources={item.sources} label={`مرجع ${index + 1}`} />
-                ))}
-              </div>
+        <section className="briefing-summary-section" aria-label="الملخص التنفيذي">
+          <details className="briefing-summary-disclosure">
+            <summary>
+              <span className="briefing-summary-summary-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M5 6h14M5 12h14M5 18h9" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/></svg>
+              </span>
+              <span className="briefing-summary-summary-title">الملخص التنفيذي</span>
+              <span className="briefing-summary-summary-hint">اضغط لقراءة الموجز الكامل</span>
+              <span className="briefing-summary-chevron" aria-hidden="true">⌄</span>
+            </summary>
+            <div className="briefing-executive-prose">
+              <p>
+                {executiveSummary.map((item, index) => {
+                  const transitions = ["", "وفي تطور آخر، ", "أما ميدانيًا، ", "وعلى المستوى الإنساني، ", "وفي السياق الدولي، "];
+                  return (
+                    <span key={index} className="briefing-executive-clause">
+                      {index > 0 ? " " : ""}{transitions[index] ?? "كذلك، "}
+                      <BriefingEmphasis text={item.text_ar.trim()} />
+                    </span>
+                  );
+                })}
+              </p>
             </div>
-          </div>
+          </details>
         </section>
       ) : null}
 
