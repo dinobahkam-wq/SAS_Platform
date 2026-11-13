@@ -1,0 +1,119 @@
+/* Dedicated A4 print edition. Scoped to the export route. */
+.briefing-print-page {
+  min-height:100vh;
+  background:#f0f0f0;
+  color:#151515;
+  font-family:"Thmanyah Sans",Arial,sans-serif;
+  font-size:14px;
+  line-height:1.85;
+}
+.briefing-print-page * { box-sizing:border-box; }
+.briefing-print-tools {
+  direction:rtl;
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  gap:12px;
+  padding:13px 17px;
+  background:white;
+  border-bottom:1px solid #ddd;
+}
+.briefing-print-tools>a {color:#555;font-size:13px;text-decoration:underline;}
+.briefing-print-tools p {margin:0;color:#747474;font-size:12px;}
+.briefing-print-action {display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid #111;border-radius:7px;background:#171717;color:white;font-size:13px;font-weight:700;cursor:pointer;}
+.briefing-print-action:focus-visible {outline:2px solid #666;outline-offset:3px;}
+.briefing-print-document {
+  direction:rtl;
+  width:min(210mm,100%);
+  min-height:297mm;
+  margin:18px auto;
+  padding:18mm 18mm 22mm;
+  background:white;
+  box-shadow:0 12px 42px #00000017;
+}
+.briefing-print-masthead {display:flex;align-items:end;justify-content:space-between;gap:15px;padding-bottom:11px;border-bottom:2px solid #191919;}
+.briefing-print-brand {display:flex;flex-direction:column;align-items:flex-start;}
+.briefing-print-brand strong {font-family:"Tajarib Taweel","Thmanyah Sans",sans-serif;font-size:31px;line-height:1.15;font-weight:800;}
+.briefing-print-brand span {font-size:9px;color:#777;}
+.briefing-print-issue {text-align:left;display:grid;gap:2px;font-size:10px;color:#777;}
+.briefing-print-issue strong {font-size:12px;color:#161616;}
+.briefing-print-cover {padding:18px 0 16px;}
+.briefing-print-kicker {margin:0 0 4px;color:#777;font-size:10px;letter-spacing:0.03em;}
+.briefing-print-cover h1 {font-family:"Tajarib Taweel","Thmanyah Sans",sans-serif;font-weight:750;line-height:1.4;font-size:34px;margin:0 0 2px;}
+.briefing-print-subtitle {font-family:"Tajarib Taweel","Thmanyah Sans",sans-serif;color:#555;font-size:17px;margin:0 0 11px;}
+.briefing-print-meta {display:flex;flex-wrap:wrap;gap:6px 18px;border-top:1px solid #eee;padding-top:8px;font-size:10px;color:#777;}
+.briefing-print-meta strong {color:#222;}
+.briefing-print-correction {background:#efefef;padding:8px 12px;margin:11px 0 0;font-size:11px;border-right:2px solid #444;}
+.briefing-print-document h2 {font-family:"Tajarib Taweel","Thmanyah Sans",sans-serif;font-size:18px;font-weight:750;color:#151515;margin:0 0 9px;}
+.briefing-print-document h3 {font-family:"Tajarib Taweel","Thmanyah Sans",sans-serif;}
+.briefing-print-indicators {border-top:1px solid #bbb;border-bottom:1px solid #bbb;padding:10px 0 12px;margin-bottom:17px;}
+.briefing-print-indicator-grid {display:grid;grid-template-columns:1fr 1fr;gap:17px;}
+.briefing-print-indicator-grid>div {min-width:0;}
+.briefing-print-indicator-grid h3 {margin:0 0 5px;font-size:12px;font-weight:700;}
+.briefing-print-indicator-grid h3 span {font-weight:400;color:#888;font-size:9px;}
+.briefing-print-page table {width:100%;border-collapse:collapse;text-align:right;}
+.briefing-print-page table th,.briefing-print-page table td {border-bottom:1px solid #e8e8e8;padding:5px 4px;text-align:right;vertical-align:top;}
+.briefing-print-page table thead th {background:#f5f5f5;color:#666;font-size:9px;font-weight:500;}
+.briefing-print-page table tbody th,.briefing-print-page table td {font-size:11px;}
+.briefing-print-page table small {font-size:8px;color:#777;white-space:nowrap;}
+.briefing-print-page a {color:inherit;text-decoration:underline;text-underline-offset:2px;}
+.briefing-print-table-source {font-size:9px;color:#777;margin:7px 0 0;}
+.briefing-print-summary {padding-bottom:16px;border-bottom:1px solid #aaa;margin-bottom:20px;}
+.briefing-print-summary p {margin:0;font-size:13px;line-height:2;orphans:3;widows:3;}
+.briefing-print-section-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:2px solid #333;padding-bottom:9px;margin-bottom:12px;}
+.briefing-print-section-heading h2 {margin:0;}
+.briefing-print-section-heading span {font-size:10px;color:#777;}
+.briefing-print-event {position:relative;break-inside:avoid-page;page-break-inside:avoid;border-bottom:1px solid #d8d8d8;padding:12px 0 15px;}
+.briefing-print-event:first-of-type {padding-top:3px;}
+.briefing-print-event-head {display:flex;align-items:center;gap:10px;}
+.briefing-print-event-no {border:1px solid #777;border-radius:50%;width:27px;height:27px;flex:0 0 auto;display:grid;place-items:center;font:700 10px/1 Arial,sans-serif;}
+.briefing-print-event-meta {display:flex;flex-wrap:wrap;gap:4px 10px;color:#777;font-size:10px;}
+.briefing-print-event h3 {font-size:17px;line-height:1.6;margin:6px 0 7px;font-weight:700;}
+.briefing-print-event>p {font-size:12px;line-height:1.95;margin:0 0 7px;orphans:3;widows:3;}
+.briefing-print-detail {background:#f7f7f7;border-right:2px solid #999;padding:6px 8px;}
+.briefing-print-context {color:#666;}
+.briefing-print-citations {border-top:1px dotted #ddd;margin-top:7px;padding-top:6px;display:flex;align-items:flex-start;gap:6px;font-size:9px;color:#666;}
+.briefing-print-citations>strong {white-space:nowrap;font-weight:700;}
+.briefing-print-citations ol {margin:0;padding-right:15px;min-width:0;}
+.briefing-print-citations li {margin:0 0 3px;overflow-wrap:anywhere;}
+.briefing-print-citations time {color:#888;}
+.briefing-print-methodology,.briefing-print-analysis {margin-top:18px;padding-top:12px;border-top:1px solid #999;}
+.briefing-print-methodology h3 {font-size:12px;margin:9px 0 3px;}
+.briefing-print-methodology p,.briefing-print-analysis p {font-size:11px;line-height:1.95;margin:0;white-space:pre-line;}
+.briefing-print-document-end {display:flex;flex-wrap:wrap;gap:5px 18px;justify-content:space-between;margin-top:26px;padding-top:10px;border-top:2px solid #161616;font-size:9px;color:#777;}
+.briefing-print-public-url {display:none;}
+@page {
+  size:A4 portrait;
+  margin:15mm 15mm 17mm;
+  @bottom-center {
+    content:"ساس للإعلام والدراسات · صفحة " counter(page);
+    font-family:Arial,sans-serif;
+    font-size:8pt;
+    color:#777;
+  }
+}
+@media screen and (max-width:700px){
+  .briefing-print-tools {margin:0;align-items:flex-start;}
+  .briefing-print-document {margin:0 auto;padding:19px 16px;min-height:unset;box-shadow:none;}
+  .briefing-print-indicator-grid {grid-template-columns:1fr;gap:10px;}
+  .briefing-print-cover h1 {font-size:28px;}
+  .briefing-print-event h3 {font-size:16px;}
+}
+@media print {
+  :root { color-scheme:light; }
+  html,body { background:#fff!important; }
+  .briefing-print-page {background:#fff!important;font-size:11pt;color:#111;min-height:0;}
+  .briefing-print-tools {display:none!important;}
+  .briefing-print-document {margin:0!important;width:auto!important;min-height:0!important;padding:0!important;box-shadow:none!important;overflow:visible!important;}
+  .briefing-print-masthead {break-inside:avoid;}
+  .briefing-print-cover {break-inside:avoid;}
+  .briefing-print-indicators {break-inside:avoid;}
+  .briefing-print-section-heading {break-after:avoid;}
+  .briefing-print-event {break-inside:avoid-page;page-break-inside:avoid;}
+  .briefing-print-methodology {break-inside:avoid;}
+  .briefing-print-public-url {display:inline;}
+  .briefing-print-document a {text-decoration:none;border-bottom:1px dotted #aaa;}
+}
