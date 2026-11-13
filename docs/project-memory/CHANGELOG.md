@@ -309,3 +309,13 @@
 
 - Opened Draft PR #33 from `feat/daily-briefing-public-experience-v1` to `feat/daily-briefing-data-model-security-v1`; implementation code checkpoint `a178b8a7782f67fbaa38005f8c279913ea7fce95`, mergeable at last check. Subsequent commits updated documentation.
 - No GitHub Actions runs were reported for this commit. Vercel status failed with `build-rate-limit` (account/plan build limit), not a code test result. No manual deployment.
+
+
+### 2026-11-13 — First real Daily Briefing edition published
+
+- Applied `20261113074127_briefing_analysis_optional_source_first_v1` to production: optional SAS commentary; no 400–650-word analysis gate.
+- Published briefing edition #1 for 2026-11-12 at slug `daily-briefing-2026-11-12` with **24 verified-source-linked developments, 5 executive points, 24 distinct public source URLs**.
+- Persisted source dossier to `docs/briefings/2026-11-12.verified.json`.
+- Verified public archive/detail RPC output and audit events. Six of the 24 records represent sourced claims, explicitly attributed rather than independently confirmed facts.
+- Regenerated Supabase TypeScript types after the production migration.
+- No Vercel deployment or merge; PR #33 remains a draft.
