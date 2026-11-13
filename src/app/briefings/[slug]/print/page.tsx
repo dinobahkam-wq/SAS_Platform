@@ -101,7 +101,7 @@ export default async function BriefingPrintPage({
                   <tbody>
                     {context.exchange_rates.rates.map((rate) => (
                       <tr key={rate.city + rate.code}>
-                        <th>{rate.city}</th><td><bdi dir="ltr">{rate.code}</bdi></td>
+                        <th>{rate.city}</th><td className="briefing-print-currency-name">{rate.code === "USD" ? "الدولار الأمريكي" : "الريال السعودي"}</td>
                         <td><bdi dir="ltr">{formatNumber(rate.buy)}</bdi></td>
                         <td><bdi dir="ltr">{formatNumber(rate.sell)}</bdi></td>
                       </tr>
