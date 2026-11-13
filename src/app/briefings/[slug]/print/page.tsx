@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BriefingPrintAction } from "@/components/briefing-print-action";
+import { BrandLogo } from "@/components/brand-logo";
 import {
   briefingCategoryLabel,
   briefingClassLabel,
@@ -48,8 +49,11 @@ export default async function BriefingPrintPage({
       <div className="briefing-print-document">
         <header className="briefing-print-masthead">
           <div className="briefing-print-brand">
-            <strong>ساس</strong>
-            <span>منصة ساس للإعلام والدراسات</span>
+            <BrandLogo
+              variant="full"
+              className="briefing-print-logo"
+              priority
+            />
           </div>
           <div className="briefing-print-issue">
             <span>الإحاطة اليومية</span>
