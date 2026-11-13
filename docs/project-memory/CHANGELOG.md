@@ -355,3 +355,6 @@
 - Gold and Open-Meteo have keyless fetch paths; Brent requires optional server-only OILPRICEAPI_KEY and confirmed public display rights.
 - Confirmed provider licensing review is required before launching a commercial/public production product.
 - No SQL, no changes to news content, no merge or Vercel deployment. Local typecheck/build and browser verification remain outstanding.
+
+
+- Opened [Draft PR #35](https://github.com/dinobahkam-wq/SAS_Platform/pull/35) stacked on PR #34. GitHub reports mergeable=true; no local code build or browser test claimed.
