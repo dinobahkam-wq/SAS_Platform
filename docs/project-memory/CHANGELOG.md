@@ -382,3 +382,11 @@
 - No Supabase changes, merge or deployment; local compilation and mobile UX testing pending.
 
 - Opened Draft PR #37 stacked on PR #36; GitHub comparison reports 9 commits ahead and no divergent base commits. No build or deployment claimed.
+
+
+### 2026-11-13 — Exchange rate indicator V5
+
+- Replaced frontline display and schematic map with dated USD/SAR buy/sell comparisons between Sana'a and Aden.
+- Versioned 12 Nov 2026 YER quotes with cited price-board sources: Sana'a USD 530/533, SAR 139.50/140.20; Aden USD 1,568/1,579, SAR 410/413.
+- Refactored dated context types and compact exchange-rate UI, preserving existing historical oil/gold quotes, live weather, dollar prefix, and Material Symbols summary toggle.
+- No new Supabase migration or edits, no merge or Vercel deployment. Local typecheck/build and responsive inspection pending.
