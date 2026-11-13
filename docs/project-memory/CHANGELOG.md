@@ -344,3 +344,14 @@
 - Added interactive in-edition filters (All/Yemen/International/Official Statements/Economy/Sports/Trending Tweets), with per-filter counts and explicit empty states.
 - Clarified the filters use existing published snapshot data only; Trending Tweets is currently based on X/Twitter source URLs, **not** actual trending analytics.
 - No content/SQL changes, no Vercel deployment. Local typecheck/build and mobile UX verification pending.
+
+
+### 2026-11-13 — Daily Briefing visual V3
+
+- Introduced monochrome visual identity for the public reader and hierarchically split edition headline.
+- Removed large coverage-window publication metadata card, retaining dates in the underlying immutable snapshot.
+- Made executive summary collapsible and removed its duplicate source controls; citations remain on developments.
+- Added source-dated server-side context indicator table (Brent, global spot gold, modeled temperatures in Mukalla/Sana'a/Aden) with source links and unavailable states.
+- Gold and Open-Meteo have keyless fetch paths; Brent requires optional server-only OILPRICEAPI_KEY and confirmed public display rights.
+- Confirmed provider licensing review is required before launching a commercial/public production product.
+- No SQL, no changes to news content, no merge or Vercel deployment. Local typecheck/build and browser verification remain outstanding.
