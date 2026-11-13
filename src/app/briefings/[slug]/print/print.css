@@ -118,3 +118,33 @@
   .briefing-print-public-url {display:inline;}
   .briefing-print-document a {text-decoration:none;border-bottom:1px dotted #aaa;}
 }
+
+
+/* SAS PDF editorial accents: discreet teal for research metrics, bronze for gold. */
+.briefing-print-page {
+  --print-accent:#245e74;
+  --print-accent-soft:#edf4f6;
+  --print-gold:#946735;
+}
+.briefing-print-masthead {border-bottom-color:var(--print-accent);}
+.briefing-print-cover h1 {color:#202a30;}
+.briefing-print-meta strong {color:var(--print-accent);}
+.briefing-print-indicators {border-top-color:#8cabb7;border-bottom-color:#8cabb7;}
+.briefing-print-indicators h2,
+.briefing-print-indicator-grid h3 {color:var(--print-accent);}
+.briefing-print-indicator-grid thead th {background:var(--print-accent-soft);color:#355568;}
+.briefing-print-indicator-grid tbody td:nth-child(2) {color:var(--print-accent);font-weight:650;}
+.briefing-print-indicator-grid>div:first-child tbody tr:nth-child(2) td:nth-child(2) {color:var(--print-gold);}
+.briefing-print-currency-name {font-weight:600;color:#304957;white-space:normal;}
+.briefing-print-summary h2 {color:var(--print-accent);}
+.briefing-print-section-heading {border-bottom-color:var(--print-accent);}
+.briefing-print-event-no {border-color:#8cabb7;color:var(--print-accent);}
+.briefing-print-event h3 {color:#24343c;}
+.briefing-print-methodology h2,.briefing-print-analysis h2 {color:var(--print-accent);}
+@media print {
+  .briefing-print-page {
+    print-color-adjust:exact;
+    -webkit-print-color-adjust:exact;
+  }
+  .briefing-print-currency-name {font-size:9px;}
+}
