@@ -312,3 +312,17 @@ Build the private editorial room against the new schema and RPCs. Test with the 
 ### توضيح نطاق الفروع
 
 الفرع `feat/daily-briefing-editorial-room-v1` ناتج عن فهم سابق غير صحيح للحاجة إلى محرر داخلي. لا تتابع تطويره ولا تحذفه؛ لم يُدمج وليس جزءًا من مسار المنتج المعتمد. المسار الحالي هو الواجهة العامة للقراءة والأرشيف في PR #33، وتحديث المحتوى يتم من المحادثة.
+
+
+---
+
+## 13 نوفمبر 2026 — Live issue #1
+
+- Edition date: `2026-11-12`; slug: `daily-briefing-2026-11-12`.
+- Status: `published` in production Supabase `budsfbyrdpjkobqstpyr`.
+- 24 developments and 24 independent public source links; 5 executive-summary entries; zero developments without public sources.
+- Official and media citations, titles, classifications and editorial summaries are stored in `docs/briefings/2026-11-12.verified.json`.
+- Database migration `20261113074127_briefing_analysis_optional_source_first_v1` applied; commentary is optional. TypeScript types regenerated.
+- Public reader URL (local branch): `http://localhost:3000/briefings/daily-briefing-2026-11-12`.
+- No merge and no Vercel deployment. A production database publication does not imply a deployed website release.
+- Need browser inspection and editorial verification of published facts; corrections must be issued as new revisions.
