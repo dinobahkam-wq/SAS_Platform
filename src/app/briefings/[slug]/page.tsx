@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PublicFooter, PublicHeader } from "@/components/public-site";
 import {
-  BriefingSource,
   BriefingTypeTag,
   BriefingVerification,
   briefingCategoryLabel,
   briefingScopeLabel,
   formatBriefingDate,
   formatBriefingDateOnly,
+  BriefingEmphasis,
 } from "@/components/briefing-public";
 import { getPublicBriefing, type BriefingDevelopment } from "@/lib/public-briefing";
+import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
 
 export const dynamic = "force-dynamic";
 
@@ -106,22 +107,30 @@ export default async function PublicBriefingPage({
         {executiveSummary.length ? (
           <section className="briefing-summary-section" aria-labelledby="briefing-summary-title">
             <div className="briefing-section-heading">
-              <div><span className="briefing-eyebrow">EXECUTIVE OVERVIEW</span><h2 id="briefing-summary-title">خلاصة التطورات</h2></div>
-              <span>{executiveSummary.length} نقاط</span>
+              <div><span className="briefing-eyebrow">EXECUTIVE SUMMARY</span><h2 id="briefing-summary-title">الملخص التنفيذي</h2></div>
+              <span>أبرز ما ورد في السجل</span>
             </div>
-            <ol className="briefing-summary-list">
-              {executiveSummary.map((item, index) => (
-                <li key={index}>
-                  <span className="briefing-summary-index">{String(index + 1).padStart(2, "0")}</span>
-                  <div>
-                    <div className="briefing-summary-meta"><BriefingTypeTag value={item.information_class}/><BriefingVerification value={item.verification_status}/></div>
-                    <h3>{item.headline_ar}</h3>
-                    <p>{item.text_ar}</p>
-                    {item.sources.length ? <div className="briefing-summary-sources">{item.sources.map((source, sourceIndex) => <BriefingSource key={sourceIndex} source={source} compact/>)}</div> : null}
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <div className="briefing-executive-prose">
+              <p>
+                {executiveSummary.map((item, index) => {
+                  const transitions = ["", "وفي تطور آخر، ", "أما ميدانيًا، ", "وعلى المستوى الإنساني، ", "وفي السياق الدولي، "];
+                  const lead = transitions[index] ?? "كذلك، ";
+                  return (
+                    <span key={index} className="briefing-executive-clause">
+                      {index > 0 ? " " : ""}{lead}<BriefingEmphasis text={item.text_ar.trim()} />
+                    </span>
+                  );
+                })}
+              </p>
+              <div className="briefing-executive-foot">
+                <span>ملخص مستند إلى التطورات الواردة أدناه، وليس تحليلًا مستقلًا.</span>
+                <div className="briefing-executive-references">
+                  {executiveSummary.map((item, index) => (
+                    <BriefingSourcesPopover key={index} sources={item.sources} label={`مرجع ${index + 1}`} />
+                  ))}
+                </div>
+              </div>
+            </div>
           </section>
         ) : null}
 
@@ -151,14 +160,12 @@ export default async function PublicBriefingPage({
                       </div>
                       <div className="briefing-event-tags"><BriefingTypeTag value={development.information_class}/><BriefingVerification value={development.verification_status}/></div>
                       <h3>{development.headline_ar}</h3>
-                      {development.summary_ar ? <p className="briefing-event-summary">{development.summary_ar}</p> : null}
+                      {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar} /></p> : null}
                       {development.what_changed_ar ? <div className="briefing-event-fact"><strong>تفصيل التطور</strong><p>{development.what_changed_ar}</p></div> : null}
                       {development.context_ar ? <div className="briefing-event-context"><strong>السياق المرتبط</strong><p>{development.context_ar}</p></div> : null}
-                      {development.verification_note_ar ? <p className="briefing-verification-note">ملاحظة التحقق: {development.verification_note_ar}</p> : null}
                       {development.sources.length ? (
-                        <div className="briefing-event-sources">
-                          <div className="briefing-source-section-title"><span>المصادر الأصلية</span><span>{development.sources.length} مصدر</span></div>
-                          <div className="briefing-source-grid">{development.sources.map((source, sourceIndex) => <BriefingSource key={sourceIndex} source={source}/>)}</div>
+                        <div className="briefing-event-source-action">
+                          <BriefingSourcesPopover sources={development.sources} label="المصادر" />
                         </div>
                       ) : (
                         <div className="briefing-no-source">لا تتوفر إحالة عامة لمصدر هذا التطور.</div>
@@ -174,10 +181,11 @@ export default async function PublicBriefingPage({
         </section>
 
         {sources.length ? (
-          <section className="briefing-source-index">
-            <div className="briefing-section-heading"><div><span className="briefing-eyebrow">SOURCE INDEX</span><h2>فهرس المصادر</h2></div><span>{sources.length} مصدرًا</span></div>
-            <div className="briefing-source-index-grid">{sources.map((source, index) => <BriefingSource key={source.source_url || source.source_reference || source.source_name + index} source={source}/>)}</div>
-          </section>
+          <div className="briefing-source-index-minimal">
+            <span>الإحالات المنشورة</span>
+            <strong>{sources.length} مصدرًا فريدًا</strong>
+            <small>تُفتح بيانات كل مصدر من زر المراجع المرفق بتطوره.</small>
+          </div>
         ) : null}
 
         <section className="briefing-methodology-section">
@@ -190,7 +198,7 @@ export default async function PublicBriefingPage({
           </details>
         </section>
 
-        {revision.analysis_ar.trim() ? (
+        {revision.analysis_ar?.trim() ? (
           <section className="briefing-analysis-section">
             <details>
               <summary><span>قراءة ساس</span><span>مساحة تفسيرية منفصلة · عرض +</span></summary>
