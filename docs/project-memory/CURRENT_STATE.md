@@ -350,3 +350,11 @@
 - حذف رقم العدد المكرر فوق العنوان، وتقليص مساحة الرأس والأسطر البيضاء، واعتماد Google Material Symbols Rounded لأيقونات المؤشرات والخريطة.
 - المواصفة: `docs/daily-briefing-compact-intelligence-v4.md`. ملفات التنفيذ: `src/components/briefing-intelligence-panel.tsx`, `src/lib/briefing-dated-context.ts`, `src/lib/briefing-indicators.ts`, `src/app/briefings/[slug]/page.tsx`, `src/app/globals.css`.
 - لا تغييرات على Supabase ولا محتوى الإحاطة المنشور؛ الخطوة التالية اختبارات Windows المحلية ونوافذ الهاتف، ثم مراجعة نسخة V4.
+
+
+### PR #36 — نقطة تحقق V4
+
+- [PR #36](https://github.com/dinobahkam-wq/SAS_Platform/pull/36) مفتوح Draft وغير مدمج، فوق V3/PR #35. فحص GitHub أعطى mergeable=true.
+- رأس الكود الموثق `7ce2b1cd6ea9037ac4c416ba74c9b3330e8a4f32` قبل تحديثات التوثيق.
+- تحقق قراءة ملفات الفرع من عدم تكرار رقم العدد، ووجود أيقونات Google Material Symbols، وأسعار مؤرخة لليوم 12 نوفمبر، و4 جبهات كلها unverified، ومخطط مواقع قابل للفتح.
+- لم يجر تشغيل typecheck/build أو الاختبار الحقيقي على الهاتف؛ لا يجوز إعلان نجاحهما قبل تنفيذ أوامر Windows.
