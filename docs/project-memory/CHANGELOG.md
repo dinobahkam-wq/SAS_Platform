@@ -402,3 +402,9 @@
 - No Supabase changes, Git merges or Vercel release; local typecheck/build and PDF screenshot review still pending.
 
 - Opened Draft [PR #39](https://github.com/dinobahkam-wq/SAS_Platform/pull/39). File-level verification passed for the print route, complete developments, original citations, dated context, A4 styles, page counters and print action. No local PDF rendering/build was claimed.
+
+
+### 2026-11-13 — Colored SAS brand in PDF print masthead
+- Reused the existing approved full-color `BrandLogo` component in `src/app/briefings/[slug]/print/page.tsx` instead of the wordmark rendered as text.
+- Adjusted `print.css` image dimensions for A4 and preserved print colors; removed duplicate caption text because the source logo contains the full brand mark.
+- No DB/content modifications, PR merge or deployment; local re-export QA required.
