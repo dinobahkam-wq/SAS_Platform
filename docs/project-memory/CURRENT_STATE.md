@@ -295,3 +295,12 @@
 - **حالة البيانات:** تحقق Supabase للقراءة فقط من 24 تطورًا فريد العنوان والترتيب، رغم تكرار الحدث 03 الظاهر في PDF المتصفح المرفق؛ يجب اختبار التقاط الصفحة مستقلًا.
 - **الاختبارات المتبقية:** typecheck، build، معاينة الهاتف، فتح/إغلاق المراجع، وتحقق الطباعة. لم يُدمج أو يُنشر على Vercel.
 - **مواصفة الحزمة:** `docs/daily-briefing-visual-v2.md`.
+
+
+### PR #34 — Public Briefing Visual V2
+
+- **URL:** https://github.com/dinobahkam-wq/SAS_Platform/pull/34
+- **Status:** Open Draft, not merged, technically mergeable at last GitHub check.
+- **Branch:** `feat/daily-briefing-mobile-visual-v2` based on PR #33 branch.
+- **Code review probes:** Source popover client component, compact source triggers, connected summary prose, removal of public verification notes, and null-safe optional analysis expression were confirmed present in GitHub files.
+- **Remaining:** Windows typecheck/build and real mobile/browser/print inspection. No Vercel deployment.
