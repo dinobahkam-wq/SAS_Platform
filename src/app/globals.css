@@ -3339,3 +3339,47 @@ textarea {
  .briefing-intelligence{break-inside:avoid}
  .briefing-front-map-disclosure:not([open]) .briefing-mini-map{display:none}
 }
+
+
+/* SAS Daily Briefing — Frontline Map V1 */
+.briefing-market-amount{display:inline-flex;align-items:baseline;justify-content:flex-end;gap:3px;white-space:nowrap}
+.briefing-market-dollar{font:600 .64em/1 Arial,sans-serif;color:#555}
+.briefing-summary-chevron.material-symbols-rounded{font-size:25px;transition:transform .16s ease;display:inline-block}
+.briefing-summary-disclosure[open] .briefing-summary-chevron.material-symbols-rounded{transform:rotate(180deg)}
+.briefing-front-map-layout{display:grid;grid-template-columns:minmax(230px,.86fr) minmax(0,1.14fr);align-items:start;gap:18px;margin-top:8px}
+.briefing-front-map-layout .briefing-mini-map{width:100%;margin:0}
+.briefing-front-map-details{min-width:0}
+.briefing-front-legend{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:3px 0 10px}
+.briefing-front-legend>span{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#555;line-height:1.5}
+.briefing-legend-dot{width:10px;height:10px;flex:0 0 auto;border-radius:50%;background:#888;display:inline-block}
+.briefing-legend-government{background:#237d50}
+.briefing-legend-houthi{background:#c33e41}
+.briefing-legend-unknown{background:#777}
+.briefing-map-scope{margin:0 0 11px;padding:8px 10px;border-right:2px solid #aaa;background:#f6f6f6;color:#777;font-size:10px;line-height:1.9}
+.briefing-movement-history{display:grid;gap:8px}
+.briefing-movement-entry{padding:10px 12px;border:1px solid #e6e6e6;border-right:3px solid #aaa;border-radius:6px;background:#fff}
+.briefing-movement-government{border-right-color:#237d50}
+.briefing-movement-houthi{border-right-color:#c33e41}
+.briefing-movement-entry-head{display:flex;align-items:center;flex-wrap:wrap;gap:5px 9px}
+.briefing-movement-entry-head strong{font-size:12px;color:#222}
+.briefing-movement-entry-head span{font-size:10px;font-weight:650}
+.briefing-movement-government .briefing-movement-entry-head span{color:#237d50}
+.briefing-movement-houthi .briefing-movement-entry-head span{color:#c33e41}
+.briefing-movement-entry-head time{font-size:10px;color:#888;margin-inline-start:auto}
+.briefing-movement-entry p{font-size:11px;color:#555;line-height:1.8;margin:6px 0}
+.briefing-movement-entry a{display:inline-flex;align-items:center;gap:3px;color:#444;text-decoration:underline;text-underline-offset:3px;font-size:11px}
+.briefing-movement-entry a .material-symbols-rounded{font-size:12px}
+@media(max-width:760px){
+ .briefing-front-map-layout{grid-template-columns:1fr;gap:10px}
+ .briefing-front-map-layout .briefing-mini-map{width:min(350px,100%);margin:0 auto}
+ .briefing-front-legend{margin:5px 0 10px}
+}
+@media(max-width:430px){
+ .briefing-front-legend>span{font-size:10px}
+ .briefing-movement-entry{padding:9px 10px}
+ .briefing-movement-entry p{font-size:11px}
+}
+@media print{
+ .briefing-front-map-layout{break-inside:avoid}
+ .briefing-summary-chevron.material-symbols-rounded{display:none}
+}
