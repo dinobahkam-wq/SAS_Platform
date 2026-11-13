@@ -4,8 +4,9 @@ import { PublicFooter, PublicHeader } from "@/components/public-site";
 import { formatBriefingDateOnly } from "@/components/briefing-public";
 import { BriefingEditionBody } from "@/components/briefing-edition-body";
 import { getPublicBriefing } from "@/lib/public-briefing";
-import { getBriefingIndicators } from "@/lib/briefing-indicators";
-import { BriefingContextIndicators } from "@/components/briefing-context-indicators";
+import { getBriefingWeatherIndicators } from "@/lib/briefing-indicators";
+import { getDatedBriefingContext } from "@/lib/briefing-dated-context";
+import { BriefingIntelligencePanel } from "@/components/briefing-intelligence-panel";
 
 export const dynamic = "force-dynamic";
 
@@ -48,12 +49,16 @@ export default async function PublicBriefingPage({
 
   const { edition, revision, executiveSummary, developments } = briefing;
   const correction = revision.revision_kind === "correction";
-  const indicators = await getBriefingIndicators();
+  const [weather, context] = await Promise.all([
+    getBriefingWeatherIndicators(),
+    getDatedBriefingContext(edition.edition_date),
+  ]);
   const [headline, ...subtitleParts] = revision.title_ar.split(" | ");
   const subtitle = subtitleParts.join(" | ").replace(/\s+—\s+\d{1,2}\s+[^—]+\d{4}\s*$/, "").trim();
 
   return (
     <main className="briefing-public-site">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@20..48,400,0&display=swap" />
       <PublicHeader />
       <div className="briefing-public-container briefing-edition-container">
         <nav className="briefing-breadcrumb" aria-label="مسار الصفحة">
@@ -61,10 +66,7 @@ export default async function PublicBriefingPage({
         </nav>
 
         <header className="briefing-edition-header">
-          <div className="briefing-edition-overline">
-            <span className="briefing-edition-number">العدد {edition.edition_no}</span>
-            {correction ? <span className="briefing-correction-tag">نسخة مصححة</span> : null}
-          </div>
+          {correction ? <span className="briefing-correction-tag">نسخة مصححة</span> : null}
           <h1 className="briefing-title-hierarchy">
             <span className="briefing-title-primary">{headline}</span>
             {subtitle ? <span className="briefing-title-secondary">{subtitle}</span> : null}
@@ -81,7 +83,7 @@ export default async function PublicBriefingPage({
           ) : null}
         </header>
 
-        <BriefingContextIndicators indicators={indicators} />
+        <BriefingIntelligencePanel context={context} weather={weather} />
 
         <BriefingEditionBody executiveSummary={executiveSummary} developments={developments} />
 
