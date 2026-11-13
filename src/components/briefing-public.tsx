@@ -114,6 +114,20 @@ export function BriefingSource({
   );
 }
 
+/** Highlight reported figures only; preserve original wording and attribution. */
+export function BriefingEmphasis({ text }: { text: string }) {
+  const segments = text.split(/(\d[\d,،.]*\d|\d+)/g);
+  return (
+    <>
+      {segments.map((part, index) =>
+        /^\d/.test(part)
+          ? <mark className="briefing-key-figure" key={index}>{part}</mark>
+          : <span key={index}>{part}</span>
+      )}
+    </>
+  );
+}
+
 export function BriefingTypeTag({ value }: { value: string }) {
   return <span className={"briefing-type-tag briefing-type-tag--" + value}>{briefingClassLabel(value)}</span>;
 }
