@@ -304,3 +304,16 @@
 - **Branch:** `feat/daily-briefing-mobile-visual-v2` based on PR #33 branch.
 - **Code review probes:** Source popover client component, compact source triggers, connected summary prose, removal of public verification notes, and null-safe optional analysis expression were confirmed present in GitHub files.
 - **Remaining:** Windows typecheck/build and real mobile/browser/print inspection. No Vercel deployment.
+
+
+### 13 نوفمبر 2026 — إحاطة V2.1: تبسيط العرض والتبويبات
+
+- على الفرع `feat/daily-briefing-mobile-visual-v2` (PR #34 Draft) نُفذت تعديلات إضافية على الواجهة العامة بناءً على معاينة PDF من 18 صفحة.
+- حذف إشعار إخلاء المسؤولية الثابت من الصفحة دون حذف تصنيف الوقائع/المواقف/الادعاءات أو المصادر.
+- الملخص التنفيذي أصبح فقرة بلا بطاقة أو إطار، مع أزرار المراجع الأصلية.
+- حذفت العناوين الإنجليزية فوق الأقسام وكذلك من واجهة الأرشيف.
+- فواصل التطورات أوضح والخط الواصل بين أرقامها نقاط متتابعة.
+- مكوّن `src/components/briefing-edition-body.tsx` يقدّم تبويبات `الكل/اليمن/دولي/بيانات رسمية/اقتصاد/رياضة/تغريدات رائجة` مرشحات للمحتوى نفسه، مع عدد مطابق وحالة فارغة عند غياب محتوى مناسب.
+- تعريف مرشح `تغريدات رائجة` الحالي يقتصر على روابط X/Twitter وليس تقييمًا موضوعيًا للرواج؛ يحتاج خط رصد/مؤشر تفاعل مستقل في مرحلة لاحقة.
+- لا تغييرات على قاعدة البيانات أو المراجع أو Snapshot المنشور؛ لا PR merge أو نشر Vercel.
+- المتبقي: `npm run typecheck` و`npm run build` ومراجعة الهاتف وتفاعل التبويبات والمراجع.
