@@ -54,3 +54,9 @@ npm run dev
 ```
 
 Stop if Git reports a conflict; preserve local modifications and stashes. No Vercel deployment or PR merge without approval.
+
+
+## Review PR
+
+- https://github.com/dinobahkam-wq/SAS_Platform/pull/34
+- Status: Draft, open, technically mergeable at last inspection. No actual build or mobile browser test has been executed by the agent.
