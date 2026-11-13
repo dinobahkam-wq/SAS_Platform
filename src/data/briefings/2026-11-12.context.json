@@ -1,0 +1,76 @@
+{
+  "edition_date": "2026-11-12",
+  "market": [
+    {
+      "id": "brent",
+      "label": "خام برنت",
+      "value": 95.82,
+      "unit": "دولار/برميل",
+      "instrument": "عقود خام برنت الآجلة",
+      "price_type": "إغلاق تسوية",
+      "source_name": "Financial Times / ICE",
+      "source_url": "https://markets.ft.markitdigital.com/data/commodities/tearsheet/historical?c=Brent+Crude+Oil",
+      "as_of_date": "2026-11-12",
+      "note": "سعر الإغلاق المرجعي لعقود خام برنت الآجلة؛ ليس سعر البيع المحلي."
+    },
+    {
+      "id": "gold",
+      "label": "الذهب",
+      "value": 3876.75,
+      "unit": "دولار/أونصة",
+      "instrument": "XAU/USD الذهب الفوري",
+      "price_type": "إغلاق يومي",
+      "source_name": "Investing.com",
+      "source_url": "https://www.investing.com/currencies/xau-usd-historical-data",
+      "as_of_date": "2026-11-12",
+      "note": "إغلاق الأداة الفورية XAU/USD؛ يختلف عن تسوية عقود COMEX أو أسعار الذهب في اليمن."
+    }
+  ],
+  "fronts": [
+    {
+      "id": "marib",
+      "name": "مأرب",
+      "lat": 15.462,
+      "lon": 45.325,
+      "change": "unverified",
+      "activity": "عمليات عسكرية معلنة",
+      "source_name": "وكالة سبأ — تصريح القوات الحكومية",
+      "source_url": "https://www.sabanew.net/viewstory/155696",
+      "note": "وردت مأرب ضمن الجبهات التي أعلن المتحدث الحكومي تنفيذ عمليات فيها؛ لا توجد خريطة تحقق مستقلة من تقدم أو تراجع في هذا المصدر."
+    },
+    {
+      "id": "jawf",
+      "name": "الجوف",
+      "lat": 16.6,
+      "lon": 45.5,
+      "change": "unverified",
+      "activity": "عمليات عسكرية معلنة",
+      "source_name": "وكالة سبأ — تصريح القوات الحكومية",
+      "source_url": "https://www.sabanew.net/viewstory/155696",
+      "note": "ذكر المصدر الجوف ضمن العمليات المعلنة؛ لا يثبت تغير خطوط السيطرة."
+    },
+    {
+      "id": "taiz",
+      "name": "تعز",
+      "lat": 13.58,
+      "lon": 44.02,
+      "change": "unverified",
+      "activity": "نشاط عسكري وقصف مبلّغ عنه",
+      "source_name": "وكالة سبأ — تصريح القوات الحكومية",
+      "source_url": "https://www.sabanew.net/viewstory/155696",
+      "note": "الإعلان عن النشاط العسكري لا يثبت تقدم أي طرف."
+    },
+    {
+      "id": "bayda",
+      "name": "البيضاء",
+      "lat": 14.3,
+      "lon": 45,
+      "change": "unverified",
+      "activity": "عمليات عسكرية معلنة",
+      "source_name": "وكالة سبأ — تصريح القوات الحكومية",
+      "source_url": "https://www.sabanew.net/viewstory/155696",
+      "note": "البيضاء مذكورة ضمن نطاق العمليات المعلنة؛ لا تقدم موثق في هذا المصدر."
+    }
+  ],
+  "methodology": "سجل يومي للمؤشرات مع تاريخ القياس والمصدر، وقسم منفصل لرصد الجبهات. «غير متحقق» لا يعني عدم وقوع تقدم أو تراجع، بل عدم توفر دليل كافٍ لنسبته أو تحديد موقعه. إحداثيات الخريطة تقريبية لمراكز المحافظات وليست خطوط سيطرة."
+}
