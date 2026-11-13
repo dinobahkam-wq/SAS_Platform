@@ -358,3 +358,12 @@
 
 
 - Opened [Draft PR #35](https://github.com/dinobahkam-wq/SAS_Platform/pull/35) stacked on PR #34. GitHub reports mergeable=true; no local code build or browser test claimed.
+
+
+### 2026-11-13 — Daily Briefing Compact Intelligence V4
+
+- Replaced live commodity display with edition-dated, source-linked historic Brent futures close ($95.82) and spot XAU/USD gold close ($3,876.75) for 2026-11-12, saved to versioned JSON.
+- Separated current 3-city Open-Meteo weather into compact strip explicitly marked as live rather than an historic reading.
+- Added four attributed front entries with non-assertive `unverified` territorial-change classification and a collapsed approximate location schematic (not a control map).
+- Removed repeated edition number above headline, reduced empty header space, and used Google Material Symbols Rounded and grayscale presentation.
+- No production database or published edition snapshot mutation. Source licenses, typecheck/build and browser QA remain pending.
