@@ -87,7 +87,7 @@ export function BriefingEditionBody({
               </span>
               <span className="briefing-summary-summary-title">الملخص التنفيذي</span>
               <span className="briefing-summary-summary-hint">اضغط لقراءة الموجز الكامل</span>
-              <span className="briefing-summary-chevron" aria-hidden="true">⌄</span>
+              <span className="briefing-summary-chevron material-symbols-rounded" aria-hidden="true">keyboard_arrow_down</span>
             </summary>
             <div className="briefing-executive-prose">
               <p>
