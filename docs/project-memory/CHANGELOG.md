@@ -380,3 +380,5 @@
 - Added five front activity records for 12 November and two separately dated earlier reports; no territorial gain is asserted for 12 November without evidence.
 - Preserved public source links and clear distinction between reports and independently verified territorial boundaries.
 - No Supabase changes, merge or deployment; local compilation and mobile UX testing pending.
+
+- Opened Draft PR #37 stacked on PR #36; GitHub comparison reports 9 commits ahead and no divergent base commits. No build or deployment claimed.
