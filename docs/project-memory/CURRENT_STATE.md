@@ -370,3 +370,5 @@
 - **ملفات:** `src/data/briefings/2026-11-12.context.json`, `src/lib/briefing-dated-context.ts`, `src/components/briefing-intelligence-panel.tsx`, `src/components/briefing-edition-body.tsx`, `src/app/globals.css`.
 - **المواصفة:** `docs/daily-briefing-frontline-map-v1.md`.
 - **لا تغيير** على محتوى Supabase المنشور أو migrations أو Vercel؛ اختبارات Windows لم تنفذ بعد.
+
+- **PR #37:** https://github.com/dinobahkam-wq/SAS_Platform/pull/37 — Open Draft، مبني على PR #36، GitHub أكّد mergeable=true عند التحقق الثاني، ولم يُدمج.
