@@ -28,8 +28,7 @@ export default async function BriefingsArchivePage() {
       <div className="briefing-public-container">
         <header className="briefing-archive-intro">
           <div>
-            <span className="briefing-eyebrow">SAS · DAILY BRIEFING</span>
-            <h1>الإحاطة اليومية</h1>
+              <h1>الإحاطة اليومية</h1>
             <p>سجل موثق للتطورات والبيانات والمواقف المرتبطة باليمن ومحيطه، مع إحالات مباشرة إلى المصادر الأصلية.</p>
           </div>
           <div className="briefing-archive-principle">
@@ -63,7 +62,7 @@ export default async function BriefingsArchivePage() {
               {older.length ? (
                 <div className="briefing-archive-list">
                   <div className="briefing-section-heading">
-                    <div><span className="briefing-eyebrow">PREVIOUS EDITIONS</span><h2>الأعداد السابقة</h2></div>
+                    <div><h2>الأعداد السابقة</h2></div>
                     <span>{older.length} عددًا</span>
                   </div>
                   <div className="briefing-archive-grid">
@@ -84,7 +83,6 @@ export default async function BriefingsArchivePage() {
         ) : (
           <section className="briefing-empty-public">
             <span className="briefing-empty-icon" aria-hidden="true">◷</span>
-            <span className="briefing-eyebrow">ARCHIVE NOT YET AVAILABLE</span>
             <h2>لا توجد إحاطات منشورة حتى الآن</h2>
             <p>سيظهر هنا كل عدد بعد اعتماده ونشره. لا تُعرض المسودات أو المواد قيد المراجعة في الأرشيف العام.</p>
             <Link href="/" className="briefing-back-link">العودة إلى منصة ساس ←</Link>
