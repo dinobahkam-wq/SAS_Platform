@@ -1,5 +1,5 @@
 import type { BriefingIndicator } from "@/lib/briefing-indicators";
-import type { HistoricBriefingContext, BriefingFront, HistoricFrontMovement } from "@/lib/briefing-dated-context";
+import type { HistoricBriefingContext, HistoricExchangeRate } from "@/lib/briefing-dated-context";
 
 function Symbol({ name }: { name: string }) {
   return <span className="material-symbols-rounded" aria-hidden="true">{name}</span>;
@@ -14,62 +14,32 @@ function ShortTime({ date }: { date: string | null }) {
   }).format(value)}</time>;
 }
 
-function FrontMap({ fronts, history }: { fronts: BriefingFront[]; history: HistoricFrontMovement[] }) {
-  // Positions are approximate administrative-region markers, not georeferenced control polygons.
-  const x = (lon: number) => 18 + ((lon - 42) / 12) * 314;
-  const y = (lat: number) => 170 - ((lat - 12) / 7) * 153;
-  const movementByFront = new Map(history.map((item) => [item.front_id, item]));
-  const latestDate = history.length ? history.map((item) => item.as_of_date).sort().reverse()[0] : null;
+function number(value: number) {
+  return value.toLocaleString("en-US", { maximumFractionDigits: 2 });
+}
 
+function CityRates({ city, rates }: { city: "عدن" | "صنعاء"; rates: HistoricExchangeRate[] }) {
+  const local = rates.filter((rate) => rate.city === city);
   return (
-    <div className="briefing-front-map-layout">
-      <div className="briefing-mini-map">
-        <svg viewBox="0 0 350 190" role="img" aria-label="مخطط تقريبي لمناطق النشاط اليمنية، مع تمييز أخبار التقدم المعلنة بحسب الطرف وتاريخ الخبر. لا يوضح خطوط السيطرة">
-          <rect x="1" y="1" width="348" height="188" rx="9" fill="#fafafa" stroke="#d2d2d2"/>
-          <path d="M55 31 90 18 133 34 176 35 231 28 293 61 333 92 313 125 250 124 217 145 158 158 112 166 75 142 39 133 35 98 48 72Z" fill="#f1f1f1" stroke="#b1b1b1" strokeWidth="1.6" strokeLinejoin="round"/>
-          <text x="277" y="28" fontSize="11" fill="#888">اليمن</text>
-          {fronts.map((front) => {
-            const prior = movementByFront.get(front.id);
-            const movementClass = prior?.actor === "government" ? "government" : prior?.actor === "houthi" ? "houthi" : "unknown";
-            const color = movementClass === "government" ? "#237d50" : movementClass === "houthi" ? "#c33e41" : "#777";
-            const cx = x(front.lon), cy = y(front.lat);
-            return (
-              <g key={front.id}>
-                {prior ? <circle cx={cx} cy={cy} r="12" fill="none" stroke={color} strokeWidth="1.8" strokeDasharray="3 3"/> : null}
-                <circle cx={cx} cy={cy} r="5" fill={color} stroke="white" strokeWidth="1.5"/>
-                <text x={cx + 9} y={cy - 9} fontSize="11" fill="#303030" fontWeight="600">{front.name}</text>
-              </g>
-            );
-          })}
-          <text x="20" y="182" fontSize="8" fill="#888">نقاط تقريبية — ليست خطوط سيطرة</text>
-        </svg>
+    <div className="briefing-fx-city">
+      <div className="briefing-fx-city-heading">
+        <Symbol name="location_on" />
+        <strong>{city}</strong>
+        <span>ريال يمني</span>
       </div>
-      <div className="briefing-front-map-details">
-        <div className="briefing-front-legend" aria-label="مفتاح ألوان الجبهات">
-          <span><i className="briefing-legend-dot briefing-legend-government"/> تقدم حكومي منشور سابقًا</span>
-          <span><i className="briefing-legend-dot briefing-legend-houthi"/> تقدم حوثي منشور سابقًا</span>
-          <span><i className="briefing-legend-dot briefing-legend-unknown"/> نشاط دون تغير محسوم</span>
-        </div>
-        <p className="briefing-map-scope">
-          الألوان تشير إلى أخبار تحولات مؤرخة، وليست إثباتًا مستقلًا لحدود السيطرة أو لاتجاه حركة القوات.
-          {latestDate ? " أحدث خبر تحوّل مدرج: " + latestDate + "." : ""}
-        </p>
-        {history.length ? (
-          <div className="briefing-movement-history">
-            {history.map((movement) => (
-              <article key={movement.id} className={`briefing-movement-entry briefing-movement-${movement.actor}`}>
-                <div className="briefing-movement-entry-head">
-                  <strong>{movement.name}</strong>
-                  <span>{movement.actor === "government" ? "تقدم حكومي معلن" : "تقدم حوثي منشور"}</span>
-                  <time dateTime={movement.as_of_date} dir="ltr">{movement.as_of_date}</time>
-                </div>
-                <p>{movement.summary}</p>
-                <a href={movement.source_url} target="_blank" rel="noopener noreferrer" aria-label={`عرض المصدر الأصلي لتحول ${movement.name}`}>المصدر <Symbol name="open_in_new"/></a>
-              </article>
-            ))}
-          </div>
-        ) : null}
-      </div>
+      <table className="briefing-fx-table" aria-label={`أسعار الصرف في ${city}`}>
+        <thead><tr><th scope="col">العملة</th><th scope="col">شراء</th><th scope="col">بيع</th></tr></thead>
+        <tbody>
+          {local.map((rate) => (
+            <tr key={rate.code}>
+              <th scope="row"><span className="briefing-fx-code" dir="ltr">{rate.code}</span><span>{rate.code === "USD" ? "دولار" : "سعودي"}</span></th>
+              <td><bdi dir="ltr">{number(rate.buy)}</bdi></td>
+              <td><bdi dir="ltr">{number(rate.sell)}</bdi></td>
+            </tr>
+          ))}
+          {!local.length ? <tr><td colSpan={3}>لا توجد أسعار مؤرخة لهذا السوق.</td></tr> : null}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -81,11 +51,12 @@ export function BriefingIntelligencePanel({
   context: HistoricBriefingContext | null;
   weather: BriefingIndicator[];
 }) {
+  const fx = context?.exchange_rates;
   return (
     <section className="briefing-intelligence" aria-label="مؤشرات الإحاطة">
       <div className="briefing-intelligence-head">
         <h2><Symbol name="monitoring" /> لوحة المؤشرات</h2>
-        <span>سجل تاريخي موجز</span>
+        <span>مؤشرات مؤرخة للعدد</span>
       </div>
       <div className="briefing-intelligence-market">
         <div className="briefing-intelligence-label"><Symbol name="query_stats"/> الأسواق العالمية <small>إغلاق يوم العدد</small></div>
@@ -102,6 +73,24 @@ export function BriefingIntelligencePanel({
           )) : <p className="briefing-empty-metric">لا توجد أسعار تاريخية موثقة لهذا العدد.</p>}
         </div>
       </div>
+      <section className="briefing-fx-section" aria-labelledby="briefing-fx-heading">
+        <div className="briefing-fx-heading">
+          <div><Symbol name="currency_exchange"/><h3 id="briefing-fx-heading">أسعار الصرف</h3></div>
+          <span>12 نوفمبر 2026 · ريال يمني لكل وحدة</span>
+        </div>
+        {fx ? (
+          <>
+            <div className="briefing-fx-grid">
+              <CityRates city="صنعاء" rates={fx.rates}/>
+              <CityRates city="عدن" rates={fx.rates}/>
+            </div>
+            <div className="briefing-fx-credit">
+              <span>أسعار شراء وبيع استرشادية، تختلف بين محال الصرافة.</span>
+              <a href={fx.source_url} target="_blank" rel="noopener noreferrer" title={fx.note}>{fx.source_name} <Symbol name="open_in_new"/></a>
+            </div>
+          </>
+        ) : <p className="briefing-empty-metric">لم تُسجّل أسعار صرف موثقة لهذا العدد.</p>}
+      </section>
       <div className="briefing-intelligence-weather">
         <span className="briefing-weather-title"><Symbol name="thermostat"/> الطقس <small>قراءات راهنة، ليست من تاريخ العدد</small></span>
         <div className="briefing-weather-chips">
@@ -114,29 +103,7 @@ export function BriefingIntelligencePanel({
         </div>
         <span className="briefing-weather-credit"><a href="https://open-meteo.com/en/docs" rel="noopener noreferrer" target="_blank">Open-Meteo</a> <ShortTime date={weather.find((item) => item.observedAt)?.observedAt ?? null}/></span>
       </div>
-      <div className="briefing-fronts">
-        <div className="briefing-fronts-title"><Symbol name="map"/> الجبهات <small>أخبار النشاط وتحولات سابقة مؤرخة</small></div>
-        {context?.fronts.length ? (
-          <>
-            <div className="briefing-front-strip">
-              {context.fronts.map((front) => (
-                <div className="briefing-front-chip" key={front.id} title={front.note}>
-                  <span>{front.name}</span>
-                  <strong>{front.change === "advance" ? "تقدم" : front.change === "retreat" ? "تراجع" : front.change === "stable_verified" ? "ثبات متحقق" : "غير محسوم"}</strong>
-                </div>
-              ))}
-            </div>
-            <details className="briefing-front-map-disclosure">
-              <summary><Symbol name="map"/> خريطة الجبهات والتطورات <Symbol name="expand_more"/></summary>
-              <FrontMap fronts={context.fronts} history={context.frontHistory ?? []}/>
-              <div className="briefing-front-sources">
-                {context.fronts.map((front) => <p key={front.id}><strong>{front.name}:</strong> {front.activity} — {front.note} <a href={front.source_url} rel="noopener noreferrer" target="_blank">المصدر <Symbol name="open_in_new"/></a></p>)}
-              </div>
-            </details>
-          </>
-        ) : <p className="briefing-empty-metric">لم يُعتمد سجل جبهات لهذا العدد.</p>}
-      </div>
-      <p className="briefing-intelligence-foot">الأسعار محفوظة بتاريخ العدد ومسنَدة إلى مصدرها؛ الطقس رصد لحظي منفصل. مواقع الجبهات تقريبية ولا تمثل خطوط سيطرة.</p>
+      <p className="briefing-intelligence-foot">أسعار النفط والذهب والصرف مؤرخة بيوم العدد ومسنَدة إلى مصادرها؛ درجات الحرارة راهنة ومنفصلة عنها.</p>
     </section>
   );
 }
