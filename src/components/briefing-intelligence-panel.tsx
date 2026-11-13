@@ -32,7 +32,7 @@ function CityRates({ city, rates }: { city: "عدن" | "صنعاء"; rates: Hist
         <tbody>
           {local.map((rate) => (
             <tr key={rate.code}>
-              <th scope="row"><span className="briefing-fx-code" dir="ltr">{rate.code}</span><span>{rate.code === "USD" ? "دولار" : "سعودي"}</span></th>
+              <th scope="row" className="briefing-fx-currency">{rate.code === "USD" ? "الدولار الأمريكي" : "الريال السعودي"}</th>
               <td><bdi dir="ltr">{number(rate.buy)}</bdi></td>
               <td><bdi dir="ltr">{number(rate.sell)}</bdi></td>
             </tr>
