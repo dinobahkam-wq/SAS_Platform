@@ -388,7 +388,7 @@ export type Database = {
       }
       briefing_revisions: {
         Row: {
-          analysis_ar: string
+          analysis_ar: string | null
           approved_at: string | null
           approved_by: string | null
           based_on_revision_id: string | null
@@ -417,7 +417,7 @@ export type Database = {
           window_start: string
         }
         Insert: {
-          analysis_ar: string
+          analysis_ar?: string | null
           approved_at?: string | null
           approved_by?: string | null
           based_on_revision_id?: string | null
@@ -446,7 +446,7 @@ export type Database = {
           window_start: string
         }
         Update: {
-          analysis_ar?: string
+          analysis_ar?: string | null
           approved_at?: string | null
           approved_by?: string | null
           based_on_revision_id?: string | null
