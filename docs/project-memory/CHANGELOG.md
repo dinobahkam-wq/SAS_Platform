@@ -370,3 +370,13 @@
 
 
 - Opened [Draft PR #36](https://github.com/dinobahkam-wq/SAS_Platform/pull/36) stacked on PR #35, mergeable at last GitHub check. File-level integrity checks confirmed 2 dated market quotes, 4 unverified front entries, a collapsible schematic, and removed duplicate edition number. No local compilation or browser tests yet.
+
+
+### 2026-11-13 — Source-dated Frontline Map V1
+
+- Added "$" prefix to historical Brent and gold amounts, preserving LTR numeric ordering.
+- Replaced executive-summary disclosure text chevron with Material Symbols Rounded arrow.
+- Enhanced schematic frontline map with green government, red Houthi and gray unresolved legend, plus dated source-backed prior reported gains.
+- Added five front activity records for 12 November and two separately dated earlier reports; no territorial gain is asserted for 12 November without evidence.
+- Preserved public source links and clear distinction between reports and independently verified territorial boundaries.
+- No Supabase changes, merge or deployment; local compilation and mobile UX testing pending.
