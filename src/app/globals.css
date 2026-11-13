@@ -3470,3 +3470,85 @@ textarea {
 @media print {
   .briefing-public-site .briefing-pdf-export-link{display:none!important;}
 }
+
+
+/* SAS Briefing — restrained editorial accent system V1.
+   Identity remains predominantly black and white; color marks priority data. */
+.briefing-public-site {
+  --briefing-accent: #245e74;
+  --briefing-accent-soft: #e9f2f5;
+  --briefing-accent-warm: #946735;
+  --briefing-accent-warm-soft: #f5efe5;
+}
+.briefing-public-site .briefing-intelligence-head {
+  border-bottom: 2px solid var(--briefing-accent);
+}
+.briefing-public-site .briefing-intelligence-head h2 .material-symbols-rounded,
+.briefing-public-site .briefing-intelligence-label > .material-symbols-rounded,
+.briefing-public-site .briefing-fx-heading .material-symbols-rounded {
+  color: var(--briefing-accent);
+}
+.briefing-public-site .briefing-market-item strong.briefing-market-amount,
+.briefing-public-site .briefing-fx-table td {
+  color: var(--briefing-accent);
+}
+.briefing-public-site .briefing-market-dollar {
+  color: var(--briefing-accent-warm);
+}
+.briefing-public-site .briefing-market-item:first-child .briefing-market-amount {
+  color: #2a5567;
+}
+.briefing-public-site .briefing-market-item:nth-child(2) .briefing-market-amount {
+  color: var(--briefing-accent-warm);
+}
+.briefing-public-site .briefing-fx-currency {
+  color: #263d48;
+  font-weight: 650;
+  white-space: normal;
+  line-height: 1.5;
+}
+.briefing-public-site .briefing-fx-city-heading strong,
+.briefing-public-site .briefing-fx-heading h3 {
+  color: #234e60;
+}
+.briefing-public-site .briefing-fx-city-heading .material-symbols-rounded {
+  color: #497c90;
+}
+.briefing-public-site .briefing-fx-table tbody tr:nth-child(odd) {
+  background: #f7fafb;
+}
+.briefing-public-site .briefing-weather-chip strong {
+  color: #245e74;
+}
+.briefing-public-site .briefing-weather-title .material-symbols-rounded {
+  color: var(--briefing-accent-warm);
+}
+.briefing-public-site .briefing-summary-disclosure > summary {
+  border-right: 3px solid var(--briefing-accent);
+}
+.briefing-public-site .briefing-summary-summary-icon {
+  color: var(--briefing-accent);
+  background: var(--briefing-accent-soft);
+}
+.briefing-public-site .briefing-summary-summary-title {
+  color: #234d5e;
+}
+.briefing-public-site .briefing-key-figure {
+  background: var(--briefing-accent-soft);
+  color: #1f5267;
+}
+.briefing-public-site .briefing-event-content h3 {
+  color: #212d33;
+}
+.briefing-public-site .briefing-event-index span {
+  border-color: #85a9b8;
+  color: #245e74;
+}
+.briefing-public-site .briefing-reference-trigger {
+  color: #245e74;
+}
+@media (max-width: 680px) {
+  .briefing-public-site .briefing-fx-currency { font-size: 10px; }
+  .briefing-public-site .briefing-fx-table th,
+  .briefing-public-site .briefing-fx-table td { white-space: normal; }
+}
