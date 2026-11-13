@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { PublicFooter, PublicHeader } from "@/components/public-site";
 import { formatBriefingDateOnly } from "@/components/briefing-public";
 import { BriefingEditionBody } from "@/components/briefing-edition-body";
@@ -71,12 +72,18 @@ export default async function PublicBriefingPage({
             <span className="briefing-title-primary">{headline}</span>
             {subtitle ? <span className="briefing-title-secondary">{subtitle}</span> : null}
           </h1>
-          <div className="briefing-edition-date">
-            <time dateTime={edition.edition_date}>{formatBriefingDateOnly(edition.edition_date)}</time>
-            <span>·</span>
-            <span>{edition.edition_type === "special" ? "إحاطة خاصة" : "إحاطة يومية"}</span>
-            <span>·</span>
-            <span>مراجعة رقم {revision.revision_no}</span>
+          <div className="briefing-edition-toolbar">
+            <div className="briefing-edition-date">
+              <time dateTime={edition.edition_date}>{formatBriefingDateOnly(edition.edition_date)}</time>
+              <span>·</span>
+              <span>{edition.edition_type === "special" ? "إحاطة خاصة" : "إحاطة يومية"}</span>
+              <span>·</span>
+              <span>مراجعة رقم {revision.revision_no}</span>
+            </div>
+            <Link className="briefing-pdf-export-link" href={`/briefings/${edition.slug}/print`} target="_blank" rel="noopener noreferrer" aria-label="فتح النسخة المهيأة للطباعة والحفظ بصيغة PDF">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 15v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              تصدير PDF
+            </Link>
           </div>
           {correction && revision.change_reason_ar ? (
             <p className="briefing-correction-note">سبب التصحيح: {revision.change_reason_ar}</p>
