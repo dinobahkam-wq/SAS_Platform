@@ -319,3 +319,15 @@
 - Verified public archive/detail RPC output and audit events. Six of the 24 records represent sourced claims, explicitly attributed rather than independently confirmed facts.
 - Regenerated Supabase TypeScript types after the production migration.
 - No Vercel deployment or merge; PR #33 remains a draft.
+
+
+### 2026-11-13 — Public Briefing mobile visual V2
+
+- Introduced compact, clickable source citations with responsive popovers and original-source links.
+- Removed public display of verification notes while retaining verification-status labels.
+- Replaced the five summary cards with a single connected executive-summary paragraph retaining each source citation.
+- Added restrained semantic color to type badges and numeric highlights.
+- Increased titles, body copy, metadata and tap targets for mobile-first reading.
+- Reduced duplicate source-index bulk to a compact source count.
+- Verified via read-only Supabase query that the published issue has 24 distinct headline/order pairs. PDF capture exhibits visual repetition that is not in the database snapshot.
+- No DB writes, deployment, or merge. Windows typecheck/build and responsive UI inspection still pending.
