@@ -408,3 +408,11 @@
 - Reused the existing approved full-color `BrandLogo` component in `src/app/briefings/[slug]/print/page.tsx` instead of the wordmark rendered as text.
 - Adjusted `print.css` image dimensions for A4 and preserved print colors; removed duplicate caption text because the source logo contains the full brand mark.
 - No DB/content modifications, PR merge or deployment; local re-export QA required.
+
+
+### 2026-11-13 — Selective color accents and Arabic FX currency names
+
+- Replaced USD and SAR visual abbreviations with full Arabic names in website and A4 PDF exchange-rate tables.
+- Added muted teal and bronze accents to significant market figures, section titles and summary highlights, preserving monochrome SAS foundations.
+- Matched print CSS to the approved full-color original logo; did not alter source data or published snapshots.
+- No database changes, PR merge, deployment, or local build claimed.
