@@ -400,3 +400,5 @@
 - Suppressed page navigation, interactive popovers and live weather from the print edition.
 - Added print-specific pagination, legible text and optional print page footer.
 - No Supabase changes, Git merges or Vercel release; local typecheck/build and PDF screenshot review still pending.
+
+- Opened Draft [PR #39](https://github.com/dinobahkam-wq/SAS_Platform/pull/39). File-level verification passed for the print route, complete developments, original citations, dated context, A4 styles, page counters and print action. No local PDF rendering/build was claimed.
