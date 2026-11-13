@@ -56,3 +56,10 @@ This uses the native browser PDF print workflow, not a one-click server-generate
 ## Non-action
 
 No Vercel deployment, migration, or merge was performed in this package. No browser PDF was actually produced from the local Windows project by the assistant.
+
+
+## 13 نوفمبر 2026 — ملحق الهوية الملونة
+- في رأس نسخة الطباعة يتم استخدام `BrandLogo variant="full"` مباشرةً من مكتبة هوية المنصة، وليس إعادة إنشاء صورة شعار.
+- الأصل المرجعي المستخدم فعليًا بواسطة المكوّن: `public/brand/logos/sas-logo-for white background.png`، وهو الشعار المعتمد للخلفيات البيضاء.
+- أبعاد العرض: 132px على الشاشة، 126px في وضع A4 للطباعة، مع الحفاظ على نسبة الأبعاد تلقائيًا و`print-color-adjust:exact`.
+- يجب إعادة توليد PDF من Windows وفحص أن العلامة الملونة واسم المنصة يظهران واضحين في صفحة 1 دون تمدد أو قص.
