@@ -24,12 +24,31 @@ export type BriefingFront = {
   source_name: string;
   source_url: string;
   note: string;
+  reported_at?: string;
+  evidence_status?: "reported_activity";
+  actor?: "government" | "houthi" | "undetermined";
+};
+
+export type HistoricFrontMovement = {
+  id: string;
+  front_id: string;
+  name: string;
+  actor: "government" | "houthi";
+  change: "reported_advance" | "reported_retreat";
+  status: "reported";
+  as_of_date: string;
+  location_label: string;
+  summary: string;
+  source_name: string;
+  source_url: string;
+  precision: "area" | "governorate";
 };
 
 export type HistoricBriefingContext = {
   edition_date: string;
   market: HistoricMarketPoint[];
   fronts: BriefingFront[];
+  frontHistory?: HistoricFrontMovement[];
   methodology: string;
 };
 
@@ -42,5 +61,12 @@ export async function getDatedBriefingContext(editionDate: string): Promise<Hist
       ? front.change
       : "unverified",
   }));
-  return { edition_date: nov12.edition_date, market: nov12.market, fronts, methodology: nov12.methodology };
+  const frontHistory: HistoricFrontMovement[] = nov12.frontHistory.map((entry) => ({
+    ...entry,
+    actor: entry.actor === "government" ? "government" : "houthi",
+    change: entry.change === "reported_retreat" ? "reported_retreat" : "reported_advance",
+    status: "reported",
+    precision: entry.precision === "area" ? "area" : "governorate",
+  }));
+  return { edition_date: nov12.edition_date, market: nov12.market, fronts, frontHistory, methodology: nov12.methodology };
 }
