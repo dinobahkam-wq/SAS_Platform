@@ -6,7 +6,6 @@ import {
   briefingCategoryLabel,
   briefingClassLabel,
   briefingVerificationLabel,
-  formatBriefingDate,
   formatBriefingDateOnly,
 } from "@/components/briefing-public";
 import { getPublicBriefing } from "@/lib/public-briefing";
