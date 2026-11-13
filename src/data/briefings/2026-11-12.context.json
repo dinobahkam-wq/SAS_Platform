@@ -1,0 +1,69 @@
+{
+  "edition_date": "2026-11-12",
+  "market": [
+    {
+      "id": "brent",
+      "label": "خام برنت",
+      "value": 95.82,
+      "unit": "دولار/برميل",
+      "instrument": "عقود خام برنت الآجلة",
+      "price_type": "إغلاق تسوية",
+      "source_name": "Financial Times / ICE",
+      "source_url": "https://markets.ft.markitdigital.com/data/commodities/tearsheet/historical?c=Brent+Crude+Oil",
+      "as_of_date": "2026-11-12",
+      "note": "سعر الإغلاق المرجعي لعقود خام برنت الآجلة؛ ليس سعر البيع المحلي."
+    },
+    {
+      "id": "gold",
+      "label": "الذهب",
+      "value": 3876.75,
+      "unit": "دولار/أونصة",
+      "instrument": "XAU/USD الذهب الفوري",
+      "price_type": "إغلاق يومي",
+      "source_name": "Investing.com",
+      "source_url": "https://www.investing.com/currencies/xau-usd-historical-data",
+      "as_of_date": "2026-11-12",
+      "note": "إغلاق الأداة الفورية XAU/USD؛ يختلف عن تسوية عقود COMEX أو أسعار الذهب في اليمن."
+    }
+  ],
+  "methodology": "مؤشرات الأسواق وأسعار الصرف مثبتة بتاريخ العدد، مع إظهار العملة والوحدة والشراء والبيع ومرجع البيانات. قراءات الطقس إذا ظهرت فهي لحظية وليست حرارة يوم العدد. لا يُستخدم سعر سوق صنعاء بوصفه سعر سوق عدن، والعكس صحيح.",
+  "exchange_rates": {
+    "as_of_date": "2026-11-12",
+    "quote_currency": "YER",
+    "quote_basis": "ريال يمني لكل وحدة من العملة الأجنبية",
+    "rates": [
+      {
+        "city": "صنعاء",
+        "code": "USD",
+        "label": "الدولار الأمريكي",
+        "buy": 530,
+        "sell": 533
+      },
+      {
+        "city": "صنعاء",
+        "code": "SAR",
+        "label": "الريال السعودي",
+        "buy": 139.5,
+        "sell": 140.2
+      },
+      {
+        "city": "عدن",
+        "code": "USD",
+        "label": "الدولار الأمريكي",
+        "buy": 1568,
+        "sell": 1579
+      },
+      {
+        "city": "عدن",
+        "code": "SAR",
+        "label": "الريال السعودي",
+        "buy": 410,
+        "sell": 413
+      }
+    ],
+    "source_name": "بقش — أسعار الصرف المحلية",
+    "source_url": "https://boqash.com/price-currency/",
+    "corroboration_url": "https://yemen-currency.iwatheq.com/",
+    "note": "أسعار شراء وبيع استرشادية منشورة لتاريخ 12 نوفمبر 2026؛ تختلف من محل صرافة لآخر، وليس المقصود سعرًا رسميًا موحدًا. يُعرض سعر كل سوق بصورة مستقلة."
+  }
+}

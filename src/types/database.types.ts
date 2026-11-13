@@ -58,6 +58,439 @@ export type Database = {
           },
         ]
       }
+      briefing_development_relations: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          note_ar: string | null
+          relation_type: string
+          source_development_id: string
+          target_development_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          note_ar?: string | null
+          relation_type: string
+          source_development_id: string
+          target_development_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          note_ar?: string | null
+          relation_type?: string
+          source_development_id?: string
+          target_development_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_development_relations_source_development_id_fkey"
+            columns: ["source_development_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_developments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "briefing_development_relations_target_development_id_fkey"
+            columns: ["target_development_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_developments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      briefing_development_sources: {
+        Row: {
+          accessed_at: string
+          attribution_note: string | null
+          created_at: string
+          created_by: string
+          development_id: string
+          display_order: number
+          display_publicly: boolean
+          source_excerpt: string | null
+          source_id: string
+          source_role: string
+        }
+        Insert: {
+          accessed_at?: string
+          attribution_note?: string | null
+          created_at?: string
+          created_by?: string
+          development_id: string
+          display_order?: number
+          display_publicly?: boolean
+          source_excerpt?: string | null
+          source_id: string
+          source_role?: string
+        }
+        Update: {
+          accessed_at?: string
+          attribution_note?: string | null
+          created_at?: string
+          created_by?: string
+          development_id?: string
+          display_order?: number
+          display_publicly?: boolean
+          source_excerpt?: string | null
+          source_id?: string
+          source_role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_development_sources_development_id_fkey"
+            columns: ["development_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_developments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "briefing_development_sources_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "content_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      briefing_developments: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string
+          geographic_scope: string
+          headline_ar: string
+          id: string
+          information_class: string
+          location_text: string | null
+          occurred_at: string | null
+          occurred_on: string | null
+          related_content_item_id: string | null
+          status: string
+          summary_ar: string
+          time_precision: string
+          updated_at: string
+          updated_by: string | null
+          verification_note_ar: string | null
+          verification_status: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          created_by?: string
+          geographic_scope?: string
+          headline_ar: string
+          id?: string
+          information_class: string
+          location_text?: string | null
+          occurred_at?: string | null
+          occurred_on?: string | null
+          related_content_item_id?: string | null
+          status?: string
+          summary_ar: string
+          time_precision?: string
+          updated_at?: string
+          updated_by?: string | null
+          verification_note_ar?: string | null
+          verification_status?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string
+          geographic_scope?: string
+          headline_ar?: string
+          id?: string
+          information_class?: string
+          location_text?: string | null
+          occurred_at?: string | null
+          occurred_on?: string | null
+          related_content_item_id?: string | null
+          status?: string
+          summary_ar?: string
+          time_precision?: string
+          updated_at?: string
+          updated_by?: string | null
+          verification_note_ar?: string | null
+          verification_status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_developments_related_content_item_id_fkey"
+            columns: ["related_content_item_id"]
+            isOneToOne: false
+            referencedRelation: "content_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      briefing_edition_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          edition_id: string
+          event_data: Json
+          event_type: string
+          from_status: string | null
+          id: number
+          note_ar: string | null
+          revision_id: string | null
+          to_status: string | null
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          edition_id: string
+          event_data?: Json
+          event_type: string
+          from_status?: string | null
+          id?: never
+          note_ar?: string | null
+          revision_id?: string | null
+          to_status?: string | null
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          edition_id?: string
+          event_data?: Json
+          event_type?: string
+          from_status?: string | null
+          id?: never
+          note_ar?: string | null
+          revision_id?: string | null
+          to_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_edition_events_edition_id_fkey"
+            columns: ["edition_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_editions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "briefing_edition_events_revision_id_fkey"
+            columns: ["revision_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_revisions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      briefing_edition_items: {
+        Row: {
+          context_ar: string | null
+          created_at: string
+          development_id: string
+          display_order: number
+          display_section: string
+          headline_override_ar: string | null
+          id: string
+          revision_id: string
+          summary_text_ar: string | null
+          what_changed_ar: string | null
+          why_it_matters_ar: string | null
+        }
+        Insert: {
+          context_ar?: string | null
+          created_at?: string
+          development_id: string
+          display_order: number
+          display_section: string
+          headline_override_ar?: string | null
+          id?: string
+          revision_id: string
+          summary_text_ar?: string | null
+          what_changed_ar?: string | null
+          why_it_matters_ar?: string | null
+        }
+        Update: {
+          context_ar?: string | null
+          created_at?: string
+          development_id?: string
+          display_order?: number
+          display_section?: string
+          headline_override_ar?: string | null
+          id?: string
+          revision_id?: string
+          summary_text_ar?: string | null
+          what_changed_ar?: string | null
+          why_it_matters_ar?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_edition_items_development_id_fkey"
+            columns: ["development_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_developments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "briefing_edition_items_revision_id_fkey"
+            columns: ["revision_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_revisions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      briefing_editions: {
+        Row: {
+          created_at: string
+          created_by: string
+          current_revision_id: string | null
+          edition_date: string
+          edition_no: number
+          edition_type: string
+          id: string
+          slug: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          current_revision_id?: string | null
+          edition_date: string
+          edition_no?: never
+          edition_type?: string
+          id?: string
+          slug: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          current_revision_id?: string | null
+          edition_date?: string
+          edition_no?: never
+          edition_type?: string
+          id?: string
+          slug?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_editions_current_revision_fkey"
+            columns: ["id", "current_revision_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_revisions"
+            referencedColumns: ["edition_id", "id"]
+          },
+        ]
+      }
+      briefing_revisions: {
+        Row: {
+          analysis_ar: string | null
+          approved_at: string | null
+          approved_by: string | null
+          based_on_revision_id: string | null
+          change_reason_ar: string | null
+          checked_at: string
+          coverage_note_ar: string
+          created_at: string
+          created_by: string
+          edition_id: string
+          id: string
+          methodology_ar: string
+          published_at: string | null
+          published_by: string | null
+          published_snapshot: Json | null
+          review_note_ar: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          revision_kind: string
+          revision_no: number
+          status: string
+          submitted_at: string | null
+          submitted_by: string | null
+          title_ar: string
+          updated_at: string
+          window_end: string
+          window_start: string
+        }
+        Insert: {
+          analysis_ar?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          based_on_revision_id?: string | null
+          change_reason_ar?: string | null
+          checked_at?: string
+          coverage_note_ar: string
+          created_at?: string
+          created_by?: string
+          edition_id: string
+          id?: string
+          methodology_ar: string
+          published_at?: string | null
+          published_by?: string | null
+          published_snapshot?: Json | null
+          review_note_ar?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_kind?: string
+          revision_no: number
+          status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title_ar: string
+          updated_at?: string
+          window_end: string
+          window_start: string
+        }
+        Update: {
+          analysis_ar?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          based_on_revision_id?: string | null
+          change_reason_ar?: string | null
+          checked_at?: string
+          coverage_note_ar?: string
+          created_at?: string
+          created_by?: string
+          edition_id?: string
+          id?: string
+          methodology_ar?: string
+          published_at?: string | null
+          published_by?: string | null
+          published_snapshot?: Json | null
+          review_note_ar?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          revision_kind?: string
+          revision_no?: number
+          status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title_ar?: string
+          updated_at?: string
+          window_end?: string
+          window_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_revisions_edition_id_based_on_revision_id_fkey"
+            columns: ["edition_id", "based_on_revision_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_revisions"
+            referencedColumns: ["edition_id", "id"]
+          },
+          {
+            foreignKeyName: "briefing_revisions_edition_id_fkey"
+            columns: ["edition_id"]
+            isOneToOne: false
+            referencedRelation: "briefing_editions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       categories: {
         Row: {
           created_at: string
@@ -260,10 +693,13 @@ export type Database = {
           created_by: string | null
           id: string
           is_active: boolean
+          language_code: string | null
           organization_name: string | null
           publication_date: string | null
+          published_at: string | null
           source_name: string
           source_reference: string | null
+          source_title: string | null
           source_type: string
           source_url: string | null
           updated_at: string
@@ -274,10 +710,13 @@ export type Database = {
           created_by?: string | null
           id?: string
           is_active?: boolean
+          language_code?: string | null
           organization_name?: string | null
           publication_date?: string | null
+          published_at?: string | null
           source_name: string
           source_reference?: string | null
+          source_title?: string | null
           source_type: string
           source_url?: string | null
           updated_at?: string
@@ -288,10 +727,13 @@ export type Database = {
           created_by?: string | null
           id?: string
           is_active?: boolean
+          language_code?: string | null
           organization_name?: string | null
           publication_date?: string | null
+          published_at?: string | null
           source_name?: string
           source_reference?: string | null
+          source_title?: string | null
           source_type?: string
           source_url?: string | null
           updated_at?: string
@@ -438,7 +880,49 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      approve_briefing_revision: {
+        Args: { p_note_ar?: string; p_revision_id: string }
+        Returns: undefined
+      }
+      create_briefing_correction: {
+        Args: { p_change_reason_ar: string; p_edition_id: string }
+        Returns: string
+      }
+      create_briefing_edition: {
+        Args: {
+          p_analysis_ar: string
+          p_coverage_note_ar: string
+          p_edition_date: string
+          p_edition_type: string
+          p_methodology_ar: string
+          p_slug: string
+          p_title_ar: string
+          p_window_end: string
+          p_window_start: string
+        }
+        Returns: Json
+      }
+      get_public_briefing: { Args: { p_slug: string }; Returns: Json }
+      get_public_briefing_archive: {
+        Args: {
+          p_before_date?: string
+          p_before_edition_no?: number
+          p_limit?: number
+        }
+        Returns: Json
+      }
+      publish_briefing_revision: {
+        Args: { p_revision_id: string }
+        Returns: Json
+      }
+      return_briefing_revision: {
+        Args: { p_note_ar: string; p_revision_id: string }
+        Returns: undefined
+      }
+      submit_briefing_revision: {
+        Args: { p_revision_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

@@ -162,9 +162,257 @@
 
 - **الفرع:** `integration/sas-mainline-2026-11-12`.
 - **نقطة الأساس:** `bdbdee17e82b846a705030514617fcbfa3525035`.
+- **Commit التوحيد:** `11cfd07512660f7b749c854ec8ced3731c0d02b5` (الفرع تحرك إليه fast-forward).
 - **المصادر:** محتوى التوثيق من PR #10 وPR #19، مع الاحتفاظ بتاريخ Commit المصدر لكليهما في تاريخ Git.
 - **المخرجات:** إدراج دراسة إعادة الإطلاق، ووثائق Package 02 (جرد الأرشيف ومراجعة 38 مادة ودليل التشغيل والعينة المنظمة)، وتحديثات القرارات والمراجع، ومواصفات صورة الهوية الثابتة.
 - **الأصل البصري:** أضيفت صورة واحدة فقط من أصل ست صور في فرع PR #7، وهي `public/brand/صورة ChatGPT 12 نوفمبر 2026، 10_27_45 ص-6.png`. لم تُنقل الصور الخمس الأخرى.
 - **حدود التغيير:** لا تعديل على كود التطبيق أو مخطط Supabase أو بيانات المحتوى أو Storage أو إعدادات Vercel. وجود صورة الهوية في المستودع لا يعني أنها رُبطت بعد بالصفحة الرئيسية.
 - **حالة التحقق:** لم تُشغّل اختبارات على شجرة التوحيد الجديدة بعد. يلزم تشغيل `node --test` و`npm run typecheck` و`npm run build` ومراجعة الصورة على أحجام الشاشات المستهدفة.
 - **النشر:** لم يتغير `main` ولم يحدث نشر إنتاجي. هذه نقطة تكامل للمراجعة المحلية قبل إعداد PR نهائي مستقل.
+
+---
+
+## 12 نوفمبر 2026 — دمج PR #20 إلى main وتحديث نقطة الاستئناف
+
+- **PR:** [#20 — Integration/sas mainline 2026 11 12](https://github.com/dinobahkam-wq/SAS_Platform/pull/20).
+- **الحالة:** مدمج؛ `merged_at=2026-11-12T11:50:12Z`.
+- **Commit الدمج على main:** `697a1eb9cdde11537a45ef9e24dba969343bff53`.
+- **الآباء:** `c7e6a04bc5623457889cbbd9c8563ce05d900370` وCommit التوحيد `11cfd07512660f7b749c854ec8ced3731c0d02b5`.
+- **النتيجة:** أصبح `main` يحتوي حزم التكامل والوثائق المختارة وصورة الهوية السادسة.
+- **ما بعد الدمج:** تقدم فرع التكامل بتحديثين توثيقيين فقط لتسجيل Commit التوحيد ودمج PR #20: `78991cb5bccc511de356eb7e4d7af7d91e15ec70` و`f44dd11c5cc575d02da899fe8703af2dcf5b40a3`. المقارنة الحالية بين `main` والتكامل تُظهر اختلاف ملفي `CURRENT_STATE.md` و`CHANGELOG.md` فقط، ولا تظهر تغييرات في كود التطبيق.
+- **التحقق:** لم يُعثر على GitHub Actions Workflow Run للرأس `f44dd11`، وحالة Vercel المبلّغ عنها لذلك الرأس `failure`. لا تُعد هذه الحزمة مختبرة أو جاهزة للنشر حتى مراجعة السبب وإعادة الاختبارات محليًا.
+
+
+---
+
+### 2026-11-12 — إغلاق استوديو الصور الإخبارية ودمج النسخة الموحدة
+
+- **الفروع المصدرية:** `feat/news-studio-controls-v1` و`feat/news-studio-layout-engine-v2` و`feat/news-studio-live-workspace-v1`.
+- **التجميع:** PR #28 على `feat/news-studio-consolidated-v1`، ثم دُمج في `integration/sas-mainline-2026-11-12`.
+- **Commit الدمج:** `20f57b10df1c3712d572de832b94bde71f7c4235`.
+- **الوظائف:** المقاسات والألوان والقوالب، إعدادات الخط والصورة والهوامش، استيراد JSON/Markdown/TXT، حد موجز 250 كلمة وتعدد الصفحات، تحديد وتحريك وتحجيم العنوان والموجز والصورة بطبقة SVG فوق Canvas، والحفاظ على نسبة أبعاد الصورة.
+- **تسوية PRs:** أُغلقت PRs #25 و#26 و#27 بعد استيعابها في #28؛ لا تُعد عمليات دمج مستقلة مطلوبة.
+- **اختبار المستخدم:** نجاح `npm run typecheck` و`npm run build` محليًا على رأس `2fcd4ad9bdcfcde240f4755e00c59f0c6edff22c`، ثم أكد المستخدم نجاح اختبارات الاستيراد والتحريك والتحجيم وتصدير PNG.
+- **الحدود:** لا Migration أو تغيير Supabase ضمن PR #28. لا يُسجل نشر إنتاجي. وظائف Layers وUndo/Redo والمساطر والتحرير النصي المباشر المتقدم تبقى عناصر لاحقة غير مثبتة ضمن قبول هذه الحزمة.
+- **الوثيقة:** [استكمال استوديو الصور](../news-studio-completion-2026-11-12.md).
+
+### 2026-11-12 — مزامنة أصل الشعار من main إلى التكامل
+
+- **PR:** [#29](https://github.com/dinobahkam-wq/SAS_Platform/pull/29).
+- **النتيجة:** دمج ملف الشعار الأبيض الخلفية الذي كان موجودًا في main فقط إلى فرع التكامل.
+- **Commit:** `d06f769db0e76cecb2e315dc535c8cc1b9a4ea92`.
+- **حدود التغيير:** مزامنة أصل بصري؛ لا تعديل في كود التطبيق أو مخطط Supabase.
+
+### 2026-11-12 — تأسيس مرحلة الإحاطة اليومية V1
+
+- **الفرع:** `feat/daily-briefing-v1`، مبني على فرع التكامل بعد PR #29.
+- **الوثائق:** `docs/daily-briefing-v1.md` و`docs/news-studio-completion-2026-11-12.md`، مع تحديث الحالة والقرارات والمراجع وسير العمل.
+- **النطاق الحالي:** توثيق المنتج وتدقيق النقل فقط؛ لا صفحة عامة أو لوحة إدارة أو Migration جديدة في هذه الحزمة.
+- **المرجع القديم:** `dinobahkam-wq/SAS` / `feature/daily-briefing-v1`؛ مرجع وظيفي لا يُنسخ مباشرة.
+- **الخطوة التالية:** تدقيق نموذج البيانات القديم ومقارنته بمخطط SAS_Platform، ثم قرار مستقل حول وحدة التطور والعلاقات والصلاحيات قبل أي تنفيذ.
+
+- **PR #30:** [تجهيز مرحلة الإحاطة اليومية V1](https://github.com/dinobahkam-wq/SAS_Platform/pull/30) — Draft، توثيق فقط، غير مدمج.
+
+
+### 2026-11-12 — Package: Daily Briefing Experience & Architecture Audit
+
+- **الفرع:** `feat/daily-briefing-experience-v1`، مبني على `feat/daily-briefing-v1`.
+- **المخرجات:** مواصفة تجربة بصرية وتفاعلية للإحاطة، وتدقيق معماري يقارن النموذج القديم بمخطط SAS_Platform الحالي.
+- **قرارات التصميم المقترحة:** وثيقة رقمية نصية بلا صور إخبارية؛ Evidence-first؛ بطاقة المصدر بجوار كل معلومة؛ فصل واضح بين FACT / POSITION / CLAIM / ANALYSIS؛ GPT للمحرر فقط داخل غرفة التحرير.
+- **النتيجة المعمارية:** الاستفادة من `content_sources` و`content_source_links` دون إنشاء مكتبة مصادر موازية؛ سجل التطور مستقل عن `content_items` لأن التطور لا يشترط أن يكون مادة منشورة.
+- **الحدود:** توثيق فقط؛ لا كود واجهة، ولا SQL/Migration، ولا تعديل Supabase، ولا تكامل GPT، ولا نشر.
+- **التحقق:** فحص ساكن لملفات GitHub في المستودع الرئيسي والمرجع القديم؛ لم تُشغّل اختبارات أو قاعدة بيانات.
+- **الخطوة التالية:** مراجعة واعتماد نموذج البيانات والصلاحيات ثم تصميم ERD وMigration مراجعة.
+
+
+### 2026-11-12 — Daily Briefing Handoff for New Session
+
+- أضيفت [وثيقة التسليم](../DAILY_BRIEFING_HANDOFF_2026-11-12.md) لتثبيت السياق والخطة التنفيذية وتعليمات الاستئناف.
+- **الحالة الحية وقت التوثيق:** PR #30 وPR #31 مفتوحان Draft وغير مدمجين؛ PR #31 مكدس فوق فرع PR #30.
+- **التالي:** Package 1 — Data Model & Security Design قبل أي واجهة أو Migration.
+- **لا تغيير:** لا Supabase، لا كود تشغيل، لا GPT، لا نشر.
+
+---
+
+### 2026-11-12 — Package 1: Daily Briefing Data Model & Security Design
+
+- **الفرع:** `feat/daily-briefing-data-model-security-v1`.
+- **الأصل:** رأس PR #31 `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef)، مع الحفاظ على تكديس PR #30 وPR #31 كما هو.
+- **المخرجات:** `docs/daily-briefing-data-model-security-v1.md`، `docs/sql/daily_briefing_package1.draft.sql`، `docs/sql/daily_briefing_package1_verification.sql`.
+- **التصميم:** هوية عدد مستقلة، نسخ تحريرية وتصحيحات منفصلة، سجل تطورات مستقل، ربط مصادر مشترك، عناصر لكل نسخة، علاقات سياقية، وسجل تدقيق append-only.
+- **الأمن:** RLS للجداول الجديدة؛ عدم منح anon وصولًا مباشرًا؛ RPCs قراءة عامة محدودة؛ RPCs دورة العمل SECURITY INVOKER؛ قيود على الانتقالات والنسخ المنشورة وهوية العدد؛ حراس بيانات الإنشاء وسجل التدقيق.
+- **تحسينات على المسودة الأولية:** إضافة checked_at؛ ضمان أن نقاط الموجز التنفيذي مرتبطة بتطورات سجل التطورات؛ مؤشر أرشيف مركب يدعم الإصدارات الخاصة في التاريخ نفسه؛ منع مسح مؤشر النسخة المنشورة؛ منع تعديل metadata الإنشاء وملاحظات المراجعة خارج انتقال الحالة.
+- **مراجعة قاعدة البيانات:** تأكيد وجود private.has_any_role(text[]) وأنها تتحقق من المستخدم النشط؛ تأكيد أن public.user_roles يحتوي admin/editor/author وأن admin واحدًا نشط وقت الفحص؛ لم تكن هناك أدوار editor نشطة.
+- **اختبارات:** فحص ساكن للبنية النصية لمسودة SQL فقط. لا ادعاء باجتياز PostgreSQL parser أو تطبيق Migration أو اختبار RLS محلي.
+- **الحدود:** لا كتابة إلى Supabase البعيد؛ لا بيانات اختبار؛ لا نشر Vercel؛ لا دمج PRs السابقة.
+- **التالي:** مراجعة PR الحزمة، ثم توليد ملف Migration بواسطة `supabase migration new daily_briefing_package1` محليًا، واختباره عبر `supabase db reset` واستعلامات التحقق قبل طلب موافقة منفصلة على أي تطبيق بعيد.
+
+- **PR #32:** [مراجعة Package 1](https://github.com/dinobahkam-wq/SAS_Platform/pull/32) — مفتوح Draft، غير مدمج؛ مكدس فوق PR #31.
+- **حالة الفحص:** GitHub compare: ahead 13 / behind 0 وmergeable=true. Vercel status: failure على رأس PR وقت الفحص؛ لم يُستنتج السبب ولم يُنفذ نشر.
+
+
+### 2026-11-12 — Package 1: Daily Briefing Data Model & Security (Draft)
+
+- **فرع التنفيذ:** `feat/daily-briefing-data-model-security-v1`، متفرع من رأس PR #31 `8b0da6fb28e7e4a5ef88b0bed7c1b66f4bb6e8ef`.
+- **الوثائق:** `docs/daily-briefing-data-model-security-v1.md`.
+- **SQL:** `docs/sql/daily_briefing_package1.draft.sql` — مسودة مراجعة وليست Migration قابلة للتطبيق.
+- **التحقق:** `docs/sql/daily_briefing_package1_verification.sql`.
+- **ما يغطيه التصميم:** 7 جداول جديدة، توسيع مكتبة المصادر بثلاثة حقول، دورة مراجعة واعتماد ونشر، تصحيحات بإصدارات مستقلة، snapshot ثابت، سجل تدقيق، RLS وواجهات قراءة عامة محدودة.
+- **فحص قاعدة البيانات:** استعلامات قراءة فقط على مشروع Supabase لتأكيد أسماء الأعمدة والأدوار والدالة المساعدة والامتيازات. لم تتغير قاعدة البيانات.
+- **الاختبارات:** فحص lexical لنص SQL فقط؛ لا PostgreSQL parser، ولا db reset محلي، ولا RLS behavior tests. لا TypeScript/Build لأن الحزمة لا تغيّر التطبيق.
+- **الحالة:** مرفوعة على فرع مستقل؛ بانتظار المراجعة واختبار Windows المحلي. لم تُدمج ولم تُطبق على Supabase البعيد ولم تُنشر.
+- **الخطوة التالية:** توليد Migration محلية من CLI، تطبيقها على Supabase المحلي، إصلاح أخطاء parser/constraints/RLS، ثم إعادة توثيق النتائج قبل أي قرار تطبيق بعيد.
+
+
+### 2026-11-12 — Package 1 PR #32 status update
+
+- [PR #32](https://github.com/dinobahkam-wq/SAS_Platform/pull/32) مفتوح Draft وغير مدمج، فوق PR #31.
+- أضيفت تشديدات لمسودة SQL: إنشاء العدد بحالة active فقط، تثبيت هوية العدد بعد أول نسخة، منع تفريغ مؤشر النسخة المنشورة، حماية metadata، وسجل تدقيق append-only.
+- أضيفت اختبارات يدوية تغطي هذه القيود.
+- Vercel check: failure بسبب `build-rate-limit` وفق الرابط المرفق؛ لا يثبت وجود خطأ في التطبيق، ولا يثبت نجاح البناء.
+- الحالة: بانتظار اختبار PostgreSQL محلي ومراجعة بشرية؛ لا تطبيق بعيد ولا دمج.
+
+
+### 2026-11-12 — Package 1 source visibility hardening
+
+- مطابقة مسودة الحزمة مع مخطط وسياسات `content_sources` الحقيقية.
+- إضافة عرض المصادر للعامة باختيار صريح لكل ارتباط تطوير/مصدر، مع افتراضية خاصة.
+- قصر Snapshot العام على المصادر النشطة التي اختيرت للعرض، وفرض وجود مصدر عام صالح عند النشر.
+- إزالة تعديل امتيازات الجداول الأساسية من Migration لتضييق نطاق التغيير.
+- التحديثات على فرع الحزمة فقط؛ لا DDL على Supabase البعيد.
+
+
+### 2026-11-13 — Package 1 applied to production
+
+- Applied Supabase migration `20261112211738_daily_briefing_package1` to project `budsfbyrdpjkobqstpyr`.
+- Created canonical migration file `supabase/migrations/20261112211738_daily_briefing_package1.sql` on the package branch.
+- Verified seven briefing tables with RLS enabled, 23 RLS policies, no direct anon SELECT grants, audit table SELECT-only for authenticated, and public read RPC behavior on empty/unknown editions.
+- Verified `content_sources` metadata fields and opt-in public source visibility defaulting false.
+- No test records inserted; no production content created.
+- Advisor notes: two intentional public SECURITY DEFINER read RPC warnings; one existing Auth leaked-password-protection warning; 13 unindexed FK INFO findings and unused indexes expected for empty new tables.
+- Package remains in open Draft PR #32; no merge or Vercel deployment.
+
+
+- Regenerated `src/types/database.types.ts` from the live Supabase schema after Package 1 migration, including all briefing tables and RPC signatures.
+
+
+### 2026-11-13 — Public Daily Briefing Experience V1
+
+- Added `/briefings` public archive and `/briefings/[slug]` public reader.
+- Added server-side data access through the existing public read RPCs only; no direct public table reads or write operations.
+- Added a source-first development register, evidence type and verification labels, publication/occurrence times, per-development source cards, source index, methodology disclosure, and a collapsed secondary SAS analysis section.
+- Added Daily Briefing to the public navigation and responsive styles.
+- Verified production database currently has zero editions and zero published revisions; archive RPC returns an empty array. Empty state is intentional; no demo content inserted.
+- User's updated editorial direction prioritizes the development ledger and reduces SAS analysis. Package 1 still enforces a required 400–650 word analysis; a follow-up schema amendment is needed and requires approval before production application.
+- Local typecheck/build not yet run. No merge or deployment.
+
+
+- Opened Draft PR #33 from `feat/daily-briefing-public-experience-v1` to `feat/daily-briefing-data-model-security-v1`; implementation code checkpoint `a178b8a7782f67fbaa38005f8c279913ea7fce95`, mergeable at last check. Subsequent commits updated documentation.
+- No GitHub Actions runs were reported for this commit. Vercel status failed with `build-rate-limit` (account/plan build limit), not a code test result. No manual deployment.
+
+
+### 2026-11-13 — First real Daily Briefing edition published
+
+- Applied `20261113074127_briefing_analysis_optional_source_first_v1` to production: optional SAS commentary; no 400–650-word analysis gate.
+- Published briefing edition #1 for 2026-11-12 at slug `daily-briefing-2026-11-12` with **24 verified-source-linked developments, 5 executive points, 24 distinct public source URLs**.
+- Persisted source dossier to `docs/briefings/2026-11-12.verified.json`.
+- Verified public archive/detail RPC output and audit events. Six of the 24 records represent sourced claims, explicitly attributed rather than independently confirmed facts.
+- Regenerated Supabase TypeScript types after the production migration.
+- No Vercel deployment or merge; PR #33 remains a draft.
+
+
+### 2026-11-13 — Public Briefing mobile visual V2
+
+- Introduced compact, clickable source citations with responsive popovers and original-source links.
+- Removed public display of verification notes while retaining verification-status labels.
+- Replaced the five summary cards with a single connected executive-summary paragraph retaining each source citation.
+- Added restrained semantic color to type badges and numeric highlights.
+- Increased titles, body copy, metadata and tap targets for mobile-first reading.
+- Reduced duplicate source-index bulk to a compact source count.
+- Verified via read-only Supabase query that the published issue has 24 distinct headline/order pairs. PDF capture exhibits visual repetition that is not in the database snapshot.
+- No DB writes, deployment, or merge. Windows typecheck/build and responsive UI inspection still pending.
+
+
+- Opened Draft PR #34 (https://github.com/dinobahkam-wq/SAS_Platform/pull/34), stacked on PR #33. GitHub reported mergeable=true at last check. Code presence checks passed; local typecheck/build not yet run.
+
+
+### 2026-11-13 — Briefing V2.1 editorial layout and tab filters
+
+- Removed static public disclaimer notice and decorative English section overlines, including archive headings.
+- Removed executive summary card background/border to create a formal continuous text block; retained inline citation disclosures.
+- Strengthened inter-development separators and changed the numbered-event connector into a dotted vertical flow.
+- Added interactive in-edition filters (All/Yemen/International/Official Statements/Economy/Sports/Trending Tweets), with per-filter counts and explicit empty states.
+- Clarified the filters use existing published snapshot data only; Trending Tweets is currently based on X/Twitter source URLs, **not** actual trending analytics.
+- No content/SQL changes, no Vercel deployment. Local typecheck/build and mobile UX verification pending.
+
+
+### 2026-11-13 — Daily Briefing visual V3
+
+- Introduced monochrome visual identity for the public reader and hierarchically split edition headline.
+- Removed large coverage-window publication metadata card, retaining dates in the underlying immutable snapshot.
+- Made executive summary collapsible and removed its duplicate source controls; citations remain on developments.
+- Added source-dated server-side context indicator table (Brent, global spot gold, modeled temperatures in Mukalla/Sana'a/Aden) with source links and unavailable states.
+- Gold and Open-Meteo have keyless fetch paths; Brent requires optional server-only OILPRICEAPI_KEY and confirmed public display rights.
+- Confirmed provider licensing review is required before launching a commercial/public production product.
+- No SQL, no changes to news content, no merge or Vercel deployment. Local typecheck/build and browser verification remain outstanding.
+
+
+- Opened [Draft PR #35](https://github.com/dinobahkam-wq/SAS_Platform/pull/35) stacked on PR #34. GitHub reports mergeable=true; no local code build or browser test claimed.
+
+
+### 2026-11-13 — Daily Briefing Compact Intelligence V4
+
+- Replaced live commodity display with edition-dated, source-linked historic Brent futures close ($95.82) and spot XAU/USD gold close ($3,876.75) for 2026-11-12, saved to versioned JSON.
+- Separated current 3-city Open-Meteo weather into compact strip explicitly marked as live rather than an historic reading.
+- Added four attributed front entries with non-assertive `unverified` territorial-change classification and a collapsed approximate location schematic (not a control map).
+- Removed repeated edition number above headline, reduced empty header space, and used Google Material Symbols Rounded and grayscale presentation.
+- No production database or published edition snapshot mutation. Source licenses, typecheck/build and browser QA remain pending.
+
+
+- Opened [Draft PR #36](https://github.com/dinobahkam-wq/SAS_Platform/pull/36) stacked on PR #35, mergeable at last GitHub check. File-level integrity checks confirmed 2 dated market quotes, 4 unverified front entries, a collapsible schematic, and removed duplicate edition number. No local compilation or browser tests yet.
+
+
+### 2026-11-13 — Source-dated Frontline Map V1
+
+- Added "$" prefix to historical Brent and gold amounts, preserving LTR numeric ordering.
+- Replaced executive-summary disclosure text chevron with Material Symbols Rounded arrow.
+- Enhanced schematic frontline map with green government, red Houthi and gray unresolved legend, plus dated source-backed prior reported gains.
+- Added five front activity records for 12 November and two separately dated earlier reports; no territorial gain is asserted for 12 November without evidence.
+- Preserved public source links and clear distinction between reports and independently verified territorial boundaries.
+- No Supabase changes, merge or deployment; local compilation and mobile UX testing pending.
+
+- Opened Draft PR #37 stacked on PR #36; GitHub comparison reports 9 commits ahead and no divergent base commits. No build or deployment claimed.
+
+
+### 2026-11-13 — Exchange rate indicator V5
+
+- Replaced frontline display and schematic map with dated USD/SAR buy/sell comparisons between Sana'a and Aden.
+- Versioned 12 Nov 2026 YER quotes with cited price-board sources: Sana'a USD 530/533, SAR 139.50/140.20; Aden USD 1,568/1,579, SAR 410/413.
+- Refactored dated context types and compact exchange-rate UI, preserving existing historical oil/gold quotes, live weather, dollar prefix, and Material Symbols summary toggle.
+- No new Supabase migration or edits, no merge or Vercel deployment. Local typecheck/build and responsive inspection pending.
+
+
+### 2026-11-13 — Daily Briefing PDF print/export V1
+
+- Added `تصدير PDF` link beside published edition metadata.
+- Added dedicated `/briefings/[slug]/print` A4 RTL route, with native browser PDF save workflow.
+- Print route includes every published development, source titles and clickable URLs, the executive summary irrespective of its collapsed web state, dated markets and exchange rates, methodology and correction metadata.
+- Suppressed page navigation, interactive popovers and live weather from the print edition.
+- Added print-specific pagination, legible text and optional print page footer.
+- No Supabase changes, Git merges or Vercel release; local typecheck/build and PDF screenshot review still pending.
+
+- Opened Draft [PR #39](https://github.com/dinobahkam-wq/SAS_Platform/pull/39). File-level verification passed for the print route, complete developments, original citations, dated context, A4 styles, page counters and print action. No local PDF rendering/build was claimed.
+
+
+### 2026-11-13 — Colored SAS brand in PDF print masthead
+- Reused the existing approved full-color `BrandLogo` component in `src/app/briefings/[slug]/print/page.tsx` instead of the wordmark rendered as text.
+- Adjusted `print.css` image dimensions for A4 and preserved print colors; removed duplicate caption text because the source logo contains the full brand mark.
+- No DB/content modifications, PR merge or deployment; local re-export QA required.
+
+
+### 2026-11-13 — Selective color accents and Arabic FX currency names
+
+- Replaced USD and SAR visual abbreviations with full Arabic names in website and A4 PDF exchange-rate tables.
+- Added muted teal and bronze accents to significant market figures, section titles and summary highlights, preserving monochrome SAS foundations.
+- Matched print CSS to the approved full-color original logo; did not alter source data or published snapshots.
+- No database changes, PR merge, deployment, or local build claimed.

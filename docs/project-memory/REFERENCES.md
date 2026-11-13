@@ -71,3 +71,66 @@
 
 - [PR #19 — تحديث الذاكرة التنفيذية ومواصفات صورة الهوية](https://github.com/dinobahkam-wq/SAS_Platform/pull/19)
 - [فرع تحديث الذاكرة](https://github.com/dinobahkam-wq/SAS_Platform/tree/docs/project-memory-refresh-2026-11-12)
+
+
+---
+
+## تحديث المراجع — 12 نوفمبر 2026: استوديو الصور والإحاطة اليومية
+
+### استوديو الصور الإخبارية
+
+- [PR #28 — دمج محرك التخطيط ومساحة العمل التفاعلية](https://github.com/dinobahkam-wq/SAS_Platform/pull/28) — مدمج في فرع التكامل.
+- [Commit دمج PR #28](https://github.com/dinobahkam-wq/SAS_Platform/commit/20f57b10df1c3712d572de832b94bde71f7c4235).
+- [PR #29 — مزامنة أصل الشعار من main إلى التكامل](https://github.com/dinobahkam-wq/SAS_Platform/pull/29) — مدمج.
+- [توثيق قبول الاستوديو](../news-studio-completion-2026-11-12.md).
+
+### الإحاطة اليومية V1
+
+- [مواصفات المنتج وخطة النقل](../daily-briefing-v1.md).
+- [الفرع النشط](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-v1).
+- [النموذج القديم في مستودع SAS](https://github.com/dinobahkam-wq/SAS/tree/feature/daily-briefing-v1) — مرجع فقط، وليس مصدرًا للكود أو المخطط الجديد.
+- [الصفحة العامة القديمة](https://github.com/dinobahkam-wq/SAS/blob/feature/daily-briefing-v1/app/briefings/page.tsx).
+- [محرر الإحاطة القديم](https://github.com/dinobahkam-wq/SAS/blob/feature/daily-briefing-v1/app/admin/briefings/page.tsx).
+- [SQL القراءة العامة القديم](https://github.com/dinobahkam-wq/SAS/blob/feature/daily-briefing-v1/docs/database/sas_public_briefing_latest_v1.sql).
+
+### نقطة التنفيذ الحالية
+
+- لا يوجد في فرع تكامل SAS_Platform مسارا `/briefings` أو `/admin/briefings` حتى تاريخ هذا التحديث.
+- لا توجد Migrations خاصة بالإحاطة في `supabase/migrations/`.
+- يجب تدقيق مخطط `public.content_items` و`public.content_sources` وعلاقاتها قبل تقرير نموذج البيانات.
+
+- [PR #30 — تجهيز مرحلة الإحاطة اليومية V1 (Draft، توثيق فقط)](https://github.com/dinobahkam-wq/SAS_Platform/pull/30).
+
+
+### تسليم الإحاطة اليومية — 12 نوفمبر 2026
+
+- [وثيقة استئناف العمل والخطة التنفيذية](../DAILY_BRIEFING_HANDOFF_2026-11-12.md).
+- [PR #31 — تجربة الإحاطة والتدقيق المعماري](https://github.com/dinobahkam-wq/SAS_Platform/pull/31) — Draft.
+- [فرع تجربة الإحاطة](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-experience-v1).
+- [PR #30 — تأسيس مواصفات الإحاطة](https://github.com/dinobahkam-wq/SAS_Platform/pull/30) — Draft.
+
+### Package 1 — Data Model & Security Design
+
+- [وثيقة نموذج البيانات والأمن](../daily-briefing-data-model-security-v1.md).
+- [مسودة SQL للمراجعة فقط](../sql/daily_briefing_package1.draft.sql) — ليست Migration مطبقة.
+- [استعلامات التحقق المحلي](../sql/daily_briefing_package1_verification.sql).
+- [فرع Package 1](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
+- [PR #32 — Package 1 Data Model & Security Design](https://github.com/dinobahkam-wq/SAS_Platform/pull/32) — Draft، مكدس فوق PR #31.
+- [فرع Package 1](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
+
+
+### Package 1 — Data Model & Security
+
+- [فرع نموذج البيانات والأمان](https://github.com/dinobahkam-wq/SAS_Platform/tree/feat/daily-briefing-data-model-security-v1).
+- [تصميم البيانات والأمان](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/docs/daily-briefing-data-model-security-v1.md).
+- [مسودة SQL للمراجعة](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/docs/sql/daily_briefing_package1.draft.sql).
+- [استعلامات التحقق](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/docs/sql/daily_briefing_package1_verification.sql).
+- الحالة: لم تُطبق Migration محليًا أو بعيدًا حتى إكمال المراجعة والاختبارات.
+
+
+- [PR #32 — Package 1: Data Model & Security (Draft)](https://github.com/dinobahkam-wq/SAS_Platform/pull/32).
+
+
+### Package 1 production migration
+
+- [Migration `20261112211738_daily_briefing_package1`](https://github.com/dinobahkam-wq/SAS_Platform/blob/feat/daily-briefing-data-model-security-v1/supabase/migrations/20261112211738_daily_briefing_package1.sql).
