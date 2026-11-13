@@ -367,3 +367,6 @@
 - Added four attributed front entries with non-assertive `unverified` territorial-change classification and a collapsed approximate location schematic (not a control map).
 - Removed repeated edition number above headline, reduced empty header space, and used Google Material Symbols Rounded and grayscale presentation.
 - No production database or published edition snapshot mutation. Source licenses, typecheck/build and browser QA remain pending.
+
+
+- Opened [Draft PR #36](https://github.com/dinobahkam-wq/SAS_Platform/pull/36) stacked on PR #35, mergeable at last GitHub check. File-level integrity checks confirmed 2 dated market quotes, 4 unverified front entries, a collapsible schematic, and removed duplicate edition number. No local compilation or browser tests yet.
