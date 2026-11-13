@@ -35,9 +35,8 @@
   box-shadow:0 12px 42px #00000017;
 }
 .briefing-print-masthead {display:flex;align-items:end;justify-content:space-between;gap:15px;padding-bottom:11px;border-bottom:2px solid #191919;}
-.briefing-print-brand {display:flex;flex-direction:column;align-items:flex-start;}
-.briefing-print-brand strong {font-family:"Tajarib Taweel","Thmanyah Sans",sans-serif;font-size:31px;line-height:1.15;font-weight:800;}
-.briefing-print-brand span {font-size:9px;color:#777;}
+.briefing-print-brand {display:flex;align-items:center;justify-content:flex-start;flex:0 0 auto;min-width:0;}
+.briefing-print-brand .briefing-print-logo {display:block;width:132px;height:auto;max-width:100%;object-fit:contain;}
 .briefing-print-issue {text-align:left;display:grid;gap:2px;font-size:10px;color:#777;}
 .briefing-print-issue strong {font-size:12px;color:#161616;}
 .briefing-print-cover {padding:18px 0 16px;}
@@ -99,6 +98,7 @@
   .briefing-print-tools {margin:0;align-items:flex-start;}
   .briefing-print-document {margin:0 auto;padding:19px 16px;min-height:unset;box-shadow:none;}
   .briefing-print-indicator-grid {grid-template-columns:1fr;gap:10px;}
+  .briefing-print-brand .briefing-print-logo {width:118px;}
   .briefing-print-cover h1 {font-size:28px;}
   .briefing-print-event h3 {font-size:16px;}
 }
@@ -108,7 +108,8 @@
   .briefing-print-page {background:#fff!important;font-size:11pt;color:#111;min-height:0;}
   .briefing-print-tools {display:none!important;}
   .briefing-print-document {margin:0!important;width:auto!important;min-height:0!important;padding:0!important;box-shadow:none!important;overflow:visible!important;}
-  .briefing-print-masthead {break-inside:avoid;}
+  .briefing-print-masthead {break-inside:avoid;align-items:center;}
+  .briefing-print-brand .briefing-print-logo {width:126px!important;height:auto!important;print-color-adjust:exact;-webkit-print-color-adjust:exact;}
   .briefing-print-cover {break-inside:avoid;}
   .briefing-print-indicators {break-inside:avoid;}
   .briefing-print-section-heading {break-after:avoid;}
