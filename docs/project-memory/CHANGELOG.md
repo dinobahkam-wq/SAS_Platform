@@ -390,3 +390,13 @@
 - Versioned 12 Nov 2026 YER quotes with cited price-board sources: Sana'a USD 530/533, SAR 139.50/140.20; Aden USD 1,568/1,579, SAR 410/413.
 - Refactored dated context types and compact exchange-rate UI, preserving existing historical oil/gold quotes, live weather, dollar prefix, and Material Symbols summary toggle.
 - No new Supabase migration or edits, no merge or Vercel deployment. Local typecheck/build and responsive inspection pending.
+
+
+### 2026-11-13 — Daily Briefing PDF print/export V1
+
+- Added `تصدير PDF` link beside published edition metadata.
+- Added dedicated `/briefings/[slug]/print` A4 RTL route, with native browser PDF save workflow.
+- Print route includes every published development, source titles and clickable URLs, the executive summary irrespective of its collapsed web state, dated markets and exchange rates, methodology and correction metadata.
+- Suppressed page navigation, interactive popovers and live weather from the print edition.
+- Added print-specific pagination, legible text and optional print page footer.
+- No Supabase changes, Git merges or Vercel release; local typecheck/build and PDF screenshot review still pending.
