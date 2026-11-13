@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PublicFooter, PublicHeader } from "@/components/public-site";
-import { formatBriefingDate, formatBriefingDateOnly } from "@/components/briefing-public";
+import { formatBriefingDateOnly } from "@/components/briefing-public";
 import { BriefingEditionBody } from "@/components/briefing-edition-body";
 import { getPublicBriefing } from "@/lib/public-briefing";
+import { getBriefingIndicators } from "@/lib/briefing-indicators";
+import { BriefingContextIndicators } from "@/components/briefing-context-indicators";
 
 export const dynamic = "force-dynamic";
 
@@ -46,6 +48,9 @@ export default async function PublicBriefingPage({
 
   const { edition, revision, executiveSummary, developments } = briefing;
   const correction = revision.revision_kind === "correction";
+  const indicators = await getBriefingIndicators();
+  const [headline, ...subtitleParts] = revision.title_ar.split(" | ");
+  const subtitle = subtitleParts.join(" | ").replace(/\s+—\s+\d{1,2}\s+[^—]+\d{4}\s*$/, "").trim();
 
   return (
     <main className="briefing-public-site">
@@ -60,7 +65,10 @@ export default async function PublicBriefingPage({
             <span className="briefing-edition-number">العدد {edition.edition_no}</span>
             {correction ? <span className="briefing-correction-tag">نسخة مصححة</span> : null}
           </div>
-          <h1>{revision.title_ar}</h1>
+          <h1 className="briefing-title-hierarchy">
+            <span className="briefing-title-primary">{headline}</span>
+            {subtitle ? <span className="briefing-title-secondary">{subtitle}</span> : null}
+          </h1>
           <div className="briefing-edition-date">
             <time dateTime={edition.edition_date}>{formatBriefingDateOnly(edition.edition_date)}</time>
             <span>·</span>
@@ -71,13 +79,9 @@ export default async function PublicBriefingPage({
           {correction && revision.change_reason_ar ? (
             <p className="briefing-correction-note">سبب التصحيح: {revision.change_reason_ar}</p>
           ) : null}
-          <div className="briefing-window-grid">
-            <div><span>بداية نافذة الرصد</span><strong>{formatBriefingDate(revision.window_start, true)} <small>بتوقيت اليمن</small></strong></div>
-            <div><span>نهاية نافذة الرصد</span><strong>{formatBriefingDate(revision.window_end, true)} <small>بتوقيت اليمن</small></strong></div>
-            <div><span>آخر تحقق تحريري</span><strong>{formatBriefingDate(revision.checked_at, true)}</strong></div>
-            <div><span>تاريخ النشر</span><strong>{formatBriefingDate(revision.published_at, true)}</strong></div>
-          </div>
         </header>
+
+        <BriefingContextIndicators indicators={indicators} />
 
         <BriefingEditionBody executiveSummary={executiveSummary} developments={developments} />
 
