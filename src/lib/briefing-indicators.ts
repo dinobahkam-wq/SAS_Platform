@@ -119,3 +119,12 @@ export async function getBriefingIndicators(): Promise<BriefingIndicator[]> {
     weather({ id: "aden", label: "عدن", lat: 12.7855, lon: 45.0187 }),
   ]);
 }
+
+/** Live weather only; historic market quotes are stored in dated edition snapshots. */
+export async function getBriefingWeatherIndicators(): Promise<BriefingIndicator[]> {
+  return Promise.all([
+    weather({ id: "mukalla", label: "المكلا", lat: 14.5425, lon: 49.1242 }),
+    weather({ id: "sanaa", label: "صنعاء", lat: 15.3694, lon: 44.1910 }),
+    weather({ id: "aden", label: "عدن", lat: 12.7855, lon: 45.0187 }),
+  ]);
+}
