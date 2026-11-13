@@ -3383,3 +3383,48 @@ textarea {
  .briefing-front-map-layout{break-inside:avoid}
  .briefing-summary-chevron.material-symbols-rounded{display:none}
 }
+
+
+/* SAS Daily Briefing V5 — compact dated USD/SAR exchange rates (no frontline module) */
+.briefing-fx-section{border-bottom:1px solid #e8e8e8;background:#fff}
+.briefing-fx-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 14px;border-bottom:1px solid #ededed}
+.briefing-fx-heading>div{display:flex;align-items:center;gap:6px}
+.briefing-fx-heading h3{margin:0;font-size:12px;font-weight:700;color:#222}
+.briefing-fx-heading>span{font-size:10px;color:#888}
+.briefing-fx-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.briefing-fx-city{min-width:0;padding:8px 14px 10px}
+.briefing-fx-city:first-child{border-left:1px solid #e9e9e9}
+.briefing-fx-city-heading{display:flex;align-items:center;gap:5px;margin-bottom:5px}
+.briefing-fx-city-heading .material-symbols-rounded{font-size:15px;color:#777}
+.briefing-fx-city-heading strong{font-size:12px;color:#222}
+.briefing-fx-city-heading>span:last-child{font-size:9px;color:#999;margin-inline-start:auto}
+.briefing-fx-table{width:100%;border-collapse:collapse;text-align:right}
+.briefing-fx-table th,.briefing-fx-table td{padding:5px 7px;border-bottom:1px solid #f0f0f0;text-align:right;white-space:nowrap}
+.briefing-fx-table tr:last-child th,.briefing-fx-table tr:last-child td{border-bottom:0}
+.briefing-fx-table thead th{font-size:10px;font-weight:500;color:#999}
+.briefing-fx-table tbody th{font-weight:500;font-size:11px;color:#555}
+.briefing-fx-table tbody th>span:last-child{font-size:10px;margin-inline-start:5px}
+.briefing-fx-code{font:700 11px Arial,sans-serif;color:#333}
+.briefing-fx-table td{font:700 14px/1.5 Arial,sans-serif;color:#222}
+.briefing-fx-credit{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 14px;background:#fcfcfc;border-top:1px solid #f1f1f1}
+.briefing-fx-credit span{font-size:10px;line-height:1.6;color:#858585}
+.briefing-fx-credit a{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#5b5b5b;white-space:nowrap;text-decoration:underline;text-underline-offset:2px}
+.briefing-fx-credit a .material-symbols-rounded{font-size:12px}
+.briefing-intelligence-weather{border-bottom:0}
+@media(max-width:680px){
+ .briefing-fx-heading{padding:9px 10px;gap:8px}
+ .briefing-fx-heading>span{font-size:9px}
+ .briefing-fx-city{padding:8px 6px 8px}
+ .briefing-fx-city:first-child{border-left:1px solid #e9e9e9}
+ .briefing-fx-table th,.briefing-fx-table td{padding:5px 3px}
+ .briefing-fx-table tbody th>span:last-child{display:none}
+ .briefing-fx-table td{font-size:13px}
+ .briefing-fx-city-heading{padding:0 3px}
+ .briefing-fx-credit{padding:8px 10px;align-items:flex-start}
+ .briefing-fx-credit a{white-space:normal;text-align:left}
+}
+@media(max-width:360px){
+ .briefing-fx-grid{grid-template-columns:1fr}
+ .briefing-fx-city:first-child{border-left:0;border-bottom:1px solid #e9e9e9}
+ .briefing-fx-table tbody th>span:last-child{display:inline}
+}
