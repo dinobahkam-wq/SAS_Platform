@@ -514,3 +514,25 @@ html[data-theme="dark"] .brand-logo-full {background:rgba(255,255,255,.96);borde
 .sas-theme-check {grid-column:2;grid-row:1/3;color:var(--accent);font-size:15px;}
 .sas-theme-trigger:focus-visible,.sas-theme-choice:focus-visible {outline:3px solid var(--accent);outline-offset:2px;}
 @media(max-width:600px){.sas-theme-switcher{left:10px;bottom:max(10px,env(safe-area-inset-bottom))}.sas-theme-trigger{width:43px;height:43px;padding:10px;justify-content:center}.sas-theme-trigger span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}}
+
+/* Final contrast and native widget safeguards */
+html[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),html[data-theme="dark"] select,html[data-theme="dark"] textarea {
+  background-color:#202e27; color:#edf3ee; border-color:#415449;
+}
+html[data-theme="dark"] input::placeholder,html[data-theme="dark"] textarea::placeholder {color:#98aa9c}
+html[data-theme="dark"] .studio-size-card.selected {background:#284638!important}
+html[data-theme="dark"] .studio-layout-templates button:hover {background:#284638!important}
+html[data-theme="dark"] .studio-preview canvas {background:#092d28}
+html[data-theme="dark"] .briefing-public-site .briefing-type-tag--position,
+html[data-theme="dark"] .briefing-public-site .briefing-type-tag--claim,
+html[data-theme="dark"] .briefing-public-site .briefing-type-tag--analysis,
+html[data-theme="dark"] .briefing-public-site .briefing-type-tag--fact {background:#27382f;color:#d9e8df}
+html[data-theme="dark"] .briefing-public-site .briefing-fx-table tbody tr:nth-child(odd) {background:#243229}
+html[data-theme="dark"] .briefing-public-site .briefing-fx-table td {color:#93cde1}
+html[data-theme="dark"] .briefing-public-site .briefing-pdf-export-link {background:#24352d;color:#eaf1ea;border-color:#486052}
+html[data-theme="dark"] ::selection {background:#3e6952;color:#fff}
+html[data-theme="dark"] {scrollbar-color:#455b4c #17221b}
+@media print {
+ html[data-theme="dark"] {--background:#fff;--surface:#fff;--foreground:#171d19;--muted:#666;--line:#ddd;--accent:#174b3c;--accent-soft:#eaf1ed;--briefing-accent:#245e74;--briefing-accent-soft:#e9f2f5;--briefing-accent-warm:#946735;--briefing-accent-warm-soft:#f5efe5;color-scheme:light}
+ html[data-theme="dark"] body {background:#fff;color:#171d19}
+}
