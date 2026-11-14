@@ -36,10 +36,10 @@ export default async function Home() {
         <div className="home-intro-copy">
           <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
           <p>أخبار موثقة، وتحليل سياسي، ودراسات تستكشف اليمن ومحيطه الإقليمي والدولي.</p>
-        </div>
-        <div className="home-compact-actions">
-          <a href="/news" className="button button-primary">الأخبار والشؤون الجارية</a>
-          <a href="/research" className="button button-secondary">الدراسات والأبحاث</a>
+          <div className="home-compact-actions">
+            <a href="/news" className="button button-primary">الأخبار والشؤون الجارية</a>
+            <a href="/research" className="button button-secondary">الدراسات والأبحاث</a>
+          </div>
         </div>
       </section>
 
