@@ -6,6 +6,8 @@ import "./brand-hero.css";
 import "./hero-carousel.css";
 import "./mukalla-hero.css";
 import "./threads-hero.css";
+import "./sitewide-threads.css";
+import { SasHeroThreads } from "@/components/sas-hero-threads";
 import { themeInitializer } from "@/lib/theme-initializer";
 
 export const metadata: Metadata = {
@@ -27,7 +29,10 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: themeInitializer }} /></head>
-      <body>{children}</body>
+      <body>
+        <SasHeroThreads />
+        <div className="sas-site-content">{children}</div>
+      </body>
     </html>
   );
 }
