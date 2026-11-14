@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   EmptyContent,
   PublicFooter,
@@ -6,26 +7,34 @@ import {
 } from "@/components/public-site";
 import { EditorialRail } from "@/components/editorial-rail";
 import { KnowledgeRail } from "@/components/knowledge-rail";
-import { HomepageLead } from "@/components/homepage-lead";
-
-import { getPublishedContent, getPublishedRailSources } from "@/lib/public-content";
+import { getPublishedContent } from "@/lib/public-content";
+import { getPublicBriefingArchive } from "@/lib/public-briefing";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const published = await getPublishedContent({ limit: 36 });
-  const sourcesById = await getPublishedRailSources(published.map((item) => item.id));
-  const news = published.filter((item) => item.section === "news");
-  const analysis = published.filter((item) => item.section === "analysis");
-  const research = published.filter((item) => item.section === "research");
-  const media = published.filter((item) => item.section === "media");
+  const [analysis, research, media] = await Promise.all([
+    getPublishedContent({ section: "analysis", limit: 12 }),
+    getPublishedContent({ section: "research", limit: 12 }),
+    getPublishedContent({ section: "media", limit: 24 }),
+  ]);
 
-  // The lead is chosen from published news only. Prefer an explicitly featured
-  // item; otherwise use the newest published news item.
-  const lead = news.find((item) => item.is_featured) ?? news[0] ?? null;
-  const supporting = lead ? news.filter((item) => item.id !== lead.id).slice(0, 2) : [];
-  const leadIds = new Set([lead?.id, ...supporting.map((item) => item.id)].filter(Boolean));
-  const remainingNews = news.filter((item) => !leadIds.has(item.id));
+  // Daily briefing is the editorial flagship. A temporary archive outage must
+  // not prevent the other independent knowledge products from loading.
+  let latestBriefing: Awaited<ReturnType<typeof getPublicBriefingArchive>>[number] | null = null;
+  let briefingUnavailable = false;
+  try {
+    const [latest] = await getPublicBriefingArchive(1);
+    latestBriefing = latest ?? null;
+  } catch {
+    briefingUnavailable = true;
+  }
+
+  const insights = [...analysis, ...research]
+    .sort((a, b) => (b.published_at ?? "").localeCompare(a.published_at ?? ""))
+    .slice(0, 9);
+  const visual = media.filter((item) => ["infographic", "photo_gallery"].includes(item.format));
+  const programs = media.filter((item) => ["video", "podcast", "interview"].includes(item.format));
 
   return (
     <main className="public-site">
@@ -34,47 +43,62 @@ export default async function Home() {
       <section className="home-compact-intro home-brand-hero site-container">
         <div className="home-intro-copy">
           <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
-          <p>أخبار موثقة، وتحليل سياسي، ودراسات تستكشف اليمن ومحيطه الإقليمي والدولي.</p>
+          <p>إحاطة سياسية موثقة، وتحليلات ودراسات، ومعرفة بصرية وفيديوهات تفسر الأحداث وسياقاتها.</p>
           <div className="home-compact-actions">
-            <a href="/news" className="button button-primary">الأخبار والشؤون الجارية</a>
-            <a href="/research" className="button button-secondary">الدراسات والأبحاث</a>
+            <Link href="/briefings" className="button button-primary">استعرض الإحاطة اليومية</Link>
+            <Link href="/insights" className="button button-secondary">التحليل والدراسات</Link>
           </div>
         </div>
       </section>
 
-      {lead ? (
-        <HomepageLead featured={lead} supporting={supporting} sourcesById={sourcesById} />
-      ) : null}
-
-      <section className="home-section site-container home-news-section">
-        <SectionHeading eyebrow="متابعة يومية" title="الأخبار والشؤون الجارية" href="/news" />
-        {remainingNews.length ? (
-          <>
-            <EditorialRail title="التقارير الإخبارية" items={remainingNews.filter((item) => item.format === "news_report")} sourcesById={sourcesById} />
-            <EditorialRail title="الأخبار الموجزة" items={remainingNews.filter((item) => item.format === "news_brief")} sourcesById={sourcesById} />
-            <EditorialRail title="البيانات والقرارات الرسمية" items={remainingNews.filter((item) => item.format === "official_statement")} sourcesById={sourcesById} />
-          </>
-        ) : news.length ? (
-          <p className="home-section-note">تظهر أحدث المواد في واجهة المشهد أعلاه. <a href="/news">استعرض أرشيف الأخبار كاملًا</a>.</p>
-        ) : <EmptyContent />}
-      </section>
-
-      <section className="home-section home-analysis-section">
-        <div className="site-container">
-          <SectionHeading eyebrow="قراءة في السياق" title="التحليل والرأي" href="/analysis" />
-          {analysis.length ? <KnowledgeRail title="تحليلات ومقالات" items={analysis} /> : <EmptyContent />}
+      <section className="home-section site-container sas-product-section sas-product-section--flagship">
+        <SectionHeading eyebrow="المنتج الرئيسي · رصد وتفسير" title="الإحاطة اليومية" href="/briefings" linkLabel="جميع الإحاطات" />
+        <div className="sas-flagship-briefing">
+          <div className="sas-flagship-description">
+            <span className="sas-product-kicker">تطورات اليوم، في سياقها</span>
+            <h3>ماذا حدث؟ ما الذي تغيّر؟ وما الذي يستحق المتابعة؟</h3>
+            <p>إحاطة تحريرية منتقاة لأهم التطورات السياسية، مدعومة بالمصادر الأصلية والبيانات ذات الصلة.</p>
+            <Link href="/briefings" className="sas-product-link">الدخول إلى الإحاطة اليومية <span aria-hidden="true">←</span></Link>
+          </div>
+          <div className="sas-flagship-edition">
+            <span className="sas-product-kicker">أحدث إصدار</span>
+            {latestBriefing ? (
+              <>
+                <h3>{latestBriefing.title_ar}</h3>
+                <time dateTime={latestBriefing.edition_date}>{latestBriefing.edition_date}</time>
+                <Link href={"/briefings/" + encodeURIComponent(latestBriefing.slug)}>قراءة العدد <span aria-hidden="true">←</span></Link>
+              </>
+            ) : (
+              <p>{briefingUnavailable
+                ? "تعذر جلب الأعداد المنشورة حاليًا. يمكنك فتح أرشيف الإحاطات والمحاولة مجددًا."
+                : "لا توجد إحاطة منشورة حتى الآن. سيظهر هنا أحدث عدد فور نشره."}</p>
+            )}
+          </div>
         </div>
       </section>
 
-      <section className="home-section site-container home-research-section">
-        <SectionHeading eyebrow="معرفة معمقة" title="الدراسات والأبحاث" href="/research" />
-        {research.length ? <KnowledgeRail title="أوراق ودراسات" items={research} /> : <EmptyContent />}
+      <section className="home-section home-analysis-section sas-product-section">
+        <div className="site-container">
+          <SectionHeading eyebrow="قراءة معمّقة" title="التحليل والدراسات" href="/insights" />
+          {insights.length
+            ? <KnowledgeRail title="أحدث التحليلات والدراسات" items={insights} />
+            : <EmptyContent message="لا توجد تحليلات أو دراسات منشورة حتى الآن." />}
+        </div>
       </section>
 
-      <section className="home-section home-media-section">
+      <section className="home-section site-container sas-product-section">
+        <SectionHeading eyebrow="السياسة بلغة الصورة" title="المعرفة البصرية" href="/visual-knowledge" />
+        {visual.length
+          ? <EditorialRail title="إنفوجرافيك ومواد بصرية" items={visual} />
+          : <EmptyContent message="سيظهر هنا الإنفوجرافيك والمواد المعرفية البصرية بعد نشرها." />}
+      </section>
+
+      <section className="home-section home-media-section sas-product-section">
         <div className="site-container">
-          <SectionHeading eyebrow="المعرفة متعددة الوسائط" title="البرامج والوسائط" href="/media" />
-          {media.length ? <EditorialRail title="الإنتاج المرئي والمسموع" items={media} sourcesById={sourcesById} /> : <EmptyContent />}
+          <SectionHeading eyebrow="ساس مرئيًا" title="الفيديو والبرامج" href="/programs" />
+          {programs.length
+            ? <EditorialRail title="مقاطع وبرامج سياسية" items={programs} />
+            : <EmptyContent message="ستظهر هنا المقاطع السياسية والحوارات والبرامج فور نشرها." />}
         </div>
       </section>
 

@@ -57,13 +57,19 @@ export default async function PublicContentPage({ params }: PageProps) {
   const bodyText = blocks.map((block) => block.text || (block.items || []).join(" ")).join(" ");
   const isAnalysis = item.section === "analysis";
   const isResearch = item.section === "research";
+  const parentHref = item.section === "news" ? "/briefings"
+    : item.section === "media" ? (["infographic", "photo_gallery"].includes(item.format) ? "/visual-knowledge" : "/programs")
+    : "/insights";
+  const parentLabel = item.section === "news" ? "الإحاطة اليومية"
+    : item.section === "media" ? (["infographic", "photo_gallery"].includes(item.format) ? "المعرفة البصرية" : "الفيديو والبرامج")
+    : "التحليل والدراسات";
 
   return (
     <main className="public-site">
       <PublicHeader />
       <div className={"article-page article-page--" + item.section}>
         <div className="article-breadcrumb">
-          <a href="/">الرئيسية</a><span>/</span><a href={"/" + item.section}>{sectionLabel(item.section)}</a>
+          <a href="/">الرئيسية</a><span>/</span><a href={parentHref}>{parentLabel}</a>
         </div>
 
         {isResearch ? (
@@ -140,7 +146,7 @@ export default async function PublicContentPage({ params }: PageProps) {
               <strong>{item.title}</strong>
               <p>{item.excerpt || "مادة منشورة ضمن " + sectionLabel(item.section)}</p>
             </div>
-            <a href={"/" + item.section} className="article-back-link">المزيد في {sectionLabel(item.section)} ←</a>
+            <a href={parentHref} className="article-back-link">المزيد في {parentLabel} ←</a>
           </aside>
         </div>
       </div>
