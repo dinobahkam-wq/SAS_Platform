@@ -8,6 +8,7 @@ import { getPublicBriefing } from "@/lib/public-briefing";
 import { getBriefingWeatherIndicators } from "@/lib/briefing-indicators";
 import { getDatedBriefingContext } from "@/lib/briefing-dated-context";
 import { BriefingIntelligencePanel } from "@/components/briefing-intelligence-panel";
+import { BriefingDailyOverview } from "@/components/briefing-daily-overview";
 
 export const dynamic = "force-dynamic";
 
@@ -89,6 +90,8 @@ export default async function PublicBriefingPage({
             <p className="briefing-correction-note">سبب التصحيح: {revision.change_reason_ar}</p>
           ) : null}
         </header>
+
+        <BriefingDailyOverview developments={developments} />
 
         <BriefingIntelligencePanel context={context} weather={weather} />
 
