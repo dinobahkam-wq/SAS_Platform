@@ -30,11 +30,11 @@ export default async function Home() {
     <main className="public-site">
       <PublicHeader />
 
-      <section className="home-compact-intro site-container">
+      <section className="home-compact-intro home-brand-hero site-container">
         <div className="home-intro-copy">
           <span className="eyebrow">منصة للإعلام والمعرفة السياسية</span>
-          <h1>نفهم الأحداث، <em>ونقرأ ما وراءها.</em></h1>
-          <p>أخبار موثقة، وقراءات سياسية، ودراسات تستكشف اليمن ومحيطه الإقليمي والدولي.</p>
+          <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
+          <p>أخبار موثقة، وتحليل سياسي، ودراسات تستكشف اليمن ومحيطه الإقليمي والدولي.</p>
         </div>
         <div className="home-compact-actions">
           <a href="/news" className="button button-primary">الأخبار والشؤون الجارية</a>
