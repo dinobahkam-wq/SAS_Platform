@@ -23,8 +23,11 @@ for (const test of tests) {
   try {
     const response = await fetch(new URL(test.path, base), { redirect: "manual", cache: "no-store" });
     const html = await response.text();
-    const statusOk = response.status === test.expectedStatus;
-    const bodyOk = test.expectedStatus !== 404 || html.includes("هذه المادة غير متاحة للنشر");
+    // Next.js may return 200 for streamed notFound pages; require the expected Arabic UI and noindex.
+    const unavailable = test.expectedStatus === 404;
+    const statusOk = unavailable ? [200, 404].includes(response.status) : response.status === test.expectedStatus;
+    const bodyOk = !unavailable || (html.includes("هذه المادة غير متاحة للنشر") &&
+      (response.status === 404 || /name=["\x27]robots["\x27][^>]*noindex|noindex[^>]*name=["\x27]robots["\x27]/i.test(html)));
     const good = statusOk && bodyOk;
     console.log((good ? "PASS" : "FAIL") + " " + test.label + ": HTTP " + response.status +
       (bodyOk ? "" : " (missing Arabic 404 copy)"));
