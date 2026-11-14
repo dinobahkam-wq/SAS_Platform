@@ -22,3 +22,15 @@
  .briefing-overview-metric>strong{font-size:24px}
 }
 @media print{.briefing-daily-overview{break-inside:avoid}}
+
+/* Editorial evidence signals: short readable headlines, no duplicate citation buttons. */
+.briefing-overview-signals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:14px;border-top:1px solid var(--line,#d9e3de);padding-top:12px;margin-top:6px}
+.briefing-overview-signal-group{min-width:0}
+.briefing-overview-signal-group h3{font-size:12px;font-weight:700;margin:0 0 8px;color:var(--foreground)}
+.briefing-overview-signal-group ol{list-style:none;padding:0;margin:0;display:grid;gap:0;counter-reset:signal}
+.briefing-overview-signal-group li{position:relative;counter-increment:signal;padding:7px 18px 7px 0;border-bottom:1px solid var(--line,#d9e3de)}
+.briefing-overview-signal-group li:last-child{border-bottom:0}
+.briefing-overview-signal-group li::before{content:counter(signal,decimal-leading-zero);position:absolute;inset-inline-start:0;top:8px;font-size:9px;color:var(--muted)}
+.briefing-overview-signal-title{display:block;font-size:12px;line-height:1.65;font-weight:600;color:var(--foreground)}
+.briefing-overview-signal-group small{display:block;font-size:10px;line-height:1.65;color:var(--muted);margin-top:2px}
+@media(max-width:700px){.briefing-overview-signals{grid-template-columns:1fr;gap:10px}.briefing-overview-signal-group li{padding-top:6px;padding-bottom:6px}}
