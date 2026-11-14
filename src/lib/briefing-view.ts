@@ -27,3 +27,27 @@ export function briefingEditionOverview(developments: BriefingDevelopment[]) {
     changes: developments.filter((item) => Boolean(item.what_changed_ar?.trim())).length,
   };
 }
+
+/** Show selected recorded positions and editorially documented changes, never inferred trends. */
+export function briefingEditorialSignals(developments: BriefingDevelopment[], limit = 3) {
+  const ordered = prioritizeBriefingDevelopments(developments);
+  const boundedLimit = Math.max(0, Math.min(6, Math.trunc(limit)));
+  return {
+    positions: ordered
+      .filter((item) => item.information_class === "position" && item.headline_ar.trim())
+      .slice(0, boundedLimit)
+      .map((item) => ({
+        headline: item.headline_ar,
+        scope: briefingViewGroup(item),
+        source: item.sources.find((source) => source.source_role === "primary")?.source_name
+          ?? item.sources[0]?.source_name ?? null,
+      })),
+    changes: ordered
+      .filter((item) => Boolean(item.what_changed_ar?.trim()))
+      .slice(0, boundedLimit)
+      .map((item) => ({
+        headline: item.headline_ar,
+        change: item.what_changed_ar!.trim(),
+      })),
+  };
+}
