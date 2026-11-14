@@ -3,8 +3,6 @@ import "./globals.css";
 import "./knowledge-reading.css";
 import "./theme.css";
 import "./brand-hero.css";
-import "./hero-carousel.css";
-import "./mukalla-hero.css";
 import "./threads-hero.css";
 import "./sitewide-threads.css";
 import { SasHeroThreads } from "@/components/sas-hero-threads";
