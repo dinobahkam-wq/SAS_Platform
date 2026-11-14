@@ -27,8 +27,8 @@ export function SasHeroThreads() {
     <div className="sas-threads-background" aria-hidden="true">
       <div className="sas-threads-mesh">
         <Threads
-          color={dark ? "#5fd0c9" : "#007e80"}
-          accentColor={dark ? "#5c8c92" : "#9bb8ba"}
+          color={dark ? [95 / 255, 208 / 255, 201 / 255] : [0, 126 / 255, 128 / 255]}
+          accentColor={dark ? [92 / 255, 140 / 255, 146 / 255] : [155 / 255, 184 / 255, 186 / 255]}
           lineCount={72}
           thickness={0.48}
           softness={1.45}
