@@ -3,6 +3,7 @@ import type { PublicContentItem } from "@/lib/public-content";
 import { getPublishedRailSources } from "@/lib/public-content";
 import { formatLabel } from "@/lib/content";
 import { EditorialRail } from "@/components/editorial-rail";
+import { KnowledgeRail } from "@/components/knowledge-rail";
 import { EmptyContent, PublicFooter, PublicHeader } from "@/components/public-site";
 
 const newsFormats = [
@@ -41,8 +42,10 @@ export async function SectionLanding({
       <div className="section-landing-content site-container">
         {items.length
           ? configured.filter((group) => grouped[group.key]?.length).map((group) => (
-            <EditorialRail key={group.key} title={group.label}
-              items={grouped[group.key]} sourcesById={sourceMap} />
+            items[0]?.section === "analysis" || items[0]?.section === "research"
+              ? <KnowledgeRail key={group.key} title={group.label} items={grouped[group.key]} />
+              : <EditorialRail key={group.key} title={group.label}
+                  items={grouped[group.key]} sourcesById={sourceMap} />
           ))
           : <EmptyContent />}
       </div>
