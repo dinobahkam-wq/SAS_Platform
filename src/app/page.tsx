@@ -7,6 +7,7 @@ import {
 import { EditorialRail } from "@/components/editorial-rail";
 import { KnowledgeRail } from "@/components/knowledge-rail";
 import { HomepageLead } from "@/components/homepage-lead";
+import { HeroPhotoCarousel } from "@/components/hero-photo-carousel";
 import { getPublishedContent, getPublishedRailSources } from "@/lib/public-content";
 
 export const dynamic = "force-dynamic";
@@ -31,8 +32,8 @@ export default async function Home() {
       <PublicHeader />
 
       <section className="home-compact-intro home-brand-hero site-container">
+        <HeroPhotoCarousel />
         <div className="home-intro-copy">
-          <span className="eyebrow">منصة للإعلام والمعرفة السياسية</span>
           <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
           <p>أخبار موثقة، وتحليل سياسي، ودراسات تستكشف اليمن ومحيطه الإقليمي والدولي.</p>
         </div>
