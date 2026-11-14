@@ -1,9 +1,10 @@
 import type { BriefingDevelopment } from "@/lib/public-briefing";
-import { briefingEditionOverview } from "@/lib/briefing-view";
+import { briefingEditionOverview, briefingEditorialSignals } from "@/lib/briefing-view";
 import "./briefing-daily-overview.css";
 
 export function BriefingDailyOverview({ developments }: { developments: BriefingDevelopment[] }) {
   const overview = briefingEditionOverview(developments);
+  const signals = briefingEditorialSignals(developments);
   const metrics = [
     { key: "yemen", title: "اليمن", value: overview.yemen, hint: "تطورًا محليًا ووطنيًا" },
     { key: "regional", title: "الإقليم", value: overview.regional, hint: "تطورًا مرتبطًا باليمن" },
@@ -29,6 +30,36 @@ export function BriefingDailyOverview({ developments }: { developments: Briefing
           </div>
         ))}
       </div>
+      {(signals.positions.length > 0 || signals.changes.length > 0) ? (
+        <div className="briefing-overview-signals">
+          {signals.positions.length > 0 ? (
+            <section className="briefing-overview-signal-group" aria-labelledby="briefing-overview-positions-title">
+              <h3 id="briefing-overview-positions-title">مواقف مسجلة في العدد</h3>
+              <ol>
+                {signals.positions.map((position, index) => (
+                  <li key={position.headline + index}>
+                    <span className="briefing-overview-signal-title">{position.headline}</span>
+                    {position.source ? <small>{position.source}</small> : null}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
+          {signals.changes.length > 0 ? (
+            <section className="briefing-overview-signal-group" aria-labelledby="briefing-overview-changes-title">
+              <h3 id="briefing-overview-changes-title">تغيرات موثقة في العدد</h3>
+              <ol>
+                {signals.changes.map((change, index) => (
+                  <li key={change.headline + index}>
+                    <span className="briefing-overview-signal-title">{change.headline}</span>
+                    <small>{change.change}</small>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
+        </div>
+      ) : null}
       {overview.changes > 0 ? (
         <p className="briefing-overview-changes">تتضمن الإحاطة {overview.changes} {overview.changes === 1 ? "تطورًا مع توضيح لما تغيّر" : "تطورات مع توضيح لما تغيّر"} مقارنة بالسياق السابق.</p>
       ) : (
