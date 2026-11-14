@@ -44,7 +44,7 @@ export function PublicFooter() {
       <div className="site-footer-inner">
         <div>
           <BrandLogo variant="full" />
-          <p>منصة مستقلة للإعلام والمعرفة السياسية.</p>
+          <p className="site-footer-official-name">منصة ساس للإعلام والدراسات</p>
         </div>
         <div className="site-footer-links">
           {navigation.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}
