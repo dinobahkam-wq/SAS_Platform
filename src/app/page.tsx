@@ -5,6 +5,7 @@ import {
   SectionHeading,
 } from "@/components/public-site";
 import { EditorialRail } from "@/components/editorial-rail";
+import { KnowledgeRail } from "@/components/knowledge-rail";
 import { HomepageLead } from "@/components/homepage-lead";
 import { getPublishedContent, getPublishedRailSources } from "@/lib/public-content";
 
@@ -61,13 +62,13 @@ export default async function Home() {
       <section className="home-section home-analysis-section">
         <div className="site-container">
           <SectionHeading eyebrow="قراءة في السياق" title="التحليل والرأي" href="/analysis" />
-          {analysis.length ? <EditorialRail title="تحليلات ومقالات" items={analysis} sourcesById={sourcesById} /> : <EmptyContent />}
+          {analysis.length ? <KnowledgeRail title="تحليلات ومقالات" items={analysis} /> : <EmptyContent />}
         </div>
       </section>
 
       <section className="home-section site-container home-research-section">
         <SectionHeading eyebrow="معرفة معمقة" title="الدراسات والأبحاث" href="/research" />
-        {research.length ? <EditorialRail title="أوراق ودراسات" items={research} sourcesById={sourcesById} /> : <EmptyContent />}
+        {research.length ? <KnowledgeRail title="أوراق ودراسات" items={research} /> : <EmptyContent />}
       </section>
 
       <section className="home-section home-media-section">
