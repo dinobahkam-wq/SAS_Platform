@@ -11,18 +11,17 @@ import {
   formatBriefingDateOnly,
 } from "@/components/briefing-public";
 import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
+import "./briefing-dense-layout.css";
 import type { BriefingDevelopment, BriefingSummaryItem } from "@/lib/public-briefing";
 
-type Tab = "all" | "yemen" | "international" | "statements" | "economy" | "sports" | "trending";
+type Tab = "all" | "yemen" | "international" | "statements" | "economy";
 
 const tabs: { key: Tab; label: string }[] = [
   { key: "all", label: "الكل" },
   { key: "yemen", label: "اليمن" },
-  { key: "international", label: "دولي" },
+  { key: "international", label: "الإقليم والعالم" },
   { key: "statements", label: "بيانات رسمية" },
   { key: "economy", label: "اقتصاد" },
-  { key: "sports", label: "رياضة" },
-  { key: "trending", label: "تغريدات رائجة" },
 ];
 
 function isOfficialStatement(development: BriefingDevelopment) {
@@ -40,10 +39,6 @@ function matchesTab(development: BriefingDevelopment, tab: Tab) {
     case "international": return development.geographic_scope === "regional" || development.geographic_scope === "international";
     case "statements": return isOfficialStatement(development);
     case "economy": return development.category === "economy";
-    case "sports": return development.category === "sports";
-    case "trending": return development.sources.some((source) =>
-      /^https?:\/\/(?:www\.)?(?:x\.com|twitter\.com)\//i.test(source.source_url ?? "")
-    );
   }
 }
 
@@ -57,6 +52,7 @@ export function BriefingEditionBody({
   const [activeTab, setActiveTab] = useState<Tab>("all");
   const filtered = developments.filter((development) => matchesTab(development, activeTab));
   const selectedLabel = tabs.find((tab) => tab.key === activeTab)?.label ?? "الكل";
+  const sourceLabel = (development: BriefingDevelopment) => development.sources.find((source) => source.source_role === "primary")?.source_name ?? development.sources[0]?.source_name ?? null;
 
   return (
     <>
@@ -110,7 +106,7 @@ export function BriefingEditionBody({
         <div className="briefing-section-heading briefing-developments-heading">
           <div>
             <h2 id="briefing-developments-title">سجل التطورات</h2>
-            <p>{activeTab === "all" ? "تطورات مرتبة وفق تسلسل العدد، مع تصنيف المعلومة ومصادرها." : `التطورات المصنفة ضمن «${selectedLabel}» في هذا العدد.`}</p>
+            <p>{activeTab === "all" ? "وقائع ومواقف موثقة، مع إبراز التغيرات دون ازدحام مرجعي." : `التطورات المصنفة ضمن «${selectedLabel}» في هذا العدد.`}</p>
           </div>
           <span className="briefing-development-count">{filtered.length} تطورًا</span>
         </div>
@@ -123,7 +119,7 @@ export function BriefingEditionBody({
                   ? formatBriefingDateOnly(development.occurred_on)
                   : "وقت الوقوع غير محدد";
               return (
-                <article className="briefing-event" key={development.order}>
+                <article className="briefing-event briefing-event--dense" key={development.order}>
                   <div className="briefing-event-index">
                     <span>{String(development.order + 1).padStart(2, "0")}</span>
                   </div>
@@ -134,21 +130,24 @@ export function BriefingEditionBody({
                       <span>{happened}</span>
                       {development.location_text ? <span>{development.location_text}</span> : null}
                     </div>
-                    <div className="briefing-event-tags">
-                      <BriefingTypeTag value={development.information_class}/>
-                      <BriefingVerification value={development.verification_status}/>
-                    </div>
                     <h3>{development.headline_ar}</h3>
                     {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
-                    {development.what_changed_ar ? <div className="briefing-event-fact"><strong>تفصيل التطور</strong><p>{development.what_changed_ar}</p></div> : null}
-                    {development.context_ar ? <div className="briefing-event-context"><strong>السياق المرتبط</strong><p>{development.context_ar}</p></div> : null}
-                    {development.sources.length ? (
-                      <div className="briefing-event-source-action">
-                        <BriefingSourcesPopover sources={development.sources} label="المصادر"/>
+                    {development.what_changed_ar ? <p className="briefing-dense-change"><strong>ما تغيّر</strong> {development.what_changed_ar}</p> : null}
+                    <div className="briefing-dense-foot">
+                      <div className="briefing-dense-evidence">
+                        <BriefingTypeTag value={development.information_class}/>
+                        <BriefingVerification value={development.verification_status}/>
+                        {sourceLabel(development) ? <span className="briefing-dense-source-name" title="الجهة الناشرة للمصدر الأساسي أو أول مصدر متاح">{sourceLabel(development)}</span> : <span className="briefing-no-source">لا توجد إحالة عامة</span>}
+                        {development.sources.length > 0 ? <BriefingSourcesPopover sources={development.sources} label="التوثيق"/> : null}
                       </div>
-                    ) : (
-                      <div className="briefing-no-source">لا تتوفر إحالة عامة لمصدر هذا التطور.</div>
-                    )}
+                      {(development.context_ar || development.why_it_matters_ar) ? (
+                        <details className="briefing-dense-context">
+                          <summary>السياق والدلالة</summary>
+                          {development.context_ar ? <p><strong>السياق:</strong> {development.context_ar}</p> : null}
+                          {development.why_it_matters_ar ? <p><strong>لماذا يهم:</strong> {development.why_it_matters_ar}</p> : null}
+                        </details>
+                      ) : null}
+                    </div>
                   </div>
                 </article>
               );
