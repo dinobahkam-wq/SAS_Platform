@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { signIn } from "./actions";
 import { createClient } from "@/lib/supabase/server";
 import { BrandLogo } from "@/components/brand-logo";
+import { ThemeControl } from "@/components/theme-control";
 
 const errorMessages: Record<string, string> = {
   missing: "أدخل البريد الإلكتروني وكلمة المرور.",
@@ -32,6 +33,7 @@ export default async function LoginPage({
   return (
     <main className="login-screen">
       <div className="login-card">
+        <div className="login-theme-control"><ThemeControl /></div>
         <Link href="/" className="login-brand" aria-label="العودة إلى منصة ساس">
           <BrandLogo variant="full" priority />
         </Link>

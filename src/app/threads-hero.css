@@ -1,0 +1,83 @@
+/* SAS Threads identity layer — intentionally seamless with the public page. */
+.home-brand-hero {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:clamp(390px,39vw,550px);
+  background:var(--background)!important;
+  border:0;
+  border-radius:0;
+}
+.sas-threads-background {
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 90% at 0% 50%,rgba(0,126,128,.085),transparent 76%),
+    radial-gradient(ellipse 65% 80% at 42% 45%,rgba(133,172,172,.075),transparent 83%);
+}
+.sas-threads-mesh {
+  position:absolute;
+  inset:0 auto 0 0;
+  width:81%;
+  opacity:1;
+  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 37%,rgba(0,0,0,.68) 59%,transparent 95%);
+  mask-image:linear-gradient(to right,#000 0%,#000 37%,rgba(0,0,0,.68) 59%,transparent 95%);
+}
+.sas-threads-background::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to left,
+    var(--background) 0%,
+    color-mix(in srgb,var(--background) 98%,transparent) 19%,
+    color-mix(in srgb,var(--background) 83%,transparent) 38%,
+    color-mix(in srgb,var(--background) 28%,transparent) 62%,
+    transparent 82%);
+}
+.home-brand-hero .home-intro-copy {
+  position:relative;
+  z-index:2;
+  max-width:800px;
+}
+.home-brand-hero .home-compact-actions {z-index:2;}
+html[data-theme="dark"] .sas-threads-background {
+  background:
+    radial-gradient(ellipse 70% 90% at 0% 50%,rgba(30,130,133,.14),transparent 77%),
+    radial-gradient(ellipse 65% 80% at 42% 45%,rgba(75,122,129,.085),transparent 83%);
+}
+@media(max-width:900px) {
+  .sas-threads-mesh {width:100%;opacity:.72;}
+  .sas-threads-background::after {
+    background:linear-gradient(to left,
+      var(--background) 0%,
+      color-mix(in srgb,var(--background) 96%,transparent) 18%,
+      color-mix(in srgb,var(--background) 83%,transparent) 47%,
+      color-mix(in srgb,var(--background) 44%,transparent) 75%,
+      transparent 100%);
+  }
+}
+@media(max-width:600px) {
+  .home-brand-hero {min-height:405px;padding-block:54px 64px;}
+  .sas-threads-mesh {
+    width:130%;
+    left:-35%;
+    opacity:.55;
+    -webkit-mask-image:linear-gradient(to right,#000 0%,rgba(0,0,0,.7) 48%,transparent 87%);
+    mask-image:linear-gradient(to right,#000 0%,rgba(0,0,0,.7) 48%,transparent 87%);
+  }
+  .sas-threads-background::after {
+    background:linear-gradient(to bottom,
+      color-mix(in srgb,var(--background) 83%,transparent) 0%,
+      color-mix(in srgb,var(--background) 90%,transparent) 40%,
+      color-mix(in srgb,var(--background) 75%,transparent) 80%,
+      color-mix(in srgb,var(--background) 58%,transparent) 100%),
+    linear-gradient(to left,var(--background),transparent 100%);
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .sas-threads-mesh {opacity:.42;}
+}
+@media print {.sas-threads-background{display:none!important;}}

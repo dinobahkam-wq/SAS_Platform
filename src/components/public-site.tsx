@@ -7,6 +7,7 @@ import {
 } from "@/lib/public-content";
 import { formatLabel, sectionLabel } from "@/lib/content";
 import { BrandLogo } from "@/components/brand-logo";
+import { ThemeControl } from "@/components/theme-control";
 
 const navigation = [
   { href: "/briefings", label: "الإحاطة اليومية" },
@@ -21,14 +22,17 @@ export function PublicHeader() {
     <header className="site-header">
       <div className="site-header-inner">
         <Link href="/" className="site-brand" aria-label="منصة ساس">
-          <BrandLogo variant="full" priority />
+          <BrandLogo variant="color" priority />
         </Link>
         <nav className="site-nav" aria-label="الأقسام الرئيسية">
           {navigation.map((item) => (
             <Link href={item.href} key={item.href}>{item.label}</Link>
           ))}
         </nav>
-        <Link href="/login" className="site-admin-link">دخول الإدارة</Link>
+        <div className="site-header-actions">
+          <ThemeControl />
+          <Link href="/login" className="site-admin-link">دخول الإدارة</Link>
+        </div>
       </div>
     </header>
   );
@@ -40,7 +44,7 @@ export function PublicFooter() {
       <div className="site-footer-inner">
         <div>
           <BrandLogo variant="full" />
-          <p>منصة مستقلة للإعلام والمعرفة السياسية.</p>
+          <p className="site-footer-official-name">منصة ساس للإعلام والدراسات</p>
         </div>
         <div className="site-footer-links">
           {navigation.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}

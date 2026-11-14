@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./knowledge-reading.css";
+import "./theme.css";
+import "./brand-hero.css";
+import "./threads-hero.css";
+import "./sitewide-threads.css";
+import { SasHeroThreads } from "@/components/sas-hero-threads";
+import { themeInitializer } from "@/lib/theme-initializer";
 
 export const metadata: Metadata = {
   title: {
@@ -18,8 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
-      <body>{children}</body>
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: themeInitializer }} /></head>
+      <body>
+        <SasHeroThreads />
+        <div className="sas-site-content">{children}</div>
+      </body>
     </html>
   );
 }

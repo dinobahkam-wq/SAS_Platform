@@ -1,0 +1,123 @@
+/* SAS identity — palette derived from the approved teal and neutral-grey logo. */
+:root {
+  --brand-teal:#007e80;
+  --brand-teal-deep:#00666b;
+  --brand-grey:#8b8e8e;
+  --brand-teal-glow:rgba(0,126,128,.11);
+  --accent:var(--brand-teal);
+  --accent-strong:var(--brand-teal-deep);
+  --accent-soft:#e7f3f2;
+  --gold:#8b8e8e;
+}
+html[data-theme="dark"] {
+  --brand-teal:#66c7c4;
+  --brand-teal-deep:#9ce1db;
+  --brand-grey:#aeb8b7;
+  --brand-teal-glow:rgba(60,177,179,.19);
+  --accent:var(--brand-teal);
+  --accent-strong:var(--brand-teal-deep);
+  --accent-soft:#193b3a;
+  --gold:#aeb8b7;
+}
+.site-brand { display:flex;align-items:center;justify-content:center; }
+.site-brand .brand-logo-color {
+  width:clamp(128px,13vw,164px);
+  height:68px;
+  object-fit:cover;
+  object-position:center;
+  border-radius:4px;
+}
+html[data-theme="dark"] .site-brand .brand-logo-color {background:#fff;}
+/* Restrained institutional hero: expanded spacing, readable typography and ambient movement. */
+.home-brand-hero {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:clamp(310px,32vw,425px);
+  width:min(1320px,calc(100% - 44px));
+  max-width:1320px;
+  margin:28px auto 42px;
+  padding:clamp(40px,6vw,83px) clamp(24px,5vw,72px);
+  border:1px solid rgba(0,126,128,.10);
+  border-radius:18px;
+  background:radial-gradient(ellipse at 85% 10%,rgba(0,126,128,.075),transparent 48%),
+             radial-gradient(ellipse at 12% 85%,rgba(139,142,142,.095),transparent 50%),
+             linear-gradient(125deg,#f5f8f7,#f7f8f6 55%,#eef3f2);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:32px;
+}
+.home-brand-hero::before {
+  content:"";position:absolute;inset:-30%;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 30% 40%,rgba(0,126,128,.095),transparent 35%),
+             radial-gradient(ellipse at 75% 65%,rgba(139,142,142,.10),transparent 38%);
+  filter:blur(38px);
+  transform:translate3d(0,0,0) scale(1);
+  animation:sas-hero-ambient 28s ease-in-out infinite alternate;
+}
+.home-brand-hero::after {
+  content:"";position:absolute;z-index:-1;pointer-events:none;
+  inset:auto 40px 0 40px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,126,128,.27),transparent);
+}
+@keyframes sas-hero-ambient {
+  0%{transform:translate3d(-1.5%,1%,0) scale(1)}
+  100%{transform:translate3d(2%,-2%,0) scale(1.045)}
+}
+.home-brand-hero .home-intro-copy {position:relative;z-index:1;max-width:none;flex:1 1 66%;min-width:0;}
+.home-brand-hero .eyebrow {color:var(--accent);font-size:12px;}
+.home-brand-hero h1 {
+  max-width:none;
+  margin:18px 0 19px;
+  font-family:"Thmanyah Serif Display","Tajarib Taweel",serif;
+  font-weight:400;
+  font-size:clamp(43px,5.3vw,82px);
+  line-height:1.42;
+  letter-spacing:-.025em;
+  text-wrap:balance;
+  color:#263736;
+}
+.home-brand-hero h1 em {font-style:normal;color:var(--brand-teal);}
+.home-brand-hero p {max-width:750px;font-size:clamp(13px,1.2vw,16px);line-height:2;color:#596766;}
+.home-brand-hero .home-compact-actions {position:relative;z-index:1;flex:0 1 260px;align-self:end;justify-content:flex-end;}
+.home-brand-hero .button-primary {background:var(--brand-teal-deep);color:#fff;}
+.home-brand-hero .button-primary:hover {background:#005256;}
+html[data-theme="dark"] .home-brand-hero {
+  background:radial-gradient(ellipse at 84% 12%,rgba(25,136,136,.20),transparent 51%),
+             radial-gradient(ellipse at 12% 86%,rgba(113,136,136,.12),transparent 49%),
+             linear-gradient(125deg,#152524,#192826 55%,#182d2d);
+  border-color:#31514f;
+}
+html[data-theme="dark"] .home-brand-hero::before {
+  background:radial-gradient(ellipse at 30% 40%,rgba(52,180,180,.17),transparent 35%),
+             radial-gradient(ellipse at 75% 65%,rgba(128,158,158,.11),transparent 38%);
+}
+html[data-theme="dark"] .home-brand-hero h1 {color:#eff7f5}
+html[data-theme="dark"] .home-brand-hero h1 em {color:#78d0cc}
+html[data-theme="dark"] .home-brand-hero p {color:#b6c6c2}
+html[data-theme="dark"] .home-brand-hero .button-primary {background:#087d80;color:#fff}
+@font-face {
+ font-family:"Thmanyah Serif Display";
+ src:url("/fonts/thmanyah-serif-display_all/thmanyah-serif-display-regular.otf") format("opentype");
+ font-weight:400;font-style:normal;font-display:swap;
+}
+@font-face {
+ font-family:"Thmanyah Serif Display";
+ src:url("/fonts/thmanyah-serif-display_all/thmanyah-serif-display-medium.otf") format("opentype");
+ font-weight:500;font-style:normal;font-display:swap;
+}
+@media(max-width:900px) {
+ .home-brand-hero{min-height:330px;flex-direction:column;align-items:stretch;justify-content:center;gap:14px;}
+ .home-brand-hero .home-intro-copy{flex:auto;}
+ .home-brand-hero .home-compact-actions{flex:auto;align-self:flex-start;justify-content:flex-start;}
+}
+@media(max-width:600px) {
+ .site-brand .brand-logo-color{width:112px;height:53px}
+ .home-brand-hero{width:calc(100% - 24px);margin:12px auto 26px;padding:35px 22px 34px;border-radius:13px;min-height:290px;}
+ .home-brand-hero h1{font-size:clamp(35px,9vw,51px);line-height:1.55;margin:12px 0;}
+ .home-brand-hero p{font-size:12px;line-height:1.95;}
+ .home-brand-hero .home-compact-actions{width:100%;}
+}
+@media(prefers-reduced-motion:reduce){.home-brand-hero::before{animation:none;}}
+@media print{.home-brand-hero::before{animation:none!important;}}

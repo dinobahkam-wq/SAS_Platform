@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import type { PublicContentItem } from "@/lib/public-content";
 import { formatLabel, sectionLabel } from "@/lib/content";
@@ -54,6 +55,9 @@ export function EditorialRail({
   const scrollRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [selected, setSelected] = useState<PublicContentItem | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
   const [scrollState, setScrollState] = useState({ previous: false, next: items.length > 1 });
   const dialogTitle = useId();
 
@@ -141,7 +145,7 @@ export function EditorialRail({
           </article>
         ))}
       </div>
-      <dialog className="editorial-detail" ref={dialogRef} aria-labelledby={dialogTitle}
+      {mounted ? createPortal(<dialog className="editorial-detail editorial-detail--floating" ref={dialogRef} aria-labelledby={dialogTitle}
         onClose={() => setSelected(null)}
         onClick={(event) => { if (event.target === event.currentTarget) setSelected(null); }}>
         {selected ? (
@@ -194,7 +198,7 @@ export function EditorialRail({
             </div>
           </div>
         ) : null}
-      </dialog>
+      </dialog>, document.body) : null}
     </section>
   );
 }

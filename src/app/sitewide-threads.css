@@ -1,0 +1,104 @@
+/* Sitewide SAS identity background: a single fixed WebGL canvas, never repeated per section. */
+html, body { min-height:100%; }
+body { position:relative; background:var(--background); }
+.sas-site-content { position:relative; z-index:1; min-height:100vh; isolation:isolate; }
+.sas-threads-background--sitewide {
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  width:100%;
+  height:100vh;
+  height:100dvh;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 78% 78% at 0% 44%,rgba(0,126,128,.055),transparent 76%),
+    radial-gradient(ellipse 55% 60% at 35% 66%,rgba(139,142,142,.038),transparent 80%);
+}
+.sas-threads-background--sitewide .sas-threads-mesh {
+  inset:0 auto 0 0;
+  width:100%;
+  height:100%;
+  opacity:.78;
+  -webkit-mask-image:linear-gradient(to right,#000 0%,#000 42%,rgba(0,0,0,.62) 65%,transparent 97%);
+  mask-image:linear-gradient(to right,#000 0%,#000 42%,rgba(0,0,0,.62) 65%,transparent 97%);
+}
+.sas-threads-background--sitewide::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(to left,
+    var(--background) 0%,
+    color-mix(in srgb,var(--background) 94%,transparent) 16%,
+    color-mix(in srgb,var(--background) 77%,transparent) 35%,
+    color-mix(in srgb,var(--background) 27%,transparent) 62%,
+    transparent 90%);
+}
+/* Transparent section canvas, opaque reading cards: motion remains behind content. */
+.sas-site-content .public-site,
+.sas-site-content .home-brand-hero,
+.sas-site-content .home-analysis-section,
+.sas-site-content .home-media-section,
+.sas-site-content .home-news-section,
+.sas-site-content .home-research-section,
+.sas-site-content .section-landing-content {
+  background:transparent!important;
+}
+.sas-site-content .home-brand-hero {
+  position:relative;
+  z-index:auto;
+  isolation:auto;
+}
+.sas-site-content .site-header {
+  background:color-mix(in srgb,var(--surface) 96%,transparent);
+  backdrop-filter:blur(14px);
+}
+.sas-site-content .site-footer {
+  background:color-mix(in srgb,var(--surface) 95%,transparent);
+}
+/* Keep editing workspaces, briefing sheets and the newsroom stable and legible. */
+.sas-site-content .admin-frame,
+.sas-site-content .briefing-public-site,
+.sas-site-content .login-screen {
+  background:var(--background);
+}
+html[data-theme="dark"] .sas-threads-background--sitewide {
+  background:
+    radial-gradient(ellipse 76% 82% at 0% 42%,rgba(36,127,130,.10),transparent 78%),
+    radial-gradient(ellipse 58% 60% at 34% 68%,rgba(88,132,138,.055),transparent 84%);
+}
+html[data-theme="dark"] .sas-threads-background--sitewide .sas-threads-mesh {opacity:.72;}
+@media(max-width:900px) {
+  .sas-threads-background--sitewide .sas-threads-mesh {
+    opacity:.64;
+    -webkit-mask-image:linear-gradient(to right,#000 0%,rgba(0,0,0,.8) 48%,transparent 96%);
+    mask-image:linear-gradient(to right,#000 0%,rgba(0,0,0,.8) 48%,transparent 96%);
+  }
+}
+@media(max-width:600px) {
+  .sas-threads-background--sitewide .sas-threads-mesh {
+    inset:0 auto 0 -20%;
+    width:120%;
+    opacity:.43;
+    -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.88) 0%,rgba(0,0,0,.66) 52%,transparent 100%);
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.88) 0%,rgba(0,0,0,.66) 52%,transparent 100%);
+  }
+  .sas-threads-background--sitewide::after {
+    background:linear-gradient(to left,
+      color-mix(in srgb,var(--background) 83%,transparent),
+      color-mix(in srgb,var(--background) 34%,transparent) 70%,
+      transparent 100%);
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .sas-threads-background--sitewide .sas-threads-mesh {opacity:.30;}
+}
+@media print {
+  .sas-threads-background--sitewide {display:none!important;}
+  .sas-site-content {isolation:auto;}
+  .sas-site-content .public-site,
+  .sas-site-content .home-brand-hero,
+  .sas-site-content .home-analysis-section,
+  .sas-site-content .home-media-section {background:white!important;}
+}
