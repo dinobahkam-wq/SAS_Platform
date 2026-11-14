@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./knowledge-reading.css";
 import "./theme.css";
+import "./brand-hero.css";
 import { themeInitializer } from "@/lib/theme-initializer";
 
 export const metadata: Metadata = {
