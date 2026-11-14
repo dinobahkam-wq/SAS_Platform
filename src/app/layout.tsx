@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./knowledge-reading.css";
+import "./theme.css";
+import { ThemeControl } from "@/components/theme-control";
+import { themeInitializer } from "@/lib/theme-initializer";
 
 export const metadata: Metadata = {
   title: {
@@ -19,8 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
-      <body>{children}</body>
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: themeInitializer }} /></head>
+      <body>{children}<ThemeControl /></body>
     </html>
   );
 }
