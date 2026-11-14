@@ -1,0 +1,44 @@
+{
+  "edition_date": "2026-11-14",
+  "market": [],
+  "exchange_rates": null,
+  "indicative_exchange_rates": {
+    "as_of_date": "2026-11-14",
+    "quote_currency": "YER",
+    "quote_basis": "ريال يمني لكل وحدة من العملة الأجنبية",
+    "rates": [
+      {
+        "city": "عدن",
+        "code": "USD",
+        "low": 1560,
+        "high": 1560,
+        "qualifier": "نحو"
+      },
+      {
+        "city": "عدن",
+        "code": "SAR",
+        "low": 410,
+        "high": 410,
+        "qualifier": "نحو"
+      },
+      {
+        "city": "صنعاء",
+        "code": "USD",
+        "low": 535,
+        "high": 540,
+        "qualifier": "نطاق تقريبي"
+      },
+      {
+        "city": "صنعاء",
+        "code": "SAR",
+        "low": 140,
+        "high": 140,
+        "qualifier": "نحو"
+      }
+    ],
+    "source_name": "المهرية نت",
+    "source_url": "https://en.almahriah.net/local/foreign-currency-rates-vs-yemeni-rial-nov-14-2026",
+    "note": "أسعار سوق تقريبية منشورة في 14 نوفمبر، وليست أسعار شراء وبيع. لم يُتحقق من تفصيل طرفي المعاملة، ولا ينبغي ملء أعمدة الشراء والبيع بهذه التقديرات."
+  },
+  "methodology": "بيانات السوق تقريبية مؤرخة بيوم العدد، وجرى نقلها من سجل التطورات إلى المؤشرات بعد تصحيح تحريري. لم يثبت مصدر الملف أسعار شراء وبيع تفصيلية."
+}
