@@ -11,10 +11,9 @@ import { ThemeControl } from "@/components/theme-control";
 
 const navigation = [
   { href: "/briefings", label: "الإحاطة اليومية" },
-  { href: "/news", label: "الأخبار" },
-  { href: "/analysis", label: "التحليل والرأي" },
-  { href: "/research", label: "الدراسات والأبحاث" },
-  { href: "/media", label: "البرامج والوسائط" },
+  { href: "/insights", label: "التحليل والدراسات" },
+  { href: "/visual-knowledge", label: "المعرفة البصرية" },
+  { href: "/programs", label: "الفيديو والبرامج" },
 ];
 
 export function PublicHeader() {
