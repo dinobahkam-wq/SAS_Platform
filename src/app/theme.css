@@ -545,3 +545,7 @@ html[data-theme="dark"] {scrollbar-color:#455b4c #17221b}
 .site-header,.admin-topbar{position:relative;z-index:60;overflow:visible;}
 @media(max-width:600px){.site-header-actions{gap:7px}.site-header-actions .sas-theme-trigger,.admin-topbar .sas-theme-trigger{min-height:38px;width:38px}.site-header-actions .sas-theme-menu{left:0;right:auto;}.admin-topbar .sas-theme-menu{left:0;right:auto;}}
 @media print{.sas-theme-switcher{display:none!important}}
+
+.login-theme-control{display:flex;justify-content:flex-end;margin:-16px -12px 6px 0;}
+.login-theme-control .sas-theme-trigger{border-radius:9px;box-shadow:none;min-height:38px;}
+.login-theme-control .sas-theme-menu{left:0;right:auto;}
