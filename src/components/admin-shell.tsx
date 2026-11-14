@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { signOut } from "@/app/login/actions";
 import { BrandLogo } from "@/components/brand-logo";
+import { ThemeControl } from "@/components/theme-control";
 
 const navigation = [
   { href: "/admin", label: "نظرة عامة", symbol: "⌂", exact: true },
@@ -60,6 +61,7 @@ export function AdminShell({
             <strong>نظام إدارة المنصة</strong>
           </div>
           <div className="topbar-user">
+            <ThemeControl />
             <span className="user-avatar">{user.displayName.slice(0, 1)}</span>
             <span className="user-meta">
               <strong>{user.displayName}</strong>
