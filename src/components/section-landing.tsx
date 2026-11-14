@@ -28,6 +28,10 @@ export async function SectionLanding({
   const configured = items[0]?.section === "news"
     ? newsFormats
     : Object.keys(grouped).map((key) => ({ key, label: formatLabel(key) }));
+  const newsTrialGroup = items[0]?.section === "news"
+    ? configured.find((group) => grouped[group.key]?.length)?.key
+    : undefined;
+
   return (
     <main className="public-site">
       <PublicHeader />
@@ -45,7 +49,8 @@ export async function SectionLanding({
             items[0]?.section === "analysis" || items[0]?.section === "research"
               ? <KnowledgeRail key={group.key} title={group.label} items={grouped[group.key]} />
               : <EditorialRail key={group.key} title={group.label}
-                  items={grouped[group.key]} sourcesById={sourceMap} />
+                  items={grouped[group.key]} sourcesById={sourceMap}
+                  experimentalFlipFirst={group.key === newsTrialGroup} />
           ))
           : <EmptyContent />}
       </div>
