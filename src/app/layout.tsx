@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import "./knowledge-reading.css";
 import "./theme.css";
@@ -26,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <head><script dangerouslySetInnerHTML={{ __html: themeInitializer }} /></head>
+      <Script id="sas-theme-initializer" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeInitializer }} />
       <body>{children}</body>
     </html>
   );
