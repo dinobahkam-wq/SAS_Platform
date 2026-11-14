@@ -3,18 +3,38 @@
 import { useEffect, useState } from "react";
 
 /**
- * The photographs are separately managed editorial assets, not part of the logo.
- * Upload files under public/hero with these stable names; unavailable files are
- * excluded automatically, preserving the clean gradient until they arrive.
+ * Temporary photography sourced from Wikimedia Commons with attribution.
+ * Licensed sample images are loaded from Commons only for visual testing.
+ * Replace with approved locally hosted images before production if desired.
  */
 const candidates = [
-  { src: "/hero/yemen-identity.webp", alt: "مشهد يعبر عن الهوية اليمنية" },
-  { src: "/hero/yemen-history.webp", alt: "مشهد من التراث والعمران اليمني" },
-  { src: "/hero/yemen-war.webp", alt: "مشهد يوثق آثار الحرب في اليمن" },
-  { src: "/hero/yemen-peace.webp", alt: "مشهد يرمز إلى السلام والتعافي" },
+  {
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/Old_City_of_Sana%27a-111119.jpg?width=1280",
+    alt: "صنعاء القديمة، عمارة يمنية تراثية",
+    credit: "صنعاء القديمة — ويكيميديا كومنز",
+    source: "https://commons.wikimedia.org/wiki/File:Old_City_of_Sana%27a-111119.jpg",
+  },
+  {
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/Shibam_Hadramaut.jpg?width=1280",
+    alt: "أبراج مدينة شبام التاريخية بحضرموت",
+    credit: "شبام حضرموت — ويكيميديا كومنز",
+    source: "https://commons.wikimedia.org/wiki/File:Shibam_Hadramaut.jpg",
+  },
+  {
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/Destroyed_house_in_the_south_of_Sanaa_12-6-2015-1.jpg?width=1280",
+    alt: "منزل متضرر من الحرب جنوب صنعاء عام 2015",
+    credit: "آثار الحرب 2015 — تصوير Ibrahem Qasim، CC BY-SA 4.0",
+    source: "https://commons.wikimedia.org/wiki/File:Destroyed_house_in_the_south_of_Sanaa_12-6-2015-1.jpg",
+  },
+  {
+    src: "https://commons.wikimedia.org/wiki/Special:FilePath/Socotra_Island%2C_Yemen.jpg?width=1280",
+    alt: "طبيعة سقطرى اليمنية وشواطئها",
+    credit: "سقطرى — تصوير Rod Waddington، CC BY-SA 4.0",
+    source: "https://commons.wikimedia.org/wiki/File:Socotra_Island,_Yemen.jpg",
+  },
 ] as const;
 
-type Slide = { src: string; alt: string };
+type Slide = { src: string; alt: string; credit: string; source: string };
 
 export function HeroPhotoCarousel() {
   const [slides, setSlides] = useState<Slide[]>([]);
@@ -70,6 +90,11 @@ export function HeroPhotoCarousel() {
             style={{ backgroundImage: "url(" + JSON.stringify(slide.src) + ")" }} />
         ))}
       </div>
+      <a className="sas-hero-photo-credit" href={slides[active]?.source}
+        target="_blank" rel="noopener noreferrer"
+        title="بيانات مصدر الصورة وترخيصها">
+        {slides[active]?.credit}
+      </a>
       {slides.length > 1 ? (
         <div className="sas-hero-pagination" aria-label="التنقل بين الصور">
           {slides.map((slide, index) => (
