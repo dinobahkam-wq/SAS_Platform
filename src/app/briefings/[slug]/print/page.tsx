@@ -35,6 +35,8 @@ export default async function BriefingPrintPage({
 
   const { edition, revision, developments, executiveSummary } = briefing;
   const context = await getDatedBriefingContext(edition.edition_date);
+  const fx = context?.exchange_rates;
+  const indicativeFx = context?.indicative_exchange_rates;
   const [headline, ...subtitleParts] = revision.title_ar.split(" | ");
   const subtitle = subtitleParts.join(" | ").replace(/\s+—\s+\d{1,2}\s+[^—]+\d{4}\s*$/, "").trim();
 
@@ -94,12 +96,12 @@ export default async function BriefingPrintPage({
                   </tbody>
                 </table>
               </div> : null}
-              {context.exchange_rates ? <div>
+              {fx ? <div>
                 <h3>أسعار الصرف <span>ريال يمني للوحدة · شراء/بيع</span></h3>
                 <table>
                   <thead><tr><th>السوق</th><th>العملة</th><th>شراء</th><th>بيع</th></tr></thead>
                   <tbody>
-                    {context.exchange_rates.rates.map((rate) => (
+                    {fx.rates.map((rate) => (
                       <tr key={rate.city + rate.code}>
                         <th>{rate.city}</th><td className="briefing-print-currency-name">{rate.code === "USD" ? "الدولار الأمريكي" : "الريال السعودي"}</td>
                         <td><bdi dir="ltr">{formatNumber(rate.buy)}</bdi></td>
@@ -109,14 +111,14 @@ export default async function BriefingPrintPage({
                   </tbody>
                 </table>
                 <p className="briefing-print-table-source">
-                  المصدر: <a href={context.exchange_rates.source_url}>{context.exchange_rates.source_name}</a> · أسعار استرشادية بتاريخ العدد
+                  المصدر: <a href={fx.source_url}>{fx.source_name}</a> · أسعار استرشادية بتاريخ العدد
                 </p>
-              </div> : context.indicative_exchange_rates ? <div>
-                <h3>أسعار الصرف <span>تقديرات استرشادية — {formatBriefingDateOnly(context.indicative_exchange_rates.as_of_date)}</span></h3>
+              </div> : indicativeFx ? <div>
+                <h3>أسعار الصرف <span>تقديرات استرشادية — {formatBriefingDateOnly(indicativeFx.as_of_date)}</span></h3>
                 <table>
                   <thead><tr><th>السوق</th><th>العملة</th><th>التقدير (ريال يمني)</th></tr></thead>
                   <tbody>
-                    {context.indicative_exchange_rates.rates.map((rate) => (
+                    {indicativeFx.rates.map((rate) => (
                       <tr key={rate.city + rate.code}>
                         <th>{rate.city}</th>
                         <td className="briefing-print-currency-name">{rate.code === "USD" ? "الدولار الأمريكي" : "الريال السعودي"}</td>
@@ -126,7 +128,7 @@ export default async function BriefingPrintPage({
                   </tbody>
                 </table>
                 <p className="briefing-print-table-source">
-                  المصدر: <a href={context.indicative_exchange_rates.source_url}>{context.indicative_exchange_rates.source_name}</a> · ليست أسعار شراء وبيع منفصلة.
+                  المصدر: <a href={indicativeFx.source_url}>{indicativeFx.source_name}</a> · ليست أسعار شراء وبيع منفصلة.
                 </p>
               </div> : null}
             </div>
