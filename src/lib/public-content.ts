@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 
 import { createClient } from "@/lib/supabase/server";
 import type { Json, Tables } from "@/types/database.types";
@@ -123,27 +124,36 @@ export async function getPublishedContent(options: ContentOptions = {}): Promise
   }
 }
 
-export async function getPublishedContentBySlug(slug: string): Promise<PublicContentItem | null> {
+export const getPublishedContentBySlug = cache(async (slug: string): Promise<PublicContentItem | null> => {
   try {
+    // Accept percent-encoded Arabic URLs and normalize canonical Unicode form.
+    let normalizedSlug = slug.normalize("NFC");
+    if (normalizedSlug.includes("%")) {
+      try { normalizedSlug = decodeURIComponent(normalizedSlug).normalize("NFC"); }
+      catch { /* Preserve literal percent signs in valid slugs. */ }
+    }
     const supabase = await createClient();
     const { data, error } = await supabase
       .from("content_items")
       .select(
         "id,title,slug,section,format,excerpt,body,published_at,is_featured,cover_asset_id,category_id,seo_title,seo_description",
       )
-      .eq("slug", slug)
+      .eq("slug", normalizedSlug)
       .eq("status", "published")
       .maybeSingle();
 
     if (error) throw error;
-    if (!data) return null;
+    if (!data) {
+      console.info("[SAS content route] no published item for slug:", normalizedSlug);
+      return null;
+    }
     const [item] = await attachCovers(supabase, [data]);
     return item ?? null;
   } catch (error) {
     reportPublicDataError("content detail initialization", error);
     throw new Error("تعذر تحميل المادة المنشورة حاليًا.", { cause: error });
   }
-}
+});
 
 export async function getPublishedSources(contentId: string): Promise<PublicSource[]> {
   try {

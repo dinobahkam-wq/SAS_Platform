@@ -1,0 +1,9 @@
+.sas-content-unavailable{width:min(720px,calc(100% - 32px));min-height:55vh;margin:0 auto;padding:clamp(60px,9vw,120px) 0 70px;text-align:right;}
+.sas-content-unavailable-code{display:block;font:500 14px Arial,sans-serif;letter-spacing:.15em;color:var(--accent);margin-bottom:18px}
+.sas-content-unavailable h1{font:500 clamp(29px,4vw,43px)/1.65 "Thmanyah Serif Display","Tajarib Taweel",serif;color:var(--foreground);margin:0 0 14px}
+.sas-content-unavailable p{max-width:650px;font-size:14px;line-height:2.1;color:var(--muted);margin:0 0 27px}
+.sas-content-unavailable-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.sas-content-unavailable-actions a{display:inline-flex;align-items:center;justify-content:center;padding:10px 15px;min-height:42px;border:1px solid var(--line);border-radius:9px;background:var(--surface);font-size:12px;font-weight:700}
+.sas-content-unavailable-actions a:first-child{background:var(--brand-teal-deep);border-color:var(--brand-teal-deep);color:#fff}
+.sas-content-unavailable-actions a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media print{.sas-content-unavailable-actions{display:none}}
