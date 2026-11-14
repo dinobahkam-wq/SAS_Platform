@@ -5,6 +5,7 @@ import "./theme.css";
 import "./brand-hero.css";
 import "./hero-carousel.css";
 import "./mukalla-hero.css";
+import "./threads-hero.css";
 import { themeInitializer } from "@/lib/theme-initializer";
 
 export const metadata: Metadata = {
