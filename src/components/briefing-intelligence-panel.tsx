@@ -1,5 +1,5 @@
 import type { BriefingIndicator } from "@/lib/briefing-indicators";
-import type { HistoricBriefingContext, HistoricExchangeRate } from "@/lib/briefing-dated-context";
+import type { HistoricBriefingContext, HistoricExchangeRate, IndicativeExchangeRate } from "@/lib/briefing-dated-context";
 import { formatBriefingDateOnly } from "@/components/briefing-public";
 
 function Symbol({ name }: { name: string }) {
@@ -45,6 +45,24 @@ function CityRates({ city, rates }: { city: "عدن" | "صنعاء"; rates: Hist
   );
 }
 
+function IndicativeCityRates({ city, rates }: { city: "عدن" | "صنعاء"; rates: IndicativeExchangeRate[] }) {
+  const local = rates.filter((rate) => rate.city === city);
+  return (
+    <div className="briefing-fx-city">
+      <div className="briefing-fx-city-heading"><Symbol name="location_on" /><strong>{city}</strong><span>ريال يمني</span></div>
+      <table className="briefing-fx-table" aria-label={`أسعار صرف تقريبية في ${city}`}>
+        <thead><tr><th scope="col">العملة</th><th scope="col">السعر الاسترشادي</th></tr></thead>
+        <tbody>{local.map((rate) => (
+          <tr key={rate.code}>
+            <th scope="row" className="briefing-fx-currency">{rate.code === "USD" ? "الدولار الأمريكي" : "الريال السعودي"}</th>
+            <td><span>{rate.qualifier} </span><bdi dir="ltr">{rate.low === rate.high ? number(rate.low) : `${number(rate.low)}–${number(rate.high)}`}</bdi></td>
+          </tr>
+        ))}</tbody>
+      </table>
+    </div>
+  );
+}
+
 export function BriefingIntelligencePanel({
   context,
   weather,
@@ -53,13 +71,14 @@ export function BriefingIntelligencePanel({
   weather: BriefingIndicator[];
 }) {
   const fx = context?.exchange_rates;
+  const indicative = context?.indicative_exchange_rates;
   return (
     <section className="briefing-intelligence" aria-label="مؤشرات الإحاطة">
       <div className="briefing-intelligence-head">
         <h2><Symbol name="monitoring" /> لوحة المؤشرات</h2>
         <span>مؤشرات مؤرخة للعدد</span>
       </div>
-      <div className="briefing-intelligence-market">
+      {context?.market.length ? <div className="briefing-intelligence-market">
         <div className="briefing-intelligence-label"><Symbol name="query_stats"/> الأسواق العالمية <small>إغلاق يوم العدد</small></div>
         <div className="briefing-intelligence-market-items">
           {context?.market.length ? context.market.map((item) => (
@@ -73,11 +92,11 @@ export function BriefingIntelligencePanel({
             </div>
           )) : <p className="briefing-empty-metric">لا توجد أسعار تاريخية موثقة لهذا العدد.</p>}
         </div>
-      </div>
+      </div> : null}
       <section className="briefing-fx-section" aria-labelledby="briefing-fx-heading">
         <div className="briefing-fx-heading">
           <div><Symbol name="currency_exchange"/><h3 id="briefing-fx-heading">أسعار الصرف</h3></div>
-          <span>{fx && context ? formatBriefingDateOnly(context.edition_date) : "لا تتوفر أسعار مؤرخة"} · ريال يمني لكل وحدة</span>
+          <span>{context ? formatBriefingDateOnly(context.edition_date) : "لا تتوفر أسعار مؤرخة"} · ريال يمني لكل وحدة</span>
         </div>
         {fx ? (
           <>
@@ -88,6 +107,17 @@ export function BriefingIntelligencePanel({
             <div className="briefing-fx-credit">
               <span>أسعار شراء وبيع استرشادية، تختلف بين محال الصرافة.</span>
               <a href={fx.source_url} target="_blank" rel="noopener noreferrer" title={fx.note}>{fx.source_name} <Symbol name="open_in_new"/></a>
+            </div>
+          </>
+        ) : indicative ? (
+          <>
+            <div className="briefing-fx-grid">
+              <IndicativeCityRates city="صنعاء" rates={indicative.rates} />
+              <IndicativeCityRates city="عدن" rates={indicative.rates} />
+            </div>
+            <div className="briefing-fx-credit">
+              <span>أسعار تقريبية، وليست تسعيرات شراء وبيع منفصلة. تختلف حسب السوق والصراف.</span>
+              <a href={indicative.source_url} target="_blank" rel="noopener noreferrer" title={indicative.note}>{indicative.source_name} <Symbol name="open_in_new"/></a>
             </div>
           </>
         ) : <p className="briefing-empty-metric">لم تُسجّل أسعار صرف موثقة لهذا العدد.</p>}
@@ -104,7 +134,7 @@ export function BriefingIntelligencePanel({
         </div>
         <span className="briefing-weather-credit"><a href="https://open-meteo.com/en/docs" rel="noopener noreferrer" target="_blank">Open-Meteo</a> <ShortTime date={weather.find((item) => item.observedAt)?.observedAt ?? null}/></span>
       </div>
-      <p className="briefing-intelligence-foot">أسعار النفط والذهب والصرف مؤرخة بيوم العدد ومسنَدة إلى مصادرها؛ درجات الحرارة راهنة ومنفصلة عنها.</p>
+      <p className="briefing-intelligence-foot">تُعرض مؤشرات الأسواق والصرف المتوفرة بتاريخها ومصادرها، وتُميَّز الأسعار التقريبية عن الشراء والبيع؛ درجات الحرارة راهنة وليست من تاريخ العدد.</p>
     </section>
   );
 }
