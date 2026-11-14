@@ -24,18 +24,18 @@ export function SasHeroThreads() {
   }, []);
 
   return (
-    <div className="sas-threads-background" aria-hidden="true">
+    <div className="sas-threads-background sas-threads-background--sitewide" aria-hidden="true">
       <div className="sas-threads-mesh">
         <Threads
           color={dark ? [95 / 255, 208 / 255, 201 / 255] : [0, 126 / 255, 128 / 255]}
           accentColor={dark ? [92 / 255, 140 / 255, 146 / 255] : [155 / 255, 184 / 255, 186 / 255]}
-          lineCount={72}
+          lineCount={64}
           thickness={0.48}
           softness={1.45}
           amplitude={0.85}
           distance={0.54}
           waves={0.9}
-          speed={0.22}
+          speed={0.19}
           split={0.07}
           fray={0.48}
           angle={18}
@@ -44,7 +44,7 @@ export function SasHeroThreads() {
           parting={0}
           enableMouseInteraction={false}
           fade={0.13}
-          opacity={dark ? 0.48 : 0.56}
+          opacity={dark ? 0.37 : 0.44}
           seed={4}
         />
       </div>
