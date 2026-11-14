@@ -7,7 +7,6 @@ import {
 import { EditorialRail } from "@/components/editorial-rail";
 import { KnowledgeRail } from "@/components/knowledge-rail";
 import { HomepageLead } from "@/components/homepage-lead";
-import { SasHeroThreads } from "@/components/sas-hero-threads";
 
 import { getPublishedContent, getPublishedRailSources } from "@/lib/public-content";
 
@@ -33,7 +32,6 @@ export default async function Home() {
       <PublicHeader />
 
       <section className="home-compact-intro home-brand-hero site-container">
-        <SasHeroThreads />
         <div className="home-intro-copy">
           <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
           <p>أخبار موثقة، وتحليل سياسي، ودراسات تستكشف اليمن ومحيطه الإقليمي والدولي.</p>
