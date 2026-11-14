@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./knowledge-reading.css";
 import "./theme.css";
-import { ThemeControl } from "@/components/theme-control";
 import { themeInitializer } from "@/lib/theme-initializer";
 
 export const metadata: Metadata = {
@@ -24,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: themeInitializer }} /></head>
-      <body>{children}<ThemeControl /></body>
+      <body>{children}</body>
     </html>
   );
 }
