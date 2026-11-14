@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import Link from "next/link";
+import { NewsFlipTrial } from "@/components/news-flip-trial";
 import type { PublicContentItem } from "@/lib/public-content";
 import { formatLabel, sectionLabel } from "@/lib/content";
 
@@ -47,10 +48,12 @@ export function EditorialRail({
   title,
   items,
   sourcesById = {},
+  experimentalFlipFirst = false,
 }: {
   title: string;
   items: PublicContentItem[];
   sourcesById?: RailSources;
+  experimentalFlipFirst?: boolean;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -120,7 +123,12 @@ export function EditorialRail({
         </div>
       </div>
       <div className="editorial-rail-track" ref={scrollRef} tabIndex={0} role="region" aria-label={"قائمة قابلة للتمرير: " + title}>
-        {items.map((item) => (
+        {items.map((item, index) => experimentalFlipFirst && index === 0 ? (
+          <NewsFlipTrial key={item.id} item={item}
+            dateLabel={displayDate(item.published_at)}
+            sourceName={sourcesById[item.id]?.[0]?.source_name?.includes("أرشيف") ? "أرشيف ساس" : (sourcesById[item.id]?.[0]?.source_name ?? "منصة ساس")}
+            onRead={() => setSelected(item)} />
+        ) : (
           <article className="editorial-tile" key={item.id}>
             <button className="editorial-tile-button" type="button" onClick={() => setSelected(item)}
               aria-haspopup="dialog" aria-label={"قراءة: " + item.title}>
