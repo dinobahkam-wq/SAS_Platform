@@ -1,5 +1,6 @@
 import type { BriefingIndicator } from "@/lib/briefing-indicators";
 import type { HistoricBriefingContext, HistoricExchangeRate } from "@/lib/briefing-dated-context";
+import { formatBriefingDateOnly } from "@/components/briefing-public";
 
 function Symbol({ name }: { name: string }) {
   return <span className="material-symbols-rounded" aria-hidden="true">{name}</span>;
@@ -76,7 +77,7 @@ export function BriefingIntelligencePanel({
       <section className="briefing-fx-section" aria-labelledby="briefing-fx-heading">
         <div className="briefing-fx-heading">
           <div><Symbol name="currency_exchange"/><h3 id="briefing-fx-heading">أسعار الصرف</h3></div>
-          <span>12 نوفمبر 2026 · ريال يمني لكل وحدة</span>
+          <span>{fx ? formatBriefingDateOnly(context!.edition_date) : "لا تتوفر أسعار مؤرخة"} · ريال يمني لكل وحدة</span>
         </div>
         {fx ? (
           <>
