@@ -12,6 +12,7 @@ import {
 } from "@/components/briefing-public";
 import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
 import "./briefing-dense-layout.css";
+import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
 import type { BriefingDevelopment, BriefingSummaryItem } from "@/lib/public-briefing";
 
 type Tab = "all" | "yemen" | "international" | "statements" | "economy";
@@ -50,7 +51,7 @@ export function BriefingEditionBody({
   developments: BriefingDevelopment[];
 }) {
   const [activeTab, setActiveTab] = useState<Tab>("all");
-  const filtered = developments.filter((development) => matchesTab(development, activeTab));
+  const filtered = prioritizeBriefingDevelopments(developments).filter((development) => matchesTab(development, activeTab));
   const selectedLabel = tabs.find((tab) => tab.key === activeTab)?.label ?? "الكل";
   const sourceLabel = (development: BriefingDevelopment) => development.sources.find((source) => source.source_role === "primary")?.source_name ?? development.sources[0]?.source_name ?? null;
 
@@ -106,13 +107,13 @@ export function BriefingEditionBody({
         <div className="briefing-section-heading briefing-developments-heading">
           <div>
             <h2 id="briefing-developments-title">سجل التطورات</h2>
-            <p>{activeTab === "all" ? "وقائع ومواقف موثقة، مع إبراز التغيرات دون ازدحام مرجعي." : `التطورات المصنفة ضمن «${selectedLabel}» في هذا العدد.`}</p>
+            <p>{activeTab === "all" ? "اليمن أولًا، ثم الإقليم والعالم المرتبطان به؛ ترتيب العرض لا يغيّر الأرشيف الأصلي." : `التطورات المصنفة ضمن «${selectedLabel}» في هذا العدد.`}</p>
           </div>
           <span className="briefing-development-count">{filtered.length} تطورًا</span>
         </div>
         {filtered.length ? (
           <div className="briefing-timeline">
-            {filtered.map((development) => {
+            {filtered.map((development, index) => {
               const happened = development.occurred_at
                 ? formatBriefingDate(development.occurred_at, development.time_precision !== "date_only")
                 : development.occurred_on
@@ -121,7 +122,7 @@ export function BriefingEditionBody({
               return (
                 <article className="briefing-event briefing-event--dense" key={development.order}>
                   <div className="briefing-event-index">
-                    <span>{String(development.order + 1).padStart(2, "0")}</span>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
                   </div>
                   <div className="briefing-event-content">
                     <div className="briefing-event-meta">
