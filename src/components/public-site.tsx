@@ -22,7 +22,7 @@ export function PublicHeader() {
     <header className="site-header">
       <div className="site-header-inner">
         <Link href="/" className="site-brand" aria-label="منصة ساس">
-          <BrandLogo variant="full" priority />
+          <BrandLogo variant="color" priority />
         </Link>
         <nav className="site-nav" aria-label="الأقسام الرئيسية">
           {navigation.map((item) => (
