@@ -77,7 +77,7 @@ export function BriefingIntelligencePanel({
       <section className="briefing-fx-section" aria-labelledby="briefing-fx-heading">
         <div className="briefing-fx-heading">
           <div><Symbol name="currency_exchange"/><h3 id="briefing-fx-heading">أسعار الصرف</h3></div>
-          <span>{fx ? formatBriefingDateOnly(context!.edition_date) : "لا تتوفر أسعار مؤرخة"} · ريال يمني لكل وحدة</span>
+          <span>{fx && context ? formatBriefingDateOnly(context.edition_date) : "لا تتوفر أسعار مؤرخة"} · ريال يمني لكل وحدة</span>
         </div>
         {fx ? (
           <>
