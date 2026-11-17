@@ -1,0 +1,26 @@
+/* Compact evidence-first briefing ledger. Detailed sources remain available on demand. */
+.briefing-event--dense .briefing-event-meta{margin-bottom:6px;gap:5px 12px}
+.briefing-event--dense .briefing-event-content h3{margin-bottom:5px;line-height:1.55}
+.briefing-event--dense .briefing-event-summary{line-height:1.85}
+.briefing-dense-change{margin:8px 0 0;padding-inline-start:10px;border-inline-start:2px solid #549b84;color:var(--foreground);font-size:12px;line-height:1.85}
+.briefing-dense-change strong{font-weight:700;color:#267765;margin-inline-end:5px}
+.briefing-dense-foot{display:flex;align-items:center;justify-content:space-between;gap:8px 20px;flex-wrap:wrap;margin-top:10px}
+.briefing-dense-evidence{display:flex;align-items:center;flex-wrap:wrap;gap:5px 10px;min-width:0;font-size:11px;color:var(--muted,#68746e)}
+.briefing-dense-evidence .briefing-verification{font-size:10px}
+.briefing-dense-source-name{max-width:235px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.briefing-dense-evidence .briefing-reference-trigger{min-height:30px;padding:4px 7px;font-size:10px;background:transparent;border-color:transparent;color:inherit}
+.briefing-dense-evidence .briefing-reference-trigger:hover,.briefing-dense-evidence .briefing-reference-trigger[aria-expanded="true"]{border-color:var(--line,#dce4de)}
+.briefing-dense-evidence .briefing-reference-counter{font-size:9px}
+.briefing-dense-context{font-size:11px;color:var(--muted,#68746e);max-width:100%}
+.briefing-dense-context summary{cursor:pointer;list-style:revert;white-space:nowrap}
+.briefing-dense-context p{color:var(--foreground);line-height:1.85;margin:7px 0 0;max-width:75ch}
+.briefing-dense-context[open]{flex-basis:100%;padding:8px 12px;border-inline-start:2px solid var(--line,#dce4de)}
+@media(max-width:640px){
+ .briefing-dense-foot{align-items:flex-start;flex-direction:column;gap:6px}
+ .briefing-event--dense .briefing-event-content h3{font-size:17px}
+ .briefing-dense-source-name{max-width:155px}
+}
+@media print{
+ .briefing-dense-evidence .briefing-reference-wrap,.briefing-dense-context summary{display:none}
+ .briefing-dense-context:not([open]) p{display:block}
+}
