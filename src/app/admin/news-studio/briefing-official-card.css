@@ -1,0 +1,19 @@
+/* Official briefing canvas preset — editor only, themed and responsive. */
+.studio-official-card{display:grid;gap:12px;padding:16px 18px;margin:10px 0 20px;border-radius:10px;border:1px solid var(--line,#d9e3de);background:var(--surface,#fff);font-family:"Thmanyah Sans",sans-serif;color:var(--foreground)}
+.studio-official-card-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.studio-official-card-heading strong{font:700 15px/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif}
+.studio-official-card-heading p{font-size:11px;color:var(--muted);margin:2px 0 0}
+.studio-official-card-heading>span{font-size:10px;color:var(--accent);border:1px solid var(--line);padding:4px 7px;border-radius:5px;white-space:nowrap}
+.studio-official-card-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.studio-official-card fieldset{border:0;min-width:0;padding:0;margin:0}
+.studio-official-card legend{font-size:11px;font-weight:700;color:var(--foreground);margin-bottom:7px}
+.studio-official-card-options{display:flex;flex-wrap:wrap;gap:6px}
+.studio-official-card-options button{border:1px solid var(--line);border-radius:6px;padding:8px 11px;cursor:pointer;background:var(--surface);color:var(--foreground);font:600 11px/1.6 "Thmanyah Sans",sans-serif}
+.studio-official-card-options button.is-active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.studio-official-card-options button:hover{border-color:var(--accent)}
+.studio-official-card-options button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.studio-official-card-upload{display:grid;gap:7px;font-size:11px;font-weight:600;max-width:360px}
+.studio-official-card-upload input{max-width:100%;font-size:11px}
+.studio-official-card-note{font-size:11px;line-height:1.8;color:var(--muted);margin:0}
+@media(max-width:670px){.studio-official-card{padding:12px}.studio-official-card-controls{grid-template-columns:1fr}}
+@media print{.studio-official-card{display:none}}
