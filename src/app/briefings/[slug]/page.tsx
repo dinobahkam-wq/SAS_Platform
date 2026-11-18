@@ -9,6 +9,7 @@ import { getBriefingWeatherIndicators } from "@/lib/briefing-indicators";
 import { getDatedBriefingContext } from "@/lib/briefing-dated-context";
 import { BriefingIntelligencePanel } from "@/components/briefing-intelligence-panel";
 import { BriefingDailyOverview } from "@/components/briefing-daily-overview";
+import { canUseNewsStudio } from "@/lib/briefing-studio-permission";
 
 export const dynamic = "force-dynamic";
 
@@ -51,9 +52,10 @@ export default async function PublicBriefingPage({
 
   const { edition, revision, executiveSummary, developments } = briefing;
   const correction = revision.revision_kind === "correction";
-  const [weather, context] = await Promise.all([
+  const [weather, context, canOpenStudio] = await Promise.all([
     getBriefingWeatherIndicators(),
     getDatedBriefingContext(edition.edition_date),
+    canUseNewsStudio(),
   ]);
   const [headline, ...subtitleParts] = revision.title_ar.split(" | ");
   const subtitle = subtitleParts.join(" | ").replace(/\s+—\s+\d{1,2}\s+[^—]+\d{4}\s*$/, "").trim();
@@ -95,7 +97,7 @@ export default async function PublicBriefingPage({
 
         <BriefingIntelligencePanel context={context} weather={weather} />
 
-        <BriefingEditionBody executiveSummary={executiveSummary} developments={developments} />
+        <BriefingEditionBody executiveSummary={executiveSummary} developments={developments} studioEdition={canOpenStudio ? { slug: edition.slug, revisionNo: revision.revision_no } : null} />
 
         <section className="briefing-methodology-section">
           <details>
