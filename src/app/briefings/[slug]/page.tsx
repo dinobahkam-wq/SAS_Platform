@@ -107,15 +107,6 @@ export default async function PublicBriefingPage({
           </details>
         </section>
 
-        {revision.analysis_ar?.trim() ? (
-          <section className="briefing-analysis-section">
-            <details>
-              <summary><span>قراءة ساس</span><span>مساحة تفسيرية منفصلة · عرض +</span></summary>
-              <div className="briefing-analysis-content"><p>{revision.analysis_ar}</p></div>
-            </details>
-          </section>
-        ) : null}
-
         <footer className="briefing-edition-end">
           <a href="/briefings">العودة إلى أرشيف الإحاطات ←</a>
           <span>منصة ساس للإعلام والدراسات</span>
