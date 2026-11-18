@@ -1,0 +1,24 @@
+/* Briefing → News Studio (Package 2): source lineage and editorial cautions. */
+.studio-briefing-origin{
+  display:grid;gap:9px;
+  margin:14px 0 20px;padding:15px 18px;
+  border:1px solid var(--line,#dce4df);border-inline-start:3px solid var(--accent,#174b3c);
+  border-radius:9px;background:var(--surface,#fff);
+  color:var(--foreground,#17211e);
+  font:400 12px/1.8 "Thmanyah Sans",sans-serif;
+}
+.studio-briefing-origin-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.studio-briefing-origin-head strong{font-size:14px;font-weight:700}
+.studio-briefing-origin-head a{color:var(--accent,#174b3c);font-size:11px;text-decoration:underline;text-underline-offset:3px}
+.studio-briefing-origin-meta{display:flex;flex-wrap:wrap;gap:7px}
+.studio-briefing-origin-meta span{display:inline-block;border:1px solid var(--line,#dce4df);padding:3px 8px;border-radius:5px;color:var(--muted,#718078);font-size:10px}
+.studio-briefing-origin-warning{margin:0;border-inline-start:3px solid var(--danger,#a33f36);padding:7px 11px;background:color-mix(in srgb,var(--danger,#a33f36) 7%,var(--surface,#fff));color:var(--foreground,#17211e);font-size:12px}
+.studio-briefing-origin-note{margin:0;font-size:11px;color:var(--muted,#718078)}
+.studio-briefing-origin details{border-top:1px solid var(--line,#dce4df);padding-top:8px}
+.studio-briefing-origin summary{cursor:pointer;color:var(--accent,#174b3c);font-size:11px;font-weight:700}
+.studio-briefing-origin ul{padding-inline-start:20px;margin:9px 0 0;display:grid;gap:5px}
+.studio-briefing-origin li{font-size:11px;overflow-wrap:anywhere}
+.studio-briefing-origin li a{color:var(--accent,#174b3c);text-decoration:underline;text-underline-offset:2px}
+.studio-briefing-origin small{color:var(--muted,#718078);font-size:10px}
+@media(max-width:640px){.studio-briefing-origin{padding:12px}.studio-briefing-origin-head{align-items:flex-start}}
+@media print{.studio-briefing-origin{display:none}}
