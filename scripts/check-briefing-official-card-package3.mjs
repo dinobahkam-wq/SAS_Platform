@@ -39,6 +39,10 @@ test("square and portrait cards are switchable without losing uploaded image", (
   assert.match(studio, /setPhotoPanY/);
 });
 
+test("source is always shown on imported briefing designs", () => {
+  assert.ok(studio.includes("return (cfg.briefingOrigin || cfg.showSource)&&value?cfg.sourcePrefix"));
+});
+
 test("PNG download uses actual canvas size and refuses missing brand or source", () => {
   assert.match(studio, /canvas\.width=w;canvas\.height=h/);
   assert.match(studio, /temp\.toBlob\(resolve,'image\/png'\)/);
