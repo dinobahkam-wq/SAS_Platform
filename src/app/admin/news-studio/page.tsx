@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useMemo,useRef,useState,type PointerEvent as ReactPointerEvent} from 'react';
-import type { BriefingStudioPrefill, BriefingStudioOrigin } from '@/lib/briefing-studio-transfer';
+import { useBriefingStudioHandoff } from '@/components/briefing-studio-handoff-context';
 import './briefing-studio-import.css';
 type Format='square'|'portrait'|'landscape'|'wide'|'story'|'custom';
 type Skin='forest'|'ink'|'ivory'|'navy'|'olive'|'stone'|'rose'|'charcoal'|'midnight'|'burgundy'|'cobalt'|'teal'|'sand'|'white'|'slate'|'plum'|'emerald'|'terracotta'|'custom';
@@ -538,7 +538,10 @@ async function getLogo(variant:LogoVariant):Promise<HTMLImageElement|null>{
  const sources:Record<LogoVariant,string>={color:'/brand/logos/sas-logo-1.svg',dark:'/brand/logos/sas-logo.svg',light:'/brand/logos/sas-logo-for%20white%20background.png'};
  return await new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=sources[variant]});
 }
-export default function Studio({initialImport,briefingOrigin}:{initialImport?:BriefingStudioPrefill;briefingOrigin?:BriefingStudioOrigin}={}){
+export default function Studio(){
+ const transfer=useBriefingStudioHandoff();
+ const initialImport=transfer?.prefill;
+ const briefingOrigin=transfer?.origin;
  const [mode,setMode]=useState<Mode>('news');
  const [format,setFormat]=useState<Format>('portrait');
  const [customWidth,setCustomWidth]=useState(1080);
