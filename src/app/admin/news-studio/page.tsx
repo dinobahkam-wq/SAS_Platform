@@ -301,7 +301,7 @@ function photoCredit(ctx:CanvasRenderingContext2D,cfg:Config,photo:PhotoRect,bel
 function clamp(value:number,min:number,max:number){return Math.max(min,Math.min(max,value))}
 function sourceText(cfg:Config){
  const value=cfg.sourceName.trim()||sourceLabel(cfg.sourceUrl);
- return cfg.showSource&&value?cfg.sourcePrefix+' '+value:'';
+ return (cfg.briefingOrigin || cfg.showSource)&&value?cfg.sourcePrefix+' '+value:'';
 }
 function calendarDate(value:string,showWeekday:boolean){
  const match=new RegExp('^([0-9]{4})/([0-9]{2})/([0-9]{2})$').exec(value.trim());
