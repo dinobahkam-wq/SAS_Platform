@@ -13,7 +13,7 @@ const ledger = read("src/components/briefing-edition-body.tsx");
 
 test("official canvas template adds visible edition metadata, attribution and brand logo", () => {
   assert.match(studio, /cfg\.briefingOrigin\?'الإحاطة اليومية':modes\[cfg\.mode\]/);
-  assert.match(studio, /'العدد '\+String\(origin\.editionNo\)/);
+  assert.match(studio, /'الإحاطة اليومية · العدد '\+String\(origin\.editionNo\)/);
   assert.match(studio, /' · التطور '\+String\(origin\.developmentOrder\+1\)/);
   assert.match(studio, /checkLabels|const labels:Record<string,string>/);
   assert.match(studio, /'منسوب إلى مصدر'/);
