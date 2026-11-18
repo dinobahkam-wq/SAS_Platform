@@ -61,6 +61,18 @@ function validDate(value: string | null | undefined): string | null {
   return /^\d{4}-\d{2}-\d{2}$/.test(raw) ? raw : null;
 }
 
+/** The editorial timestamp represents the event time in Yemen, not its UTC calendar day. */
+function localEventDate(timestamp: string | null | undefined): string | null {
+  if (!timestamp) return null;
+  const parsed = new Date(timestamp);
+  if (Number.isNaN(parsed.getTime())) return null;
+  const parts = new Intl.DateTimeFormat("en-GB-u-ca-gregory-nu-latn", {
+    timeZone: "Asia/Aden", year: "numeric", month: "2-digit", day: "2-digit",
+  }).formatToParts(parsed);
+  const part = (name: string) => parts.find((entry) => entry.type === name)?.value ?? "";
+  return validDate(part("year") + "-" + part("month") + "-" + part("day"));
+}
+
 export function createBriefingStudioTransfer(
   briefing: PublicBriefing,
   developmentOrder: number,
@@ -77,7 +89,7 @@ export function createBriefingStudioTransfer(
   if (!development || !development.headline_ar.trim()) return null;
 
   const source = selectedSource(development.sources);
-  const eventDate = validDate(development.occurred_on) ?? validDate(development.occurred_at);
+  const eventDate = validDate(development.occurred_on) ?? localEventDate(development.occurred_at);
   const publishedDate = validDate(briefing.edition.edition_date);
   if (!eventDate && !publishedDate) return null;
 
