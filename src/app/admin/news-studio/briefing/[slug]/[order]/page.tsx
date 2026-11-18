@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Studio from "@/app/admin/news-studio/page";
+import { BriefingStudioHandoffProvider } from "@/components/briefing-studio-handoff-context";
 import { requireAdmin } from "@/lib/admin";
 import { briefingCategoryLabel } from "@/components/briefing-public";
 import { getPublicBriefing } from "@/lib/public-briefing";
@@ -50,12 +51,14 @@ export default async function BriefingStudioPage({
   if (!transfer) notFound();
 
   return (
-    <Studio
-      initialImport={{
+    <BriefingStudioHandoffProvider transfer={{
+      ...transfer,
+      prefill: {
         ...transfer.prefill,
         category: briefingCategoryLabel(transfer.prefill.category),
-      }}
-      briefingOrigin={transfer.origin}
-    />
+      },
+    }}>
+      <Studio />
+    </BriefingStudioHandoffProvider>
   );
 }
