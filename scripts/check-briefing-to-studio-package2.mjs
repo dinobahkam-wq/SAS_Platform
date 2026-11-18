@@ -56,6 +56,15 @@ test("date fallback is explicitly labelled as edition date, not event date", () 
   assert.deepEqual(result.origin.sources, []);
 });
 
+test("event timestamps use Yemen local calendar date", () => {
+  const input = example();
+  input.developments[0].occurred_on = null;
+  input.developments[0].occurred_at = "2026-11-13T22:30:00Z";
+  const result = createBriefingStudioTransfer(input, 0, 2);
+  assert.equal(result.prefill.date, "2026/11/14");
+  assert.equal(result.origin.dateBasis, "event");
+});
+
 test("stale, invalid, missing, withdrawn and unpublished editions are rejected", () => {
   const base = example();
   for (const order of [-1, 1, 2.5, Number.NaN]) {
