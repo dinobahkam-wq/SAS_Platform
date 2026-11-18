@@ -27,7 +27,7 @@ test("public and print editions omit Reading SAS without losing factual briefing
 });
 
 test("archived analysis remains readable in underlying snapshot parser", () => {
-  assert.match(publicBriefingReader, /analysis_ar: nullableText\(revision\.analysis_ar\)/);
+  assert.match(publicBriefingReader, /analysis_ar: text\(revision\.analysis_ar\)/);
   assert.match(publicBriefingReader, /get_public_briefing/);
 });
 
