@@ -532,7 +532,7 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   const labels:Record<string,string>={verified:'متحقق',attributed:'منسوب إلى مصدر',disputed:'متنازع عليه',unverified:'لم يتحقق مستقلًا',not_applicable:'لا ينطبق'};
   ctx.save();ctx.direction='rtl';ctx.textAlign='left';
   ctx.fillStyle=c.accent;ctx.font='700 21px '+sans;
-  ctx.fillText('الإحاطة اليومية · العدد '+String(origin.editionNo).padStart(2,'0')+' · التطور '+String(origin.developmentOrder+1).padStart(2,'0'),margin,foot+17);
+  ctx.fillText('الإحاطة اليومية · العدد '+String(origin.editionNo).padStart(2,'0')+' · السجل '+String(origin.developmentOrder+1).padStart(2,'0'),margin,foot+17);
   ctx.fillStyle=c.dim;ctx.font='400 19px '+sans;
   ctx.fillText(ellipsis(ctx,labels[origin.verificationStatus]??'حالة التحقق غير محددة',badgeX-margin-24),margin,foot+53);
   ctx.restore();
