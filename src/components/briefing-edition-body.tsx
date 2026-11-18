@@ -13,6 +13,7 @@ import {
 } from "@/components/briefing-public";
 import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
 import "./briefing-dense-layout.css";
+import "./briefing-studio-transfer.css";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
 import type { BriefingDevelopment, BriefingSummaryItem } from "@/lib/public-briefing";
 
