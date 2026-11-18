@@ -1,5 +1,7 @@
 'use client';
 import {useEffect,useMemo,useRef,useState,type PointerEvent as ReactPointerEvent} from 'react';
+import type { BriefingStudioPrefill, BriefingStudioOrigin } from '@/lib/briefing-studio-transfer';
+import './briefing-studio-import.css';
 type Format='square'|'portrait'|'landscape'|'wide'|'story'|'custom';
 type Skin='forest'|'ink'|'ivory'|'navy'|'olive'|'stone'|'rose'|'charcoal'|'midnight'|'burgundy'|'cobalt'|'teal'|'sand'|'white'|'slate'|'plum'|'emerald'|'terracotta'|'custom';
 type Mode='news'|'urgent'|'statement'|'quote';
@@ -536,7 +538,7 @@ async function getLogo(variant:LogoVariant):Promise<HTMLImageElement|null>{
  const sources:Record<LogoVariant,string>={color:'/brand/logos/sas-logo-1.svg',dark:'/brand/logos/sas-logo.svg',light:'/brand/logos/sas-logo-for%20white%20background.png'};
  return await new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=sources[variant]});
 }
-export default function Studio(){
+export default function Studio({initialImport,briefingOrigin}:{initialImport?:BriefingStudioPrefill;briefingOrigin?:BriefingStudioOrigin}={}){
  const [mode,setMode]=useState<Mode>('news');
  const [format,setFormat]=useState<Format>('portrait');
  const [customWidth,setCustomWidth]=useState(1080);
@@ -607,6 +609,7 @@ export default function Studio(){
  const [page,setPage]=useState(0);const [count,setCount]=useState(0);
  const [error,setError]=useState('');const [logo,setLogo]=useState<HTMLImageElement|null>(null);
  const [importFeedback,setImportFeedback]=useState<{kind:'success'|'error';message:string}|null>(null);
+ const receivedBriefingRef=useRef<string|null>(null);
  const [scene,setScene]=useState<StudioElement[]>([]);const [selectedElement,setSelectedElement]=useState<StudioElementId|null>(null);const gesture=useRef<StudioGesture|null>(null);
  const [exporting,setExporting]=useState(false);const canvas=useRef<HTMLCanvasElement>(null);
  const cfg=useMemo(()=>({mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline}),[mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline]);
@@ -706,22 +709,38 @@ export default function Studio(){
   }
  }
  function endGesture(){gesture.current=null}
+ function applyImportedNews(imported:NewsImportPayload){
+  const design=imported.design;
+  setMode('news');setFormat(design?.format??'portrait');setSkin(design?.skin??'forest');
+  setTitle(imported.headline);setSummary(imported.summary);setSourceName(imported.sourceName);setSourceUrl(imported.sourceUrl);setDate(imported.date);
+  setLocation(imported.location);setShowLocation(design?.showLocation??Boolean(imported.location));
+  setPath({dossier:'',issue:'',event:imported.category});setShowPath(Boolean(imported.category));
+  setShowSource(design?.showSource??Boolean(imported.sourceName||imported.sourceUrl));
+  setShowWeekday(design?.showWeekday??false);
+  setTextSize(78);setTextWeight(700);setAlign('right');setVertical('top');setTitleSize(60);setSummarySize(32);setSideMargin(76);setMarginLeft(0);setMarginRight(0);setLineSpacing(1.45);
+  setHeadlineFont(design?.headlineFont??'tajarib');setSummaryFont(design?.summaryFont??'sans');setMetaFont(design?.metaFont??'sans');setLogoVariant(design?.logoVariant??'color');
+  setPhotoPosition(design?.photoPosition??'left');setPhotoFit(design?.photoFit??'cover');setPhotoScale(100);setPhotoFrameWidth(100);setPhotoFrameHeight(100);setPhotoZoom(100);setPhotoPanX(0);setPhotoPanY(0);
+  setNewsImage(null);setImageCredit('');setShowImageCredit(false);setMediaError('');
+  setSourcePrefix('المصدر:');
+  setPage(0);setError('');
+ }
+ useEffect(()=>{
+  if(!initialImport||!briefingOrigin)return;
+  const key=briefingOrigin.slug+':'+briefingOrigin.revisionNo+':'+briefingOrigin.developmentOrder;
+  if(receivedBriefingRef.current===key)return;
+  receivedBriefingRef.current=key;
+  applyImportedNews(initialImport);
+  if(briefingOrigin.informationClass==='claim' || briefingOrigin.verificationStatus==='disputed' || briefingOrigin.verificationStatus==='unverified'){
+   setSourcePrefix('بحسب:');
+  }
+  setImportFeedback({kind:'success',message:'تمت تعبئة حقول الخبر من النسخة المنشورة للإحاطة. راجع نسبة التصريحات والمصادر قبل التصدير.'});
+ },[initialImport,briefingOrigin]);
  async function importNewsFile(file:File|undefined){
   if(!file)return;
   if(file.size>1024*1024){setImportFeedback({kind:'error',message:'حجم ملف المادة يتجاوز 1MB'});return}
   try{
-   const imported=parseNewsImport(await file.text(),file.name),design=imported.design;
-   setMode('news');setFormat(design?.format??'portrait');setSkin(design?.skin??'forest');
-   setTitle(imported.headline);setSummary(imported.summary);setSourceName(imported.sourceName);setSourceUrl(imported.sourceUrl);setDate(imported.date);
-   setLocation(imported.location);setShowLocation(design?.showLocation??Boolean(imported.location));
-   setPath({dossier:'',issue:'',event:imported.category});setShowPath(Boolean(imported.category));
-   setShowSource(design?.showSource??Boolean(imported.sourceName||imported.sourceUrl));
-   setShowWeekday(design?.showWeekday??false);
-   setTextSize(78);setTextWeight(700);setAlign('right');setVertical('top');setTitleSize(60);setSummarySize(32);setSideMargin(76);setMarginLeft(0);setMarginRight(0);setLineSpacing(1.45);
-   setHeadlineFont(design?.headlineFont??'tajarib');setSummaryFont(design?.summaryFont??'sans');setMetaFont(design?.metaFont??'sans');setLogoVariant(design?.logoVariant??'color');
-   setPhotoPosition(design?.photoPosition??'left');setPhotoFit(design?.photoFit??'cover');setPhotoScale(100);setPhotoFrameWidth(100);setPhotoFrameHeight(100);setPhotoZoom(100);setPhotoPanX(0);setPhotoPanY(0);
-   setNewsImage(null);setImageCredit('');setShowImageCredit(false);setMediaError('');
-   setPage(0);setError('');
+   const imported=parseNewsImport(await file.text(),file.name);
+   applyImportedNews(imported);
    setImportFeedback({kind:'success',message:'تم استيراد «'+file.name+'» وتحديث معاينة الخبر تلقائيًا. أضف صورة الخبر من قسم الصورة الرئيسية إذا لزم.'});
   }catch(error){
    setImportFeedback({kind:'error',message:error instanceof Error?error.message:'تعذر قراءة ملف المادة'});
@@ -765,6 +784,31 @@ export default function Studio(){
  const resizeHandles:ResizeHandle[]=['nw','n','ne','e','se','s','sw','w'];
  return <div className="studio-page">
  <header className="knowledge-hero"><span className="eyebrow">استوديو ساس · V3-C.3</span><h1>استوديو المنتجات البصرية</h1><p>معاينة وتصدير محلي دون نشر آلي أو تعديل تلقائي للبيان.</p></header>
+ {briefingOrigin&&<section className="studio-briefing-origin" aria-label="بيانات ربط الإحاطة">
+   <div className="studio-briefing-origin-head">
+    <strong>مادة مستوردة من الإحاطة اليومية</strong>
+    <a href={'/briefings/'+encodeURIComponent(briefingOrigin.slug)} target="_blank" rel="noopener noreferrer">عرض التطور في العدد</a>
+   </div>
+   <div className="studio-briefing-origin-meta">
+    <span>العدد {briefingOrigin.editionNo}</span>
+    <span>المراجعة {briefingOrigin.revisionNo}</span>
+    <span>الترتيب الأصلي {briefingOrigin.developmentOrder+1}</span>
+    <span>تاريخ العدد {briefingOrigin.editionDate}</span>
+    <span>{briefingOrigin.dateBasis==='event'?'التاريخ: يوم وقوع التطور':'التاريخ: يوم العدد (وقت الحدث غير محدد)'}</span>
+    <span>التصنيف: {briefingOrigin.informationClass==='claim'?'ادعاء':briefingOrigin.informationClass==='position'?'موقف':'معلومة'}</span>
+   </div>
+   {(briefingOrigin.informationClass==='claim'||briefingOrigin.verificationStatus==='unverified'||briefingOrigin.verificationStatus==='disputed')&&
+    <p role="note" className="studio-briefing-origin-warning">تنبيه تحريري: هذا التطور يتضمن ادعاءً أو معلومة غير متحقق منها مستقلًا. يجب الإبقاء على النسبة إلى المصدر وصياغة الحذر في الصورة.</p>}
+   {briefingOrigin.verificationNote&&<p className="studio-briefing-origin-note">التحقق: {briefingOrigin.verificationNote}</p>}
+   {briefingOrigin.sources.length?
+    <details><summary>المصادر المسجلة ({briefingOrigin.sources.length})</summary>
+     <ul>{briefingOrigin.sources.map((source,index)=><li key={source.url??source.name+index}>
+       {source.url?<a href={source.url} target="_blank" rel="noopener noreferrer">{source.name}</a>:<span>{source.name}</span>}
+       {source.title?' — '+source.title:''}{source.attribution?' · '+source.attribution:''}
+      </li>)}</ul></details>
+    :<p role="note" className="studio-briefing-origin-warning">لم تُسجّل إحالة عامة للتطور. تحقق من المصدر قبل تصدير البطاقة.</p>}
+   <small>التعديلات في الاستوديو لا تغير التطور المنشور ولا مصادره. لا يُنشر التصميم تلقائيًا.</small>
+  </section>}
  <div className="studio-layout"><section className="admin-panel studio-fields">
  <h2>إعداد المادة</h2>
  <fieldset className="studio-options studio-import">
