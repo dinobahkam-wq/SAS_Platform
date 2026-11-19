@@ -10,7 +10,7 @@ import { KnowledgeRail } from "@/components/knowledge-rail";
 import { getPublishedContent } from "@/lib/public-content";
 import { getPublicBriefing, getPublicBriefingArchive } from "@/lib/public-briefing";
 import { HomeBriefingShowcase } from "@/components/home-briefing-showcase";
-import { VisualKnowledgeFeature, CivicKnowledgeFeature } from "@/components/visual-knowledge-feature";
+import { VisualKnowledgeShowcase } from "@/components/visual-knowledge-feature";
 
 export const dynamic = "force-dynamic";
 
@@ -81,7 +81,8 @@ export default async function Home() {
 
       <section className="home-section site-container sas-product-section">
         <SectionHeading eyebrow="السياسة بلغة الصورة" title="المعرفة البصرية" href="/visual-knowledge" />
-        <div style={{ display: "grid", gap: 18 }}><CivicKnowledgeFeature compact /><VisualKnowledgeFeature compact /></div>
+        <p className="sas-visual-showcase-intro">تصورات تفاعلية توضح المفاهيم السياسية وتحولات الأحداث، بمصادر يمكن الرجوع إليها.</p>
+        <VisualKnowledgeShowcase />
         {visual.length ? (
           <div style={{ marginTop: 24 }}><EditorialRail title="مواد بصرية أخرى" items={visual} /></div>
         ) : null}
