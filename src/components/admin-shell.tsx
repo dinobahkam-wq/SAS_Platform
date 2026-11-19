@@ -6,6 +6,7 @@ import { ThemeControl } from "@/components/theme-control";
 const navigation = [
   { href: "/admin", label: "نظرة عامة", symbol: "⌂", exact: true },
   { href: "/admin/content", label: "إدارة المحتوى", symbol: "▤" },
+  { href: "/admin/legacy-import", label: "ترحيل أرشيف ساس", symbol: "↥" },
   { href: "/admin/sources", label: "المصادر", symbol: "◎" },
   { href: "/admin/categories", label: "التصنيفات", symbol: "▦" },
   { href: "/admin/media", label: "مكتبة الوسائط", symbol: "▧" },
