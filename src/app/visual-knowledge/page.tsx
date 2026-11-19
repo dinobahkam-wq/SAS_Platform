@@ -1,22 +1,43 @@
 import type { Metadata } from "next";
-import { SectionLanding } from "@/components/section-landing";
-import { getPublishedContent } from "@/lib/public-content";
+import Link from "next/link";
+import { PublicHeader, PublicFooter } from "@/components/public-site";
+import { VisualKnowledgeFeature } from "@/components/visual-knowledge-feature";
+import { EditorialRail } from "@/components/editorial-rail";
+import { getPublishedContent, getPublishedRailSources } from "@/lib/public-content";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "المعرفة البصرية",
-  description: "إنفوجرافيك ومفاهيم سياسية وشروحات مرئية تربط المعرفة بالأحداث الجارية.",
+  description: "تصورات معرفية تفاعلية وإنفوجرافيك ومواد مرئية موثقة تساعد على فهم التحولات السياسية في اليمن.",
 };
 
 export default async function VisualKnowledgePage() {
   const all = await getPublishedContent({ section: "media", limit: 48 });
   const items = all.filter((item) => item.format === "infographic" || item.format === "photo_gallery");
+  const sourceMap = items.length ? await getPublishedRailSources(items.map((item) => item.id)) : {};
   return (
-    <SectionLanding
-      eyebrow="السياسة بلغة الصورة"
-      title="المعرفة البصرية"
-      description="مفاهيم العلوم السياسية والأنظمة والمؤسسات والعلاقات الدولية، تقدم في إنفوجرافيك ومواد بصرية مرتبطة بالأحداث."
-      items={items}
-    />
+    <main className="public-site">
+      <PublicHeader />
+      <section className="section-landing-intro site-container">
+        <div>
+          <span className="eyebrow">من الخبر إلى المعرفة</span>
+          <h1>المعرفة البصرية</h1>
+          <p>تصورات تفاعلية وإنفوجرافيك موثق تشرح الأحداث وتحولاتها، وتربط الوقائع بالمصادر وسياقها.</p>
+        </div>
+        <Link href="/" className="section-back-link">العودة إلى الرئيسية</Link>
+      </section>
+      <div className="section-landing-content site-container" style={{ paddingBottom: 70 }}>
+        <div className="site-section-heading">
+          <div><span className="eyebrow">الإصدار التجريبي الأول</span><h2>تصور معرفي تفاعلي</h2></div>
+        </div>
+        <VisualKnowledgeFeature />
+        {items.length ? (
+          <div style={{ marginTop: 44 }}>
+            <EditorialRail title="إنفوجرافيك ومواد بصرية أخرى" items={items} sourcesById={sourceMap} />
+          </div>
+        ) : null}
+      </div>
+      <PublicFooter />
+    </main>
   );
 }
