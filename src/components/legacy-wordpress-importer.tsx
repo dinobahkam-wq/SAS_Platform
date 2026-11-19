@@ -45,8 +45,8 @@ export function LegacyWordPressImporter() {
       })));
       setOutcomes(prev=>[outcome,...prev]);
       // A record is never marked transferred merely because the request was sent.
-      const doneTitles=new Set([...outcome.imported,...outcome.skipped].map(item=>item.title));
-      setItems(prev=>prev.map(item=>doneTitles.has(item.title)?{...item,selected:false}:item));
+      const doneIds=new Set([...outcome.imported,...outcome.skipped].map(item=>item.legacyId));
+      setItems(prev=>prev.map(item=>doneIds.has(item.legacyId)?{...item,selected:false}:item));
       if(outcome.failed.length) setError("بعض المواد لم تُستورد، راجع تفاصيل الأخطاء أدناه.");
     }catch(err){setError(err instanceof Error?err.message:"تعذر حفظ الدفعة.");}
     finally{setBusy(false);}
