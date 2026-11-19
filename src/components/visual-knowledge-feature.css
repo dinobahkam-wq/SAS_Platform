@@ -22,3 +22,14 @@
 @media(max-width:850px){.sas-visual-feature{grid-template-columns:1fr}.sas-visual-feature-graphic{border-inline-start:0;border-top:1px solid var(--line);min-height:165px}.sas-visual-feature--compact .sas-visual-feature-graphic{min-height:120px}.sas-visual-feature-type{margin-top:17px}}
 @media(max-width:580px){.sas-visual-feature-content{padding:20px}.sas-visual-feature-graphic{padding:21px}.sas-visual-feature-graphic-foot{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.sas-visual-feature *{transition:none!important}}
+
+/* Second visual knowledge cover — civic institution diagram. */
+.sas-visual-feature--civics .sas-visual-feature-graphic{background:linear-gradient(125deg,#153c35,#245c4d)}
+.sas-civics-map{display:flex;flex-direction:column;align-items:center;padding:8px 0 2px;gap:0}
+.sas-civics-map-core{background:#d8e8c5;color:#14362b;border-radius:8px;font:700 15px/1.7 "Tajarib Taweel","Thmanyah Sans",sans-serif;padding:11px 31px}
+.sas-civics-map-stems{width:65%;height:34px;display:grid;grid-template-columns:repeat(3,1fr);border-top:0}
+.sas-civics-map-stems span{border-right:1px solid #c7ddc5;align-self:stretch}
+.sas-civics-map-stems span:nth-child(2){border-right:1px solid #c7ddc5}
+.sas-civics-map-nodes{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.sas-civics-map-nodes span{border:1px solid #d0e5ce66;background:#ffffff12;border-radius:6px;padding:10px 4px;color:#ecf5e7;font:600 11px/1.5 "Thmanyah Sans",sans-serif;text-align:center}
+@media(max-width:560px){.sas-civics-map-stems{width:65%}}
