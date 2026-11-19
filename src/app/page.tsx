@@ -10,6 +10,7 @@ import { KnowledgeRail } from "@/components/knowledge-rail";
 import { getPublishedContent } from "@/lib/public-content";
 import { getPublicBriefing, getPublicBriefingArchive } from "@/lib/public-briefing";
 import { HomeBriefingShowcase } from "@/components/home-briefing-showcase";
+import { VisualKnowledgeFeature } from "@/components/visual-knowledge-feature";
 
 export const dynamic = "force-dynamic";
 
@@ -80,9 +81,10 @@ export default async function Home() {
 
       <section className="home-section site-container sas-product-section">
         <SectionHeading eyebrow="السياسة بلغة الصورة" title="المعرفة البصرية" href="/visual-knowledge" />
-        {visual.length
-          ? <EditorialRail title="إنفوجرافيك ومواد بصرية" items={visual} />
-          : <EmptyContent message="سيظهر هنا الإنفوجرافيك والمواد المعرفية البصرية بعد نشرها." />}
+        <VisualKnowledgeFeature compact />
+        {visual.length ? (
+          <div style={{ marginTop: 24 }}><EditorialRail title="مواد بصرية أخرى" items={visual} /></div>
+        ) : null}
       </section>
 
       <section className="home-section home-media-section sas-product-section">
