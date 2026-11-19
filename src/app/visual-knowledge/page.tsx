@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PublicHeader, PublicFooter } from "@/components/public-site";
-import { VisualKnowledgeFeature, CivicKnowledgeFeature } from "@/components/visual-knowledge-feature";
+import { VisualKnowledgeShowcase } from "@/components/visual-knowledge-feature";
 import { EditorialRail } from "@/components/editorial-rail";
 import { getPublishedContent, getPublishedRailSources } from "@/lib/public-content";
 
@@ -30,7 +30,8 @@ export default async function VisualKnowledgePage() {
         <div className="site-section-heading">
           <div><span className="eyebrow">منصة معرفية تفاعلية</span><h2>الإصدارات المعرفية</h2></div>
         </div>
-        <div style={{ display: "grid", gap: 18 }}><CivicKnowledgeFeature /><VisualKnowledgeFeature /></div>
+        <p className="sas-visual-showcase-intro">معرفة سياسية بصرية تجمع بين شرح المفاهيم واستكشاف الوقائع، وتتيح الانتقال إلى كل مادة تفاعلية كاملة.</p>
+        <VisualKnowledgeShowcase />
         {items.length ? (
           <div style={{ marginTop: 44 }}>
             <EditorialRail title="إنفوجرافيك ومواد بصرية أخرى" items={items} sourcesById={sourceMap} />
