@@ -1275,8 +1275,8 @@ textarea {
 .content-card--compact .content-card-copy { padding: 13px 2px 15px; }
 .content-card--compact .content-card-copy h3 { margin: 5px 0 0; font-size: 16px; line-height: 1.65; }
 .content-card--compact .content-card-copy > p, .content-card--compact .content-card-more { display: none; }
-.public-empty-state { display: grid; place-items: center; min-height: 180px; padding: 28px; border: 1px solid var(--line); background: #fff; color: #7b8980; text-align: center; }
-.public-empty-state > span { color: #b1bdb4; font: 500 27px/1 "Tajarib Taweel",serif; }
+.public-empty-state { display: grid; place-items: center; align-content: center; min-height: 180px; padding: 28px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); text-align: center; }
+.public-empty-state .public-empty-state-logo { display: block; width: clamp(110px, 12vw, 148px); height: auto; max-height: 82px; object-fit: contain; }
 .public-empty-state p { max-width: 520px; margin: 10px 0 0; font: 400 12px/2 "Thmanyah Sans",sans-serif; }
 
 .section-landing-intro { display: flex; align-items: end; justify-content: space-between; gap: 30px; padding-top: 58px; padding-bottom: 32px; }
