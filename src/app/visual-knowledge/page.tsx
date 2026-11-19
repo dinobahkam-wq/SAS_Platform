@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PublicHeader, PublicFooter } from "@/components/public-site";
-import { VisualKnowledgeFeature } from "@/components/visual-knowledge-feature";
+import { VisualKnowledgeFeature, CivicKnowledgeFeature } from "@/components/visual-knowledge-feature";
 import { EditorialRail } from "@/components/editorial-rail";
 import { getPublishedContent, getPublishedRailSources } from "@/lib/public-content";
 
@@ -28,9 +28,9 @@ export default async function VisualKnowledgePage() {
       </section>
       <div className="section-landing-content site-container" style={{ paddingBottom: 70 }}>
         <div className="site-section-heading">
-          <div><span className="eyebrow">الإصدار التجريبي الأول</span><h2>تصور معرفي تفاعلي</h2></div>
+          <div><span className="eyebrow">منصة معرفية تفاعلية</span><h2>الإصدارات المعرفية</h2></div>
         </div>
-        <VisualKnowledgeFeature />
+        <div style={{ display: "grid", gap: 18 }}><CivicKnowledgeFeature /><VisualKnowledgeFeature /></div>
         {items.length ? (
           <div style={{ marginTop: 44 }}>
             <EditorialRail title="إنفوجرافيك ومواد بصرية أخرى" items={items} sourcesById={sourceMap} />
