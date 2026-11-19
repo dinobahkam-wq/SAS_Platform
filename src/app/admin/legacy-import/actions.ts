@@ -6,8 +6,8 @@ import type { Json } from "@/types/database.types";
 import type { LegacyImportPost } from "@/lib/legacy-wordpress-export";
 
 export type LegacyImportOutcome = {
-  imported: Array<{ title: string; id: string }>;
-  skipped: Array<{ title: string; reason: string }>;
+  imported: Array<{ title: string; id: string; legacyId: number }>;
+  skipped: Array<{ title: string; reason: string; legacyId: number }>;
   failed: Array<{ title: string; reason: string }>;
 };
 
@@ -68,11 +68,11 @@ export async function importLegacyDrafts(items: LegacyImportPost[]): Promise<Leg
     const label=String(raw?.title??"مادة غير معروفة").slice(0,160);
     try {
       const item=validate(raw);
-      if (seen.has(item.slug)) {result.skipped.push({title:label,reason:"مكرر في الدفعة"});continue;}
+      if (seen.has(item.slug)) {result.skipped.push({title:label,reason:"مكرر في الدفعة",legacyId:item.wpId});continue;}
       seen.add(item.slug);
       const {data:exists,error:readError}=await supabase.from("content_items").select("id").eq("slug",item.slug).maybeSingle();
       if(readError)throw Error("تعذر التحقق من التكرارات.");
-      if(exists){result.skipped.push({title:label,reason:"موجود سابقًا"});continue;}
+      if(exists){result.skipped.push({title:label,reason:"موجود سابقًا",legacyId:item.wpId});continue;}
 
       // Preserve the original publication DAY; WordPress export timezone may vary.
       const {data:created,error:saveError}=await supabase.from("content_items").insert({
@@ -101,7 +101,7 @@ export async function importLegacyDrafts(items: LegacyImportPost[]): Promise<Leg
         display_order:0,attribution_text:"أصل المادة في ساس القديم",
       });
       if(linkError)throw Error("حُفظت المسودة لكن تعذر ربط مصدرها.");
-      result.imported.push({title:label,id:created.id});
+      result.imported.push({title:label,id:created.id,legacyId:item.wpId});
     }catch(error){
       result.failed.push({title:label,reason:error instanceof Error?error.message:"خطأ غير معروف"});
     }
