@@ -44,7 +44,7 @@ export const yemenTimeline: TimelineEvent[] = [
     sources: [{ title: "عرض الأمم المتحدة لتطور الأزمة اليمنية", organization: "إدارة الشؤون السياسية وبناء السلام — الأمم المتحدة", url: "https://dppa.un.org/en/yemen" }],
   },
   {
-    id: "central-bank-2016", date: "2016-09-18", dateLabel: "سبتمبر 2016", year: "2016",
+    id: "central-bank-2016", date: "2016-09", dateLabel: "سبتمبر 2016", year: "2016",
     title: "نقل مقر البنك المركزي إلى عدن", category: "institutional", place: "صنعاء / عدن",
     description: "أصدرت الحكومة اليمنية قرارًا بنقل المقر الرئيسي للبنك المركزي من صنعاء إلى عدن، وسط انقسام السيطرة على المؤسسات.",
     change: "تعمق الانقسام النقدي والمؤسسي ونشأت سلطتان نقديتان متنافستان وما ارتبط بذلك من تعقيدات مالية.",
