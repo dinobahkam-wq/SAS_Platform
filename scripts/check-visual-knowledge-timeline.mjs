@@ -43,8 +43,8 @@ test("interactive page and section have complete navigation and data boundary", 
   assert.match(ui, /قراءة تحريرية لساس/);
   assert.match(ui, /href=\{source\.url\}/);
   assert.match(route, /YemenCrisisTimeline/);
-  assert.match(landing, /VisualKnowledgeFeature/);
-  assert.match(home, /VisualKnowledgeFeature/);
+  assert.match(landing, /VisualKnowledgeShowcase/);
+  assert.match(home, /VisualKnowledgeShowcase/);
   assert.match(route, /PublicFooter/);
 });
 
