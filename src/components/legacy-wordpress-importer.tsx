@@ -35,7 +35,18 @@ export function LegacyWordPressImporter() {
   }
   async function importBatch() {
     if(busy||selected.length===0)return;
-    const batch=selected.slice(0,10);
+    // Next.js Server Actions have a request-body size limit; keep Arabic
+    // (multi-byte) text safely under it instead of silently dropping content.
+    const batch:LegacyPreview[]=[];
+    let totalBytes=0;
+    for(const item of selected.slice(0,10)){
+      const bytes=new Blob([JSON.stringify(item)]).size;
+      if(bytes>650000){setError("هذه المادة كبيرة جدًا لنقلها دفعة واحدة. راجع تقسيمها يدويًا: "+item.title);return;}
+      if(totalBytes+bytes>650000)break;
+      batch.push(item);
+      totalBytes+=bytes;
+    }
+    if(!batch.length){setError("تعذر تجهيز دفعة الاستيراد.");return;}
     setBusy(true);setError("");
     try {
       const outcome=await importLegacyDrafts(batch.map(item=>({
