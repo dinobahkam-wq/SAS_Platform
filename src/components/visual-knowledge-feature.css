@@ -213,3 +213,11 @@
 @media(prefers-reduced-motion:reduce) {
   .sas-visual-feature * {transition:none!important;}
 }
+
+/* A single editorial introduction, without a second oversized section header. */
+.sas-visual-showcase-intro {
+  margin:-8px 0 19px;
+  max-width:780px;
+  font:400 12px/1.9 "Thmanyah Sans",sans-serif;
+  color:var(--muted);
+}
