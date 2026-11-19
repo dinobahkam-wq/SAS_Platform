@@ -134,7 +134,7 @@ export function SectionHeading({
 }
 
 export function EmptyContent({ message = "لا توجد مواد منشورة في هذا القسم حتى الآن." }: { message?: string }) {
-  return <div className="public-empty-state"><span>ساس</span><p>{message}</p></div>;
+  return <div className="public-empty-state"><BrandLogo variant="full" className="public-empty-state-logo" /><p>{message}</p></div>;
 }
 
 export function ContentBody({ body }: { body: PublicContentItem["body"] }) {
