@@ -1,0 +1,88 @@
+/* SAS | knowledge visualizations. Isolated from legacy site styles. */
+.sastl{--tl-ink:var(--foreground,#17211e);--tl-muted:var(--muted,#718078);--tl-line:var(--line,#e3e8e3);--tl-green:var(--accent,#174b3c);--tl-panel:var(--surface,#fff);width:100%;display:grid;gap:22px;direction:rtl;font-family:"Thmanyah Sans",sans-serif}
+.sastl *{box-sizing:border-box}
+.sastl-hero{position:relative;overflow:hidden;border-radius:16px;background:linear-gradient(130deg,#0a3029,#174b3c 62%,#1d604d);color:#f4f7f1;padding:clamp(23px,3.8vw,48px)}
+.sastl-hero:before{content:"";position:absolute;left:-4%;bottom:-75%;width:min(55vw,610px);aspect-ratio:1;border:1px solid #ffffff1f;border-radius:50%;box-shadow:0 0 0 55px #ffffff08,0 0 0 105px #ffffff07;pointer-events:none}
+.sastl-hero>*{position:relative;z-index:1}
+.sastl-topline{display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #ffffff28;padding-bottom:15px}
+.sastl-brandline{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:700}
+.sastl-edition{font-size:11px;color:#c5dcd0}
+.sastl-hero-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(210px,.5fr);gap:35px;align-items:end;padding:35px 0 31px}
+.sastl-eyebrow{display:block;font-size:11px;font-weight:700;color:var(--tl-green);margin:0 0 10px}
+.sastl-hero .sastl-eyebrow{color:#cae8d9}
+.sastl-hero h1{font-family:"Tajarib Taweel","Thmanyah Sans",sans-serif;font-size:clamp(27px,3.8vw,46px);font-weight:700;line-height:1.48;letter-spacing:0;margin:0 0 14px;max-width:700px}
+.sastl-intro{margin:0;color:#e1eee6;font-size:13px;line-height:2;max-width:640px}
+.sastl-period{padding:23px 20px 20px;border-radius:12px;border:1px solid #ffffff2e;background:#ffffff0a;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.sastl-period span{font-size:11px;color:#bbd5c6}
+.sastl-period strong{font-size:clamp(21px,2.3vw,29px);line-height:1.4;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sastl-period small{font-size:10px;line-height:1.8;color:#d1e0d7}
+.sastl-keyfacts{border-top:1px solid #ffffff2a;padding-top:15px;display:flex;align-items:center;flex-wrap:wrap;gap:12px 28px}
+.sastl-keyfacts span{display:inline-flex;gap:8px;align-items:center;font-size:11px;color:#e2eee6}
+.sastl-keyfacts svg{color:#c5decc}
+.sastl-dashboard{display:grid;grid-template-columns:minmax(270px,.75fr) minmax(0,1.25fr);gap:15px;align-items:start}
+.sastl-controls,.sastl-detail{border:1px solid var(--tl-line);border-radius:14px;background:var(--tl-panel);min-width:0}
+.sastl-controls{padding:23px 19px 20px}
+.sastl-section-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sastl-section-head h2{font:700 24px/1.5 "Tajarib Taweel","Thmanyah Sans",sans-serif;color:var(--tl-ink);margin:0}
+.sastl-count{border:1px solid var(--tl-line);border-radius:6px;padding:5px 9px;color:var(--tl-muted);font-size:11px}
+.sastl-filters{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0}
+.sastl-filters button{padding:7px 10px;border:1px solid var(--tl-line);border-radius:6px;background:transparent;color:var(--tl-muted);font-size:11px;font-weight:600}
+.sastl-filters button.is-active{background:var(--tl-green);color:#fff;border-color:var(--tl-green)}
+.sastl-stop{position:relative;display:grid;grid-template-columns:17px minmax(0,1fr) 24px;align-items:center;gap:12px;text-align:right;width:100%;background:transparent;border:0;border-radius:9px;color:var(--tl-ink);padding:12px 8px}
+.sastl-stop.is-active{background:var(--accent-soft,#eaf1ed)}
+.sastl-stop:hover:not(.is-active){background:color-mix(in srgb,var(--tl-green) 5%,var(--tl-panel))}
+.sastl-stop-line{height:100%;min-height:54px;display:flex;justify-content:center;align-items:center;position:relative}
+.sastl-stop-line:before{content:"";position:absolute;top:-24px;bottom:-24px;left:8px;width:1px;background:var(--tl-line)}
+.sastl-stop:first-child .sastl-stop-line:before{top:50%}
+.sastl-stop:last-child .sastl-stop-line:before{bottom:50%}
+.sastl-stop-line span{position:relative;z-index:1;width:11px;height:11px;box-shadow:0 0 0 3px var(--tl-panel);border:2px solid var(--tl-green);border-radius:50%;background:var(--tl-panel)}
+.sastl-stop.is-active .sastl-stop-line span{background:var(--tl-green)}
+.sastl-stop-content{display:flex;flex-direction:column;gap:3px;min-width:0}
+.sastl-stop-yr{font:700 11px/1.4 "Thmanyah Sans",sans-serif;color:var(--tl-green);align-self:flex-start;direction:ltr}
+.sastl-stop-content strong{font-size:12px;font-weight:700;line-height:1.65}
+.sastl-stop-content small{font-size:10px;color:var(--tl-muted)}
+.sastl-stop-index{font-size:11px;color:var(--tl-muted);font-variant-numeric:tabular-nums}
+.sastl-detail{padding:clamp(22px,3vw,37px)}
+.sastl-detail-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sastl-type{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;font-size:11px;font-weight:700;border:1px solid var(--tl-line);border-radius:6px;color:var(--tl-green);background:var(--accent-soft,#eaf1ed)}
+.sastl-type--military{color:var(--tl-ink);background:color-mix(in srgb,var(--tl-ink) 7%,var(--tl-panel))}
+.sastl-type--diplomatic{color:var(--tl-green)}
+.sastl-type--institutional{color:var(--tl-ink)}
+.sastl-fraction{font-size:12px;letter-spacing:1px;color:var(--tl-muted);font-variant-numeric:tabular-nums}
+.sastl-event-date{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--tl-muted);font-size:12px;margin:30px 0 11px}
+.sastl-event-date svg{color:var(--tl-green)}
+.sastl-bullet{opacity:.7}
+.sastl-detail h2{font-family:"Tajarib Taweel","Thmanyah Sans",sans-serif;font-size:clamp(24px,3vw,36px);line-height:1.6;font-weight:700;color:var(--tl-ink);margin:0 0 11px}
+.sastl-lead{font-size:13px;line-height:2.15;color:var(--tl-ink);margin:0 0 24px}
+.sastl-explain{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sastl-explain>div{background:color-mix(in srgb,var(--tl-green) 4%,var(--tl-panel));border:1px solid var(--tl-line);border-radius:9px;padding:16px}
+.sastl-explain-head{display:flex;gap:9px;align-items:center}
+.sastl-ordinal{font-size:11px;color:var(--tl-green);font-weight:700}
+.sastl-explain h3{font-size:13px;font-weight:700;margin:0;color:var(--tl-ink)}
+.sastl-explain p{font-size:12px;line-height:2;margin:12px 0 0;color:var(--tl-ink)}
+.sastl-explain small{display:block;margin-top:11px;color:var(--tl-muted);font-size:10px;line-height:1.8}
+.sastl-sources{margin-top:27px;border-top:1px solid var(--tl-line);padding-top:19px}
+.sastl-source-heading{display:flex;align-items:center;gap:9px;color:var(--tl-green)}
+.sastl-source-heading h3{margin:0;font-size:13px;font-weight:700}
+.sastl-sources>a{display:flex;align-items:center;justify-content:space-between;gap:14px;border:1px solid var(--tl-line);border-radius:8px;margin-top:11px;padding:12px 14px}
+.sastl-sources>a:hover{border-color:var(--tl-green)}
+.sastl-sources>a>span{display:flex;flex-direction:column;gap:4px;min-width:0}
+.sastl-sources>a strong{font-size:12px;font-weight:700;line-height:1.7;color:var(--tl-ink)}
+.sastl-sources>a small{font-size:10px;color:var(--tl-muted);line-height:1.6}
+.sastl-sources>a svg{flex-shrink:0;color:var(--tl-green)}
+.sastl-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:28px;padding-top:19px;border-top:1px solid var(--tl-line)}
+.sastl-nav button{display:inline-flex;align-items:center;gap:7px;background:var(--tl-panel);border:1px solid var(--tl-line);color:var(--tl-ink);border-radius:7px;padding:9px 12px;font-size:11px}
+.sastl-nav button:disabled{opacity:.35;cursor:not-allowed}
+.sastl-nav button:not(:disabled):hover{border-color:var(--tl-green)}
+.sastl-nav button:first-child svg{transform:rotate(180deg)}
+.sastl-nav>span{font-size:11px;color:var(--tl-muted)}
+.sastl-note{display:flex;gap:17px;align-items:flex-start;border:1px solid var(--tl-line);border-radius:11px;padding:21px 23px;background:var(--tl-panel)}
+.sastl-note-icon{display:grid;place-items:center;flex-shrink:0;width:35px;height:35px;border-radius:8px;background:var(--accent-soft,#eaf1ed);color:var(--tl-green)}
+.sastl-note h2{margin:0 0 5px;color:var(--tl-ink);font-size:13px;font-weight:700}
+.sastl-note p{font-size:12px;line-height:2;color:var(--tl-muted);margin:0 0 9px}
+.sastl-note a{display:inline-flex;gap:7px;align-items:center;color:var(--tl-green);font-weight:700;font-size:11px}
+.sastl button:focus-visible,.sastl a:focus-visible{outline:2px solid var(--tl-green);outline-offset:3px}
+@media(max-width:940px){.sastl-dashboard{grid-template-columns:1fr}.sastl-controls{padding:21px}.sastl-stops{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.sastl-stop{display:flex;flex-direction:column;align-items:flex-start;min-height:115px;padding:12px}.sastl-stop-line{display:none}.sastl-stop-index{display:none}.sastl-stop-content strong{font-size:11px}.sastl-hero-grid{grid-template-columns:minmax(0,1.25fr) minmax(185px,.75fr)}}
+@media(max-width:660px){.sastl{gap:14px}.sastl-hero{border-radius:11px;padding:22px}.sastl-hero-grid{grid-template-columns:1fr;gap:22px;padding:25px 0}.sastl-period{padding:15px}.sastl-keyfacts{gap:10px 16px}.sastl-controls{padding:17px}.sastl-stops{grid-template-columns:repeat(2,minmax(0,1fr))}.sastl-stop{min-height:98px}.sastl-detail{padding:21px}.sastl-event-date{margin-top:24px}.sastl-explain{grid-template-columns:1fr}.sastl-nav>span{font-size:10px}.sastl-nav button{padding:8px}.sastl-note{padding:17px}.sastl-edition{font-size:10px}}
+@media print{.sastl{display:block}.sastl-hero{print-color-adjust:exact}.sastl-controls,.sastl-nav{display:none}.sastl-detail{margin-top:20px}.sastl-note{margin-top:20px}}
+@media(prefers-reduced-motion:reduce){.sastl *{scroll-behavior:auto!important;transition:none!important}}
