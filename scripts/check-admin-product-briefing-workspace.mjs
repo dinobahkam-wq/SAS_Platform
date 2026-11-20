@@ -43,8 +43,8 @@ test("sidebar and dashboard prioritize four products and News Studio",()=>{
 
 test("legacy CMS is retained only as archive and forms no longer suggest obsolete content types",()=>{
   assert.match(content,/productForContent/);
-  assert.match(content,/\?product=legacy/);
-  assert.match(content,/productForContent/);
+  assert.match(content,/product==="legacy"/);
+  assert.match(content,/href="\/admin\/briefings"/);
   assert.doesNotMatch(content,/label: "الأخبار"/);
   assert.doesNotMatch(content,/label: "التحليل والرأي"/);
   assert.match(form,/newEditorialFormats/);
