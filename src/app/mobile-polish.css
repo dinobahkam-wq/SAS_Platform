@@ -143,6 +143,40 @@
     font-size: 12px;
   }
   /* Summary and sources should be legible without zoom. */
+  /* Research/study cards should read as compact editorial summaries on phone. */
+  .public-site .knowledge-rail { margin: 14px 0 22px; }
+  .public-site .knowledge-rail-head { margin-bottom: 13px; padding-bottom: 9px; }
+  .public-site .knowledge-rail-head h2 {
+    font: 700 clamp(18px,4.8vw,23px)/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+  }
+  .public-site .knowledge-rail-head span { font-size: 12px; }
+  .public-site .knowledge-rail-grid { gap: 12px; }
+  .public-site .knowledge-card { border-radius: 11px; }
+  .public-site .knowledge-card-copy { padding: 17px; }
+  .public-site .knowledge-card-date { font-size: 12px; }
+  .public-site .knowledge-card-copy h3 {
+    font: 700 clamp(21px,4.7vw,25px)/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+    margin: 9px 0;
+  }
+  .public-site .knowledge-card-copy p {
+    color: var(--muted);
+    font: 400 13px/1.95 "Thmanyah Sans",sans-serif;
+    margin-bottom: 12px;
+  }
+  .public-site .knowledge-card-open {
+    min-height: 44px;
+    padding-top: 11px;
+    font-size: 12px;
+  }
+  .public-site .knowledge-card-copy,
+  .public-site .knowledge-card-copy h3 { color: var(--foreground); }
+  .public-site .knowledge-card { background: var(--surface); border-color: var(--line); }
+  .public-site .knowledge-card-open { border-color: var(--line); }
+  .public-site .home-brand-hero::before {
+    animation: none;
+    filter: none;
+    opacity: .45;
+  }
   .public-site .sas-home-briefing-feature { border-radius: 12px; }
   .public-site .sas-home-briefing-main,
   .public-site .sas-home-briefing-highlights { padding: 19px; }
