@@ -24,7 +24,7 @@ function BriefingIcon({ name, className = "" }: { name: IconName; className?: st
   if (name === "layers") return <svg {...common}><path d="m12 3 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 16l9 5 9-5"/></svg>;
   if (name === "shield") return <svg {...common}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>;
   if (name === "pulse") return <svg {...common}><path d="M3 12h4l3-6 4 12 3-6h4"/></svg>;
-  return <svg {...common}><path d="M17 17 7 7M7 7v8M7 7h8"/></svg>;
+  return <svg {...common}><path d="M19 12H5m7 7-7-7 7-7"/></svg>;
 }
 
 export function HomeBriefingShowcase({
@@ -89,7 +89,7 @@ export function HomeBriefingShowcase({
           </div>
 
           <div className="sas-home-briefing-actions">
-            <Link className="sas-home-briefing-primary-link" href={href}>قراءة الإحاطة <BriefingIcon name="arrow"/></Link>
+            <Link className="sas-home-briefing-primary-link sas-cta sas-cta--primary" href={href}>قراءة الإحاطة <BriefingIcon name="arrow"/></Link>
             <span className="sas-home-briefing-edition-note">نسخة تحريرية مؤرخة وقابلة للتوثيق</span>
           </div>
         </div>
