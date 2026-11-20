@@ -18,6 +18,7 @@ export const searchKinds = [
   { id: "research", label: "الدراسات" },
   { id: "visual", label: "المعرفة البصرية" },
   { id: "media", label: "الفيديو والبرامج" },
+  { id: "news", label: "الأخبار المؤرشفة" },
 ] as const;
 
 export function normalizeSearchTerm(value: string) {
@@ -66,10 +67,11 @@ export async function searchPublicContent(query: string): Promise<{ results: Pub
       supabase.from("content_items").select(select).eq("status", "published").ilike("excerpt", pattern).limit(48),
     ]);
     if (titles.error || excerpts.error) throw titles.error ?? excerpts.error;
-    const bySlug = new Map((([...(titles.data ?? []), ...(excerpts.data ?? [])])) .map(item => [item.slug, item]));
+    const bySlug = new Map([...(titles.data ?? []), ...(excerpts.data ?? [])].map(item => [item.slug, item]));
     for (const item of bySlug.values()) {
+      const kind: PublicSearchResult["kind"] = ["analysis", "research", "media", "news"].includes(item.section) ? item.section as PublicSearchResult["kind"] : "news";
       results.push({
-        kind: item.section,
+        kind,
         title: item.title,
         description: item.excerpt ?? "مادة منشورة ضمن أرشيف ساس.",
         href: "/content/" + encodeURIComponent(item.slug),
