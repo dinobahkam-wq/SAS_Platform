@@ -66,5 +66,7 @@ test("visual styles preserve SAS typography and accessible responsive behavior",
   assert.match(css, /focus-visible/);
   assert.match(css, /max-width:670px/);
   assert.match(css, /prefers-reduced-motion/);
-  assert.match(cover, /sas-civics-map/);
+  assert.match(cover, /sas-vk-civic-diagram/);
+  assert.match(cover, /sas-vk-civic-grid/);
+  assert.match(cover, /sas-vk-civic-hub/);
 });
