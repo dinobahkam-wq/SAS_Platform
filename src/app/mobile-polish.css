@@ -38,10 +38,10 @@
     gap: 5px;
   }
   .public-site .site-brand .brand-logo-color {
-    width: 112px;
-    height: 50px;
-    object-fit: contain;
-    object-position: center right;
+    width: 144px;
+    height: 68px;
+    object-fit: cover;
+    object-position: center;
   }
   .public-site .site-nav {
     grid-area: nav;
@@ -81,6 +81,53 @@
     height: 44px;
     padding: 9px;
   }
+  /* Search and appearance are the same 44px icon control. The real theme
+     component is .sas-theme-switcher/.sas-theme-trigger (not .theme-control). */
+  .public-site .site-header-actions .sas-header-search,
+  .public-site .site-header-actions .sas-theme-trigger {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--foreground);
+    box-shadow: none;
+    transition: background-color .18s ease, border-color .18s ease, color .18s ease;
+  }
+  .public-site .site-header-actions .sas-header-search:hover,
+  .public-site .site-header-actions .sas-theme-trigger:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .public-site .site-header-actions .sas-header-search:focus-visible,
+  .public-site .site-header-actions .sas-theme-trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .public-site .site-header-actions :is(.sas-header-search, .sas-theme-trigger) svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  .public-site .site-header-actions :is(.sas-header-search, .sas-theme-trigger) > span {
+    display: none;
+  }
+  .public-site .site-header-actions .sas-theme-switcher { flex: 0 0 44px; }
+  /* Keep the dropdown anchored to its icon and above the site header. */
+  .public-site .site-header-actions .sas-theme-menu { inset-inline-start: auto; inset-inline-end: 0; }
+  .public-site .site-brand { min-width: 0; overflow: hidden; }
+
   .public-site .site-header .site-admin-link { min-height: 44px; padding: 8px 10px; font-size: 11px; }
   .public-site .home-section,
   .public-site .home-analysis-section,
@@ -223,9 +270,14 @@
     font-size: 12px;
   }
   /* Background is an ambient brand layer, not an additional text texture. */
-  .sas-threads-background--sitewide .sas-threads-mesh { opacity: .25; }
+  .sas-threads-background--sitewide .sas-threads-mesh { opacity: .57; }
 }
 @media (max-width: 540px) {
+  .public-site .site-brand .brand-logo-color {
+    width: 132px;
+    height: 62px;
+    object-fit: cover;
+  }
   .public-site .site-container,
   .public-site .home-section.site-container,
   .public-site .home-section > .site-container,
@@ -288,7 +340,7 @@
 }
 @media (max-width: 390px) {
   .public-site .site-header-inner { width: calc(100% - 24px); }
-  .public-site .site-brand .brand-logo-color { width: 96px; height: 46px; }
+  .public-site .site-brand .brand-logo-color { width: 120px; height: 58px; }
   .public-site .site-header .sas-header-search { width: 44px; height: 44px; }
   .public-site .site-header .site-admin-link { padding-inline: 8px; font-size: 10px; }
   .public-site .home-brand-hero h1 { font-size: 30px; }
@@ -318,4 +370,32 @@
 /* Disable ambient motion only where system preference requires it. */
 @media (prefers-reduced-motion: reduce) and (max-width: 760px) {
   .public-site .home-brand-hero::before { animation: none; }
+}
+
+/* Consistent controls across dark and light modes, even at old 400px overrides.
+   Restore mesh contrast without obscuring the opaque editorial cards. */
+@media (max-width: 760px) {
+  html[data-theme="dark"] .sas-threads-background--sitewide .sas-threads-mesh {
+    opacity: .56;
+  }
+  .sas-threads-background--sitewide::after {
+    background: linear-gradient(to left,
+      color-mix(in srgb, var(--background) 62%, transparent),
+      color-mix(in srgb, var(--background) 24%, transparent) 72%,
+      transparent);
+  }
+}
+@media (max-width: 390px) {
+  .public-site .site-header-actions .sas-header-search,
+  .public-site .site-header-actions .sas-theme-trigger {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site .site-header-actions :is(.sas-header-search, .sas-theme-trigger) {
+    transition: none;
+  }
 }
