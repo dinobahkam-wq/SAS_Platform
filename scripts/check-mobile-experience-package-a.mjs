@@ -65,13 +65,34 @@ test("breakpoints cover phone and tablet and respect reduced motion", () => {
   }
   assert.match(mobile, /prefers-reduced-motion: reduce/);
   assert.match(mobile, /pointer: fine/);
-  assert.match(mobile, /\.sas-threads-background--sitewide \.sas-threads-mesh \{ opacity: \.25;/);
+  assert.match(mobile, /\.sas-threads-background--sitewide \.sas-threads-mesh \{ opacity: \.52;/);
 });
 
 test("decorative WebGL density is reduced only for phone-sized viewports", () => {
   assert.match(threads, /matchMedia\("\(max-width: 760px\)"\)/);
-  assert.match(threads, /lineCount=\{compact \? 28 : 64\}/);
-  assert.match(threads, /speed=\{compact \? 0\.12 : 0\.19\}/);
+  assert.match(threads, /lineCount=\{compact \? 36 : 64\}/);
+  assert.match(threads, /speed=\{compact \? 0\.21 : 0\.19\}/);
   assert.match(threads, /media\.removeEventListener\("change", sync\)/);
   assert.match(threads, /aria-hidden="true"/);
+});
+
+test("logo stays visually prominent and theme/search share real 44px control rules", () => {
+  const brand = read("src/components/brand-logo.tsx");
+  const theme = read("src/components/theme-control.tsx");
+  assert.match(header, /<BrandLogo variant="color" priority \/>/);
+  assert.match(brand, /brand-logo-color/);
+  assert.match(theme, /className="sas-theme-trigger"/);
+  assert.match(mobile, /\.public-site \.site-brand \.brand-logo-color \{[\s\S]*?width: 138px;[\s\S]*?object-fit: cover;/);
+  assert.match(mobile, /\.public-site \.site-header \.sas-theme-trigger/);
+  assert.match(mobile, /flex: 0 0 44px/);
+  assert.match(mobile, /\.public-site \.site-header \.sas-header-search:hover/);
+  assert.match(mobile, /\.public-site \.site-header \.sas-theme-trigger:focus-visible/);
+  assert.match(mobile, /width: 124px; height: 54px;/);
+});
+test("mesh remains legible on phones without overriding reduced-motion preferences", () => {
+  assert.match(threads, /opacity=\{dark \? \(compact \? 0\.46 : 0\.37\) : \(compact \? 0\.52 : 0\.44\)\}/);
+  assert.match(mobile, /\.sas-threads-background--sitewide::after/);
+  assert.match(mobile, /-webkit-mask-image: linear-gradient\(to bottom/);
+  assert.match(mobile, /prefers-reduced-motion: reduce/);
+  assert.match(mobile, /\.sas-threads-background--sitewide \.sas-threads-mesh \{ opacity: \.30;/);
 });
