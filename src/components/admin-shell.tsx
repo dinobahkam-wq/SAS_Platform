@@ -25,7 +25,7 @@ export function AdminShell({
   user,
 }: {
   children: React.ReactNode;
-  user: { email: string; displayName: string };
+  user: { email: string; displayName: string; isOwner: boolean };
 }) {
   return (
     <div className="admin-frame">
@@ -52,6 +52,8 @@ export function AdminShell({
             </Link>
           ))}
         </nav>
+
+        {user.isOwner ? <nav className="sidebar-nav" aria-label="إدارة الفريق"><Link href="/admin/team" className="sidebar-link"><span className="nav-symbol" aria-hidden="true">♙</span><span>الأعضاء والصلاحيات</span></Link></nav> : null}
 
         <div className="sidebar-caption">إدارة الأصول والأرشيف</div>
         <nav className="sidebar-nav" aria-label="الإدارة المساندة">
