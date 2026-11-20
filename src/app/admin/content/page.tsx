@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin";
 import { formatLabel } from "@/lib/content";
-import { adminEditorialProducts, productForContent, type AdminEditorialProduct } from "@/lib/admin-products";
+import { adminEditorialProducts, productForContent } from "@/lib/admin-products";
 import "./admin-content-products.css";
 
 const statuses = [
