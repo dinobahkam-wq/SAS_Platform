@@ -4,7 +4,7 @@ import "./visual-knowledge-feature.css";
 type FeatureVariant = "lead" | "supporting";
 
 function FeatureArrow() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m16 17-9-9M7 8v7M7 8h7" /></svg>;
+  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7" /></svg>;
 }
 
 /**
@@ -90,7 +90,7 @@ function KnowledgeCard({ type, variant }: { type: "civic" | "timeline"; variant:
         <div className="sas-visual-feature-meta">
           {item.metadata.map((value) => <span key={value}>{value}</span>)}
         </div>
-        <Link href={item.href} className="sas-visual-feature-action" aria-label={item.action + ": " + item.title}>
+        <Link href={item.href} className={"sas-visual-feature-action sas-cta " + (variant === "lead" ? "sas-cta--primary" : "sas-cta--secondary")} aria-label={item.action + ": " + item.title}>
           {item.action}<FeatureArrow />
         </Link>
       </div>
