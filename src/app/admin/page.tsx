@@ -1,65 +1,74 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin";
-import { formatLabel, sectionLabel } from "@/lib/content";
+import { getPublicBriefingArchive } from "@/lib/public-briefing";
+import { productForContent } from "@/lib/admin-products";
+import { formatLabel } from "@/lib/content";
+import "./content/admin-content-products.css";
+
+export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const { supabase, displayName } = await requireAdmin();
-
-  const [all, drafts, published, sources, categories, recent] = await Promise.all([
-    supabase.from("content_items").select("id", { count: "exact", head: true }),
-    supabase.from("content_items").select("id", { count: "exact", head: true }).eq("status", "draft"),
-    supabase.from("content_items").select("id", { count: "exact", head: true }).eq("status", "published"),
-    supabase.from("content_sources").select("id", { count: "exact", head: true }),
-    supabase.from("categories").select("id", { count: "exact", head: true }),
-    supabase.from("content_items").select("id,title,section,format,status,updated_at").order("updated_at", { ascending: false }).limit(6),
+  const {supabase,displayName}=await requireAdmin();
+  const [materials, sources, editions] = await Promise.all([
+    supabase.from("content_items").select("id,title,section,format,status,updated_at").order("updated_at",{ascending:false}).limit(150),
+    supabase.from("content_sources").select("id",{count:"exact",head:true}),
+    getPublicBriefingArchive(50).catch(()=>null),
   ]);
-
-  const stats = [
-    { label: "إجمالي المواد", value: all.count ?? 0 },
-    { label: "المسودات", value: drafts.count ?? 0 },
-    { label: "المواد المنشورة", value: published.count ?? 0 },
-    { label: "المصادر المسجلة", value: sources.count ?? 0 },
+  const items=materials.data??[];
+  const statistics=[
+    {label:"أعداد الإحاطة المتاحة",value:editions?.length??"—"},
+    {label:"المواد المنشورة",value:items.filter(x=>x.status==="published").length},
+    {label:"المسودات التحريرية",value:items.filter(x=>x.status==="draft").length},
+    {label:"المصادر المسجلة",value:sources.count??"—"},
   ];
-
+  const products=[
+    {num:"01",title:"الإحاطة اليومية",description:"تصفح الأعداد والتطورات المنشورة وتحويل أي سجل إلى بطاقة في News Studio.",href:"/admin/briefings",action:"فتح سجل الإحاطات"},
+    {num:"02",title:"التحليل والدراسات",description:"إدارة التحليلات والأوراق البحثية والتقديرات السياسية ضمن قسم واحد.",href:"/admin/content?product=analysis",action:"إدارة التحليلات والدراسات"},
+    {num:"03",title:"المعرفة البصرية",description:"إدارة المواد البصرية في قاعدة المحتوى ومراجعة المنتجات التفاعلية.",href:"/admin/content?product=visual",action:"فتح المعرفة البصرية"},
+    {num:"04",title:"الفيديو والبرامج",description:"إدارة الفيديوهات والبودكاست واللقاءات والمقاطع المرئية.",href:"/admin/content?product=programs",action:"فتح الفيديو والبرامج"},
+  ];
   return (
     <>
       <div className="page-heading">
-        <div><span className="eyebrow">لوحة القيادة</span><h1>مرحبًا، {displayName}</h1><p>هذه مساحة إدارة المحتوى والتحرير لمنصة ساس. جميع الأرقام تُقرأ مباشرة من قاعدة البيانات.</p></div>
-        <Link href="/admin/content/new" className="button button-primary">＋ إنشاء مادة</Link>
+        <div><span className="eyebrow">غرفة التحرير / لوحة التشغيل</span>
+          <h1>مرحبًا، {displayName}</h1>
+          <p>إدارة منتجات ساس الأربعة من مكان واحد. الأعداد اليومية محفوظة في سجل منفصل عن مواد الموقع الاعتيادية.</p>
+        </div>
+        <Link href="/admin/news-studio" className="button button-primary">فتح News Studio</Link>
       </div>
-
-      <div className="stat-grid">
-        {stats.map((stat) => <article className="stat-card" key={stat.label}><span>{stat.label}</span><strong>{stat.value.toLocaleString("en-US")}</strong></article>)}
-      </div>
-
+      {(!editions||materials.error||sources.error)?<div className="notice notice-error">بعض إحصاءات لوحة التشغيل غير متاحة الآن؛ قد تكون الأرقام الظاهرة جزئية.</div>:null}
+      <div className="stat-grid">{statistics.map(item=><article key={item.label} className="stat-card">
+        <span>{item.label}</span><strong>{typeof item.value==="number"?item.value.toLocaleString("en-US"):item.value}</strong>
+      </article>)}</div>
+      <section className="sas-admin-home-products" aria-label="منتجات ساس التحريرية">
+        {products.map(item=><article key={item.num}>
+          <span className="sas-admin-product-number">{item.num} / SAS</span>
+          <h2>{item.title}</h2>
+          <p>{item.description}</p>
+          <Link href={item.href} className="button button-secondary">{item.action} ←</Link>
+        </article>)}
+      </section>
       <div className="admin-grid">
         <section className="panel">
-          <div className="panel-header"><h2>آخر المواد تحديثًا</h2><Link href="/admin/content" className="table-title">عرض الكل ←</Link></div>
-          {recent.error ? <div className="empty-state">تعذر تحميل المواد.</div> : recent.data?.length ? (
-            <div className="table-wrap"><table className="data-table">
-              <thead><tr><th>العنوان</th><th>القسم</th><th>الحالة</th><th>آخر تحديث</th></tr></thead>
-              <tbody>{recent.data.map((item) => <tr key={item.id}>
-                <td><Link href={`/admin/content/${item.id}`} className="table-title">{item.title}</Link><div className="table-subtitle">{formatLabel(item.format)}</div></td>
-                <td>{sectionLabel(item.section)}</td>
-                <td><span className={`pill ${item.status === "published" ? "pill-green" : "pill-gold"}`}>{item.status === "published" ? "منشور" : item.status === "archived" ? "مؤرشف" : "مسودة"}</span></td>
-                <td dir="ltr">{new Date(item.updated_at).toLocaleDateString("en-GB")}</td>
-              </tr>)}</tbody>
-            </table></div>
-          ) : <div className="empty-state">لم تُنشأ مواد تحريرية بعد. ابدأ بإضافة أول خبر أو دراسة.</div>}
+          <div className="panel-header"><h2>آخر المواد المحفوظة</h2><Link href="/admin/content?product=analysis" className="table-title">إدارة المواد ←</Link></div>
+          {items.length?<div className="table-wrap"><table className="data-table">
+            <thead><tr><th>العنوان</th><th>المنتج</th><th>الحالة</th></tr></thead>
+            <tbody>{items.slice(0,8).map(item=><tr key={item.id}>
+              <td><Link href={"/admin/content/"+item.id} className="table-title">{item.title}</Link><div className="table-subtitle">{formatLabel(item.format)}</div></td>
+              <td>{({analysis:"التحليل والدراسات",visual:"المعرفة البصرية",programs:"الفيديو والبرامج",legacy:"أرشيف قديم"} as const)[productForContent(item.section,item.format)]}</td>
+              <td>{item.status==="published"?"منشور":item.status==="archived"?"مؤرشف":"مسودة"}</td>
+            </tr>)}</tbody>
+          </table></div>:<div className="empty-state">لا توجد مواد محفوظة.</div>}
         </section>
-
         <section className="panel">
-          <div className="panel-header"><h2>اختصارات التشغيل</h2></div>
+          <div className="panel-header"><h2>أدوات التشغيل المساندة</h2></div>
           <div className="panel-body form-stack">
-            <Link href="/admin/content/new" className="button button-secondary">＋ إنشاء مادة تحريرية</Link>
-            <Link href="/admin/sources" className="button button-secondary">◎ تسجيل مصدر جديد</Link>
-            <Link href="/admin/categories" className="button button-secondary">▦ تنظيم التصنيفات</Link>
-            <Link href="/admin/media" className="button button-secondary">▧ إضافة صورة إلى المكتبة</Link>
-            <div className="notice" style={{ background: "#f4f7f3", color: "#53645a", marginTop: 8 }}>
-              <strong>حالة البنية</strong><br />
-              Supabase Auth وPostgres وStorage متصلة. صلاحية هذه المساحة مقصورة على مدير المنصة.
-            </div>
-            <div className="helper-text">عدد التصنيفات النشطة: {categories.count ?? 0}</div>
+            <Link className="button button-secondary" href="/admin/briefings">تصفح تطورات الإحاطة</Link>
+            <Link className="button button-secondary" href="/admin/content/new">إنشاء مادة جديدة</Link>
+            <Link className="button button-secondary" href="/admin/sources">إدارة المصادر</Link>
+            <Link className="button button-secondary" href="/admin/media">مكتبة الوسائط</Link>
+            <Link className="button button-quiet" href="/admin/content?product=legacy">أرشيف المواد السابقة</Link>
+            <p className="helper-text">الصلاحيات الحالية لهذه اللوحة محصورة بدور المدير النشط. لا تعرض بيانات الإحاطة غير المنشورة.</p>
           </div>
         </section>
       </div>
