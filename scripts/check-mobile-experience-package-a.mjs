@@ -65,7 +65,7 @@ test("breakpoints cover phone and tablet and respect reduced motion", () => {
   }
   assert.match(mobile, /prefers-reduced-motion: reduce/);
   assert.match(mobile, /pointer: fine/);
-  assert.match(mobile, /\.sas-threads-background--sitewide \.sas-threads-mesh \{ opacity: \.25;/);
+  assert.match(mobile, /\.sas-threads-background--sitewide \.sas-threads-mesh \{ opacity: \.57;/);
 });
 
 test("decorative WebGL density is reduced only for phone-sized viewports", () => {
