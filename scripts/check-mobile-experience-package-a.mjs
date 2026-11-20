@@ -70,8 +70,8 @@ test("breakpoints cover phone and tablet and respect reduced motion", () => {
 
 test("decorative WebGL density is reduced only for phone-sized viewports", () => {
   assert.match(threads, /matchMedia\("\(max-width: 760px\)"\)/);
-  assert.match(threads, /lineCount=\{compact \? 28 : 64\}/);
-  assert.match(threads, /speed=\{compact \? 0\.12 : 0\.19\}/);
+  assert.match(threads, /lineCount=\{compact \? 36 : 64\}/);
+  assert.match(threads, /speed=\{compact \? 0\.18 : 0\.19\}/);
   assert.match(threads, /media\.removeEventListener\("change", sync\)/);
   assert.match(threads, /aria-hidden="true"/);
 });
