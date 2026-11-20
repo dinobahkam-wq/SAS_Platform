@@ -272,6 +272,18 @@
   .public-site .home-brand-hero {
     width: calc(100% - 28px);
   }
+  /* The original phone mask and opaque wash removed most of the mesh.
+     Keep it visible behind the opaque reading cards, not in front of text. */
+  .sas-threads-background--sitewide .sas-threads-mesh {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.95) 0%, rgba(0,0,0,.83) 55%, rgba(0,0,0,.48) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,.95) 0%, rgba(0,0,0,.83) 55%, rgba(0,0,0,.48) 100%);
+  }
+  .sas-threads-background--sitewide::after {
+    background: linear-gradient(to left,
+      color-mix(in srgb,var(--background) 70%,transparent) 0%,
+      color-mix(in srgb,var(--background) 45%,transparent) 62%,
+      color-mix(in srgb,var(--background) 16%,transparent) 100%);
+  }
   .public-site .home-brand-hero { padding: 23px 17px 22px; }
   .public-site .home-brand-hero h1 { font-size: clamp(30px, 8vw, 40px); }
   .public-site .home-brand-hero p { font-size: 13px; line-height: 1.85; }
