@@ -10,6 +10,7 @@ import Threads from "@/components/threads";
  */
 export function SasHeroThreads() {
   const [dark, setDark] = useState(false);
+  const [compact, setCompact] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -23,19 +24,28 @@ export function SasHeroThreads() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    // Reduce GPU geometry on small screens without changing the approved visual.
+    const media = window.matchMedia("(max-width: 760px)");
+    const sync = () => setCompact(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
   return (
     <div className="sas-threads-background sas-threads-background--sitewide" aria-hidden="true">
       <div className="sas-threads-mesh">
         <Threads
           color={dark ? [95 / 255, 208 / 255, 201 / 255] : [0, 126 / 255, 128 / 255]}
           accentColor={dark ? [92 / 255, 140 / 255, 146 / 255] : [155 / 255, 184 / 255, 186 / 255]}
-          lineCount={64}
+          lineCount={compact ? 28 : 64}
           thickness={0.48}
           softness={1.45}
           amplitude={0.85}
           distance={0.54}
           waves={0.9}
-          speed={0.19}
+          speed={compact ? 0.12 : 0.19}
           split={0.07}
           fray={0.48}
           angle={18}
