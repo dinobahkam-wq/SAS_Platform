@@ -1,0 +1,373 @@
+/* SAS — Package A: mobile reading, spacing and touch ergonomics.
+ * Applies to PUBLIC homepage only unless header/footer selectors are explicit.
+ * Loaded last in RootLayout to override legacy component breakpoints without
+ * changing the CMS, briefing editorial pages or content records.
+ */
+@media (max-width: 900px) {
+  .public-site .home-brand-hero {
+    min-height: 0;
+    align-items: flex-start;
+    gap: 18px;
+    padding-block: 35px;
+  }
+  .public-site .home-brand-hero .home-intro-copy { flex: 0 1 auto; }
+  .public-site .home-brand-hero .home-compact-actions {
+    margin-top: 5px;
+    align-self: flex-start;
+    justify-content: flex-start;
+  }
+}
+@media (max-width: 760px) {
+  /* Reliable two-row mobile header. Site navigation is swipeable instead of
+     squeezing four labels into 10px-wide tap targets. */
+  .public-site .site-header-inner {
+    width: calc(100% - 32px);
+    min-height: 0;
+    padding: 6px 0 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "brand actions" "nav nav";
+    column-gap: 10px;
+    row-gap: 2px;
+  }
+  .public-site .site-brand { grid-area: brand; justify-self: start; min-width: 0; }
+  .public-site .site-header-actions {
+    grid-area: actions;
+    align-self: center;
+    justify-self: end;
+    gap: 5px;
+  }
+  /* The approved colored logo is a square source with built-in margins.
+     Cover crops only its surrounding whitespace; contain made it appear tiny. */
+  .public-site .site-brand .brand-logo-color {
+    width: 138px;
+    height: 58px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+    background: transparent;
+  }
+  .public-site .site-nav {
+    grid-area: nav;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 5px;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    border-top: 1px solid var(--line);
+    font: 600 12px/1.5 "Thmanyah Sans", sans-serif;
+  }
+  .public-site .site-nav::-webkit-scrollbar { display: none; }
+  .public-site .site-nav a {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 12px;
+    text-align: center;
+    white-space: nowrap;
+    text-wrap: nowrap;
+  }
+  /* Unify search and the actual ThemeControl trigger, not the old
+     .theme-control/.theme-toggle selectors that don't exist in the markup. */
+  .public-site .site-header .sas-header-search,
+  .public-site .site-header .sas-theme-trigger {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--foreground);
+    box-shadow: none;
+    transition: border-color .16s ease, background-color .16s ease, color .16s ease;
+  }
+  .public-site .site-header .sas-theme-trigger span,
+  .public-site .site-header .sas-header-search span { display: none; }
+  .public-site .site-header .sas-theme-trigger svg,
+  .public-site .site-header .sas-header-search svg {
+    display: block;
+    flex-shrink: 0;
+    width: 19px;
+    height: 19px;
+  }
+  .public-site .site-header .sas-header-search:hover,
+  .public-site .site-header .sas-theme-trigger:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .public-site .site-header .sas-header-search:focus-visible,
+  .public-site .site-header .sas-theme-trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .public-site .site-header .site-admin-link {
+    min-height: 44px;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+  .public-site .home-section,
+  .public-site .home-analysis-section,
+  .public-site .home-media-section {
+    padding-block: 22px 26px;
+  }
+  .public-site .home-section.sas-product-section--flagship { padding-top: 13px; }
+  .public-site .home-section > .site-section-heading,
+  .public-site .home-section .site-container > .site-section-heading {
+    margin-bottom: 14px;
+  }
+  .public-site .site-section-heading { gap: 8px 13px; align-items: end; }
+  .public-site .site-section-heading .eyebrow {
+    font: 700 12px/1.6 "Thmanyah Sans",sans-serif;
+  }
+  .public-site .site-section-heading h2 {
+    font: 700 clamp(23px, 5.5vw, 29px)/1.55 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+    margin-top: 4px;
+  }
+  .public-site .site-section-heading > a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 7px;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+  .public-site .home-brand-hero {
+    width: calc(100% - 32px);
+    min-height: 0;
+    margin: 10px auto 13px;
+    padding: 27px 20px 25px;
+    border-radius: 13px;
+  }
+  .public-site .home-brand-hero h1 {
+    margin: 5px 0 9px;
+    font-size: clamp(32px, 6.2vw, 44px);
+    line-height: 1.55;
+    text-wrap: balance;
+  }
+  .public-site .home-brand-hero p {
+    font: 400 13px/1.9 "Thmanyah Sans",sans-serif;
+    margin: 0;
+    max-width: 53ch;
+  }
+  .public-site .home-brand-hero .home-compact-actions {
+    width: 100%;
+    gap: 9px;
+    margin-top: 18px;
+    padding-bottom: 0;
+    flex-wrap: wrap;
+  }
+  .public-site .home-compact-actions .button {
+    flex: 1 1 auto;
+    min-height: 44px;
+    white-space: normal;
+    text-align: center;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  /* Summary and sources should be legible without zoom. */
+  /* Research/study cards should read as compact editorial summaries on phone. */
+  .public-site .knowledge-rail { margin: 14px 0 22px; }
+  .public-site .knowledge-rail-head { margin-bottom: 13px; padding-bottom: 9px; }
+  .public-site .knowledge-rail-head h2 {
+    font: 700 clamp(18px,4.8vw,23px)/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+  }
+  .public-site .knowledge-rail-head span { font-size: 12px; }
+  .public-site .knowledge-rail-grid { gap: 12px; }
+  .public-site .knowledge-card { border-radius: 11px; }
+  .public-site .knowledge-card-copy { padding: 17px; }
+  .public-site .knowledge-card-date { font-size: 12px; }
+  .public-site .knowledge-card-copy h3 {
+    font: 700 clamp(21px,4.7vw,25px)/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+    margin: 9px 0;
+  }
+  .public-site .knowledge-card-copy p {
+    color: var(--muted);
+    font: 400 13px/1.95 "Thmanyah Sans",sans-serif;
+    margin-bottom: 12px;
+  }
+  .public-site .knowledge-card-open {
+    min-height: 44px;
+    padding-top: 11px;
+    font-size: 12px;
+  }
+  .public-site .knowledge-card-copy,
+  .public-site .knowledge-card-copy h3 { color: var(--foreground); }
+  .public-site .knowledge-card { background: var(--surface); border-color: var(--line); }
+  .public-site .knowledge-card-open { border-color: var(--line); }
+  .public-site .home-brand-hero::before {
+    animation: none;
+    filter: none;
+    opacity: .45;
+  }
+  .public-site .sas-home-briefing-feature { border-radius: 12px; }
+  .public-site .sas-home-briefing-main,
+  .public-site .sas-home-briefing-highlights { padding: 19px; }
+  .public-site .sas-home-briefing-date { margin-top: 12px; font-size: 12px; }
+  .public-site .sas-home-briefing-title { font-size: clamp(23px,5.5vw,30px); line-height: 1.58; }
+  .public-site .sas-home-briefing-lede { font-size: 13px; line-height: 1.9; }
+  .public-site .sas-home-briefing-metrics { gap: 7px; margin-top: 17px; }
+  .public-site .sas-home-briefing-metric { font-size: 12px; }
+  .public-site .sas-home-briefing-actions { padding-top: 18px; }
+  .public-site .sas-home-briefing-primary-link,
+  .public-site .sas-home-briefing-aside-link { min-height: 44px; }
+  .public-site .sas-home-briefing-aside-heading > span:first-child { font-size: 13px; }
+  .public-site .sas-home-briefing-highlight-copy p { font-size: 12px; line-height: 1.85; }
+  .public-site .sas-home-briefing-list li { padding: 12px 0; }
+  .public-site .sas-home-briefing-archive { gap: 7px; }
+  .public-site .sas-home-briefing-archive-item { min-height: 44px; }
+  .public-site .sas-visual-showcase { gap: 11px; }
+  .public-site .sas-visual-showcase-intro {
+    margin: -3px 0 12px;
+    font: 400 13px/1.9 "Thmanyah Sans",sans-serif;
+  }
+  .public-site .sas-visual-feature-description { font-size: 13px; line-height: 1.9; }
+  .public-site .sas-visual-feature-meta span { font-size: 11px; }
+  .public-site .sas-visual-feature-action { min-height: 44px; }
+  .public-site .public-empty-state {
+    min-height: 140px;
+    padding: 20px 15px;
+    border-radius: 10px;
+    gap: 7px;
+  }
+  .public-site .public-empty-state .public-empty-state-logo { width: 105px; max-height: 64px; }
+  .public-site .public-empty-state p {
+    font-size: 12px;
+    line-height: 1.9;
+    max-width: 46ch;
+    margin: 5px 0 0;
+  }
+  .public-site .site-footer-inner { gap: 13px; padding-block: 22px; }
+  .public-site .site-footer-links { gap: 4px 14px; }
+  .public-site .site-footer-links a {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    font-size: 12px;
+  }
+  /* Background is an ambient brand layer, not an additional text texture. */
+  .sas-threads-background--sitewide .sas-threads-mesh { opacity: .52; }
+}
+@media (max-width: 540px) {
+  .public-site .site-container,
+  .public-site .home-section.site-container,
+  .public-site .home-section > .site-container,
+  .public-site .home-brand-hero {
+    width: calc(100% - 28px);
+  }
+  /* The original phone mask and opaque wash removed most of the mesh.
+     Keep it visible behind the opaque reading cards, not in front of text. */
+  .sas-threads-background--sitewide .sas-threads-mesh {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.95) 0%, rgba(0,0,0,.83) 55%, rgba(0,0,0,.48) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,.95) 0%, rgba(0,0,0,.83) 55%, rgba(0,0,0,.48) 100%);
+  }
+  .sas-threads-background--sitewide::after {
+    background: linear-gradient(to left,
+      color-mix(in srgb,var(--background) 70%,transparent) 0%,
+      color-mix(in srgb,var(--background) 45%,transparent) 62%,
+      color-mix(in srgb,var(--background) 16%,transparent) 100%);
+  }
+  .public-site .home-brand-hero { padding: 23px 17px 22px; }
+  .public-site .home-brand-hero h1 { font-size: clamp(30px, 8vw, 40px); }
+  .public-site .home-brand-hero p { font-size: 13px; line-height: 1.85; }
+  .public-site .site-section-heading h2 { font-size: clamp(22px, 6vw, 27px); }
+  .public-site .site-section-heading .eyebrow { font-size: 11px; }
+  .public-site .sas-home-briefing-main,
+  .public-site .sas-home-briefing-highlights { padding: 17px; }
+  .public-site .sas-home-briefing-kicker { font-size: 12px; }
+  .public-site .sas-home-briefing-no { font-size: 11px; }
+  .public-site .sas-home-briefing-date { margin-top: 14px; }
+  .public-site .sas-home-briefing-metric { padding: 7px 9px; }
+  .public-site .sas-home-briefing-metrics { margin-top: 15px; }
+  .public-site .sas-home-briefing-list li {
+    grid-template-columns: 24px minmax(0,1fr);
+    column-gap: 9px;
+  }
+  .public-site .sas-home-briefing-index { font-size: 12px; }
+  .public-site .sas-visual-feature--lead .sas-vk-cover,
+  .public-site .sas-visual-feature--supporting .sas-vk-cover {
+    min-height: 160px;
+    padding: 15px 17px;
+  }
+  .public-site .sas-vk-civic-diagram { padding: 0; gap: 10px; }
+  .public-site .sas-vk-civic-hub { min-width: 130px; padding: 7px 18px; }
+  .public-site .sas-vk-civic-grid {
+    max-width: 300px;
+    gap: 6px;
+  }
+  .public-site .sas-vk-civic-grid span {
+    min-height: 34px;
+    font-size: 11px;
+  }
+  .public-site .sas-vk-timeline-graphic { padding: 5px 0; }
+  .public-site .sas-vk-timeline-label { font-size: 9px; }
+  .public-site .sas-vk-timeline-overline { margin-bottom: 12px; }
+  .public-site .sas-visual-feature--lead .sas-visual-feature-content,
+  .public-site .sas-visual-feature--supporting .sas-visual-feature-content {
+    padding: 18px;
+  }
+  .public-site .sas-visual-feature-label { font-size: 12px; }
+  .public-site .sas-visual-feature--lead h3 { font-size: 24px; line-height: 1.6; }
+  .public-site .sas-visual-feature--supporting h3 { font-size: 21px; line-height: 1.6; }
+  .public-site .sas-visual-feature-meta { margin: 13px 0 15px; }
+  .public-site .sas-visual-feature-meta span { font-size: 11px; }
+  .public-site .sas-visual-showcase-supporting .sas-vk-timeline-label {
+    font-size: 9px;
+    min-height: 19px;
+  }
+  .public-site .sas-home-briefing-archive-item {
+    min-width: 0;
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+}
+@media (max-width: 390px) {
+  .public-site .site-header-inner { width: calc(100% - 24px); }
+  .public-site .site-brand .brand-logo-color { width: 124px; height: 54px; }
+  .public-site .site-header .site-admin-link { padding-inline: 8px; font-size: 10px; }
+  .public-site .home-brand-hero h1 { font-size: 30px; }
+  .public-site .site-section-heading { flex-wrap: wrap; }
+  .public-site .site-section-heading > a { margin-inline-start: auto; }
+  .public-site .sas-home-briefing-date { gap: 5px; }
+  .public-site .sas-visual-feature-meta { gap: 6px; }
+  .public-site .sas-vk-timeline-stop { gap: 6px; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .public-site .content-card,
+  .public-site .sas-visual-feature,
+  .public-site .sas-home-briefing-feature { transition: border-color .16s ease, box-shadow .16s ease; }
+  .public-site .content-card:hover,
+  .public-site .sas-visual-feature:hover,
+  .public-site .sas-home-briefing-feature:hover {
+    border-color: color-mix(in srgb,var(--accent) 30%,var(--line));
+    box-shadow: 0 7px 28px rgba(20,52,44,.065);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site :is(a,button,.content-card,.sas-visual-feature,.sas-home-briefing-feature) {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* Disable ambient motion only where system preference requires it. */
+@media (prefers-reduced-motion: reduce) and (max-width: 760px) {
+  .public-site .home-brand-hero::before { animation: none; }
+  .sas-threads-background--sitewide .sas-threads-mesh { opacity: .30; }
+}

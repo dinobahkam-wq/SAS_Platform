@@ -5,11 +5,19 @@ import { ThemeControl } from "@/components/theme-control";
 
 const navigation = [
   { href: "/admin", label: "نظرة عامة", symbol: "⌂", exact: true },
-  { href: "/admin/content", label: "إدارة المحتوى", symbol: "▤" },
+  { href: "/admin/briefings", label: "الإحاطة اليومية", symbol: "▤" },
+  { href: "/admin/content?product=analysis", label: "التحليل والدراسات", symbol: "▥" },
+  { href: "/admin/content?product=visual", label: "المعرفة البصرية", symbol: "◈" },
+  { href: "/admin/content?product=programs", label: "الفيديو والبرامج", symbol: "▣" },
+  { href: "/admin/news-studio", label: "استوديو الصور", symbol: "✦" },
+];
+
+const supportNavigation = [
+  { href: "/admin/content?product=legacy", label: "أرشيف المحتوى السابق", symbol: "▦" },
+  { href: "/admin/legacy-import", label: "ترحيل أرشيف ساس", symbol: "↥" },
   { href: "/admin/sources", label: "المصادر", symbol: "◎" },
   { href: "/admin/categories", label: "التصنيفات", symbol: "▦" },
   { href: "/admin/media", label: "مكتبة الوسائط", symbol: "▧" },
-  { href: "/admin/news-studio", label: "استوديو الصور الإخبارية", symbol: "✦" },
 ];
 
 export function AdminShell({
@@ -17,7 +25,7 @@ export function AdminShell({
   user,
 }: {
   children: React.ReactNode;
-  user: { email: string; displayName: string };
+  user: { email: string; displayName: string; isOwner: boolean };
 }) {
   return (
     <div className="admin-frame">
@@ -39,6 +47,18 @@ export function AdminShell({
               className="sidebar-link"
               aria-label={item.label}
             >
+              <span className="nav-symbol" aria-hidden="true">{item.symbol}</span>
+              <span>{item.label}</span>
+            </Link>
+          ))}
+        </nav>
+
+        {user.isOwner ? <nav className="sidebar-nav" aria-label="إدارة الفريق"><Link href="/admin/team" className="sidebar-link"><span className="nav-symbol" aria-hidden="true">♙</span><span>الأعضاء والصلاحيات</span></Link></nav> : null}
+
+        <div className="sidebar-caption">إدارة الأصول والأرشيف</div>
+        <nav className="sidebar-nav" aria-label="الإدارة المساندة">
+          {supportNavigation.map(item => (
+            <Link href={item.href} key={item.href} className="sidebar-link" aria-label={item.label}>
               <span className="nav-symbol" aria-hidden="true">{item.symbol}</span>
               <span>{item.label}</span>
             </Link>

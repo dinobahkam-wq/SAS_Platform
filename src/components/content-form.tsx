@@ -1,5 +1,8 @@
+"use client";
+import { useState } from "react";
+import { newEditorialFormats } from "@/lib/admin-products";
 import type { Database } from "@/types/database.types";
-import { formats, sections } from "@/lib/content";
+import { formats } from "@/lib/content";
 import { StructuredContentEditor } from "@/components/structured-content-editor";
 
 type Category = Database["public"]["Tables"]["categories"]["Row"];
@@ -37,11 +40,27 @@ export function ContentForm({
   selectedSourceIds?: string[];
   error?: string;
 }) {
+  const [activeSection,setActiveSection]=useState(initial?.section??"analysis");
+  const [activeFormat,setActiveFormat]=useState(initial?.format??"analysis");
+  const sectionOptions=[
+    {value:"analysis",label:"التحليل والدراسات — تحليلات"},
+    {value:"research",label:"التحليل والدراسات — دراسات وأوراق"},
+    {value:"media",label:"المعرفة البصرية والفيديو والبرامج"},
+    ...(initial?.section==="news"?[{value:"news",label:"المحتوى الإخباري القديم (تعديل فقط)"}]:[]),
+  ];
+  const availableFormats=[
+    ...newEditorialFormats.filter(item=>item.section===activeSection)
+      .map(item=>({value:item.format,label:item.label})),
+    ...(initial?.section===activeSection &&
+       !newEditorialFormats.some(item=>item.section===activeSection&&item.format===initial.format)
+      ? formats.filter(item=>item.section===activeSection&&item.value===initial.format)
+        .map(item=>({value:item.value,label:item.label+" (أرشيف قديم)"})):[]),
+  ];
   return (
     <form action={action} className="panel">
       <div className="panel-header">
         <h2>{initial ? "بيانات المحتوى" : "بيانات المادة الجديدة"}</h2>
-        <span className="pill">جميع الأقسام</span>
+        <span className="pill">منتجات ساس</span>
       </div>
       <div className="panel-body">
         {error ? <div className="notice notice-error">{error}</div> : null}
@@ -49,14 +68,19 @@ export function ContentForm({
         <div className="form-grid">
           <label className="field">
             <span>القسم التحريري</span>
-            <select name="section" defaultValue={initial?.section ?? "news"} required>
-              {sections.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+            <select name="section" value={activeSection} onChange={(event)=>{
+              const next=event.target.value;
+              setActiveSection(next);
+              setActiveFormat(newEditorialFormats.find(item=>item.section===next)?.format ??
+                formats.find(item=>item.section===next)?.value ?? "analysis");
+            }} required>
+              {sectionOptions.map(item=><option key={item.value} value={item.value}>{item.label}</option>)}
             </select>
           </label>
           <label className="field">
             <span>نوع المادة</span>
-            <select name="format" defaultValue={initial?.format ?? "news_brief"} required>
-              {formats.map((item) => <option key={`${item.section}-${item.value}`} value={item.value}>{item.label} — {sections.find((s) => s.value === item.section)?.label}</option>)}
+            <select name="format" value={activeFormat} onChange={event=>setActiveFormat(event.target.value)} required>
+              {availableFormats.map(item=><option key={item.value} value={item.value}>{item.label}</option>)}
             </select>
           </label>
           <label className="field field-full">

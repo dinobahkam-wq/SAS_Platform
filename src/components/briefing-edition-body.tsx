@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   BriefingEmphasis,
   BriefingTypeTag,
@@ -12,6 +13,7 @@ import {
 } from "@/components/briefing-public";
 import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
 import "./briefing-dense-layout.css";
+import "./briefing-studio-transfer.css";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
 import type { BriefingDevelopment, BriefingSummaryItem } from "@/lib/public-briefing";
 
@@ -46,9 +48,11 @@ function matchesTab(development: BriefingDevelopment, tab: Tab) {
 export function BriefingEditionBody({
   executiveSummary,
   developments,
+  studioEdition,
 }: {
   executiveSummary: BriefingSummaryItem[];
   developments: BriefingDevelopment[];
+  studioEdition?: { slug: string; revisionNo: number } | null;
 }) {
   const [activeTab, setActiveTab] = useState<Tab>("all");
   const filtered = prioritizeBriefingDevelopments(developments).filter((development) => matchesTab(development, activeTab));
@@ -141,6 +145,19 @@ export function BriefingEditionBody({
                         {sourceLabel(development) ? <span className="briefing-dense-source-name" title="الجهة الناشرة للمصدر الأساسي أو أول مصدر متاح">{sourceLabel(development)}</span> : <span className="briefing-no-source">لا توجد إحالة عامة</span>}
                         {development.sources.length > 0 ? <BriefingSourcesPopover sources={development.sources} label="التوثيق"/> : null}
                       </div>
+                      {studioEdition ? (
+                        <Link
+                          className="briefing-studio-transfer-link"
+                          href={`/admin/news-studio/briefing/${encodeURIComponent(studioEdition.slug)}/${development.order}?revision=${studioEdition.revisionNo}`}
+                          title="إنشاء بطاقة بصرية من التطور في استوديو ساس"
+                        >
+                          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="16" rx="2"/>
+                            <path d="m7 15 3.5-3.5 2.5 2.5 3-4 3 4.5"/>
+                          </svg>
+                          إنشاء بطاقة بصرية
+                        </Link>
+                      ) : null}
                       {(development.context_ar || development.why_it_matters_ar) ? (
                         <details className="briefing-dense-context">
                           <summary>السياق والدلالة</summary>

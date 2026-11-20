@@ -148,3 +148,27 @@
   }
   .briefing-print-currency-name {font-size:9px;}
 }
+
+/* Package 1: SAS-approved fonts, including numeric values, in printed indicators. */
+.briefing-print-page .briefing-print-indicators,
+.briefing-print-page .briefing-print-indicators :where(h2,h3,span,th,td,small,a,bdi) {
+  font-family: "Thmanyah Sans", sans-serif;
+  font-synthesis: none;
+}
+.briefing-print-page .briefing-print-indicators h2,
+.briefing-print-page .briefing-print-indicators h3 {
+  font-family: "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+}
+.briefing-print-page .briefing-print-indicators bdi {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+.briefing-print-page .briefing-print-event-no {
+  font-family: "Thmanyah Sans", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+@page {
+  @bottom-center {
+    font-family: "Thmanyah Sans", sans-serif;
+  }
+}

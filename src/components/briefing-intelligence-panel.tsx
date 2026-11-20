@@ -1,6 +1,7 @@
 import type { BriefingIndicator } from "@/lib/briefing-indicators";
 import type { HistoricBriefingContext, HistoricExchangeRate, IndicativeExchangeRate } from "@/lib/briefing-dated-context";
 import { formatBriefingDateOnly } from "@/components/briefing-public";
+import "./briefing-indicator-typography.css";
 
 function Symbol({ name }: { name: string }) {
   return <span className="material-symbols-rounded" aria-hidden="true">{name}</span>;

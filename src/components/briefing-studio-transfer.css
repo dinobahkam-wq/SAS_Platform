@@ -1,0 +1,19 @@
+/* Package 2 — discreet editorial action, visible to authenticated admins only. */
+.briefing-studio-transfer-link {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  align-self:flex-start;
+  margin-block:9px 4px;
+  padding:6px 10px;
+  border-radius:6px;
+  border:1px solid var(--line,#d9e3de);
+  font:600 11px/1.6 "Thmanyah Sans",sans-serif;
+  text-decoration:none;
+  color:var(--accent,#174b3c);
+  background:var(--surface,#fff);
+}
+.briefing-studio-transfer-link:hover { border-color:var(--accent,#174b3c); }
+.briefing-studio-transfer-link:focus-visible { outline:2px solid var(--accent,#174b3c);outline-offset:3px; }
+.briefing-studio-transfer-link svg { flex:none; }
+@media print {.briefing-studio-transfer-link{display:none!important}}

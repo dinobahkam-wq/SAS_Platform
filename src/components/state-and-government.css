@@ -1,0 +1,117 @@
+/* SAS civic literacy product — scoped to its interactive knowledge surface. */
+.sascivic{--cv-ink:var(--foreground,#17211e);--cv-muted:var(--muted,#718078);--cv-line:var(--line,#e3e8e3);--cv-accent:var(--accent,#174b3c);--cv-surface:var(--surface,#fff);--cv-soft:var(--accent-soft,#eaf1ed);direction:rtl;display:grid;gap:17px;font:400 13px/1.85 "Thmanyah Sans",sans-serif;color:var(--cv-ink)}
+.sascivic *{box-sizing:border-box}
+.sascivic-hero{padding:clamp(22px,3.5vw,43px);border-radius:15px;overflow:hidden;background:linear-gradient(120deg,#123f34,#092b26 70%,#173d38);color:#f4f9f4;position:relative}
+.sascivic-hero:after{content:"";position:absolute;left:-9%;top:-90%;width:55%;aspect-ratio:1;border:1px solid #ffffff19;box-shadow:0 0 0 55px #ffffff05,0 0 0 100px #ffffff06;border-radius:50%;pointer-events:none}
+.sascivic-hero>*{position:relative;z-index:1}
+.sascivic-top{display:flex;justify-content:space-between;gap:12px;align-items:center;padding-bottom:14px;border-bottom:1px solid #ffffff25;font-size:11px;color:#d9ede2}
+.sascivic-top>span:first-child{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.sascivic-hero-main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(210px,.6fr);gap:30px;align-items:center;padding:33px 0}
+.sascivic-overline{margin:0 0 8px;color:#b3dac2;font-size:11px;font-weight:700}
+.sascivic-hero h1{font:700 clamp(29px,4vw,48px)/1.55 "Tajarib Taweel","Thmanyah Sans",sans-serif;letter-spacing:0;margin:0 0 13px;max-width:730px}
+.sascivic-hero-main p:last-child{font-size:13px;line-height:2;max-width:640px;margin:0;color:#dcefe3}
+.sascivic-hero-side{justify-self:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.sascivic-seal{width:137px;height:137px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:50%;border:1px solid #dcefbf91;background:#dff0c00b;box-shadow:0 0 0 11px #ffffff0a;color:#e2efc7}
+.sascivic-seal strong{font:700 19px "Tajarib Taweel","Thmanyah Sans",sans-serif}
+.sascivic-seal-branches{display:flex;gap:7px}
+.sascivic-seal-branches span{font-size:10px;color:#deebe0;background:#ffffff16;border:1px solid #ffffff22;border-radius:5px;padding:4px 7px}
+.sascivic-hero-bottom{padding-top:14px;border-top:1px solid #ffffff27;display:flex;align-items:center;flex-wrap:wrap;gap:13px 26px}
+.sascivic-hero-bottom span{display:inline-flex;align-items:center;gap:7px;color:#dbe9df;font-size:11px}
+.sascivic-workspace{display:grid;grid-template-columns:minmax(245px,.65fr) minmax(0,1.35fr);align-items:start;gap:15px}
+.sascivic-sidebar,.sascivic-panel,.sascivic-sources{background:var(--cv-surface);border:1px solid var(--cv-line);border-radius:13px;min-width:0}
+.sascivic-sidebar{padding:20px 16px}
+.sascivic-sidebar-label{font-weight:700;color:var(--cv-muted);font-size:11px;margin-bottom:13px}
+.sascivic-step{width:100%;display:flex;align-items:center;gap:11px;border:1px solid transparent;border-radius:8px;padding:12px 10px;text-align:right;background:transparent;color:var(--cv-ink)}
+.sascivic-step.is-current{background:var(--cv-soft);border-color:var(--cv-line)}
+.sascivic-step:hover:not(.is-current){border-color:var(--cv-line)}
+.sascivic-step-number{font-weight:700;color:var(--cv-accent);font-size:11px;flex-shrink:0;font-variant-numeric:tabular-nums}
+.sascivic-step>span:nth-child(2){flex:1;display:flex;flex-direction:column;gap:1px}
+.sascivic-step strong{font-size:12px;font-weight:700}
+.sascivic-step small{font-size:10px;color:var(--cv-muted)}
+.sascivic-step svg{color:var(--cv-muted)}
+.sascivic-sidebar-foot{border-top:1px solid var(--cv-line);margin-top:17px;padding-top:15px;color:var(--cv-muted);font-size:11px;line-height:1.9}
+.sascivic-panel{padding:clamp(21px,3vw,34px)}
+.sascivic-panel-bar{display:flex;justify-content:space-between;gap:12px;color:var(--cv-muted);font-size:10px;padding-bottom:19px;border-bottom:1px solid var(--cv-line)}
+.sascivic-unit{padding-top:21px;min-height:385px}
+.sascivic-kicker{font-weight:700;color:var(--cv-accent);font-size:11px;margin:0 0 5px}
+.sascivic-unit h2{font:700 clamp(23px,3vw,34px)/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;margin:0 0 9px}
+.sascivic-unit-intro{font-size:12px;color:var(--cv-muted);line-height:2.05;max-width:720px;margin:0 0 24px}
+.sascivic-concepts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.sascivic-concept{padding:16px;border:1px solid var(--cv-line);background:color-mix(in srgb,var(--cv-accent) 3%,var(--cv-surface));border-radius:9px;min-width:0}
+.sascivic-concept-0{border-top:3px solid var(--cv-accent)}
+.sascivic-concept-1{border-top:3px solid #b39a67}
+.sascivic-concept-2{border-top:3px solid #668a9a}
+.sascivic-concept-top{display:flex;align-items:center;gap:9px}
+.sascivic-concept-top span{font-size:10px;color:var(--cv-accent);font-weight:700}
+.sascivic-concept-top strong{font-size:14px}
+.sascivic-concept p{font-size:11px;line-height:2;color:var(--cv-ink);margin:9px 0 14px}
+.sascivic-concept small{font-size:10px;color:var(--cv-accent);font-weight:700}
+.sascivic-distinction{border:1px solid var(--cv-line);background:var(--cv-soft);display:flex;gap:12px;align-items:flex-start;border-radius:9px;padding:15px 16px;margin-top:20px;color:var(--cv-ink)}
+.sascivic-distinction>svg{flex-shrink:0;color:var(--cv-accent);margin-top:2px}
+.sascivic-distinction strong{font-weight:700;font-size:12px}
+.sascivic-distinction p{font-size:11px;line-height:2;margin:5px 0 0}
+.sascivic-elements{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sascivic-element{position:relative;min-height:170px;border:1px solid var(--cv-line);border-radius:9px;padding:17px;background:var(--cv-surface)}
+.sascivic-element-icon{display:inline-grid;place-items:center;width:44px;height:44px;background:var(--cv-soft);color:var(--cv-accent);border-radius:9px;margin-bottom:8px}
+.sascivic-element>span{position:absolute;left:17px;top:19px;font-size:11px;color:var(--cv-muted);font-variant-numeric:tabular-nums}
+.sascivic-element h3{font-size:13px;font-weight:700;margin:0 0 4px}
+.sascivic-element p{font-size:11px;color:var(--cv-muted);line-height:1.95;margin:0}
+.sascivic-choices{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.sascivic-choices button{padding:9px 15px;border-radius:7px;border:1px solid var(--cv-line);background:var(--cv-surface);color:var(--cv-ink);font-size:12px;font-weight:600}
+.sascivic-choices button.is-selected{background:var(--cv-accent);border-color:var(--cv-accent);color:#fff}
+.sascivic-structure{display:flex;align-items:center;flex-direction:column;gap:0;padding:23px;background:color-mix(in srgb,var(--cv-accent) 4%,var(--cv-surface));border:1px solid var(--cv-line);border-radius:10px}
+.sascivic-structure-main,.sascivic-structure-branch{display:flex;align-items:center;justify-content:center;gap:11px;min-width:240px;min-height:62px;background:var(--cv-surface);border:1px solid var(--cv-line);border-radius:9px;padding:12px;color:var(--cv-ink)}
+.sascivic-structure-main{border-top:3px solid var(--cv-accent)}
+.sascivic-structure-main svg,.sascivic-structure-branch svg{color:var(--cv-accent)}
+.sascivic-structure-main strong,.sascivic-structure-branch strong{font-size:12px}
+.sascivic-structure-connector{width:1px;height:42px;background:var(--cv-accent)}
+.sascivic-structure-branch{border-bottom:3px solid var(--cv-accent)}
+.sascivic-definition{border-inline-start:3px solid var(--cv-accent);padding:11px 15px;margin-top:16px}
+.sascivic-definition span{font-size:11px;color:var(--cv-accent);font-weight:700}
+.sascivic-definition p{font-size:12px;line-height:2;margin:6px 0 0}
+.sascivic-system-title{background:var(--cv-soft);border:1px solid var(--cv-line);padding:15px;border-radius:9px;display:flex;align-items:center;gap:13px;color:var(--cv-accent)}
+.sascivic-system-title>div{display:flex;flex-direction:column;gap:4px}
+.sascivic-system-title strong{font-weight:700;font-size:15px}
+.sascivic-system-title span{font-size:11px;color:var(--cv-muted)}
+.sascivic-system-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}
+.sascivic-system-grid>div{border:1px solid var(--cv-line);border-radius:8px;padding:13px;min-width:0}
+.sascivic-system-grid small{color:var(--cv-accent);font-weight:700;font-size:10px}
+.sascivic-system-grid p{font-size:11px;line-height:2;margin:7px 0 0}
+.sascivic-quiz-header{display:flex;justify-content:space-between;gap:10px;font-size:11px;margin:10px 0 9px}
+.sascivic-quiz-header span{color:var(--cv-muted)}
+.sascivic-quiz-progress{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:23px}
+.sascivic-quiz-progress>span{height:4px;border-radius:9px;background:var(--cv-line)}
+.sascivic-quiz-progress>span.is-active{background:var(--cv-accent)}
+.sascivic-quiz-progress>span.is-done{background:#8baa8a}
+.sascivic-quiz{border:0;padding:0;margin:0;min-width:0;display:grid;gap:8px}
+.sascivic-quiz legend{font-weight:700;font-size:14px;line-height:1.9;margin-bottom:13px}
+.sascivic-quiz button{border:1px solid var(--cv-line);border-radius:8px;display:flex;align-items:center;gap:11px;text-align:right;padding:12px;background:var(--cv-surface);font-size:12px;color:var(--cv-ink)}
+.sascivic-quiz button.is-selected{border-color:var(--cv-accent);background:var(--cv-soft)}
+.sascivic-answer-symbol{border:1px solid var(--cv-line);border-radius:6px;width:28px;height:28px;display:grid;place-items:center;flex-shrink:0;color:var(--cv-accent);font-size:11px;font-weight:700}
+.sascivic-feedback{margin-top:14px;padding:13px 15px;background:var(--cv-soft);border:1px solid var(--cv-line);border-radius:7px}
+.sascivic-feedback.is-incorrect{border-inline-start:3px solid #b39a67}
+.sascivic-feedback.is-correct{border-inline-start:3px solid var(--cv-accent)}
+.sascivic-feedback strong{font-size:12px}
+.sascivic-feedback p{font-size:11px;line-height:1.9;margin:5px 0 0}
+.sascivic-quiz-nav{display:flex;justify-content:space-between;gap:10px;margin-top:17px}
+.sascivic-quiz-nav button,.sascivic-page-nav button{border:1px solid var(--cv-line);background:var(--cv-surface);padding:8px 13px;border-radius:7px;font-size:11px;color:var(--cv-ink)}
+.sascivic-quiz-nav button:disabled,.sascivic-page-nav button:disabled{opacity:.4;cursor:not-allowed}
+.sascivic-page-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--cv-line);padding-top:19px;margin-top:28px}
+.sascivic-page-nav span{font-size:11px;color:var(--cv-muted);font-variant-numeric:tabular-nums}
+.sascivic-sources{padding:clamp(20px,3vw,31px)}
+.sascivic-sources-head{display:flex;align-items:center;gap:12px}
+.sascivic-sources-head>svg{color:var(--cv-accent)}
+.sascivic-sources-head h2{font:700 21px/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;margin:0}
+.sascivic-sources-head p{font-size:11px;color:var(--cv-muted);margin:0}
+.sascivic-sources-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:18px}
+.sascivic-sources-list a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;border:1px solid var(--cv-line);border-radius:8px;padding:12px}
+.sascivic-sources-list a:hover{border-color:var(--cv-accent)}
+.sascivic-sources-list a strong{grid-column:1;font-size:11px;line-height:1.8}
+.sascivic-sources-list a span{grid-column:1;font-size:10px;color:var(--cv-muted)}
+.sascivic-sources-list a svg{grid-column:2;grid-row:1/3;color:var(--cv-accent);align-self:center}
+.sascivic-method{border-top:1px solid var(--cv-line);padding-top:14px;margin:20px 0 0;font-size:11px;color:var(--cv-muted);line-height:2}
+.sascivic button:focus-visible,.sascivic a:focus-visible{outline:2px solid var(--cv-accent);outline-offset:3px}
+@media(max-width:1020px){.sascivic-workspace{grid-template-columns:1fr}.sascivic-sidebar{display:flex;flex-wrap:wrap;gap:7px;padding:15px}.sascivic-sidebar-label{width:100%;margin:0 0 5px}.sascivic-step{width:auto;flex:1 1 140px;min-width:120px}.sascivic-step>svg{display:none}.sascivic-sidebar-foot{width:100%;margin-top:3px}.sascivic-hero-main{grid-template-columns:minmax(0,1.4fr) minmax(170px,.6fr)}}
+@media(max-width:670px){.sascivic-hero{border-radius:11px;padding:21px}.sascivic-hero-main{grid-template-columns:1fr;padding:25px 0}.sascivic-hero-side{display:none}.sascivic-panel{padding:19px}.sascivic-sidebar{gap:5px}.sascivic-step{flex:1 1 130px;padding:9px}.sascivic-step-number{font-size:10px}.sascivic-concepts,.sascivic-system-grid{grid-template-columns:1fr}.sascivic-elements,.sascivic-sources-list{grid-template-columns:1fr}.sascivic-unit{min-height:0}.sascivic-quiz legend{font-size:13px}}
+@media print{.sascivic-hero{print-color-adjust:exact}.sascivic-sidebar,.sascivic-page-nav,.sascivic-quiz-nav{display:none}.sascivic-workspace{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.sascivic *{transition:none!important}}

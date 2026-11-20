@@ -1,3 +1,4 @@
+import "./site-search-cta.css";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -29,6 +30,10 @@ export function PublicHeader() {
           ))}
         </nav>
         <div className="site-header-actions">
+          <Link href="/search" className="sas-header-search" aria-label="البحث في منصة ساس" title="البحث في الإحاطات والمواد">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.1"/><path d="m16 16 5 5"/></svg>
+            <span>بحث</span>
+          </Link>
           <ThemeControl />
           <Link href="/login" className="site-admin-link">دخول الإدارة</Link>
         </div>
@@ -104,7 +109,7 @@ export function ContentCard({
           <ContentMeta item={item} />
           <h3>{item.title}</h3>
           {item.excerpt ? <p>{item.excerpt}</p> : null}
-          <span className="content-card-more">قراءة المادة <span aria-hidden="true">←</span></span>
+          <span className="content-card-more sas-text-link">قراءة المادة <span aria-hidden="true">←</span></span>
         </div>
       </Link>
     </article>
@@ -128,13 +133,13 @@ export function SectionHeading({
         <span className="eyebrow">{eyebrow}</span>
         <h2>{title}</h2>
       </div>
-      {href ? <Link href={href}>{linkLabel} <span aria-hidden="true">←</span></Link> : null}
+      {href ? <Link href={href} className="sas-text-link">{linkLabel} <span aria-hidden="true">←</span></Link> : null}
     </div>
   );
 }
 
 export function EmptyContent({ message = "لا توجد مواد منشورة في هذا القسم حتى الآن." }: { message?: string }) {
-  return <div className="public-empty-state"><span>ساس</span><p>{message}</p></div>;
+  return <div className="public-empty-state"><BrandLogo variant="full" className="public-empty-state-logo" /><p>{message}</p></div>;
 }
 
 export function ContentBody({ body }: { body: PublicContentItem["body"] }) {

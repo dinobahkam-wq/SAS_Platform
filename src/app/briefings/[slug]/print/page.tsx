@@ -199,13 +199,6 @@ export default async function BriefingPrintPage({
           <p>{revision.coverage_note_ar}</p>
         </section>
 
-        {revision.analysis_ar?.trim() ? (
-          <section className="briefing-print-analysis">
-            <h2>قراءة ساس</h2>
-            <p>{revision.analysis_ar}</p>
-          </section>
-        ) : null}
-
         <footer className="briefing-print-document-end">
           <span>منصة ساس للإعلام والدراسات</span>
           <span>نسخة وثائقية من العدد المنشور · مراجعة رقم {revision.revision_no}</span>

@@ -8,7 +8,9 @@ import {
 import { EditorialRail } from "@/components/editorial-rail";
 import { KnowledgeRail } from "@/components/knowledge-rail";
 import { getPublishedContent } from "@/lib/public-content";
-import { getPublicBriefingArchive } from "@/lib/public-briefing";
+import { getPublicBriefing, getPublicBriefingArchive } from "@/lib/public-briefing";
+import { HomeBriefingShowcase } from "@/components/home-briefing-showcase";
+import { VisualKnowledgeShowcase } from "@/components/visual-knowledge-feature";
 
 export const dynamic = "force-dynamic";
 
@@ -21,11 +23,18 @@ export default async function Home() {
 
   // Daily briefing is the editorial flagship. A temporary archive outage must
   // not prevent the other independent knowledge products from loading.
-  let latestBriefing: Awaited<ReturnType<typeof getPublicBriefingArchive>>[number] | null = null;
+  let briefings: Awaited<ReturnType<typeof getPublicBriefingArchive>> = [];
+  let latestEdition: Awaited<ReturnType<typeof getPublicBriefing>> = null;
   let briefingUnavailable = false;
   try {
-    const [latest] = await getPublicBriefingArchive(1);
-    latestBriefing = latest ?? null;
+    briefings = await getPublicBriefingArchive(3);
+    if (briefings[0]) {
+      try {
+        latestEdition = await getPublicBriefing(briefings[0].slug);
+      } catch {
+        // Archive remains usable if the edition detail is temporarily unavailable.
+      }
+    }
   } catch {
     briefingUnavailable = true;
   }
@@ -45,36 +54,20 @@ export default async function Home() {
           <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
           <p>إحاطة سياسية موثقة، وتحليلات ودراسات، ومعرفة بصرية وفيديوهات تفسر الأحداث وسياقاتها.</p>
           <div className="home-compact-actions">
-            <Link href="/briefings" className="button button-primary">استعرض الإحاطة اليومية</Link>
-            <Link href="/insights" className="button button-secondary">التحليل والدراسات</Link>
+            <Link href="/briefings" className="button button-primary sas-cta sas-cta--primary">استعرض الإحاطة اليومية</Link>
+            <Link href="/insights" className="button button-secondary sas-cta sas-cta--secondary">التحليل والدراسات</Link>
           </div>
         </div>
       </section>
 
       <section className="home-section site-container sas-product-section sas-product-section--flagship">
         <SectionHeading eyebrow="المنتج الرئيسي · رصد وتفسير" title="الإحاطة اليومية" href="/briefings" linkLabel="جميع الإحاطات" />
-        <div className="sas-flagship-briefing">
-          <div className="sas-flagship-description">
-            <span className="sas-product-kicker">تطورات اليوم، في سياقها</span>
-            <h3>ماذا حدث؟ ما الذي تغيّر؟ وما الذي يستحق المتابعة؟</h3>
-            <p>إحاطة تحريرية منتقاة لأهم التطورات السياسية، مدعومة بالمصادر الأصلية والبيانات ذات الصلة.</p>
-            <Link href="/briefings" className="sas-product-link">الدخول إلى الإحاطة اليومية <span aria-hidden="true">←</span></Link>
-          </div>
-          <div className="sas-flagship-edition">
-            <span className="sas-product-kicker">أحدث إصدار</span>
-            {latestBriefing ? (
-              <>
-                <h3>{latestBriefing.title_ar}</h3>
-                <time dateTime={latestBriefing.edition_date}>{latestBriefing.edition_date}</time>
-                <Link href={"/briefings/" + encodeURIComponent(latestBriefing.slug)}>قراءة العدد <span aria-hidden="true">←</span></Link>
-              </>
-            ) : (
-              <p>{briefingUnavailable
-                ? "تعذر جلب الأعداد المنشورة حاليًا. يمكنك فتح أرشيف الإحاطات والمحاولة مجددًا."
-                : "لا توجد إحاطة منشورة حتى الآن. سيظهر هنا أحدث عدد فور نشره."}</p>
-            )}
-          </div>
-        </div>
+        <HomeBriefingShowcase
+          latest={briefings[0] ?? null}
+          briefing={latestEdition}
+          previous={briefings.slice(1, 3)}
+          unavailable={briefingUnavailable}
+        />
       </section>
 
       <section className="home-section home-analysis-section sas-product-section">
@@ -88,9 +81,11 @@ export default async function Home() {
 
       <section className="home-section site-container sas-product-section">
         <SectionHeading eyebrow="السياسة بلغة الصورة" title="المعرفة البصرية" href="/visual-knowledge" />
-        {visual.length
-          ? <EditorialRail title="إنفوجرافيك ومواد بصرية" items={visual} />
-          : <EmptyContent message="سيظهر هنا الإنفوجرافيك والمواد المعرفية البصرية بعد نشرها." />}
+        <p className="sas-visual-showcase-intro">تصورات تفاعلية توضح المفاهيم السياسية وتحولات الأحداث، بمصادر يمكن الرجوع إليها.</p>
+        <VisualKnowledgeShowcase />
+        {visual.length ? (
+          <div style={{ marginTop: 24 }}><EditorialRail title="مواد بصرية أخرى" items={visual} /></div>
+        ) : null}
       </section>
 
       <section className="home-section home-media-section sas-product-section">

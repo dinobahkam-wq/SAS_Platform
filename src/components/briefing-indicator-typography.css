@@ -1,0 +1,59 @@
+/* SAS daily briefing: typography policy for metrics and issue overview.
+   Component-scoped; do not change document/site typography.
+   Material Symbols is intentionally preserved for icon glyphs. */
+.briefing-public-site .briefing-intelligence,
+.briefing-public-site .briefing-daily-overview {
+  font-family: "Thmanyah Sans", var(--font-interface), sans-serif;
+  font-synthesis: none;
+}
+
+.briefing-public-site .briefing-intelligence
+  :where(h2,h3,p,span,small,strong,th,td,time,a,bdi),
+.briefing-public-site .briefing-daily-overview
+  :where(h2,h3,p,span,small,strong,li,time,a,bdi) {
+  font-family: "Thmanyah Sans", var(--font-interface), sans-serif;
+}
+
+/* Typography roles: Tajarib only for main section headings, functional
+   Thmanyah for dense financial and environmental data. */
+.briefing-public-site .briefing-intelligence-head h2,
+.briefing-public-site .briefing-daily-overview-heading h2 {
+  font-family: "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+  font-weight: 700;
+}
+
+.briefing-public-site .briefing-market-item strong.briefing-market-amount,
+.briefing-public-site .briefing-fx-table td,
+.briefing-public-site .briefing-fx-table td bdi,
+.briefing-public-site .briefing-fx-table th,
+.briefing-public-site .briefing-weather-chip strong,
+.briefing-public-site .briefing-market-dollar,
+.briefing-public-site .briefing-overview-metric > strong {
+  font-family: "Thmanyah Sans", sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+/* Force the numerals to remain Latin while retaining the actual SAS typeface. */
+.briefing-public-site .briefing-fx-table bdi,
+.briefing-public-site .briefing-market-amount,
+.briefing-public-site .briefing-weather-chip strong {
+  unicode-bidi: isolate;
+}
+
+/* Icon glyphs must use their dedicated font. The font selector above
+   must never cause Material Symbols text (ligatures) to become visible. */
+.briefing-public-site .briefing-intelligence .material-symbols-rounded {
+  font-family: "Material Symbols Rounded" !important;
+  font-synthesis: none;
+}
+@media print {
+  .briefing-print-page .briefing-print-indicators,
+  .briefing-print-page .briefing-print-indicators :where(h2,h3,span,th,td,small,a,bdi) {
+    font-family: "Thmanyah Sans", sans-serif;
+    font-synthesis: none;
+  }
+  .briefing-print-page .briefing-print-indicators h2 {
+    font-family: "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+  }
+}

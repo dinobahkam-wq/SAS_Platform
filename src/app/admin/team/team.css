@@ -1,0 +1,14 @@
+.sas-team-owner-note {margin-bottom:20px;padding:16px 18px;border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:10px;background:var(--accent-soft);color:var(--foreground);font:400 12px/2 "Thmanyah Sans",sans-serif}
+.sas-team-panel {margin-bottom:18px}
+.sas-team-invite-form {display:grid;gap:11px}
+.sas-team-invite-form>label {font-weight:700;font-size:12px}
+.sas-team-invite-row {display:flex;gap:9px;flex-wrap:wrap}
+.sas-team-invite-row input {flex:1;min-width:190px;min-height:43px;background:var(--surface);color:var(--foreground);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:400 13px/1.6 "Thmanyah Sans",sans-serif}
+.sas-team-invite-row input:focus-visible,.sas-team-status-form button:focus-visible {outline:2px solid var(--accent);outline-offset:3px}
+.sas-team-success {color:#216a47;font:600 11px/1.7 "Thmanyah Sans",sans-serif}
+.sas-team-error {color:#b03f32;font:600 11px/1.7 "Thmanyah Sans",sans-serif}
+.sas-team-status-form {display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.sas-team-table {white-space:normal}
+.sas-team-table td {vertical-align:middle}
+.sas-team-table td[dir="ltr"] {text-align:right;unicode-bidi:isolate}
+@media(max-width:650px){.sas-team-invite-row{flex-direction:column}.sas-team-invite-row .button{width:100%}}

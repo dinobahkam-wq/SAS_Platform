@@ -880,6 +880,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      is_platform_owner: { Args: Record<string, never>; Returns: boolean }
       approve_briefing_revision: {
         Args: { p_note_ar?: string; p_revision_id: string }
         Returns: undefined

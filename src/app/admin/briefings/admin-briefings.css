@@ -1,0 +1,29 @@
+/* New SAS editorial products admin workspace. Scope prevents public styles changing. */
+.sas-admin-briefing-note {padding:15px 19px;margin:0 0 19px;border:1px solid var(--line);border-inline-start:3px solid var(--accent);border-radius:9px;background:var(--accent-soft);font:400 12px/2 "Thmanyah Sans",sans-serif;color:var(--foreground)}
+.sas-admin-editions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:18px}
+.sas-admin-edition {display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:20px}
+.sas-admin-edition-meta {display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;color:var(--muted);font-size:11px}
+.sas-admin-edition-meta span:first-child {color:var(--accent);font-weight:700}
+.sas-admin-edition h2 {font:700 clamp(18px,2vw,24px)/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;margin:14px 0 20px;flex:1;color:var(--foreground)}
+.sas-admin-edition-actions {display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.sas-admin-briefing-filters {display:flex;align-items:end;gap:10px;flex-wrap:wrap;background:var(--surface);padding:15px;border:1px solid var(--line);border-radius:10px;margin-bottom:18px}
+.sas-admin-briefing-filters label {font-size:11px;color:var(--muted);font-weight:700}
+.sas-admin-briefing-filters input,.sas-admin-briefing-filters select {min-height:39px;border:1px solid var(--line);background:var(--surface);color:var(--foreground);border-radius:7px;padding:9px 12px;font:400 12px "Thmanyah Sans",sans-serif}
+.sas-admin-briefing-filters input {flex:1;min-width:180px}
+.sas-admin-briefing-filters select {max-width:240px}
+.sas-admin-developments {display:grid;gap:0}
+.sas-admin-development {padding:24px 22px;border-bottom:1px solid var(--line)}
+.sas-admin-development:last-child {border-bottom:0}
+.sas-admin-development-header {display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.sas-admin-development-tags {display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.sas-admin-development h3 {font:700 clamp(17px,2vw,23px)/1.65 "Tajarib Taweel","Thmanyah Sans",sans-serif;margin:14px 0 8px;color:var(--foreground)}
+.sas-admin-development p {font:400 12px/2.15 "Thmanyah Sans",sans-serif;color:var(--foreground);margin:0 0 8px;white-space:normal}
+.sas-admin-development .sas-admin-development-change {color:var(--muted)}
+.sas-admin-development-provenance {display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;border-top:1px solid var(--line);padding-top:12px;margin-top:13px;color:var(--muted);font-size:11px}
+.sas-admin-development-provenance details {width:100%;line-height:1.9}
+.sas-admin-development-provenance details a {text-decoration:underline;color:var(--accent)}
+.sas-admin-development-provenance ul {padding-inline-start:22px}
+.sas-admin-warning {color:#a04c37;font-weight:700}
+.sas-admin-briefing-filters :is(input,select,button,a):focus-visible,.sas-admin-development a:focus-visible,.sas-admin-edition a:focus-visible {outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:790px){.sas-admin-editions{grid-template-columns:1fr}.sas-admin-development{padding:18px 15px}.sas-admin-briefing-filters{align-items:stretch}.sas-admin-briefing-filters input{flex-basis:100%}}
+@media(prefers-reduced-motion:reduce){.sas-admin-briefing-filters *,.sas-admin-development *{transition:none!important}}

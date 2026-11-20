@@ -1,5 +1,9 @@
 'use client';
 import {useEffect,useMemo,useRef,useState,type PointerEvent as ReactPointerEvent} from 'react';
+import { useBriefingStudioHandoff } from '@/components/briefing-studio-handoff-context';
+import type { BriefingStudioOrigin } from '@/lib/briefing-studio-transfer';
+import './briefing-official-card.css';
+import './briefing-studio-import.css';
 type Format='square'|'portrait'|'landscape'|'wide'|'story'|'custom';
 type Skin='forest'|'ink'|'ivory'|'navy'|'olive'|'stone'|'rose'|'charcoal'|'midnight'|'burgundy'|'cobalt'|'teal'|'sand'|'white'|'slate'|'plum'|'emerald'|'terracotta'|'custom';
 type Mode='news'|'urgent'|'statement'|'quote';
@@ -119,7 +123,7 @@ function parseNewsImport(text:string,fileName:string):NewsImportPayload{
 const sizes:Record<Format,{w:number;h:number;label:string}>={square:{w:1080,h:1080,label:'مربع 1080 × 1080'},portrait:{w:1080,h:1350,label:'عمودي 1080 × 1350'},landscape:{w:1200,h:675,label:'أفقي 1200 × 675'},wide:{w:1600,h:900,label:'عريض 1600 × 900'},story:{w:1080,h:1920,label:'ستوري 1080 × 1920'},custom:{w:1080,h:1350,label:'مقاس مخصص'}};
 const skins:Record<Skin,{bg:string,fg:string,accent:string,dim:string}>={forest:{bg:'#092d28',fg:'#fffefa',accent:'#d6ee91',dim:'#d3e3dc'},ink:{bg:'#182730',fg:'#ffffff',accent:'#e8b5a8',dim:'#cbd4d8'},ivory:{bg:'#faf9f3',fg:'#183833',accent:'#396a53',dim:'#526860'},navy:{bg:'#142a42',fg:'#fffdf6',accent:'#b7d3ee',dim:'#cdd9e3'},olive:{bg:'#333d27',fg:'#fffefa',accent:'#d8dd9b',dim:'#e2e4d0'},stone:{bg:'#eeeae1',fg:'#29322c',accent:'#758778',dim:'#505d52'},rose:{bg:'#f6e9e4',fg:'#412e33',accent:'#a85b6d',dim:'#775c63'},charcoal:{bg:'#202326',fg:'#f7f7f2',accent:'#f2c879',dim:'#c4c8c6'},midnight:{bg:'#101b2d',fg:'#f5f7fb',accent:'#79b8d8',dim:'#c0ccd8'},burgundy:{bg:'#421f2b',fg:'#fff8f4',accent:'#e8a6a6',dim:'#dfc9ca'},cobalt:{bg:'#183b78',fg:'#ffffff',accent:'#f6d365',dim:'#d5e1f6'},teal:{bg:'#073f43',fg:'#f4ffff',accent:'#82d8c6',dim:'#c2e5df'},sand:{bg:'#e9dfcb',fg:'#342d25',accent:'#9c6b3f',dim:'#6e6253'},white:{bg:'#ffffff',fg:'#1e2c2a',accent:'#2f765e',dim:'#65736e'},slate:{bg:'#dce2e6',fg:'#26323a',accent:'#587b91',dim:'#53616a'},plum:{bg:'#34213f',fg:'#fff9ff',accent:'#d8b4ec',dim:'#d6c9dc'},emerald:{bg:'#064b3b',fg:'#f5fff9',accent:'#a7efc1',dim:'#c5e6d3'},terracotta:{bg:'#a94f38',fg:'#fff9f1',accent:'#f7d7a8',dim:'#f0d9c8'},custom:{bg:'#092d28',fg:'#fffefa',accent:'#d6ee91',dim:'#d3e3dc'}};
 const modes:Record<Mode,string>={news:'خبر',urgent:'عاجل',statement:'بيان رسمي',quote:'تصريح / اقتباس'};
-type Config={mode:Mode;format:Format;customWidth:number;customHeight:number;customBg:string;customFg:string;customAccent:string;customDim:string;marginLeft:number;marginRight:number;photoZoom:number;photoPanX:number;photoPanY:number;photoFrameWidth:number;photoFrameHeight:number;headlineFont:FontChoice;summaryFont:FontChoice;metaFont:FontChoice;logoVariant:LogoVariant;topPadding:number;bottomPadding:number;detailSpacing:number;summaryLineSpacing:number;skin:Skin;title:string;body:string;issuer:string;date:string;logo:HTMLImageElement|null;issuerLogo:HTMLImageElement|null;path:KnowledgePath;bodyWeight:300|400;titleSize:number;showPath:boolean;sourceUrl:string;sourceName:string;showSource:boolean;textSize:number;textWeight:Weight;align:Align;underline:boolean;sideMargin:number;lineSpacing:number;vertical:'top'|'center'|'bottom';summary:string;location:string;showLocation:boolean;quoteName:string;quoteRole:string;personImage:HTMLImageElement|null;mapImage:HTMLImageElement|null;newsImage:HTMLImageElement|null;photoPosition:PhotoPosition;photoFit:PhotoFit;photoScale:number;photoOpacity:number;photoRounded:boolean;titleScale:number;hidePathOnBackground:boolean;showWeekday:boolean;sourcePlacement:SourcePlacement;sourcePrefix:string;headlineDX:number;headlineDY:number;headlineInset:number;summaryDX:number;summaryDY:number;summaryInset:number;summarySize:number;sourceDX:number;sourceDY:number;imageDX:number;imageDY:number;imageInset:number;imageShape:PhotoShape;imageRadius:number;imageBorder:number;imageCredit:string;showImageCredit:boolean;imageCreditPlacement:PhotoCreditPlacement;wrapHeadline:boolean};
+type Config={briefingOrigin:BriefingStudioOrigin|null;mode:Mode;format:Format;customWidth:number;customHeight:number;customBg:string;customFg:string;customAccent:string;customDim:string;marginLeft:number;marginRight:number;photoZoom:number;photoPanX:number;photoPanY:number;photoFrameWidth:number;photoFrameHeight:number;headlineFont:FontChoice;summaryFont:FontChoice;metaFont:FontChoice;logoVariant:LogoVariant;topPadding:number;bottomPadding:number;detailSpacing:number;summaryLineSpacing:number;skin:Skin;title:string;body:string;issuer:string;date:string;logo:HTMLImageElement|null;issuerLogo:HTMLImageElement|null;path:KnowledgePath;bodyWeight:300|400;titleSize:number;showPath:boolean;sourceUrl:string;sourceName:string;showSource:boolean;textSize:number;textWeight:Weight;align:Align;underline:boolean;sideMargin:number;lineSpacing:number;vertical:'top'|'center'|'bottom';summary:string;location:string;showLocation:boolean;quoteName:string;quoteRole:string;personImage:HTMLImageElement|null;mapImage:HTMLImageElement|null;newsImage:HTMLImageElement|null;photoPosition:PhotoPosition;photoFit:PhotoFit;photoScale:number;photoOpacity:number;photoRounded:boolean;titleScale:number;hidePathOnBackground:boolean;showWeekday:boolean;sourcePlacement:SourcePlacement;sourcePrefix:string;headlineDX:number;headlineDY:number;headlineInset:number;summaryDX:number;summaryDY:number;summaryInset:number;summarySize:number;sourceDX:number;sourceDY:number;imageDX:number;imageDY:number;imageInset:number;imageShape:PhotoShape;imageRadius:number;imageBorder:number;imageCredit:string;showImageCredit:boolean;imageCreditPlacement:PhotoCreditPlacement;wrapHeadline:boolean};
 function dimensions(cfg:Config){return cfg.format==='custom'?{w:cfg.customWidth,h:cfg.customHeight}:sizes[cfg.format]}
 function fontStack(choice:FontChoice){return choice==='tajarib'?'"Tajarib Taweel",sans-serif':'"Thmanyah Sans",sans-serif'}
 const serif='"Tajarib Taweel",sans-serif';
@@ -242,7 +246,7 @@ function photoBox(cfg:Config,w:number,h:number,margin:number){
  const width=w-2*margin-cfg.marginLeft-cfg.marginRight;
  const scale=cfg.photoScale/100;const frameW=cfg.photoFrameWidth/100,frameH=cfg.photoFrameHeight/100;
  if(cfg.photoPosition==='background')return {x:margin+cfg.marginLeft+cfg.imageInset,y:cfg.topPadding+105,w:(width-2*cfg.imageInset)*frameW,h:Math.max(100,h-cfg.topPadding-cfg.bottomPadding-310)*frameH};
- if(cfg.photoPosition==='top')return {x:margin+cfg.marginLeft+cfg.imageInset,y:0,w:(width-2*cfg.imageInset)*frameW,h:Math.max(115,Math.min(280,Math.round(h*.22*scale)))*frameH};
+ if(cfg.photoPosition==='top')return {x:margin+cfg.marginLeft+cfg.imageInset,y:0,w:(width-2*cfg.imageInset)*frameW,h:(cfg.briefingOrigin?Math.min(h*.26,345):Math.max(115,Math.min(280,Math.round(h*.22*scale))))*frameH};
  const photoW=Math.round(Math.min(width*.46,width*.38*scale)*frameW);
  const photoH=Math.max(110,Math.min(470,Math.round(h*.36*scale)))*frameH;
  return {x:cfg.photoPosition==='left'?margin+cfg.marginLeft:w-margin-cfg.marginRight-photoW,y:0,w:photoW,h:photoH};
@@ -297,7 +301,7 @@ function photoCredit(ctx:CanvasRenderingContext2D,cfg:Config,photo:PhotoRect,bel
 function clamp(value:number,min:number,max:number){return Math.max(min,Math.min(max,value))}
 function sourceText(cfg:Config){
  const value=cfg.sourceName.trim()||sourceLabel(cfg.sourceUrl);
- return cfg.showSource&&value?cfg.sourcePrefix+' '+value:'';
+ return (cfg.briefingOrigin || cfg.showSource)&&value?cfg.sourcePrefix+' '+value:'';
 }
 function calendarDate(value:string,showWeekday:boolean){
  const match=new RegExp('^([0-9]{4})/([0-9]{2})/([0-9]{2})$').exec(value.trim());
@@ -427,7 +431,7 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
  ctx.fillStyle=c.accent;ctx.fillRect(w-12,0,12,h);
  ctx.direction='rtl';ctx.textAlign='right';ctx.textBaseline='top';
  ctx.fillStyle=c.accent;ctx.font='700 34px '+fontStack(cfg.metaFont);
- ctx.fillText(modes[cfg.mode],w-margin-cfg.marginRight,cfg.topPadding);
+ ctx.fillText(cfg.briefingOrigin?'الإحاطة اليومية':modes[cfg.mode],w-margin-cfg.marginRight,cfg.topPadding);
  ctx.strokeStyle=c.accent;ctx.globalAlpha=.52;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(margin+cfg.marginLeft,cfg.topPadding+74);ctx.lineTo(w-margin-cfg.marginRight,cfg.topPadding+74);ctx.stroke();ctx.globalAlpha=1;
  let yy=cfg.topPadding+100;
  if(taxonomy.length){
@@ -523,6 +527,16 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
   ctx.fillStyle='#183833';ctx.font='700 30px '+sans;ctx.textAlign='center';ctx.fillText('ساس',badgeX+badgeW/2,badgeY+42);ctx.textAlign='right';
  }
  if(cfg.mode!=='news'&&cfg.mode!=='urgent'&&cfg.showLocation&&cfg.location.trim()){ctx.fillStyle=c.accent;ctx.font='500 24px '+serif;ctx.direction='rtl';ctx.textAlign='right';ctx.fillText(ellipsis(ctx,'الموقع: '+cfg.location,w-margin*2),w-margin,foot-47)}
+ if(cfg.briefingOrigin){
+  const origin=cfg.briefingOrigin;
+  const labels:Record<string,string>={verified:'متحقق',attributed:'منسوب إلى مصدر',disputed:'متنازع عليه',unverified:'لم يتحقق مستقلًا',not_applicable:'لا ينطبق'};
+  ctx.save();ctx.direction='rtl';ctx.textAlign='left';
+  ctx.fillStyle=c.accent;ctx.font='700 21px '+sans;
+  ctx.fillText('الإحاطة اليومية · العدد '+String(origin.editionNo).padStart(2,'0')+' · السجل '+String(origin.developmentOrder+1).padStart(2,'0'),margin,foot+17);
+  ctx.fillStyle=c.dim;ctx.font='400 19px '+sans;
+  ctx.fillText(ellipsis(ctx,labels[origin.verificationStatus]??'حالة التحقق غير محددة',badgeX-margin-24),margin,foot+53);
+  ctx.restore();
+ }
  ctx.fillStyle=c.dim;ctx.font='400 24px '+sans;ctx.direction='ltr';ctx.textAlign='left';
  ctx.fillText(calendarDate(cfg.date,cfg.showWeekday),margin,foot+88);
  if(cfg.mode==='statement')ctx.fillText(String(index+1)+' / '+String(pages.length),margin,foot+115);
@@ -537,7 +551,11 @@ async function getLogo(variant:LogoVariant):Promise<HTMLImageElement|null>{
  return await new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=sources[variant]});
 }
 export default function Studio(){
+ const transfer=useBriefingStudioHandoff();
+ const initialImport=transfer?.prefill;
+ const briefingOrigin=transfer?.origin;
  const [mode,setMode]=useState<Mode>('news');
+ const [showCardPhoto,setShowCardPhoto]=useState(false);
  const [format,setFormat]=useState<Format>('portrait');
  const [customWidth,setCustomWidth]=useState(1080);
  const [customHeight,setCustomHeight]=useState(1350);
@@ -607,9 +625,10 @@ export default function Studio(){
  const [page,setPage]=useState(0);const [count,setCount]=useState(0);
  const [error,setError]=useState('');const [logo,setLogo]=useState<HTMLImageElement|null>(null);
  const [importFeedback,setImportFeedback]=useState<{kind:'success'|'error';message:string}|null>(null);
+ const receivedBriefingRef=useRef<string|null>(null);
  const [scene,setScene]=useState<StudioElement[]>([]);const [selectedElement,setSelectedElement]=useState<StudioElementId|null>(null);const gesture=useRef<StudioGesture|null>(null);
  const [exporting,setExporting]=useState(false);const canvas=useRef<HTMLCanvasElement>(null);
- const cfg=useMemo(()=>({mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline}),[mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline]);
+ const cfg=useMemo(()=>({briefingOrigin:briefingOrigin??null,mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage:briefingOrigin&&!showCardPhoto?null:newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline}),[briefingOrigin,showCardPhoto,mode,format,customWidth,customHeight,customBg,customFg,customAccent,customDim,marginLeft,marginRight,photoZoom,photoPanX,photoPanY,photoFrameWidth,photoFrameHeight,headlineFont,summaryFont,metaFont,logoVariant,topPadding,bottomPadding,detailSpacing,summaryLineSpacing,skin,title,body,issuer,date,logo,issuerLogo,path,bodyWeight,titleSize,showPath,sourceUrl,sourceName,showSource,textSize,textWeight,align,underline,sideMargin,lineSpacing,vertical,summary,location,showLocation,quoteName,quoteRole,personImage,mapImage,newsImage,photoPosition,photoFit,photoScale,photoOpacity,photoRounded,titleScale,hidePathOnBackground,showWeekday,sourcePlacement,sourcePrefix,headlineDX,headlineDY,headlineInset,summaryDX,summaryDY,summaryInset,summarySize,sourceDX,sourceDY,imageDX,imageDY,imageInset,imageShape,imageRadius,imageBorder,imageCredit,showImageCredit,imageCreditPlacement,wrapHeadline]);
  useEffect(()=>{
   try{const parsed:unknown=JSON.parse(window.localStorage.getItem('sas-studio-presets-v3')||'[]');
    if(Array.isArray(parsed))setPresets(parsed.filter((item:unknown):item is StudioPreset=>
@@ -706,22 +725,39 @@ export default function Studio(){
   }
  }
  function endGesture(){gesture.current=null}
+ function applyImportedNews(imported:NewsImportPayload){
+  const design=imported.design;
+  setMode('news');setFormat(design?.format??'portrait');setSkin(design?.skin??'forest');
+  if(briefingOrigin)setShowCardPhoto(false);
+  setTitle(imported.headline);setSummary(imported.summary);setSourceName(imported.sourceName);setSourceUrl(imported.sourceUrl);setDate(imported.date);
+  setLocation(imported.location);setShowLocation(design?.showLocation??Boolean(imported.location));
+  setPath({dossier:'',issue:'',event:imported.category});setShowPath(Boolean(imported.category));
+  setShowSource(design?.showSource??Boolean(imported.sourceName||imported.sourceUrl));
+  setShowWeekday(design?.showWeekday??false);
+  setTextSize(78);setTextWeight(700);setAlign('right');setVertical('top');setTitleSize(60);setSummarySize(32);setSideMargin(76);setMarginLeft(0);setMarginRight(0);setLineSpacing(1.45);
+  setHeadlineFont(design?.headlineFont??'tajarib');setSummaryFont(design?.summaryFont??'sans');setMetaFont(design?.metaFont??'sans');setLogoVariant(design?.logoVariant??'color');
+  setPhotoPosition(design?.photoPosition??'left');setPhotoFit(design?.photoFit??'cover');setPhotoScale(100);setPhotoFrameWidth(100);setPhotoFrameHeight(100);setPhotoZoom(100);setPhotoPanX(0);setPhotoPanY(0);
+  setNewsImage(null);setImageCredit('');setShowImageCredit(false);setMediaError('');
+  setSourcePrefix('المصدر:');
+  setPage(0);setError('');
+ }
+ useEffect(()=>{
+  if(!initialImport||!briefingOrigin)return;
+  const key=briefingOrigin.slug+':'+briefingOrigin.revisionNo+':'+briefingOrigin.developmentOrder;
+  if(receivedBriefingRef.current===key)return;
+  receivedBriefingRef.current=key;
+  applyImportedNews(initialImport);
+  if(briefingOrigin.informationClass==='claim' || briefingOrigin.verificationStatus==='disputed' || briefingOrigin.verificationStatus==='unverified' || briefingOrigin.verificationStatus==='attributed'){
+   setSourcePrefix('بحسب:');
+  }
+  setImportFeedback({kind:'success',message:'تمت تعبئة حقول الخبر من النسخة المنشورة للإحاطة. راجع نسبة التصريحات والمصادر قبل التصدير.'});
+ },[initialImport,briefingOrigin]);
  async function importNewsFile(file:File|undefined){
   if(!file)return;
   if(file.size>1024*1024){setImportFeedback({kind:'error',message:'حجم ملف المادة يتجاوز 1MB'});return}
   try{
-   const imported=parseNewsImport(await file.text(),file.name),design=imported.design;
-   setMode('news');setFormat(design?.format??'portrait');setSkin(design?.skin??'forest');
-   setTitle(imported.headline);setSummary(imported.summary);setSourceName(imported.sourceName);setSourceUrl(imported.sourceUrl);setDate(imported.date);
-   setLocation(imported.location);setShowLocation(design?.showLocation??Boolean(imported.location));
-   setPath({dossier:'',issue:'',event:imported.category});setShowPath(Boolean(imported.category));
-   setShowSource(design?.showSource??Boolean(imported.sourceName||imported.sourceUrl));
-   setShowWeekday(design?.showWeekday??false);
-   setTextSize(78);setTextWeight(700);setAlign('right');setVertical('top');setTitleSize(60);setSummarySize(32);setSideMargin(76);setMarginLeft(0);setMarginRight(0);setLineSpacing(1.45);
-   setHeadlineFont(design?.headlineFont??'tajarib');setSummaryFont(design?.summaryFont??'sans');setMetaFont(design?.metaFont??'sans');setLogoVariant(design?.logoVariant??'color');
-   setPhotoPosition(design?.photoPosition??'left');setPhotoFit(design?.photoFit??'cover');setPhotoScale(100);setPhotoFrameWidth(100);setPhotoFrameHeight(100);setPhotoZoom(100);setPhotoPanX(0);setPhotoPanY(0);
-   setNewsImage(null);setImageCredit('');setShowImageCredit(false);setMediaError('');
-   setPage(0);setError('');
+   const imported=parseNewsImport(await file.text(),file.name);
+   applyImportedNews(imported);
    setImportFeedback({kind:'success',message:'تم استيراد «'+file.name+'» وتحديث معاينة الخبر تلقائيًا. أضف صورة الخبر من قسم الصورة الرئيسية إذا لزم.'});
   }catch(error){
    setImportFeedback({kind:'error',message:error instanceof Error?error.message:'تعذر قراءة ملف المادة'});
@@ -749,13 +785,15 @@ export default function Studio(){
   try{
    await document.fonts.ready;
    if(!logo){setError('لم يكتمل تحميل الشعار الرسمي؛ لا يمكن تصدير الصورة');return}
+   if(briefingOrigin&&!sourceName.trim()){setError('لا يمكن تصدير بطاقة إحاطة دون إسناد واضح للمصدر.');return}
+   if(briefingOrigin){const faces=await Promise.all([document.fonts.load('700 86px "Tajarib Taweel"'),document.fonts.load('400 43px "Thmanyah Sans"')]);if(faces.some(fonts=>fonts.length===0)){setError('خطوط ساس الرسمية غير متاحة؛ لن نصدر الصورة بخط بديل.');return}}
    const temp=document.createElement('canvas');const first=draw(temp,cfg,0);
    if(first.error){setError(first.error);return}
    for(let i=0;i<first.total;i++){
     const result=draw(temp,cfg,i);if(result.error){setError(result.error);return}
     const blob=await new Promise<Blob|null>(resolve=>temp.toBlob(resolve,'image/png'));
     if(!blob)throw new Error('فشل إنشاء الصورة');
-    const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='SAS-'+mode+'-'+String(i+1).padStart(2,'0')+'-of-'+first.total+'.png';a.click();
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=briefingOrigin?'SAS-Briefing-'+briefingOrigin.editionDate+'-N'+briefingOrigin.editionNo+'-D'+(briefingOrigin.developmentOrder+1)+'-P'+(i+1)+'.png':'SAS-'+mode+'-'+String(i+1).padStart(2,'0')+'-of-'+first.total+'.png';a.click();
     setTimeout(()=>URL.revokeObjectURL(url),3000);
     if(first.total>1)await new Promise(resolve=>setTimeout(resolve,180));
    }
@@ -765,6 +803,51 @@ export default function Studio(){
  const resizeHandles:ResizeHandle[]=['nw','n','ne','e','se','s','sw','w'];
  return <div className="studio-page">
  <header className="knowledge-hero"><span className="eyebrow">استوديو ساس · V3-C.3</span><h1>استوديو المنتجات البصرية</h1><p>معاينة وتصدير محلي دون نشر آلي أو تعديل تلقائي للبيان.</p></header>
+ {briefingOrigin&&<section className="studio-briefing-origin" aria-label="بيانات ربط الإحاطة">
+   <div className="studio-briefing-origin-head">
+    <strong>مادة مستوردة من الإحاطة اليومية</strong>
+    <a href={'/briefings/'+encodeURIComponent(briefingOrigin.slug)} target="_blank" rel="noopener noreferrer">عرض التطور في العدد</a>
+   </div>
+   <div className="studio-briefing-origin-meta">
+    <span>العدد {briefingOrigin.editionNo}</span>
+    <span>المراجعة {briefingOrigin.revisionNo}</span>
+    <span>الترتيب الأصلي {briefingOrigin.developmentOrder+1}</span>
+    <span>تاريخ العدد {briefingOrigin.editionDate}</span>
+    <span>{briefingOrigin.dateBasis==='event'?'التاريخ: يوم وقوع التطور':'التاريخ: يوم العدد (وقت الحدث غير محدد)'}</span>
+    <span>التصنيف: {briefingOrigin.informationClass==='claim'?'ادعاء':briefingOrigin.informationClass==='position'?'موقف':'معلومة'}</span>
+   </div>
+   {(briefingOrigin.informationClass==='claim'||briefingOrigin.verificationStatus==='unverified'||briefingOrigin.verificationStatus==='disputed')&&
+    <p role="note" className="studio-briefing-origin-warning">تنبيه تحريري: هذا التطور يتضمن ادعاءً أو معلومة غير متحقق منها مستقلًا. يجب الإبقاء على النسبة إلى المصدر وصياغة الحذر في الصورة.</p>}
+   {briefingOrigin.verificationNote&&<p className="studio-briefing-origin-note">التحقق: {briefingOrigin.verificationNote}</p>}
+   {briefingOrigin.sources.length?
+    <details><summary>المصادر المسجلة ({briefingOrigin.sources.length})</summary>
+     <ul>{briefingOrigin.sources.map((source,index)=><li key={source.url??source.name+index}>
+       {source.url?<a href={source.url} target="_blank" rel="noopener noreferrer">{source.name}</a>:<span>{source.name}</span>}
+       {source.title?' — '+source.title:''}{source.attribution?' · '+source.attribution:''}
+      </li>)}</ul></details>
+    :<p role="note" className="studio-briefing-origin-warning">لم تُسجّل إحالة عامة للتطور. تحقق من المصدر قبل تصدير البطاقة.</p>}
+   <small>التعديلات في الاستوديو لا تغير التطور المنشور ولا مصادره. لا يُنشر التصميم تلقائيًا.</small>
+  </section>}
+ {briefingOrigin&&<section className="studio-official-card" aria-label="القالب الرسمي للإحاطة">
+  <div className="studio-official-card-heading">
+   <div><strong>البطاقة الرسمية للإحاطة</strong><p>من التطور الموثق إلى تصميم قابل للنشر الاجتماعي.</p></div><span>هوية ساس</span>
+  </div>
+  <div className="studio-official-card-controls">
+   <fieldset><legend>نوع البطاقة</legend><div className="studio-official-card-options">
+    <button type="button" aria-pressed={!showCardPhoto} className={!showCardPhoto?'is-active':''} onClick={()=>{setShowCardPhoto(false);setPage(0)}}>نصية دون صورة</button>
+    <button type="button" aria-pressed={showCardPhoto} className={showCardPhoto?'is-active':''} onClick={()=>{setShowCardPhoto(true);setPhotoPosition('top');setPage(0)}}>مع صورة الحدث</button>
+   </div></fieldset>
+   <fieldset><legend>مقاس النشر</legend><div className="studio-official-card-options">
+    <button type="button" aria-pressed={format==='square'} className={format==='square'?'is-active':''} onClick={()=>{setFormat('square');setPage(0)}}>1:1 — 1080 × 1080</button>
+    <button type="button" aria-pressed={format==='portrait'} className={format==='portrait'?'is-active':''} onClick={()=>{setFormat('portrait');setPage(0)}}>4:5 — 1080 × 1350</button>
+   </div></fieldset>
+  </div>
+  {showCardPhoto&&<label className="studio-official-card-upload">صورة الحدث (PNG / JPEG / WebP حتى 5MB)
+    <input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>{const file=e.currentTarget.files?.[0];e.currentTarget.value='';void loadMedia(file,'news')}}/>
+  </label>}
+  {showCardPhoto&&!newsImage&&<p className="studio-official-card-note">لم تُرفع صورة؛ ستبقى البطاقة نصية حتى اختيار صورة فعلية للحدث.</p>}
+  <p className="studio-official-card-note">يظهر رقم العدد والتطور وحالة التحقق داخل PNG. شعار ساس ثابت ويمكن ضبط النص والصورة والهوامش في الأدوات المتقدمة.</p>
+ </section>}
  <div className="studio-layout"><section className="admin-panel studio-fields">
  <h2>إعداد المادة</h2>
  <fieldset className="studio-options studio-import">

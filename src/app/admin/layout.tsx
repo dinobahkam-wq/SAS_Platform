@@ -7,9 +7,10 @@ export default async function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const user = await requireAdmin();
+  const {data: owner} = await user.supabase.rpc("is_platform_owner");
 
   return (
-    <AdminShell user={{ email: user.email, displayName: user.displayName }}>
+    <AdminShell user={{ email: user.email, displayName: user.displayName, isOwner: owner === true }}>
       {children}
     </AdminShell>
   );
