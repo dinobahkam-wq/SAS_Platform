@@ -60,7 +60,7 @@ export function ContentForm({
     <form action={action} className="panel">
       <div className="panel-header">
         <h2>{initial ? "بيانات المحتوى" : "بيانات المادة الجديدة"}</h2>
-        <span className="pill">جميع الأقسام</span>
+        <span className="pill">منتجات ساس</span>
       </div>
       <div className="panel-body">
         {error ? <div className="notice notice-error">{error}</div> : null}
