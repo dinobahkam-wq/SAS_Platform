@@ -4,8 +4,8 @@ $ErrorActionPreference = 'Stop'
 Set-Location (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 if (-not (Test-Path 'package.json')) { throw 'تعذر تحديد جذر مشروع ساس' }
 $branch = (git branch --show-current).Trim()
-$allowed = @('integration/sas-briefing-studio-rc-2026-11-18', 'feat/visual-knowledge-yemen-timeline-v1', 'feat/visual-knowledge-state-government-civics-v1', 'feat/visual-knowledge-editorial-layout-v2', 'fix/empty-state-sas-official-logo', 'feat/legacy-wordpress-migration-v1', 'feat/public-search-cta-system-v1', 'feat/admin-product-workspace-briefing-studio-v1', 'feat/admin-team-members-owner-v1', 'feat/mobile-experience-polish-a-v1')
-if ($LASTEXITCODE -ne 0 -or $branch -notin $allowed) { throw "شغل الاختبار على فرع التطوير المعتمد، وليس على main: $branch" }
+$allowed = @('integration/sas-briefing-studio-rc-2026-11-18', 'feat/visual-knowledge-yemen-timeline-v1', 'feat/visual-knowledge-state-government-civics-v1', 'feat/visual-knowledge-editorial-layout-v2', 'fix/empty-state-sas-official-logo', 'feat/legacy-wordpress-migration-v1', 'feat/public-search-cta-system-v1', 'feat/admin-product-workspace-briefing-studio-v1', 'feat/admin-team-members-owner-v1', 'feat/mobile-experience-polish-a-v1', 'integration/sas-release-mainline-2026-11-21', 'main')
+if ($LASTEXITCODE -ne 0 -or $branch -notin $allowed) { throw "شغل الاختبار على فرع الإصدار أو main: $branch" }
 $log = Join-Path $env:TEMP ('SAS-briefing-release-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.log')
 Start-Transcript -Path $log | Out-Null
 try {
