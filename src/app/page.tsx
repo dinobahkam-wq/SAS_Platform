@@ -54,8 +54,8 @@ export default async function Home() {
           <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
           <p>إحاطة سياسية موثقة، وتحليلات ودراسات، ومعرفة بصرية وفيديوهات تفسر الأحداث وسياقاتها.</p>
           <div className="home-compact-actions">
-            <Link href="/briefings" className="button button-primary">استعرض الإحاطة اليومية</Link>
-            <Link href="/insights" className="button button-secondary">التحليل والدراسات</Link>
+            <Link href="/briefings" className="button button-primary sas-cta sas-cta--primary">استعرض الإحاطة اليومية</Link>
+            <Link href="/insights" className="button button-secondary sas-cta sas-cta--secondary">التحليل والدراسات</Link>
           </div>
         </div>
       </section>
