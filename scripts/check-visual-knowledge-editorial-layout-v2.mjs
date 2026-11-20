@@ -27,7 +27,9 @@ test("both original public knowledge links remain usable and headings distinct",
   assert.match(card, /استكشاف الدليل/);
   assert.match(card, /استعراض المحطات/);
   assert.match(card, /<h3><Link href=\{item\.href\}/);
-  assert.match(card, /className="sas-visual-feature-action"/);
+  assert.match(card, /sas-visual-feature-action sas-cta/);
+  assert.match(card, /sas-cta--primary/);
+  assert.match(card, /sas-cta--secondary/);
 });
 
 test("civic cover conveys actual state elements, not misleading institutional hierarchy", () => {
