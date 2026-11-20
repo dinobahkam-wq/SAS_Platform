@@ -26,16 +26,16 @@ export async function inviteTeamMember(_previous: TeamActionResult, formData: Fo
   }
 
   const siteUrl=process.env.SAS_SITE_URL?.trim();
-  let redirectTo:string|undefined;
-  if(siteUrl) {
-    try{
-      const site=new URL(siteUrl);
-      if(!["https:","http:"].includes(site.protocol))throw Error("Invalid scheme");
-      redirectTo=new URL("/auth/accept-invite",site).href;
-    }catch{return {ok:false,message:"عنوان SAS_SITE_URL غير صالح."};}
-  }
+  if(!siteUrl)return {ok:false,message:"يلزم ضبط SAS_SITE_URL على الخادم قبل إرسال الدعوات."};
+  let redirectTo:string;
+  try{
+    const site=new URL(siteUrl);
+    if(site.protocol!=="https:" && !(site.protocol==="http:" && ["localhost","127.0.0.1"].includes(site.hostname)))
+      throw Error("Insecure URL");
+    redirectTo=new URL("/auth/accept-invite",site).href;
+  }catch{return {ok:false,message:"عنوان SAS_SITE_URL غير صالح: استخدم HTTPS، أو localhost للتجربة."};}
 
-  const {data,error}=await client.auth.admin.inviteUserByEmail(email,redirectTo?{redirectTo}:undefined);
+  const {data,error}=await client.auth.admin.inviteUserByEmail(email,{redirectTo});
   if(error||!data.user)return {ok:false,message:"تعذر إرسال الدعوة. تحقق من إعدادات بريد Supabase أو وجود الحساب مسبقًا."};
 
   const {error:roleError}=await client.from("user_roles").upsert({
