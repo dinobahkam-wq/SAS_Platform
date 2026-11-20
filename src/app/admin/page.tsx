@@ -9,16 +9,18 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
   const {supabase,displayName}=await requireAdmin();
-  const [materials, sources, editions] = await Promise.all([
-    supabase.from("content_items").select("id,title,section,format,status,updated_at").order("updated_at",{ascending:false}).limit(150),
+  const [materials, sources, editions, publishedCount, draftCount] = await Promise.all([
+    supabase.from("content_items").select("id,title,section,format,status,updated_at").order("updated_at",{ascending:false}).limit(30),
     supabase.from("content_sources").select("id",{count:"exact",head:true}),
     getPublicBriefingArchive(50).catch(()=>null),
+    supabase.from("content_items").select("id",{count:"exact",head:true}).eq("status","published"),
+    supabase.from("content_items").select("id",{count:"exact",head:true}).eq("status","draft"),
   ]);
   const items=materials.data??[];
   const statistics=[
     {label:"أعداد الإحاطة المتاحة",value:editions?.length??"—"},
-    {label:"المواد المنشورة",value:items.filter(x=>x.status==="published").length},
-    {label:"المسودات التحريرية",value:items.filter(x=>x.status==="draft").length},
+    {label:"المواد المنشورة",value:publishedCount.count??"—"},
+    {label:"المسودات التحريرية",value:draftCount.count??"—"},
     {label:"المصادر المسجلة",value:sources.count??"—"},
   ];
   const products=[
@@ -36,7 +38,7 @@ export default async function AdminDashboardPage() {
         </div>
         <Link href="/admin/news-studio" className="button button-primary">فتح News Studio</Link>
       </div>
-      {(!editions||materials.error||sources.error)?<div className="notice notice-error">بعض إحصاءات لوحة التشغيل غير متاحة الآن؛ قد تكون الأرقام الظاهرة جزئية.</div>:null}
+      {(!editions||materials.error||sources.error||publishedCount.error||draftCount.error)?<div className="notice notice-error">بعض إحصاءات لوحة التشغيل غير متاحة الآن؛ قد تكون الأرقام الظاهرة جزئية.</div>:null}
       <div className="stat-grid">{statistics.map(item=><article key={item.label} className="stat-card">
         <span>{item.label}</span><strong>{typeof item.value==="number"?item.value.toLocaleString("en-US"):item.value}</strong>
       </article>)}</div>
