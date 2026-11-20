@@ -1,0 +1,280 @@
+/* SAS public navigation, search and call-to-action system. */
+.site-header .site-header-actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+.site-header .sas-header-search {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 8px 13px;
+  color: var(--foreground);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: 600 12px/1.5 "Thmanyah Sans",sans-serif;
+  white-space: nowrap;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+.site-header .sas-header-search:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.site-header .sas-header-search svg { flex: none; }
+
+/* One visual grammar for the site's primary and secondary actions. */
+.sas-cta,
+.public-site .button.button-primary,
+.public-site .button.button-secondary,
+.sas-home-briefing-wrap .sas-home-briefing-primary-link,
+.sas-visual-feature .sas-visual-feature-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 42px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font: 700 12px/1.5 "Thmanyah Sans",sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .18s ease, background .18s ease, border-color .18s ease, transform .18s ease;
+}
+.sas-cta--primary,
+.public-site .button.button-primary,
+.sas-home-briefing-wrap .sas-home-briefing-primary-link,
+.sas-visual-feature--lead .sas-visual-feature-action {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.sas-cta--primary:hover,
+.public-site .button.button-primary:hover,
+.sas-home-briefing-wrap .sas-home-briefing-primary-link:hover,
+.sas-visual-feature--lead .sas-visual-feature-action:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.sas-cta--secondary,
+.public-site .button.button-secondary,
+.sas-visual-feature--supporting .sas-visual-feature-action {
+  background: var(--surface);
+  color: var(--accent);
+  border-color: var(--line);
+}
+.sas-cta--secondary:hover,
+.public-site .button.button-secondary:hover,
+.sas-visual-feature--supporting .sas-visual-feature-action:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.public-site .sas-text-link,
+.sas-home-briefing-wrap .sas-home-briefing-aside-link,
+.sas-home-briefing-wrap .sas-home-briefing-archive-heading > a,
+.sas-home-briefing-wrap .sas-home-briefing-empty a {
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: 600 11px/1.6 "Thmanyah Sans",sans-serif;
+  transition: color .18s ease, gap .18s ease;
+}
+.public-site .sas-text-link:hover,
+.sas-home-briefing-wrap .sas-home-briefing-aside-link:hover,
+.sas-home-briefing-wrap .sas-home-briefing-archive-heading > a:hover,
+.sas-home-briefing-wrap .sas-home-briefing-empty a:hover {
+  gap: 11px;
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+.sas-cta svg,
+.sas-visual-feature-action svg,
+.sas-home-briefing-primary-link svg,
+.sas-text-link svg { flex: none; }
+/* RTL forward navigation points left: never mirror these icons. */
+.sas-cta svg,
+.sas-visual-feature-action svg,
+.sas-home-briefing-primary-link svg { transform: none; }
+
+.site-header .sas-header-search:focus-visible,
+.public-site .sas-cta:focus-visible,
+.public-site .button:focus-visible,
+.public-site .sas-text-link:focus-visible,
+.sas-visual-feature .sas-visual-feature-action:focus-visible,
+.sas-home-briefing-wrap a:focus-visible,
+.public-site .sas-search-page a:focus-visible,
+.public-site .sas-search-page button:focus-visible,
+.public-site .sas-search-page input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Search page: crisp archive search rather than a decorative modal. */
+.sas-search-page {
+  min-height: 58vh;
+  padding-top: clamp(32px,5vw,75px);
+  padding-bottom: clamp(58px,7vw,100px);
+  color: var(--foreground);
+}
+.sas-search-heading .eyebrow { display: inline-block; margin-bottom: 8px; }
+.sas-search-heading h1 {
+  margin: 0 0 10px;
+  font: 700 clamp(30px,4vw,45px)/1.5 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+}
+.sas-search-heading p {
+  margin: 0 0 26px;
+  max-width: 750px;
+  color: var(--muted);
+  font: 400 13px/2 "Thmanyah Sans",sans-serif;
+}
+.sas-search-form {
+  max-width: 980px;
+  background: var(--surface);
+  padding: clamp(16px,2.5vw,23px);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  display: grid;
+  gap: 10px;
+}
+.sas-search-form label {font-size: 12px;font-weight: 700;}
+.sas-search-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  background: var(--background);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 10px 5px 5px;
+}
+.sas-search-input-row svg {color: var(--accent);flex:none;}
+.sas-search-input-row input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: none;
+  color: var(--foreground);
+  font: 500 14px/1.7 "Thmanyah Sans",sans-serif;
+}
+.sas-search-input-row input::placeholder {color: var(--muted);}
+.sas-search-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 23px 0 14px;
+}
+.sas-search-filter,
+.sas-search-suggestions a {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  color: var(--muted);
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+.sas-search-filter:hover,
+.sas-search-suggestions a:hover {border-color: var(--accent);color: var(--accent);}
+.sas-search-filter.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.sas-search-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px 16px;
+  padding: 15px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.sas-search-summary strong {color: var(--foreground);font-size: 13px;}
+.sas-search-summary span:last-child:not(:first-child) {line-height: 1.8;}
+.sas-search-results {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 12px;
+  max-width: 1200px;
+}
+.sas-search-result {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: clamp(18px,2.4vw,26px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.sas-search-result-meta {display: flex;gap: 12px;flex-wrap: wrap;color: var(--accent);font-size: 10px;font-weight: 700;}
+.sas-search-result-meta time {color: var(--muted);direction: ltr;unicode-bidi: isolate;}
+.sas-search-result h2 {
+  margin: 13px 0 9px;
+  font: 700 clamp(19px,2vw,24px)/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+}
+.sas-search-result h2 a:hover {color: var(--accent);}
+.sas-search-result p {
+  margin: 0 0 19px;
+  color: var(--muted);
+  font: 400 12px/1.95 "Thmanyah Sans",sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.sas-search-result-link {margin-top: auto;}
+.sas-search-empty {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  padding: clamp(22px,3vw,36px);
+  max-width: 970px;
+}
+.sas-search-empty h2 {margin: 0 0 8px;font:700 21px/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif;}
+.sas-search-empty p {margin: 0 0 16px;color: var(--muted);font-size: 12px;line-height: 2;}
+.sas-search-suggestions {display: flex;gap: 8px;flex-wrap: wrap;}
+@media(max-width:1120px) {
+  .site-header .site-header-actions {gap: 6px;}
+  .site-header .sas-header-search {padding: 8px 10px;}
+}
+@media(max-width:830px) {
+  .site-header .site-header-inner {width: calc(100% - 32px);gap: 12px;}
+  .site-header .site-nav {gap: 10px; font-size: 11px;}
+  .site-header .sas-header-search span {display: none;}
+}
+@media(max-width:660px) {
+  .site-header .site-header-inner {min-height: 60px;}
+  .site-header .site-header-actions {gap: 5px;}
+  .site-header .sas-header-search {width: 39px;height: 39px;padding: 7px;}
+  .sas-search-page {padding-top: 32px;padding-bottom: 52px;}
+  .sas-search-results {grid-template-columns: 1fr;}
+  .sas-search-input-row {gap: 6px;padding: 5px 7px;}
+  .sas-search-input-row input {font-size: 12px;}
+  .sas-search-input-row .sas-cta {min-height: 38px;padding: 8px 10px;}
+  .sas-search-filters {flex-wrap: nowrap;overflow-x: auto;padding-bottom: 12px;}
+  .sas-search-filter {flex:none;}
+}
+@media(max-width:400px) {
+  .site-header .site-admin-link {padding: 6px 8px;font-size: 10px;}
+  .site-header .sas-header-search {width: 36px;height: 36px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .sas-header-search,.sas-cta,.sas-visual-feature-action,.sas-text-link,
+  .sas-search-filter,.sas-search-suggestions a {transition: none!important;transform: none!important;}
+}
