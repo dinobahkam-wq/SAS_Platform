@@ -17,3 +17,14 @@
 .briefing-event--dense.sas-event-scope-regional:not(.sas-event-class-position){border-inline-start:3px solid #d3bc79;padding-inline-start:10px}
 .briefing-event--dense.sas-event-scope-international:not(.sas-event-class-position){border-inline-start:3px solid #9db6d1;padding-inline-start:10px}
 @media print{.sas-identity-mark{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+
+/* Distinct roles: a publisher may not be the issuer or the subject of the event. */
+.sas-identity-mark-group{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.sas-identity-byline{flex-wrap:wrap;gap:10px 20px}
+.sas-priority-label,.sas-relevance-label{font-size:10px;line-height:1.4;border-radius:5px;padding:3px 6px;border:1px solid var(--line,#dce3df)}
+.sas-relevance-label{background:rgba(109,144,177,.09)}
+.sas-event-priority-critical{border-inline-start:3px solid #b64e4e!important;background:linear-gradient(to left,rgba(188,78,78,.07),transparent 75%)}
+.sas-event-priority-high{border-inline-start:3px solid #ba9144!important;background:linear-gradient(to left,rgba(186,145,68,.06),transparent 75%)}
+.sas-event-priority-critical .sas-priority-label{border-color:#b64e4e;color:#a13a3a}
+.sas-event-priority-high .sas-priority-label{border-color:#b9954e;color:#936a22}
+@media (prefers-reduced-motion:reduce){.sas-identity-mark,.sas-identity-studio-pick{transition:none}}
