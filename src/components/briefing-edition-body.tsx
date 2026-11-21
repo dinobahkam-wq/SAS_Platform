@@ -15,8 +15,8 @@ import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
 import "./briefing-dense-layout.css";
 import "./briefing-studio-transfer.css";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
-import type { BriefingDevelopment, BriefingSummaryItem } from "@/lib/public-briefing";
-import { findSourceIdentity, identityById } from "@/lib/visual-identities";
+import type { BriefingDevelopment } from "@/lib/public-briefing";
+import { findSourceIdentity, identityById, type Identity } from "@/lib/visual-identities";
 import "./sas-identity.css";
 
 type Tab = "all" | "priority" | "yemen" | "international" | "statements" | "economy";
@@ -50,6 +50,44 @@ function developmentTone(development: BriefingDevelopment): "critical" | "offici
   return "neutral";
 }
 
+type IdentityRole = { identity: Identity; role: "الجهة المصدرة" | "مصدر التوثيق" };
+
+function developmentIdentityMarks(development: BriefingDevelopment): IdentityRole[] {
+  const identities: IdentityRole[] = [];
+  const used = new Set<string>();
+  const add = (identity: Identity | null, role: IdentityRole["role"]) => {
+    if (!identity || used.has(identity.id)) return;
+    used.add(identity.id);
+    identities.push({ identity, role });
+  };
+  // The issuer must be explicitly registered. Never infer an authority from a headline.
+  add(identityById(development.issuer_identity_id), "الجهة المصدرة");
+  add(identityById(development.publisher_identity_id), "مصدر التوثيق");
+  const sources = [...development.sources].sort((a,b) =>
+    Number(b.source_role === "primary") - Number(a.source_role === "primary"));
+  for (const source of sources) {
+    add(findSourceIdentity(source.source_name), "مصدر التوثيق");
+  }
+  return identities;
+}
+
+function BriefingIdentityMarks({ development, compact = false }: {
+  development: BriefingDevelopment; compact?: boolean;
+}) {
+  const marks = developmentIdentityMarks(development);
+  if (!marks.length) return null;
+  const visible = compact ? marks.slice(0,3) : marks.slice(0,4);
+  return <div className={compact ? "sas-priority-identities" : "sas-identity-byline"}
+    aria-label="الجهات والمصادر الموثقة">
+    {visible.map(({identity,role}) => <span className={compact ? "sas-priority-identity" : "sas-identity-mark-group"}
+      key={identity.id} title={identity.name + " — " + role}>
+      <span className="sas-identity-mark"><img src={identity.image} alt={identity.name} loading="lazy"/></span>
+      {!compact && <span className="sas-identity-byline-copy"><strong>{identity.name}</strong><small>{role}</small></span>}
+    </span>)}
+    {marks.length > visible.length ? <span className="sas-extra-identities" aria-label={`جهات إضافية: ${marks.length-visible.length}`}>+{marks.length-visible.length}</span> : null}
+  </div>;
+}
+
 function matchesTab(development: BriefingDevelopment, tab: Tab) {
   switch (tab) {
     case "all": return true;
@@ -62,11 +100,9 @@ function matchesTab(development: BriefingDevelopment, tab: Tab) {
 }
 
 export function BriefingEditionBody({
-  executiveSummary,
   developments,
   studioEdition,
 }: {
-  executiveSummary: BriefingSummaryItem[];
   developments: BriefingDevelopment[];
   studioEdition?: { slug: string; revisionNo: number } | null;
 }) {
@@ -80,26 +116,6 @@ export function BriefingEditionBody({
 
   return (
     <>
-      {activeTab === "all" && executiveSummary.length > 0 ? (
-        <section className="sas-briefing-layer sas-scene-layer" aria-labelledby="sas-scene-title">
-          <div className="briefing-section-heading"><div>
-            <span className="sas-layer-eyebrow">01 · خلاصة العدد</span>
-            <h2 id="sas-scene-title">المشهد في دقيقة</h2>
-            <p>أبرز الوقائع والمواقف الواردة في العدد، كما وثّقتها المصادر.</p>
-          </div></div>
-          <ol className="sas-scene-points">
-            {executiveSummary.slice(0, 5).map((item,index) => <li key={item.order || index}>
-              <span className="sas-scene-index" aria-hidden="true">{String(index+1).padStart(2,"0")}</span>
-              <div className="sas-scene-text">
-                {item.headline_ar && <strong>{item.headline_ar}</strong>}
-                <p><BriefingEmphasis text={item.text_ar}/></p>
-                {item.sources.length > 0 ? <BriefingSourcesPopover sources={item.sources} label="مصادر الخلاصة"/> : null}
-              </div>
-            </li>)}
-          </ol>
-        </section>
-      ) : null}
-
       {activeTab === "all" ? (
         <section className="sas-briefing-layer sas-priority-layer" aria-labelledby="sas-priorities-title">
           <div className="briefing-section-heading"><div>
@@ -113,7 +129,11 @@ export function BriefingEditionBody({
                 <span className={`sas-priority-indicator sas-priority-indicator--${development.priority_level}`}>
                   {development.priority_level === "critical" ? "قصوى" : "عالية"}
                 </span>
-                <span>{development.headline_ar}</span>
+                <span className="sas-priority-title-group">
+                  <span className="sas-priority-reference">{String(development.order + 1).padStart(2,"0")}</span>
+                  <span>{development.headline_ar}</span>
+                </span>
+                <BriefingIdentityMarks development={development} compact/>
                 <span aria-hidden="true">←</span>
               </a>
             </li>)}
@@ -150,7 +170,7 @@ export function BriefingEditionBody({
         </div>
         {filtered.length ? (
           <div className="briefing-timeline">
-            {filtered.map((development, index) => {
+            {filtered.map((development) => {
               const happened = development.occurred_at
                 ? formatBriefingDate(development.occurred_at, development.time_precision !== "date_only")
                 : development.occurred_on
@@ -159,7 +179,7 @@ export function BriefingEditionBody({
               return (
                 <article id={`sas-development-${development.order}`} className={`briefing-event briefing-event--dense sas-tone-${developmentTone(development)} sas-event-scope-${development.geographic_scope} sas-event-class-${development.information_class}${development.priority_level ? " sas-event-priority-"+development.priority_level : ""}`} key={development.order}>
                   <div className="briefing-event-index">
-                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <span>{String(development.order + 1).padStart(2, "0")}</span>
                   </div>
                   <div className="briefing-event-content">
                     <div className="briefing-event-meta">
@@ -170,20 +190,7 @@ export function BriefingEditionBody({
                       {development.priority_level ? <span className="sas-priority-label">{priorityLabels[development.priority_level]}</span> : null}
                       {development.yemen_relevance ? <span className="sas-relevance-label">{relevanceLabels[development.yemen_relevance]}</span> : null}
                     </div>
-                    {(() => {
-                      const publisher = identityById(development.publisher_identity_id) ?? findSourceIdentity(sourceLabel(development));
-                      const issuer = identityById(development.issuer_identity_id);
-                      const identities = [
-                        ...(issuer ? [{identity:issuer,role:"الجهة المصدرة"}] : []),
-                        ...(publisher && publisher.id !== issuer?.id ? [{identity:publisher,role:"مصدر التوثيق"}] : [])
-                      ];
-                      return identities.length ? <div className="sas-identity-byline">
-                        {identities.map(({identity,role})=><span className="sas-identity-mark-group" key={role+identity.id}>
-                          <span className="sas-identity-mark"><img src={identity.image} alt="" loading="lazy"/></span>
-                          <span className="sas-identity-byline-copy"><strong>{identity.name}</strong><small>{role}</small></span>
-                        </span>)}
-                      </div> : null;
-                    })()}
+                    <BriefingIdentityMarks development={development}/>
                     <h3>{development.headline_ar}</h3>
                     {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
 
