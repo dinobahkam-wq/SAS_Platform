@@ -28,3 +28,57 @@
 .sas-event-priority-critical .sas-priority-label{border-color:#b64e4e;color:#a13a3a}
 .sas-event-priority-high .sas-priority-label{border-color:#b9954e;color:#936a22}
 @media (prefers-reduced-motion:reduce){.sas-identity-mark,.sas-identity-studio-pick{transition:none}}
+
+
+/* SAS daily briefing four-layer edition: one full card background per reviewed category.
+ * Order: critical > official statement > regional > international institution > neutral.
+ * High priority retains its own textual badge without overruling the topic background. */
+.briefing-event--dense[class*="sas-tone-"]{
+  border:1px solid var(--sas-tone-border,#dfe6e1);
+  border-inline-start:4px solid var(--sas-tone-accent,#b8c8bf) !important;
+  border-radius:14px;
+  padding:16px 13px 5px;
+  margin:0 0 13px;
+  background:var(--sas-tone-bg,#fff) !important;
+  color:var(--foreground);
+  scroll-margin-top:95px;
+  break-inside:avoid;
+}
+.briefing-event--dense[class*="sas-tone-"] .briefing-event-content{
+  margin-bottom:0;
+  padding-bottom:14px;
+  border-bottom:0;
+}
+.briefing-event--dense[class*="sas-tone-"] .briefing-event-index:after{display:none}
+.briefing-event--dense[class*="sas-tone-"] .briefing-event-meta{color:var(--muted)}
+.briefing-event--dense.sas-tone-critical{--sas-tone-bg:#fff1f0;--sas-tone-border:#e6bebb;--sas-tone-accent:#c44242}
+.briefing-event--dense.sas-tone-official{--sas-tone-bg:#eaf6ee;--sas-tone-border:#c1dfcb;--sas-tone-accent:#47875f}
+.briefing-event--dense.sas-tone-regional{--sas-tone-bg:#fff3d6;--sas-tone-border:#ead6a4;--sas-tone-accent:#b98b35}
+.briefing-event--dense.sas-tone-international{--sas-tone-bg:#eaf2ff;--sas-tone-border:#c2d7ee;--sas-tone-accent:#4b7cad}
+.briefing-event--dense.sas-tone-neutral{--sas-tone-bg:var(--surface,#fff);--sas-tone-border:var(--line,#dfe6e1);--sas-tone-accent:#bac6c0}
+:where([data-theme="dark"],.dark,.theme-dark) .briefing-event--dense.sas-tone-critical{--sas-tone-bg:#362426;--sas-tone-border:#745154;--sas-tone-accent:#e09a91}
+:where([data-theme="dark"],.dark,.theme-dark) .briefing-event--dense.sas-tone-official{--sas-tone-bg:#21342b;--sas-tone-border:#3c6550;--sas-tone-accent:#92c5a5}
+:where([data-theme="dark"],.dark,.theme-dark) .briefing-event--dense.sas-tone-regional{--sas-tone-bg:#393123;--sas-tone-border:#706042;--sas-tone-accent:#e2bf7a}
+:where([data-theme="dark"],.dark,.theme-dark) .briefing-event--dense.sas-tone-international{--sas-tone-bg:#253444;--sas-tone-border:#4c6c91;--sas-tone-accent:#9ebce0}
+:where([data-theme="dark"],.dark,.theme-dark) .briefing-event--dense.sas-tone-neutral{--sas-tone-bg:var(--surface);--sas-tone-border:var(--line);--sas-tone-accent:#81988d}
+.sas-layer-eyebrow{display:inline-block;margin-bottom:5px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.01em}
+.sas-briefing-layer{margin:24px 0 32px}
+.sas-briefing-layer .briefing-section-heading{margin-bottom:13px}
+.sas-scene-points{padding:0;margin:0;list-style:none;display:grid;gap:8px}
+.sas-scene-points li{display:grid;grid-template-columns:35px minmax(0,1fr);gap:11px;padding:13px 15px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.sas-scene-index{font:700 12px/1.5 Arial,sans-serif;color:var(--muted)}
+.sas-scene-text strong{display:block;font-size:14px;line-height:1.7;color:var(--foreground)}
+.sas-scene-text p{margin:2px 0 0;font-size:13px;line-height:1.9;color:var(--foreground)}
+.sas-scene-text .briefing-reference-wrap{margin-top:7px}
+.sas-priority-items{list-style:none;padding:0;margin:0;display:grid;gap:7px}
+.sas-priority-item-link{display:flex;align-items:center;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:13px;line-height:1.6}
+.sas-priority-item-link:hover,.sas-priority-item-link:focus-visible{border-color:var(--accent);outline-offset:2px}
+.sas-priority-item-link span:nth-child(2){flex:1}
+.sas-priority-indicator{flex-shrink:0;padding:3px 7px;border-radius:5px;font-size:11px}
+.sas-priority-indicator--critical{background:#fff1f0;color:#993d3d}
+.sas-priority-indicator--high{background:#fff1d7;color:#785a1d}
+.sas-briefing-supplement{margin:20px 0 24px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.sas-briefing-supplement>summary{cursor:pointer;padding:12px 15px;font-weight:600;color:var(--foreground)}
+.sas-briefing-supplement-body{padding:0 10px 14px}
+@media(max-width:640px){.briefing-event--dense[class*="sas-tone-"]{padding:12px 10px 0;margin-bottom:10px;grid-template-columns:34px minmax(0,1fr);gap:7px}.briefing-event--dense[class*="sas-tone-"] .briefing-event-index span{width:28px;height:28px}.sas-scene-points li{padding:11px}.sas-priority-item-link{font-size:12px}}
+@media print{.briefing-event--dense[class*="sas-tone-"]{print-color-adjust:exact;-webkit-print-color-adjust:exact}.sas-priority-items a{color:inherit}}
