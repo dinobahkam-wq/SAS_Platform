@@ -1,8 +1,8 @@
 import Link from "next/link";
 import {notFound} from "next/navigation";
 import {requireAdmin} from "@/lib/admin";
-import {DevelopmentImageUpload} from "./development-image-upload";
-import {startBriefingPhotoRevision,removeBriefingPhoto,publishBriefingPhotoRevision} from "./actions";
+import {DevelopmentImageUpload} from "../development-image-upload";
+import {startBriefingPhotoRevision,removeBriefingPhoto,publishBriefingPhotoRevision} from "../actions";
 import "./enrich.css";
 export const dynamic="force-dynamic";
 
