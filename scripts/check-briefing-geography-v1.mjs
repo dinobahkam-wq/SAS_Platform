@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {YEMEN_MAP,yemenMapPoint} from "../src/lib/briefing-geo.ts";
 const read=path=>readFileSync(path,"utf8");
-const migration=read("supabase/migrations/20261121143000_briefing_geography_registry_v1.sql");
+const migration=read("supabase/migrations/20261121112935_briefing_geography_registry_v1.sql");
 const publicPage=read("src/app/briefings/[slug]/page.tsx");
 const printPage=read("src/app/briefings/[slug]/print/page.tsx");
 const parser=read("src/lib/public-briefing.ts");
