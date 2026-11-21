@@ -1,6 +1,7 @@
 import "server-only";
 import nov12 from "@/data/briefings/2026-11-12.context.json";
 import nov14 from "@/data/briefings/2026-11-14.context.json";
+import nov21 from "@/data/briefings/2026-11-21.context.json";
 
 export type HistoricMarketPoint = {
   id: string;
@@ -53,5 +54,6 @@ export async function getDatedBriefingContext(editionDate: string): Promise<Hist
   // Only date-keyed, editorially sourced snapshots; never substitute today's prices.
   if (editionDate === "2026-11-12") return nov12 as HistoricBriefingContext;
   if (editionDate === "2026-11-14") return nov14 as HistoricBriefingContext;
+  if (editionDate === "2026-11-21") return nov21 as HistoricBriefingContext;
   return null;
 }
