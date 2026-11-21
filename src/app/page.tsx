@@ -49,7 +49,8 @@ export default async function Home() {
     <main className="public-site">
       <PublicHeader />
 
-      <section className="home-compact-intro home-brand-hero sas-mukalla-hero site-container">
+      <section className="home-compact-intro home-brand-hero sas-mukalla-hero sas-split-hero site-container">
+        <div className="sas-hero-visual" aria-hidden="true" />
         <div className="home-intro-copy">
           <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
           <p>إحاطة سياسية موثقة، وتحليلات ودراسات، ومعرفة بصرية وفيديوهات تفسر الأحداث وسياقاتها.</p>

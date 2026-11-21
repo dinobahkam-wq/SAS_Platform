@@ -1,0 +1,215 @@
+/* SAS split hero card v1 — one unified surface, image left and text right.
+ * Unlike the older full-bleed background, the artwork is a dedicated visual
+ * region that fades to the exact same surface color as the editorial copy.
+ * All selectors are scoped to the homepage hero; no changes to other pages.
+ */
+.public-site .home-brand-hero.sas-mukalla-hero.sas-split-hero {
+  --hero-card-paper: #f5f6f2;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  isolation: isolate;
+  overflow: hidden;
+  width: min(1320px, calc(100% - 44px));
+  max-width: 1320px;
+  min-height: clamp(340px, 30vw, 460px);
+  margin: 28px auto 43px;
+  padding: clamp(35px,4.5vw,66px) clamp(26px,4.5vw,68px);
+  border: 1px solid rgba(24, 74, 66, .10);
+  border-radius: 23px;
+  background: var(--hero-card-paper) !important;
+  box-shadow: none;
+}
+.public-site .home-brand-hero.sas-split-hero::before,
+.public-site .home-brand-hero.sas-split-hero::after {
+  content: none;
+  display: none;
+}
+.public-site .sas-split-hero .sas-hero-visual {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 59%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/sa.webp.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 42% 50%;
+  transform: none;
+}
+.public-site .sas-split-hero .sas-hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Art left; the rightmost 45% merges with the text's paper surface. */
+  background: linear-gradient(to right,
+    transparent 0%,
+    rgba(245, 246, 242, .04) 30%,
+    rgba(245, 246, 242, .35) 53%,
+    rgba(245, 246, 242, .80) 76%,
+    var(--hero-card-paper) 100%);
+  pointer-events: none;
+}
+.public-site .home-brand-hero.sas-split-hero .home-intro-copy {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 730px);
+  max-width: min(730px, 64%);
+  flex: 0 1 auto;
+  align-self: center;
+  margin-inline-end: auto;
+  padding-inline-end: 0;
+  text-align: right;
+}
+.public-site .home-brand-hero.sas-split-hero h1 {
+  color: #223430;
+  font-size: clamp(40px, 4.5vw, 76px);
+  line-height: 1.43;
+  margin: 0 0 clamp(14px, 2vw, 21px);
+  text-wrap: balance;
+  text-shadow: none;
+}
+.public-site .home-brand-hero.sas-split-hero h1 em {
+  color: #007e80;
+}
+.public-site .home-brand-hero.sas-split-hero p {
+  max-width: 650px;
+  color: #53635e;
+  font-size: clamp(13px, 1.13vw, 16px);
+  line-height: 1.9;
+  text-shadow: none;
+}
+.public-site .home-brand-hero.sas-split-hero .home-compact-actions {
+  margin: clamp(18px, 2vw, 27px) 0 0;
+  align-self: stretch;
+  width: 100%;
+  justify-content: flex-start;
+}
+.public-site .home-brand-hero.sas-split-hero .sas-cta {
+  min-height: 46px;
+}
+/* In dark mode preserve the card/photo integration rather than letting the
+ * lighter palette fade fight the page background. */
+html[data-theme="dark"] .public-site .home-brand-hero.sas-mukalla-hero.sas-split-hero {
+  --hero-card-paper: #172724;
+  border-color: rgba(152, 197, 184, .21);
+}
+html[data-theme="dark"] .public-site .sas-split-hero .sas-hero-visual {
+  filter: none;
+  background-image: linear-gradient(rgba(10, 25, 23, .18), rgba(10, 25, 23, .18)), url("/sa.webp.png");
+}
+html[data-theme="dark"] .public-site .sas-split-hero .sas-hero-visual::after {
+  background: linear-gradient(to right,
+    transparent 0%,
+    rgba(23, 39, 36, .04) 30%,
+    rgba(23, 39, 36, .42) 53%,
+    rgba(23, 39, 36, .85) 78%,
+    var(--hero-card-paper) 100%);
+}
+html[data-theme="dark"] .public-site .home-brand-hero.sas-split-hero h1 {
+  color: #f0f5f1;
+}
+html[data-theme="dark"] .public-site .home-brand-hero.sas-split-hero h1 em {
+  color: #80d4cb;
+}
+html[data-theme="dark"] .public-site .home-brand-hero.sas-split-hero p {
+  color: #d1ded8;
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .public-site .home-brand-hero.sas-mukalla-hero.sas-split-hero {
+    min-height: 365px;
+    padding-inline: 33px;
+  }
+  .public-site .home-brand-hero.sas-split-hero .home-intro-copy {
+    max-width: 69%;
+  }
+  .public-site .home-brand-hero.sas-split-hero h1 {
+    font-size: clamp(37px, 4.35vw, 55px);
+  }
+  .public-site .sas-split-hero .sas-hero-visual {
+    width: 61%;
+  }
+}
+/* On phones, the same continuous card becomes a portrait editorial composition:
+ * the image is above the slogan, and its lower edge dissolves into the paper.
+ * No text overlays the busy architectural details.
+ */
+@media (max-width: 760px) {
+  .public-site .home-brand-hero.sas-mukalla-hero.sas-split-hero {
+    width: calc(100% - 28px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    padding: 0 0 26px;
+    margin: 12px auto 28px;
+    border-radius: 17px;
+    gap: 0;
+  }
+  .public-site .sas-split-hero .sas-hero-visual {
+    position: relative;
+    inset: auto;
+    display: block;
+    width: 100%;
+    height: clamp(215px, 58vw, 320px);
+    flex: 0 0 auto;
+    background-position: 42% 45%;
+  }
+  .public-site .sas-split-hero .sas-hero-visual::after {
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(245, 246, 242, 0) 38%,
+      rgba(245, 246, 242, .40) 67%,
+      rgba(245, 246, 242, .87) 84%,
+      var(--hero-card-paper) 100%);
+  }
+  html[data-theme="dark"] .public-site .sas-split-hero .sas-hero-visual::after {
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(23, 39, 36, 0) 38%,
+      rgba(23, 39, 36, .43) 67%,
+      rgba(23, 39, 36, .88) 84%,
+      var(--hero-card-paper) 100%);
+  }
+  .public-site .home-brand-hero.sas-split-hero .home-intro-copy {
+    max-width: none;
+    width: 100%;
+    padding: 0 clamp(17px, 4vw, 28px);
+    margin: -6px 0 0;
+    z-index: 2;
+  }
+  .public-site .home-brand-hero.sas-split-hero h1 {
+    font-size: clamp(30px, 7.4vw, 44px);
+    line-height: 1.53;
+    margin: 0 0 10px;
+  }
+  .public-site .home-brand-hero.sas-split-hero p {
+    font-size: 13px;
+    line-height: 1.85;
+  }
+  .public-site .home-brand-hero.sas-split-hero .home-compact-actions {
+    margin-top: 18px;
+    gap: 9px;
+    width: 100%;
+  }
+  .public-site .home-brand-hero.sas-split-hero .home-compact-actions .button {
+    flex: 1 1 140px;
+    text-align: center;
+    justify-content: center;
+    min-width: 0;
+  }
+}
+@media (max-width: 390px) {
+  .public-site .sas-split-hero .sas-hero-visual { height: 220px; }
+  .public-site .home-brand-hero.sas-split-hero .home-intro-copy { padding-inline: 16px; }
+  .public-site .home-brand-hero.sas-split-hero h1 { font-size: 30px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site .sas-split-hero .sas-hero-visual { transition: none; animation: none; }
+}
+@media print {
+  .public-site .sas-split-hero .sas-hero-visual { display: none; }
+  .public-site .home-brand-hero.sas-split-hero .home-intro-copy { max-width: 100%; }
+}
