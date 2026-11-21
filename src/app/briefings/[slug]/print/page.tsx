@@ -40,7 +40,6 @@ export default async function BriefingPrintPage({
   const { edition, revision, developments } = briefing;
   const overview = briefingEditionOverview(developments);
   const ordered = prioritizeBriefingDevelopments(developments);
-  const highlighted = ordered.filter(item => item.priority_level === "critical" || item.priority_level === "high");
   const context = await getDatedBriefingContext(edition.edition_date);
   const fx = context?.exchange_rates;
   const indicativeFx = context?.indicative_exchange_rates;
@@ -148,15 +147,6 @@ export default async function BriefingPrintPage({
           </section>
         ) : null}
 
-
-        <section className="sas-print-priorities">
-          <h2>أهم التطورات</h2>
-          {highlighted.length ? <ol>{highlighted.map(item => (
-            <li key={item.order}>
-              <span>{item.priority_level === "critical" ? "أولوية قصوى" : "أولوية عالية"}</span>
-              <strong>{item.headline_ar}</strong>
-            </li>))}</ol> : <p>لم تُسجّل درجات أولوية في البيانات الأصلية لهذا العدد؛ لا يُفترض تصنيف بأثر رجعي.</p>}
-        </section>
 
         <section className="briefing-print-developments">
           <div className="briefing-print-section-heading">

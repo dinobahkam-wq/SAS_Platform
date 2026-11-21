@@ -33,3 +33,21 @@ test("14 November uses approximate rates only, never invented bid/ask", () => {
     seen.add(key);
   }
 });
+
+test("21 November dated reference board uses two distinct YER markets and previous-session oil/gold closes",()=>{
+ const c=read("2026-11-21");
+ assert.equal(c.edition_date,"2026-11-21");
+ assert.equal(c.exchange_rates.as_of_date,"2026-11-21");
+ assert.equal(c.exchange_rates.rates.length,4);
+ assert.equal(c.indicative_exchange_rates,null);
+ assert.deepEqual(new Set(c.exchange_rates.rates.map(x=>x.city+":"+x.code)).size,4);
+ for(const rate of c.exchange_rates.rates){
+   assert.ok(rate.buy>0&&rate.buy<=rate.sell);
+ }
+ for(const commodity of c.market){
+   assert.equal(commodity.as_of_date,"2026-11-20");
+   assert.ok(commodity.value>0);
+   assert.match(commodity.source_url,/^https:\/\//);
+ }
+ assert.deepEqual(c.market.map(x=>x.id),["brent","gold"]);
+});

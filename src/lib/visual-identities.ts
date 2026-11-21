@@ -16,12 +16,13 @@ export type Identity = {
 
 export const visualIdentities: readonly Identity[] = [
   { id:"ye-republic", name:"الجمهورية اليمنية", kind:"government", image:"/icons/Emblem_of_Yemen_(2).svg", aliases:["النسر الجمهوري","الجمهورية اليمنية","الحكومة اليمنية","مجلس القيادة الرئاسي","الرئاسة اليمنية"], provenance:"user_supplied" },
-  { id:"sa-government", name:"المملكة العربية السعودية", kind:"government", image:"/icons/saudi_icon_goverment.png", aliases:["السعودية","المملكة العربية السعودية","الحكومة السعودية","وزارة الخارجية السعودية","وكالة الأنباء السعودية","واس"], provenance:"user_supplied" },
+  { id:"sa-government", name:"المملكة العربية السعودية", kind:"government", image:"/icons/saudi_icon_goverment.png", aliases:["السعودية","المملكة العربية السعودية","الحكومة السعودية","وزارة الخارجية السعودية"], provenance:"user_supplied" },
   { id:"ae-government", name:"الإمارات العربية المتحدة", kind:"government", image:"/icons/New_Coat_of_arms_of_United_Arab_Emirates.png", aliases:["الإمارات","الإمارات العربية المتحدة","الحكومة الإماراتية","وام"], provenance:"user_supplied" },
   { id:"qa-government", name:"دولة قطر", kind:"government", image:"/icons/qatar_gov.jpg", aliases:["قطر","دولة قطر","الحكومة القطرية"], provenance:"user_supplied" },
   { id:"gcc", name:"مجلس التعاون الخليجي", kind:"regional", image:"/icons/GGC_icon.png", aliases:["مجلس التعاون الخليجي","مجلس التعاون لدول الخليج العربية","الأمانة العامة لمجلس التعاون"], provenance:"user_supplied" },
   { id:"eu", name:"الاتحاد الأوروبي", kind:"regional", image:"/icons/Flag_of_Europe.svg.webp", aliases:["الاتحاد الأوروبي","المفوضية الأوروبية","الاتحاد الاوروبي"], provenance:"user_supplied" },
   { id:"un", name:"الأمم المتحدة", kind:"international", image:"/icons/UN_emblem_blue.svg.webp", aliases:["الأمم المتحدة","الامم المتحدة","مجلس الأمن الدولي","مكتب المبعوث الأممي","الأمم المتحده"], provenance:"user_supplied" },
+  { id:"sa-spa", name:"وكالة الأنباء السعودية (واس)", kind:"media", image:"/icons/WAS_saudi_press_agency.png", aliases:["وكالة الأنباء السعودية","واس","SPA","Saudi Press Agency","Saudi Press Agency (SPA)"], provenance:"user_supplied" },
   { id:"reuters", name:"رويترز", kind:"media", image:"/icons/Reuters.png", aliases:["رويترز","Reuters","Reuters News"], provenance:"user_supplied" },
   { id:"aljazeera", name:"الجزيرة", kind:"media", image:"/icons/Aljazeera.svg.webp", aliases:["الجزيرة","الجزيرة نت","Al Jazeera","Aljazeera"], provenance:"user_supplied" },
   { id:"anadolu", name:"الأناضول", kind:"media", image:"/icons/Anadolu_Ajansı_logo.png", aliases:["الأناضول","وكالة الأناضول","Anadolu","Anadolu Agency"], provenance:"user_supplied" },

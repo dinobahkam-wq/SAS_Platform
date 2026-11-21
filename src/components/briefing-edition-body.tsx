@@ -110,39 +110,12 @@ export function BriefingEditionBody({
   const [activeTab, setActiveTab] = useState<Tab>("all");
   const ordered = prioritizeBriefingDevelopments(developments);
   const filtered = ordered.filter((development) => matchesTab(development, activeTab));
-  const major = ordered.filter(development => development.priority_level === "critical" || development.priority_level === "high");
 
   const selectedLabel = tabs.find((tab) => tab.key === activeTab)?.label ?? "الكل";
   const sourceLabel = (development: BriefingDevelopment) => development.sources.find((source) => source.source_role === "primary")?.source_name ?? development.sources[0]?.source_name ?? null;
 
   return (
     <>
-      {activeTab === "all" ? (
-        <section className="sas-briefing-layer sas-priority-layer" aria-labelledby="sas-priorities-title">
-          <div className="briefing-section-heading"><div>
-            <span className="sas-layer-eyebrow">02 · التطورات ذات الأولوية</span>
-            <h2 id="sas-priorities-title">أهم التطورات</h2>
-            <p>تطورات صُنفت صراحةً كأولوية قصوى أو عالية؛ لا تُمنح الأعداد القديمة درجات افتراضية.</p>
-          </div><span className="briefing-development-count">{major.length} تطورًا</span></div>
-          {major.length ? <ol className="sas-priority-items">
-            {major.map(development => <li key={development.order}>
-              <a href={`#sas-development-${development.order}`} className="sas-priority-item-link">
-                <span className={`sas-priority-indicator sas-priority-indicator--${development.priority_level}`}>
-                  {development.priority_level === "critical" ? "قصوى" : "عالية"}
-                </span>
-                <span className="sas-priority-title-group">
-                  <span className="sas-priority-reference">{String(development.order + 1).padStart(2,"0")}</span>
-                  <span>{development.headline_ar}</span>
-                </span>
-                <BriefingIdentityMarks development={development} compact/>
-                <BriefingLocationMark place={development.place} compact/>
-                <span aria-hidden="true">←</span>
-              </a>
-            </li>)}
-          </ol> : <p className="sas-unclassified-priorities">لا توجد في هذا العدد درجات أولوية مسجلة في البيانات الأصلية. جميع التطورات متاحة في السجل أدناه دون افتراض تصنيف جديد لها.</p>}
-        </section>
-      ) : null}
-
       <nav className="briefing-topic-tabs" aria-label="تصفية سجل التطورات حسب القسم">
         {tabs.map((tab) => {
           const count = developments.filter((development) => matchesTab(development, tab.key)).length;
@@ -164,7 +137,7 @@ export function BriefingEditionBody({
       <section className="briefing-developments-section" aria-labelledby="briefing-developments-title">
         <div className="briefing-section-heading briefing-developments-heading">
           <div>
-            <span className="sas-layer-eyebrow">03 · المرجع التفصيلي</span>
+            <span className="sas-layer-eyebrow">02 · السجل التفصيلي</span>
             <h2 id="briefing-developments-title">سجل التطورات</h2>
             <p>{activeTab === "all" ? "اليمن أولًا، ثم الإقليم والعالم المرتبطان به؛ ترتيب العرض لا يغيّر الأرشيف الأصلي." : `التطورات المصنفة ضمن «${selectedLabel}» في هذا العدد.`}</p>
           </div>
