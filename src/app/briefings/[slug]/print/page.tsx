@@ -196,14 +196,6 @@ export default async function BriefingPrintPage({
           ))}
         </section>
 
-        <section className="briefing-print-methodology">
-          <h2>المنهجية وحدود التغطية</h2>
-          <h3>منهجية الرصد</h3>
-          <p>{revision.methodology_ar}</p>
-          <h3>حدود التغطية</h3>
-          <p>{revision.coverage_note_ar}</p>
-        </section>
-
         <footer className="briefing-print-document-end">
           <span>منصة ساس للإعلام والدراسات</span>
           <span>نسخة وثائقية من العدد المنشور · مراجعة رقم {revision.revision_no}</span>
