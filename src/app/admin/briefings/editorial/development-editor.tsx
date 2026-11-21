@@ -8,7 +8,7 @@ export type EditorialDevelopment = {
   id: string; headline_ar: string; category: string; status: string;
   priority_level: string | null; yemen_relevance: string | null;
   issuer_identity_id: string | null; publisher_identity_id: string | null;
-  editorial_impact_note_ar: string | null;
+  editorial_impact_note_ar: string | null; place_slug: string | null;
 };
 
 const priorityOptions = [
@@ -24,7 +24,8 @@ const relevanceOptions = [
   {value:"strategic",label:"تأثير استراتيجي غير مباشر"},
 ];
 const initialState:EditorialSaveState = {ok:false,message:""};
-export function DevelopmentEditorialForm({ item }:{item:EditorialDevelopment}) {
+export type EditorialPlace = {slug:string;name_ar:string;kind:string;country_code:string;coordinate_precision:string};
+export function DevelopmentEditorialForm({ item,places }:{item:EditorialDevelopment;places:EditorialPlace[]}) {
   const [state, action, pending] = useActionState(saveBriefingEditorialMetadata,initialState);
   return <form action={action} className="sas-editorial-form">
     <input type="hidden" name="id" value={item.id} />
@@ -40,6 +41,14 @@ export function DevelopmentEditorialForm({ item }:{item:EditorialDevelopment}) {
           {relevanceOptions.map(option=><option key={option.value} value={option.value}>{option.label}</option>)}
         </select>
       </label>
+      <label>الموقع الجغرافي الموثّق
+        <select name="place_slug" defaultValue={item.place_slug??""}>
+          <option value="">لم يُحدد موقع موثّق</option>
+          {places.map(place=><option value={place.slug} key={place.slug}>
+            {place.name_ar} — {place.kind === "city" ? "مدينة" : place.kind === "governorate" ? "محافظة" : "دولة"}
+          </option>)}
+        </select>
+      </label>
       <label>الجهة صاحبة الحدث أو البيان
         <select name="issuer" defaultValue={item.issuer_identity_id??""}>
           <option value="">غير محددة</option>
@@ -53,6 +62,7 @@ export function DevelopmentEditorialForm({ item }:{item:EditorialDevelopment}) {
         </select>
       </label>
     </div>
+    <p className="sas-editorial-place-hint">الخريطة المصغرة تُعرض فقط بعد اختيار موقع معتمد. المواقع الحضرية تشير إلى مركز المدينة التقريبي، لا إلى مكان الواقعة بدقة.</p>
     <label>مبرر الأهمية ومسار التأثير في اليمن
       <textarea name="note" defaultValue={item.editorial_impact_note_ar??""} maxLength={1800} rows={3} placeholder="ما الأثر، ولماذا يرتبط باليمن؟ وما حدود الأدلة؟" />
     </label>
