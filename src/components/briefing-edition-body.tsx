@@ -14,6 +14,7 @@ import {
 import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
 import { BriefingLocationMark } from "@/components/briefing-location-mark";
 import "./briefing-dense-layout.css";
+import "./briefing-photo.css";
 import "./briefing-studio-transfer.css";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
 import type { BriefingDevelopment } from "@/lib/public-briefing";
