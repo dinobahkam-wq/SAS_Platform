@@ -49,3 +49,32 @@ export function findVisualIdentity(name:string|null|undefined):Identity|null {
 export function findSourceIdentity(sourceName:string|null|undefined):Identity|null {
   return findVisualIdentity(sourceName);
 }
+
+/** Explicit identity IDs always take precedence over name matching. */
+export function identityById(id:string|null|undefined):Identity|null {
+ return visualIdentities.find(item=>item.id===id)??null;
+}
+
+/** ISO 3166-1 alpha-2. Only curated country aliases; no guessing from article text. */
+const countries:readonly {code:string;name:string;aliases:readonly string[]}[]=[
+ {code:"ye",name:"اليمن",aliases:["الجمهورية اليمنية","اليمن"]},
+ {code:"sa",name:"السعودية",aliases:["المملكة العربية السعودية","السعودية"]},
+ {code:"ae",name:"الإمارات",aliases:["الإمارات العربية المتحدة","الامارات","الإمارات"]},
+ {code:"qa",name:"قطر",aliases:["دولة قطر","قطر"]},
+ {code:"om",name:"عُمان",aliases:["سلطنة عمان","عمان","عُمان"]},
+ {code:"ir",name:"إيران",aliases:["الجمهورية الإسلامية الإيرانية","ايران","إيران"]},
+ {code:"us",name:"الولايات المتحدة",aliases:["الولايات المتحدة الأمريكية","الولايات المتحدة","أمريكا"]},
+ {code:"gb",name:"المملكة المتحدة",aliases:["بريطانيا","المملكة المتحدة"]},
+ {code:"cn",name:"الصين",aliases:["الصين"]},
+ {code:"ru",name:"روسيا",aliases:["روسيا"]},
+ {code:"tr",name:"تركيا",aliases:["تركيا"]},
+ {code:"eg",name:"مصر",aliases:["مصر"]},
+ {code:"jo",name:"الأردن",aliases:["الأردن","الاردن"]},
+ {code:"ly",name:"ليبيا",aliases:["ليبيا"]},
+ {code:"ua",name:"أوكرانيا",aliases:["أوكرانيا","اوكرانيا"]},
+ {code:"ps",name:"فلسطين",aliases:["فلسطين"]},
+];
+export function countryByName(name:string|null|undefined){
+ const key=normalized(name??"");
+ return countries.find(item=>item.aliases.some(alias=>normalized(alias)===key))??null;
+}
