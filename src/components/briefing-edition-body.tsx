@@ -100,14 +100,14 @@ export function BriefingEditionBody({
         </section>
       ) : null}
 
-      {activeTab === "all" && major.length > 0 ? (
+      {activeTab === "all" ? (
         <section className="sas-briefing-layer sas-priority-layer" aria-labelledby="sas-priorities-title">
           <div className="briefing-section-heading"><div>
             <span className="sas-layer-eyebrow">02 · التطورات ذات الأولوية</span>
             <h2 id="sas-priorities-title">أهم التطورات</h2>
             <p>تطورات صُنفت صراحةً كأولوية قصوى أو عالية؛ لا تُمنح الأعداد القديمة درجات افتراضية.</p>
           </div><span className="briefing-development-count">{major.length} تطورًا</span></div>
-          <ol className="sas-priority-items">
+          {major.length ? <ol className="sas-priority-items">
             {major.map(development => <li key={development.order}>
               <a href={`#sas-development-${development.order}`} className="sas-priority-item-link">
                 <span className={`sas-priority-indicator sas-priority-indicator--${development.priority_level}`}>
@@ -117,7 +117,7 @@ export function BriefingEditionBody({
                 <span aria-hidden="true">←</span>
               </a>
             </li>)}
-          </ol>
+          </ol> : <p className="sas-unclassified-priorities">لا توجد في هذا العدد درجات أولوية مسجلة في البيانات الأصلية. جميع التطورات متاحة في السجل أدناه دون افتراض تصنيف جديد لها.</p>}
         </section>
       ) : null}
 
