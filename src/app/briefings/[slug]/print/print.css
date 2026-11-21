@@ -188,3 +188,10 @@
 .briefing-print-event.sas-print-tone-regional{--sas-print-bg:#fff3d6;--sas-print-border:#ead6a4;--sas-print-accent:#b98b35}
 .briefing-print-event.sas-print-tone-international{--sas-print-bg:#eaf2ff;--sas-print-border:#c2d7ee;--sas-print-accent:#4b7cad}
 @media print{.briefing-print-event[class*="sas-print-tone-"]{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+
+/* Reference section is always present; keep figures readable in PDF. */
+.sas-print-reference{margin:16px 0 12px;break-inside:avoid}
+.sas-print-reference h2{font-size:17px;margin:0 0 10px}
+.sas-print-reference table{width:100%;border-collapse:collapse;table-layout:fixed}
+.sas-print-reference th,.sas-print-reference td{padding:7px;text-align:center;border:1px solid #d7e1d8;font-size:12px}
+.sas-print-reference th{background:#f0f4f0}
