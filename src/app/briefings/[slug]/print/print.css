@@ -172,3 +172,19 @@
     font-family: "Thmanyah Sans", sans-serif;
   }
 }
+
+/* Four-layer evidence-led print/PDF hierarchy. Colors classify; they do not validate claims. */
+.sas-print-scene{display:grid;gap:8px;padding-inline-start:24px}
+.sas-print-scene li{line-height:1.8}
+.sas-print-scene strong{display:block}
+.sas-print-priorities{margin:18px 0;padding:14px 16px;border:1px solid #d9e2db;border-radius:8px;break-inside:avoid}
+.sas-print-priorities h2{margin:0 0 10px}
+.sas-print-priorities ol{margin:0;padding-inline-start:24px}
+.sas-print-priorities li{padding:5px 0;line-height:1.7}
+.sas-print-priorities li span{display:inline-block;margin-inline-end:8px;color:#775e37;font-size:11px}
+.briefing-print-event[class*="sas-print-tone-"]{padding:14px 17px;margin-bottom:12px;border:1px solid var(--sas-print-border,#dfe6df);border-inline-start:4px solid var(--sas-print-accent,#c4cdc6);border-radius:8px;background:var(--sas-print-bg,#fff);break-inside:avoid}
+.briefing-print-event.sas-print-tone-critical{--sas-print-bg:#fff1f0;--sas-print-border:#e6bebb;--sas-print-accent:#c44242}
+.briefing-print-event.sas-print-tone-official{--sas-print-bg:#eaf6ee;--sas-print-border:#c1dfcb;--sas-print-accent:#47875f}
+.briefing-print-event.sas-print-tone-regional{--sas-print-bg:#fff3d6;--sas-print-border:#ead6a4;--sas-print-accent:#b98b35}
+.briefing-print-event.sas-print-tone-international{--sas-print-bg:#eaf2ff;--sas-print-border:#c2d7ee;--sas-print-accent:#4b7cad}
+@media print{.briefing-print-event[class*="sas-print-tone-"]{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
