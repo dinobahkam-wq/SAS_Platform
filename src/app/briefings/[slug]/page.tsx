@@ -107,16 +107,6 @@ export default async function PublicBriefingPage({
 
         <BriefingEditionBody developments={developments} studioEdition={canOpenStudio ? { slug: edition.slug, revisionNo: revision.revision_no } : null} />
 
-        <section className="briefing-methodology-section">
-          <details>
-            <summary><span>منهجية الرصد وحدود التغطية</span><span>عرض التفاصيل +</span></summary>
-            <div className="briefing-methodology-content">
-              <div><h3>منهجية الرصد</h3><p>{revision.methodology_ar}</p></div>
-              <div><h3>حدود التغطية</h3><p>{revision.coverage_note_ar}</p></div>
-            </div>
-          </details>
-        </section>
-
         <footer className="briefing-edition-end">
           <a href="/briefings">العودة إلى أرشيف الإحاطات ←</a>
           <span>منصة ساس للإعلام والدراسات</span>
