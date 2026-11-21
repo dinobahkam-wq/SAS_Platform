@@ -11,6 +11,7 @@ import "./content-unavailable.css";
 import "./editorial-products.css";
 import "./mobile-polish.css";
 import "./mukalla-home-hero.css";
+import "./home-editorial-trial.css";
 import { SasHeroThreads } from "@/components/sas-hero-threads";
 import { themeInitializer } from "@/lib/theme-initializer";
 
