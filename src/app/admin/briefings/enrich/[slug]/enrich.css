@@ -1,0 +1,25 @@
+.sas-photo-enrichment{max-width:1100px;margin-inline:auto}
+.sas-photo-overview,.sas-photo-published-gate,.sas-photo-draft-banner,.sas-photo-publish-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:18px;margin:16px 0;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.sas-photo-overview strong{font-size:16px}.sas-photo-overview p,.sas-photo-published-gate p,.sas-photo-draft-banner p,.sas-photo-publish-bar p{font-size:13px;color:var(--muted);line-height:1.8;margin:0}
+.sas-photo-overview span{font-size:12px;font-weight:700;color:var(--accent)}
+.sas-photo-story-list{display:grid;gap:12px}
+.sas-photo-story{border:1px solid var(--line);background:var(--surface);padding:17px;border-radius:14px}
+.sas-photo-story-head{display:flex;align-items:baseline;gap:12px}
+.sas-photo-story-head>span{color:var(--accent);font-weight:800;font-size:16px}
+.sas-photo-story-head h2{font-size:18px;line-height:1.65;margin:0}
+.sas-photo-story-summary{font-size:13px;line-height:1.85;color:var(--muted);margin:8px 0 13px}
+.sas-photo-figure{margin:10px 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sas-photo-figure img{width:min(260px,100%);height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+.sas-photo-figure figcaption{font-size:11px;color:var(--muted);flex:1}
+.sas-photo-empty{font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:9px;padding:12px}
+.sas-photo-story-actions{display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;margin-top:12px}
+.sas-photo-widget{max-width:100%}
+.sas-photo-form{width:min(540px,calc(100vw - 65px));display:grid;gap:10px;margin-top:12px;padding:15px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.sas-photo-form label{display:grid;gap:6px;font-size:12px;font-weight:600}
+.sas-photo-form input,.sas-photo-form select{width:100%;min-width:0;min-height:38px;background:var(--surface);color:var(--foreground);padding:8px;border:1px solid var(--line);border-radius:8px}
+.sas-photo-form p{font-size:11px;line-height:1.6;color:var(--muted)}
+.sas-photo-draft-banner{border-inline-start:4px solid var(--accent)}
+.sas-photo-publish-bar{position:sticky;bottom:8px;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+@media(max-width:650px){.sas-photo-story{padding:12px}.sas-photo-story-head h2{font-size:16px}.sas-photo-publish-bar{position:static}.sas-photo-figure{display:block}}
+
+.sas-photo-form[hidden]{display:none!important}

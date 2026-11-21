@@ -464,6 +464,34 @@ export type Database = {
           },
         ]
       }
+      briefing_revision_images: {
+        Row: {
+          revision_id: string
+          development_id: string
+          media_asset_id: string
+          created_by: string
+          created_at: string
+        }
+        Insert: {
+          revision_id: string
+          development_id: string
+          media_asset_id: string
+          created_by?: string
+          created_at?: string
+        }
+        Update: {
+          revision_id?: string
+          development_id?: string
+          media_asset_id?: string
+          created_by?: string
+          created_at?: string
+        }
+        Relationships: [
+          { foreignKeyName: "briefing_revision_images_revision_id_fkey"; columns: ["revision_id"]; isOneToOne: false; referencedRelation: "briefing_revisions"; referencedColumns: ["id"] },
+          { foreignKeyName: "briefing_revision_images_development_id_fkey"; columns: ["development_id"]; isOneToOne: false; referencedRelation: "briefing_developments"; referencedColumns: ["id"] },
+          { foreignKeyName: "briefing_revision_images_media_asset_id_fkey"; columns: ["media_asset_id"]; isOneToOne: false; referencedRelation: "media_assets"; referencedColumns: ["id"] },
+        ]
+      }
       briefing_revisions: {
         Row: {
           analysis_ar: string | null
@@ -853,6 +881,9 @@ export type Database = {
       }
       media_assets: {
         Row: {
+          original_file_name: string | null
+          original_source_url: string | null
+          rights_basis: string | null
           alt_text: string | null
           bucket_id: string
           caption: string | null
@@ -868,6 +899,9 @@ export type Database = {
           width: number | null
         }
         Insert: {
+          original_file_name?: string | null
+          original_source_url?: string | null
+          rights_basis?: string | null
           alt_text?: string | null
           bucket_id?: string
           caption?: string | null
@@ -883,6 +917,9 @@ export type Database = {
           width?: number | null
         }
         Update: {
+          original_file_name?: string | null
+          original_source_url?: string | null
+          rights_basis?: string | null
           alt_text?: string | null
           bucket_id?: string
           caption?: string | null

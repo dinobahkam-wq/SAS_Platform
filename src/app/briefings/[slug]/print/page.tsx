@@ -166,6 +166,10 @@ export default async function BriefingPrintPage({
               </div>
               {development.place ? <BriefingLocationMark place={development.place} compact/> : null}
               <h3>{development.headline_ar}</h3>
+              {development.image?<figure style={{maxWidth:190,margin:"9px 0"}}>
+                <img src={development.image.url} alt={development.image.alt_text} style={{width:"100%",height:"auto",borderRadius:8}}/>
+                <figcaption style={{fontSize:10,lineHeight:1.6}}>{development.image.caption??development.image.alt_text} · {development.image.credit}</figcaption>
+              </figure>:null}
               <p>{development.summary_ar}</p>
               <div className="briefing-print-citations">
                 <strong>المراجع:</strong>

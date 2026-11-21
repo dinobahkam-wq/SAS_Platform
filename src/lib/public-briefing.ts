@@ -30,6 +30,15 @@ export type BriefingPlace = {
   source_url: string;
 };
 
+export type BriefingImage = {
+  url: string;
+  alt_text: string;
+  caption: string | null;
+  credit: string;
+  source_url: string | null;
+  rights_basis: string;
+};
+
 export type BriefingDevelopment = {
   order: number;
   headline_ar: string;
@@ -53,6 +62,7 @@ export type BriefingDevelopment = {
   issuer_identity_id: string | null;
   publisher_identity_id: string | null;
   sources: BriefingSource[];
+  image: BriefingImage | null;
 };
 
 export type BriefingSummaryItem = {
@@ -183,6 +193,20 @@ function parsePlace(value: unknown): BriefingPlace | null {
     source_name:text(row.source_name),source_url:safeHttpUrl(row.source_url)??""};
 }
 
+function parseImage(value:unknown):BriefingImage|null {
+  const row=object(value);
+  const path=text(row.object_path);
+  if(row.bucket_id!=="sas-public-media"||!path||!/^[-a-zA-Z0-9_./]+\.webp$/.test(path)
+    ||path.includes("..")||!text(row.alt_text)||!text(row.credit))return null;
+  const origin=process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if(!origin || !/^https:\/\//.test(origin))return null;
+  const url=origin.replace(/\/$/,"")+"/storage/v1/object/public/sas-public-media/"+
+    path.split("/").map(encodeURIComponent).join("/");
+  return {url,alt_text:text(row.alt_text),caption:nullableText(row.caption),
+    credit:text(row.credit),source_url:safeHttpUrl(row.source_url),
+    rights_basis:text(row.rights_basis)};
+}
+
 function parseDevelopments(value: unknown): BriefingDevelopment[] {
   if (!Array.isArray(value)) return [];
   return value.map((entry) => {
@@ -209,6 +233,7 @@ function parseDevelopments(value: unknown): BriefingDevelopment[] {
       issuer_identity_id: nullableText(row.issuer_identity_id),
       publisher_identity_id: nullableText(row.publisher_identity_id),
       sources: parseSources(row.sources),
+      image:parseImage(row.image),
     };
   }).sort((a, b) => a.order - b.order);
 }

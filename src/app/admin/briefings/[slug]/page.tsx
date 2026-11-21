@@ -29,7 +29,7 @@ export default async function AdminBriefingDetailPage({
   if (!briefing) return (
     <section className="panel"><div className="empty-state" role="alert">
       تعذر تحميل الإحاطة من قاعدة البيانات.
-      <Link href="/admin/briefings" className="button button-secondary">العودة إلى الأعداد</Link>
+      <div style={{display:"flex",gap:8,flexWrap:"wrap"}}><Link href={"/admin/briefings/enrich/"+encodeURIComponent(slug)} className="button button-primary">إثراء الإحاطة بالصور</Link><Link href="/admin/briefings" className="button button-secondary">العودة إلى الأعداد</Link></div>
     </div></section>
   );
 
