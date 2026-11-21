@@ -21,3 +21,5 @@
 .sas-photo-draft-banner{border-inline-start:4px solid var(--accent)}
 .sas-photo-publish-bar{position:sticky;bottom:8px;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.08)}
 @media(max-width:650px){.sas-photo-story{padding:12px}.sas-photo-story-head h2{font-size:16px}.sas-photo-publish-bar{position:static}.sas-photo-figure{display:block}}
+
+.sas-photo-form[hidden]{display:none!important}
