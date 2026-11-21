@@ -1,0 +1,27 @@
+/* Optional briefing illustration: restrained, factual, not a cover photo. */
+.briefing-event--dense .sas-briefing-photo {
+  float:left;
+  width:clamp(150px,20vw,205px);
+  max-width:40%;
+  margin:5px 0 10px 18px;
+  padding:0;
+}
+.briefing-event--dense .sas-briefing-photo img {
+  width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block;
+  border-radius:9px;border:1px solid var(--line,#e4e9e5);
+}
+.briefing-event--dense .sas-briefing-photo figcaption {
+  font-size:10px;line-height:1.7;color:var(--muted,#68746e);margin:5px 0 0;
+}
+.briefing-event--dense .briefing-dense-foot {clear:both}
+@media(max-width:640px){
+  .briefing-event--dense .sas-briefing-photo {
+    float:none;width:100%;max-width:100%;margin:10px 0;
+  }
+  .briefing-event--dense .sas-briefing-photo img{
+    width:100%;max-height:240px;object-fit:cover;aspect-ratio:16/9;
+  }
+}
+@media print{
+  .briefing-event--dense .sas-briefing-photo {width:140px;max-width:34%}
+}
