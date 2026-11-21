@@ -5,7 +5,7 @@ import type { BriefingStudioOrigin } from '@/lib/briefing-studio-transfer';
 import './briefing-official-card.css';
 import './briefing-studio-import.css';
 import '@/components/sas-identity.css';
-import {visualIdentities,findSourceIdentity,identityById,type Identity} from '@/lib/visual-identities';
+import {allVisualAssets,findSourceIdentity,identityById,type Identity} from '@/lib/visual-identities';
 type Format='square'|'portrait'|'landscape'|'wide'|'story'|'custom';
 type Skin='forest'|'ink'|'ivory'|'navy'|'olive'|'stone'|'rose'|'charcoal'|'midnight'|'burgundy'|'cobalt'|'teal'|'sand'|'white'|'slate'|'plum'|'emerald'|'terracotta'|'custom';
 type Mode='news'|'urgent'|'statement'|'quote';
@@ -956,7 +956,7 @@ export default function Studio(){
  <label>البحث في مكتبة الهويات<input value={identityQuery} placeholder="اسم الجهة أو المصدر" onChange={e=>setIdentityQuery(e.target.value)}/></label>
  {sourceName && findSourceIdentity(sourceName) && <button type="button" onClick={()=>void chooseRegistryIdentity(findSourceIdentity(sourceName)!)}>شعار المصدر: {findSourceIdentity(sourceName)!.name}</button>}
  <div className="sas-identity-studio-list">
- {visualIdentities.filter(item=>!identityQuery.trim() || (item.name+' '+item.aliases.join(' ')).toLowerCase().includes(identityQuery.trim().toLowerCase())).map(item=>(
+ {allVisualAssets.filter(item=>!identityQuery.trim() || (item.name+' '+item.aliases.join(' ')).toLowerCase().includes(identityQuery.trim().toLowerCase())).map(item=>(
  <button type="button" key={item.id} className="sas-identity-studio-pick" onClick={()=>void chooseRegistryIdentity(item)} aria-pressed={selectedIdentityId===item.id} title={item.name}>
  <img src={item.image} alt="" loading="lazy"/><span>{item.name}</span>
  </button>
