@@ -82,3 +82,22 @@
 .sas-briefing-supplement-body{padding:0 10px 14px}
 @media(max-width:640px){.briefing-event--dense[class*="sas-tone-"]{padding:12px 10px 0;margin-bottom:10px;grid-template-columns:34px minmax(0,1fr);gap:7px}.briefing-event--dense[class*="sas-tone-"] .briefing-event-index span{width:28px;height:28px}.sas-scene-points li{padding:11px}.sas-priority-item-link{font-size:12px}}
 @media print{.briefing-event--dense[class*="sas-tone-"]{print-color-adjust:exact;-webkit-print-color-adjust:exact}.sas-priority-items a{color:inherit}}
+
+
+/* Fixed top reference board: always visible; no disclosure toggle. */
+.sas-fixed-reference-panel{margin:22px 0 34px;padding:15px 16px 6px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.sas-reference-panel-heading{margin-bottom:12px}
+.sas-fixed-reference-panel .briefing-daily-overview,.sas-fixed-reference-panel .briefing-intelligence{margin:8px 0 12px}
+.sas-fixed-reference-panel .briefing-daily-overview-heading h2{font-size:16px}
+.sas-fixed-reference-panel .briefing-overview-metrics{gap:8px}
+.sas-fixed-reference-panel .briefing-overview-metric{min-width:0}
+/* A compact source and issuing-body group in the major developments index. */
+.sas-priority-title-group{flex:1;display:flex;align-items:flex-start;gap:10px;min-width:0}
+.sas-priority-reference{font:700 12px/1.8 Arial,sans-serif;color:var(--muted);flex:0 0 auto}
+.sas-priority-identities{display:inline-flex;align-items:center;gap:3px;flex-shrink:0}
+.sas-priority-identity{display:inline-flex;align-items:center;justify-content:center}
+.sas-priority-identity .sas-identity-mark{width:29px;height:29px;flex:0 0 29px;padding:4px;border-radius:8px}
+.sas-extra-identities{font:700 11px/1 Arial,sans-serif;color:var(--muted);padding:3px}
+.sas-priority-item-link{align-items:center}
+.sas-priority-item-link .sas-priority-title-group span:nth-child(2){flex:1}
+@media(max-width:650px){.sas-fixed-reference-panel{padding:12px 10px 4px}.sas-priority-item-link{gap:6px;padding:10px 8px}.sas-priority-identity .sas-identity-mark{width:24px;height:24px;flex-basis:24px}.sas-priority-title-group{gap:5px}}
