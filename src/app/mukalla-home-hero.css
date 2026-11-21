@@ -1,8 +1,8 @@
-/* SAS homepage hero — Syuwan palace photograph, trial asset replacing Mukalla at user request.
- * Original: public/syuwan.jfif (739×415). Decorative layer only:
+/* SAS homepage hero — the approved SA composite graphic, replacing the Seiyun trial image.
+ * Original: public/sa.webp.png (repository asset). Decorative layer only:
  * text, links and focus order remain normal semantic HTML.
- * Desktop: clear copy on the right, visible Seiyun palace on the left.
- * Mobile: architectural photograph above copy with a soft tonal transition.
+ * Desktop: clear copy on the right, visible editorial graphic on the left.
+ * Mobile: composite background above copy with a soft tonal transition.
  */
 .public-site .home-brand-hero.sas-mukalla-hero {
   position: relative;
@@ -20,7 +20,7 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: url("/syuwan.jfif") 43% 48% / cover no-repeat;
+  background: url("/sa.webp.png") 43% 48% / cover no-repeat;
   opacity: 1;
   filter: none;
   animation: none;
@@ -86,7 +86,7 @@ html[data-theme="dark"] .public-site .home-brand-hero.sas-mukalla-hero p { color
     background: linear-gradient(to left,#172522 0%,rgba(23,37,34,.97) 36%,rgba(23,37,34,.78) 59%,rgba(23,37,34,.16) 100%);
   }
 }
-/* Phones: Seiyun palace photograph above the headline. Never crop or put
+/* Phones: SA editorial artwork above the headline. Never crop or put
  * bright streetlights directly behind the legible, RTL call-to-action area. */
 @media (max-width: 760px) {
   .public-site .home-brand-hero.sas-mukalla-hero {
