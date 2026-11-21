@@ -1,8 +1,8 @@
-/* SAS homepage hero — approved Mukalla night photograph.
- * Original: public/Mukalla.webp (1400×787). Decorative layer only:
+/* SAS homepage hero — Syuwan palace photograph, trial asset replacing Mukalla at user request.
+ * Original: public/syuwan.jfif (739×415). Decorative layer only:
  * text, links and focus order remain normal semantic HTML.
- * Desktop: clear copy on the right, visible cityscape on the left.
- * Mobile: panoramic image above copy with a soft tonal transition.
+ * Desktop: clear copy on the right, visible Seiyun palace on the left.
+ * Mobile: architectural photograph above copy with a soft tonal transition.
  */
 .public-site .home-brand-hero.sas-mukalla-hero {
   position: relative;
@@ -20,7 +20,7 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: url("/Mukalla.webp") center 56% / cover no-repeat;
+  background: url("/syuwan.jfif") 43% 48% / cover no-repeat;
   opacity: 1;
   filter: none;
   animation: none;
@@ -86,7 +86,7 @@ html[data-theme="dark"] .public-site .home-brand-hero.sas-mukalla-hero p { color
     background: linear-gradient(to left,#172522 0%,rgba(23,37,34,.97) 36%,rgba(23,37,34,.78) 59%,rgba(23,37,34,.16) 100%);
   }
 }
-/* Phones: panoramic city photograph above the headline. Never crop or put
+/* Phones: Seiyun palace photograph above the headline. Never crop or put
  * bright streetlights directly behind the legible, RTL call-to-action area. */
 @media (max-width: 760px) {
   .public-site .home-brand-hero.sas-mukalla-hero {
@@ -103,7 +103,7 @@ html[data-theme="dark"] .public-site .home-brand-hero.sas-mukalla-hero p { color
   .public-site .home-brand-hero.sas-mukalla-hero::before {
     inset: 0 0 auto 0;
     height: clamp(245px,69vw,335px);
-    background-position: 50% 53%;
+    background-position: 48% 45%;
     background-size: cover;
     -webkit-mask-image: linear-gradient(to bottom,#000 0%,#000 57%,rgba(0,0,0,.78) 70%,transparent 100%);
     mask-image: linear-gradient(to bottom,#000 0%,#000 57%,rgba(0,0,0,.78) 70%,transparent 100%);
