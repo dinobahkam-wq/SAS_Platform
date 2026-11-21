@@ -93,11 +93,15 @@ export default async function PublicBriefingPage({
           ) : null}
         </header>
 
-        <BriefingDailyOverview developments={developments} />
-
-        <BriefingIntelligencePanel context={context} weather={weather} />
-
         <BriefingEditionBody executiveSummary={executiveSummary} developments={developments} studioEdition={canOpenStudio ? { slug: edition.slug, revisionNo: revision.revision_no } : null} />
+
+        <details className="sas-briefing-supplement">
+          <summary>مؤشرات العدد وبياناته المرجعية</summary>
+          <div className="sas-briefing-supplement-body">
+            <BriefingDailyOverview developments={developments} />
+            <BriefingIntelligencePanel context={context} weather={weather} />
+          </div>
+        </details>
 
         <section className="briefing-methodology-section">
           <details>
