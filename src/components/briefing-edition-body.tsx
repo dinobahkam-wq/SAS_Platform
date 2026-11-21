@@ -12,6 +12,7 @@ import {
   formatBriefingDateOnly,
 } from "@/components/briefing-public";
 import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
+import { BriefingLocationMark } from "@/components/briefing-location-mark";
 import "./briefing-dense-layout.css";
 import "./briefing-studio-transfer.css";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
@@ -134,6 +135,7 @@ export function BriefingEditionBody({
                   <span>{development.headline_ar}</span>
                 </span>
                 <BriefingIdentityMarks development={development} compact/>
+                <BriefingLocationMark place={development.place} compact/>
                 <span aria-hidden="true">←</span>
               </a>
             </li>)}
@@ -190,7 +192,10 @@ export function BriefingEditionBody({
                       {development.priority_level ? <span className="sas-priority-label">{priorityLabels[development.priority_level]}</span> : null}
                       {development.yemen_relevance ? <span className="sas-relevance-label">{relevanceLabels[development.yemen_relevance]}</span> : null}
                     </div>
-                    <BriefingIdentityMarks development={development}/>
+                    <div className="sas-development-visual-identities">
+                      <BriefingIdentityMarks development={development}/>
+                      <BriefingLocationMark place={development.place}/>
+                    </div>
                     <h3>{development.headline_ar}</h3>
                     {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
 
