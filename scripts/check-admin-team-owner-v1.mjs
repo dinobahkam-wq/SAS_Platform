@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {test} from "node:test";
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
-const migration=read("supabase/migrations/20261120170000_platform_owner_members.sql");
+const migration=read("supabase/migrations/20261121093223_platform_owner_members.sql");
 const actions=read("src/app/admin/team/actions.ts");
 const owner=read("src/lib/platform-owner.ts");
 const admin=read("src/lib/supabase/team-admin.ts");
