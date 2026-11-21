@@ -34,6 +34,10 @@ export type BriefingStudioOrigin = {
   editionDate: string;
   developmentOrder: number;
   informationClass: string;
+  priorityLevel: "critical" | "high" | "standard" | null;
+  yemenRelevance: "direct" | "regional" | "strategic" | null;
+  issuerIdentityId: string | null;
+  publisherIdentityId: string | null;
   verificationStatus: string;
   verificationNote: string | null;
   eventDate: string | null;
@@ -124,6 +128,10 @@ export function createBriefingStudioTransfer(
       editionDate: briefing.edition.edition_date,
       developmentOrder: development.order,
       informationClass: development.information_class,
+      priorityLevel: development.priority_level,
+      yemenRelevance: development.yemen_relevance,
+      issuerIdentityId: development.issuer_identity_id,
+      publisherIdentityId: development.publisher_identity_id,
       verificationStatus: development.verification_status,
       verificationNote: development.verification_note_ar,
       eventDate,

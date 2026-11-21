@@ -5,6 +5,8 @@ import "./briefing-daily-overview.css";
 export function BriefingDailyOverview({ developments }: { developments: BriefingDevelopment[] }) {
   const overview = briefingEditionOverview(developments);
   const signals = briefingEditorialSignals(developments);
+  const prioritized = developments.filter(item => item.priority_level === "critical" || item.priority_level === "high");
+  const strategic = developments.filter(item => item.yemen_relevance === "strategic");
   const metrics = [
     { key: "yemen", title: "اليمن", value: overview.yemen, hint: "تطورًا محليًا ووطنيًا" },
     { key: "regional", title: "الإقليم", value: overview.regional, hint: "تطورًا مرتبطًا باليمن" },
@@ -30,6 +32,10 @@ export function BriefingDailyOverview({ developments }: { developments: Briefing
           </div>
         ))}
       </div>
+      {(prioritized.length > 0 || strategic.length > 0) ? <div className="sas-overview-editorial">
+        {prioritized.length > 0 ? <span><strong>{prioritized.length.toLocaleString("en-US")}</strong> تطوراً ذا أولوية قصوى أو عالية</span> : null}
+        {strategic.length > 0 ? <span><strong>{strategic.length.toLocaleString("en-US")}</strong> تطوراً ذا صلة استراتيجية غير مباشرة باليمن</span> : null}
+      </div> : null}
       {(signals.positions.length > 0 || signals.changes.length > 0) ? (
         <div className="briefing-overview-signals">
           {signals.positions.length > 0 ? (

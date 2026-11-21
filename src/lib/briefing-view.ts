@@ -8,12 +8,17 @@ export function briefingViewGroup(development: BriefingDevelopment): BriefingVie
   return "international";
 }
 
-/** Presentation-only priority. Original editorial order is preserved within each region. */
+/** Yemen first, then regional and international. Reviewed importance orders items inside each region.
+ * Historic records without a priority retain their original relative editorial order. */
 export function prioritizeBriefingDevelopments(developments: BriefingDevelopment[]) {
-  const priority: Record<BriefingViewGroup, number> = { yemen: 0, regional: 1, international: 2 };
+  const scope: Record<BriefingViewGroup, number> = { yemen: 0, regional: 1, international: 2 };
+  const importance: Record<string, number> = { critical: 0, high: 1, standard: 2 };
   return [...developments].sort((a, b) => {
-    const scopeDifference = priority[briefingViewGroup(a)] - priority[briefingViewGroup(b)];
-    return scopeDifference || a.order - b.order;
+    const scopeDifference = scope[briefingViewGroup(a)] - scope[briefingViewGroup(b)];
+    if (scopeDifference) return scopeDifference;
+    const aImportance = a.priority_level ? (importance[a.priority_level] ?? 3) : 3;
+    const bImportance = b.priority_level ? (importance[b.priority_level] ?? 3) : 3;
+    return aImportance - bImportance || a.order - b.order;
   });
 }
 

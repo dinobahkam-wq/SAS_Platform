@@ -34,6 +34,11 @@ export type BriefingDevelopment = {
   time_precision: string;
   location_text: string | null;
   geographic_scope: string;
+  /** Explicit editorial metadata, absent on historical snapshots. */
+  priority_level: "critical" | "high" | "standard" | null;
+  yemen_relevance: "direct" | "regional" | "strategic" | null;
+  issuer_identity_id: string | null;
+  publisher_identity_id: string | null;
   sources: BriefingSource[];
 };
 
@@ -168,6 +173,10 @@ function parseDevelopments(value: unknown): BriefingDevelopment[] {
       time_precision: text(row.time_precision, "unknown"),
       location_text: nullableText(row.location_text),
       geographic_scope: text(row.geographic_scope, "national"),
+      priority_level: ["critical","high","standard"].includes(text(row.priority_level)) ? text(row.priority_level) as BriefingDevelopment["priority_level"] : null,
+      yemen_relevance: ["direct","regional","strategic"].includes(text(row.yemen_relevance)) ? text(row.yemen_relevance) as BriefingDevelopment["yemen_relevance"] : null,
+      issuer_identity_id: nullableText(row.issuer_identity_id),
+      publisher_identity_id: nullableText(row.publisher_identity_id),
       sources: parseSources(row.sources),
     };
   }).sort((a, b) => a.order - b.order);

@@ -24,7 +24,7 @@ export default async function AdminBriefingsPage() {
           <h1>أعداد الإحاطة اليومية</h1>
           <p>تصفّح التطورات المنشورة ومصادرها، واختر أي تطور لتحويله إلى بطاقة في استوديو ساس.</p>
         </div>
-        <Link href="/admin/news-studio" className="button button-secondary">استوديو الصور</Link>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap"}}><Link href="/admin/briefings/editorial" className="button button-primary">تصنيف التطورات</Link><Link href="/admin/news-studio" className="button button-secondary">استوديو الصور</Link></div>
       </header>
       <div className="sas-admin-briefing-note">
         هذه الواجهة لقراءة الأعداد المنشورة وتحويل تطوراتها إلى تصميمات. لا تغيّر محتوى الإحاطة أو مراجعاتها الأصلية.

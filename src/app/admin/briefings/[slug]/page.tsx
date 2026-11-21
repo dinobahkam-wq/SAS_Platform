@@ -4,6 +4,8 @@ import { requireAdmin } from "@/lib/admin";
 import { getPublicBriefing } from "@/lib/public-briefing";
 import { briefingCategoryLabel, briefingClassLabel, briefingVerificationLabel, formatBriefingDateOnly } from "@/components/briefing-public";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
+import { identityById,findSourceIdentity } from "@/lib/visual-identities";
+import "@/components/sas-identity.css";
 import "../admin-briefings.css";
 
 export const dynamic = "force-dynamic";
@@ -82,6 +84,7 @@ export default async function AdminBriefingDetailPage({
                     <span className="pill">{briefingCategoryLabel(item.category)}</span>
                     <span className="pill">{briefingClassLabel(item.information_class)}</span>
                     <span className="pill">{briefingVerificationLabel(item.verification_status)}</span>
+                    {item.priority_level?<span className="pill">{item.priority_level==="critical"?"أولوية قصوى":item.priority_level==="high"?"أولوية عالية":"أولوية اعتيادية"}</span>:null}
                   </div>
                   <Link className="button button-primary button-small" href={transferUrl}>
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" aria-hidden="true">
@@ -90,6 +93,15 @@ export default async function AdminBriefingDetailPage({
                     تصميم بطاقة ←
                   </Link>
                 </div>
+                {(() => {
+                  const issuer=identityById(item.issuer_identity_id);
+                  const publisher=identityById(item.publisher_identity_id)??findSourceIdentity(source?.source_name);
+                  const marks=[...(issuer?[{id:issuer.id,identity:issuer,role:"الجهة المصدرة"}]:[]),...(publisher&&publisher.id!==issuer?.id?[{id:publisher.id,identity:publisher,role:"مصدر التوثيق"}]:[])];
+                  return marks.length?<div className="sas-identity-byline">{marks.map(mark=><span className="sas-identity-mark-group" key={mark.id}>
+                    <span className="sas-identity-mark"><img src={mark.identity.image} alt="" loading="lazy"/></span>
+                    <span className="sas-identity-byline-copy"><strong>{mark.identity.name}</strong><small>{mark.role}</small></span>
+                  </span>)}</div>:null;
+                })()}
                 <h3>{item.headline_ar}</h3>
                 {item.summary_ar?<p>{item.summary_ar}</p>:null}
                 {item.what_changed_ar?<p className="sas-admin-development-change"><strong>ما تغيّر:</strong> {item.what_changed_ar}</p>:null}

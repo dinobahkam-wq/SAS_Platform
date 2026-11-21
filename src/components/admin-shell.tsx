@@ -6,6 +6,7 @@ import { ThemeControl } from "@/components/theme-control";
 const navigation = [
   { href: "/admin", label: "نظرة عامة", symbol: "⌂", exact: true },
   { href: "/admin/briefings", label: "الإحاطة اليومية", symbol: "▤" },
+  { href: "/admin/briefings/editorial", label: "تصنيف التطورات", symbol: "◫" },
   { href: "/admin/content?product=analysis", label: "التحليل والدراسات", symbol: "▥" },
   { href: "/admin/content?product=visual", label: "المعرفة البصرية", symbol: "◈" },
   { href: "/admin/content?product=programs", label: "الفيديو والبرامج", symbol: "▣" },
@@ -18,6 +19,7 @@ const supportNavigation = [
   { href: "/admin/sources", label: "المصادر", symbol: "◎" },
   { href: "/admin/categories", label: "التصنيفات", symbol: "▦" },
   { href: "/admin/media", label: "مكتبة الوسائط", symbol: "▧" },
+  { href: "/admin/identities", label: "هويات الجهات والشعارات", symbol: "◉" },
 ];
 
 export function AdminShell({

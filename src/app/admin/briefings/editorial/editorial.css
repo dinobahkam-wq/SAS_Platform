@@ -1,0 +1,7 @@
+.sas-editorial-info{border:1px solid var(--line,#dce4de);padding:12px 15px;border-radius:12px;margin-bottom:18px;font-size:13px;color:var(--muted,#68746e)}
+.sas-editorial-list{display:grid;gap:16px}.sas-editorial-form{border:1px solid var(--line,#dce4de);padding:18px;border-radius:14px;display:grid;gap:15px}
+.sas-editorial-form-heading h2{font-size:17px;line-height:1.65;margin:0}.sas-editorial-form-heading small{font-size:11px;color:var(--muted,#68746e)}
+.sas-editorial-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.sas-editorial-form label{display:grid;gap:6px;font-size:12px;font-weight:600}
+.sas-editorial-form select,.sas-editorial-form textarea{width:100%;max-width:100%;background:var(--surface,#fff);color:var(--foreground);border:1px solid var(--line,#dce4de);border-radius:9px;padding:9px;font:inherit}
+.sas-editorial-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.sas-editorial-success{color:#287d55;font-size:12px}.sas-editorial-error{color:#af4a4a;font-size:12px}
+@media(max-width:660px){.sas-editorial-grid{grid-template-columns:1fr}}

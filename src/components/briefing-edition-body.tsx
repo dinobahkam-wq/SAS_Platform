@@ -16,11 +16,16 @@ import "./briefing-dense-layout.css";
 import "./briefing-studio-transfer.css";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
 import type { BriefingDevelopment, BriefingSummaryItem } from "@/lib/public-briefing";
+import { findSourceIdentity, identityById } from "@/lib/visual-identities";
+import "./sas-identity.css";
 
-type Tab = "all" | "yemen" | "international" | "statements" | "economy";
+type Tab = "all" | "priority" | "yemen" | "international" | "statements" | "economy";
+const priorityLabels: Record<string,string>={critical:"أولوية قصوى",high:"أولوية عالية",standard:"أولوية اعتيادية"};
+const relevanceLabels: Record<string,string>={direct:"تأثير مباشر في اليمن",regional:"صلة إقليمية باليمن",strategic:"تأثير استراتيجي غير مباشر"};
 
 const tabs: { key: Tab; label: string }[] = [
   { key: "all", label: "الكل" },
+  { key: "priority", label: "الأولويات" },
   { key: "yemen", label: "اليمن" },
   { key: "international", label: "الإقليم والعالم" },
   { key: "statements", label: "بيانات رسمية" },
@@ -38,6 +43,7 @@ function isOfficialStatement(development: BriefingDevelopment) {
 function matchesTab(development: BriefingDevelopment, tab: Tab) {
   switch (tab) {
     case "all": return true;
+    case "priority": return development.priority_level === "critical" || development.priority_level === "high";
     case "yemen": return development.geographic_scope === "local" || development.geographic_scope === "national";
     case "international": return development.geographic_scope === "regional" || development.geographic_scope === "international";
     case "statements": return isOfficialStatement(development);
@@ -124,7 +130,7 @@ export function BriefingEditionBody({
                   ? formatBriefingDateOnly(development.occurred_on)
                   : "وقت الوقوع غير محدد";
               return (
-                <article className="briefing-event briefing-event--dense" key={development.order}>
+                <article className={`briefing-event briefing-event--dense sas-event-scope-${development.geographic_scope} sas-event-class-${development.information_class}${development.priority_level ? " sas-event-priority-"+development.priority_level : ""}`} key={development.order}>
                   <div className="briefing-event-index">
                     <span>{String(index + 1).padStart(2, "0")}</span>
                   </div>
@@ -134,7 +140,23 @@ export function BriefingEditionBody({
                       <span>{briefingScopeLabel(development.geographic_scope)}</span>
                       <span>{happened}</span>
                       {development.location_text ? <span>{development.location_text}</span> : null}
+                      {development.priority_level ? <span className="sas-priority-label">{priorityLabels[development.priority_level]}</span> : null}
+                      {development.yemen_relevance ? <span className="sas-relevance-label">{relevanceLabels[development.yemen_relevance]}</span> : null}
                     </div>
+                    {(() => {
+                      const publisher = identityById(development.publisher_identity_id) ?? findSourceIdentity(sourceLabel(development));
+                      const issuer = identityById(development.issuer_identity_id);
+                      const identities = [
+                        ...(issuer ? [{identity:issuer,role:"الجهة المصدرة"}] : []),
+                        ...(publisher && publisher.id !== issuer?.id ? [{identity:publisher,role:"مصدر التوثيق"}] : [])
+                      ];
+                      return identities.length ? <div className="sas-identity-byline">
+                        {identities.map(({identity,role})=><span className="sas-identity-mark-group" key={role+identity.id}>
+                          <span className="sas-identity-mark"><img src={identity.image} alt="" loading="lazy"/></span>
+                          <span className="sas-identity-byline-copy"><strong>{identity.name}</strong><small>{role}</small></span>
+                        </span>)}
+                      </div> : null;
+                    })()}
                     <h3>{development.headline_ar}</h3>
                     {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
                     {development.what_changed_ar ? <p className="briefing-dense-change"><strong>ما تغيّر</strong> {development.what_changed_ar}</p> : null}

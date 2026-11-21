@@ -1,0 +1,30 @@
+.sas-identity-mark{width:43px;height:43px;flex:0 0 43px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line,#dce3df);border-radius:11px;background:#fff;padding:5px;overflow:hidden}
+.sas-identity-mark img{width:100%;height:100%;object-fit:contain}
+.sas-identity-byline{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.sas-identity-byline-copy{display:flex;flex-direction:column;gap:3px;min-width:0;font-size:11px;color:var(--muted,#697571)}
+.sas-identity-byline-copy strong{font-weight:700;color:var(--foreground)}
+.sas-identity-byline-copy small{font-size:10px;line-height:1.5}
+.sas-identity-studio-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+.sas-identity-studio-pick{min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 4px;border-radius:10px;border:1px solid var(--line,#dce3df);background:transparent;cursor:pointer;color:inherit}
+.sas-identity-studio-pick:hover,.sas-identity-studio-pick:focus-visible{border-color:#528773;background:rgba(82,135,115,.08)}
+.sas-identity-studio-pick img{width:40px;height:40px;object-fit:contain;background:#fff;border-radius:6px;padding:3px}
+.sas-identity-studio-pick span{font-size:10px;line-height:1.4;text-align:center}
+@media(max-width:600px){.sas-identity-mark{width:36px;height:36px;flex-basis:36px}.sas-identity-studio-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Information class and geographic scope are factual metadata, NOT editorial priority.
+ * Reserve severity coloring for a future reviewed priority field. */
+.briefing-event--dense.sas-event-class-position{border-inline-start:3px solid #9dbfa8;padding-inline-start:10px}
+.briefing-event--dense.sas-event-scope-regional:not(.sas-event-class-position){border-inline-start:3px solid #d3bc79;padding-inline-start:10px}
+.briefing-event--dense.sas-event-scope-international:not(.sas-event-class-position){border-inline-start:3px solid #9db6d1;padding-inline-start:10px}
+@media print{.sas-identity-mark{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+
+/* Distinct roles: a publisher may not be the issuer or the subject of the event. */
+.sas-identity-mark-group{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.sas-identity-byline{flex-wrap:wrap;gap:10px 20px}
+.sas-priority-label,.sas-relevance-label{font-size:10px;line-height:1.4;border-radius:5px;padding:3px 6px;border:1px solid var(--line,#dce3df)}
+.sas-relevance-label{background:rgba(109,144,177,.09)}
+.sas-event-priority-critical{border-inline-start:3px solid #b64e4e!important;background:linear-gradient(to left,rgba(188,78,78,.07),transparent 75%)}
+.sas-event-priority-high{border-inline-start:3px solid #ba9144!important;background:linear-gradient(to left,rgba(186,145,68,.06),transparent 75%)}
+.sas-event-priority-critical .sas-priority-label{border-color:#b64e4e;color:#a13a3a}
+.sas-event-priority-high .sas-priority-label{border-color:#b9954e;color:#936a22}
+@media (prefers-reduced-motion:reduce){.sas-identity-mark,.sas-identity-studio-pick{transition:none}}
