@@ -159,6 +159,11 @@ export type Database = {
       }
       briefing_developments: {
         Row: {
+          yemen_relevance: string | null
+          publisher_identity_id: string | null
+          priority_level: string | null
+          issuer_identity_id: string | null
+          editorial_impact_note_ar: string | null
           category: string
           created_at: string
           created_by: string
@@ -179,6 +184,11 @@ export type Database = {
           verification_status: string
         }
         Insert: {
+          yemen_relevance?: string | null
+          publisher_identity_id?: string | null
+          priority_level?: string | null
+          issuer_identity_id?: string | null
+          editorial_impact_note_ar?: string | null
           category: string
           created_at?: string
           created_by?: string
@@ -199,6 +209,11 @@ export type Database = {
           verification_status?: string
         }
         Update: {
+          yemen_relevance?: string | null
+          publisher_identity_id?: string | null
+          priority_level?: string | null
+          issuer_identity_id?: string | null
+          editorial_impact_note_ar?: string | null
           category?: string
           created_at?: string
           created_by?: string
