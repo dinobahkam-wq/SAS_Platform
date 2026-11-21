@@ -46,7 +46,7 @@ export default async function Home() {
   const programs = media.filter((item) => ["video", "podcast", "interview"].includes(item.format));
 
   return (
-    <main className="public-site">
+    <main className="public-site sas-editorial-home">
       <PublicHeader />
 
       <section className="home-compact-intro home-brand-hero sas-mukalla-hero site-container">
