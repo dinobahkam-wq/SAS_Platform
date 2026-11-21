@@ -16,6 +16,8 @@ export type Identity = {
 
 export const visualIdentities: readonly Identity[] = [
   { id:"ye-republic", name:"الجمهورية اليمنية", kind:"government", image:"/icons/Emblem_of_Yemen_(2).svg", aliases:["النسر الجمهوري","الجمهورية اليمنية","الحكومة اليمنية","مجلس القيادة الرئاسي","الرئاسة اليمنية"], provenance:"user_supplied" },
+  // Administrative identity for the government-published Saba outlet; eagle is a state symbol, not a claim about the agency’s proprietary logo.
+  { id:"ye-saba-official", name:"وكالة الأنباء اليمنية (سبأ)", kind:"media", image:"/icons/Emblem_of_Yemen_(2).svg", aliases:["وكالة سبأ الحكومية","وكالة الأنباء اليمنية","وكالة الأنباء اليمنية (سبأ)","سبأ الحكومية","وكالة سبأ - الحكومة اليمنية"], provenance:"user_supplied" },
   { id:"sa-government", name:"المملكة العربية السعودية", kind:"government", image:"/icons/saudi_icon_goverment.png", aliases:["السعودية","المملكة العربية السعودية","الحكومة السعودية","وزارة الخارجية السعودية"], provenance:"user_supplied" },
   { id:"ae-government", name:"الإمارات العربية المتحدة", kind:"government", image:"/icons/New_Coat_of_arms_of_United_Arab_Emirates.png", aliases:["الإمارات","الإمارات العربية المتحدة","الحكومة الإماراتية","وام"], provenance:"user_supplied" },
   { id:"qa-government", name:"دولة قطر", kind:"government", image:"/icons/qatar_gov.jpg", aliases:["قطر","دولة قطر","الحكومة القطرية"], provenance:"user_supplied" },

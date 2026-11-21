@@ -2,6 +2,8 @@
 
 **Mandatory first read for every new development session:** [Project memory](docs/project-memory/README.md).
 
+**Mandatory first read for EVERY daily briefing workflow:** [SAS editorial standard — current v1.6](docs/SAS_DAILY_BRIEFING_EDITORIAL_STANDARD_CURRENT.md). It is the binding source of truth for drafting, official source attribution, logos, FX/oil/gold, section structure, correction revisions and verified Vercel deployment. Read directly from GitHub before working on a briefing; older v1.2–v1.5 documents are superseded where inconsistent. Do not assume a passed GitHub build is a deployed release.
+
 Before proposing or changing code:
 
 1. Read `docs/project-memory/README.md`, then `CURRENT_STATE.md`, `DECISIONS.md`, `WORKFLOW.md`, and `CHANGELOG.md`.
