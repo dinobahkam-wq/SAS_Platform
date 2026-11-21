@@ -16,6 +16,8 @@ import "./briefing-dense-layout.css";
 import "./briefing-studio-transfer.css";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
 import type { BriefingDevelopment, BriefingSummaryItem } from "@/lib/public-briefing";
+import { findSourceIdentity } from "@/lib/visual-identities";
+import "./sas-identity.css";
 
 type Tab = "all" | "yemen" | "international" | "statements" | "economy";
 
@@ -124,7 +126,7 @@ export function BriefingEditionBody({
                   ? formatBriefingDateOnly(development.occurred_on)
                   : "وقت الوقوع غير محدد";
               return (
-                <article className="briefing-event briefing-event--dense" key={development.order}>
+                <article className={`briefing-event briefing-event--dense sas-event-scope-${development.geographic_scope} sas-event-class-${development.information_class}`} key={development.order}>
                   <div className="briefing-event-index">
                     <span>{String(index + 1).padStart(2, "0")}</span>
                   </div>
@@ -135,6 +137,12 @@ export function BriefingEditionBody({
                       <span>{happened}</span>
                       {development.location_text ? <span>{development.location_text}</span> : null}
                     </div>
+                    {(() => { const source = sourceLabel(development); const identity = findSourceIdentity(source); return identity ? (
+                      <div className="sas-identity-byline">
+                        <span className="sas-identity-mark"><img src={identity.image} alt="" loading="lazy" /></span>
+                        <span className="sas-identity-byline-copy"><strong>{identity.name}</strong><small>هوية مصدر التوثيق، وليست بالضرورة الجهة صاحبة الحدث</small></span>
+                      </div>
+                    ) : null; })()}
                     <h3>{development.headline_ar}</h3>
                     {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
                     {development.what_changed_ar ? <p className="briefing-dense-change"><strong>ما تغيّر</strong> {development.what_changed_ar}</p> : null}
