@@ -10,3 +10,10 @@
 .sas-identity-studio-pick img{width:40px;height:40px;object-fit:contain;background:#fff;border-radius:6px;padding:3px}
 .sas-identity-studio-pick span{font-size:10px;line-height:1.4;text-align:center}
 @media(max-width:600px){.sas-identity-mark{width:36px;height:36px;flex-basis:36px}.sas-identity-studio-list{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Information class and geographic scope are factual metadata, NOT editorial priority.
+ * Reserve severity coloring for a future reviewed priority field. */
+.briefing-event--dense.sas-event-class-position{border-inline-start:3px solid #9dbfa8;padding-inline-start:10px}
+.briefing-event--dense.sas-event-scope-regional:not(.sas-event-class-position){border-inline-start:3px solid #d3bc79;padding-inline-start:10px}
+.briefing-event--dense.sas-event-scope-international:not(.sas-event-class-position){border-inline-start:3px solid #9db6d1;padding-inline-start:10px}
+@media print{.sas-identity-mark{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
