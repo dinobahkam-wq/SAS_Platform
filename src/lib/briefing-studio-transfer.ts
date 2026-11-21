@@ -38,6 +38,8 @@ export type BriefingStudioOrigin = {
   yemenRelevance: "direct" | "regional" | "strategic" | null;
   issuerIdentityId: string | null;
   publisherIdentityId: string | null;
+  placeSlug: string | null;
+  placeName: string | null;
   verificationStatus: string;
   verificationNote: string | null;
   eventDate: string | null;
@@ -105,7 +107,7 @@ export function createBriefingStudioTransfer(
       sourceName: source?.source_name ?? "",
       sourceUrl: source?.source_url ?? "",
       date: day.replaceAll("-", "/"),
-      location: development.location_text ?? "",
+      location: development.location_text ?? development.place?.name_ar ?? "",
       category: development.category,
       design: {
         format: "square",
@@ -117,7 +119,7 @@ export function createBriefingStudioTransfer(
         metaFont: "sans",
         logoVariant: "color",
         showWeekday: false,
-        showLocation: Boolean(development.location_text),
+        showLocation: Boolean(development.location_text || development.place?.name_ar),
         showSource: Boolean(source?.source_name || source?.source_url),
       },
     },
@@ -132,6 +134,8 @@ export function createBriefingStudioTransfer(
       yemenRelevance: development.yemen_relevance,
       issuerIdentityId: development.issuer_identity_id,
       publisherIdentityId: development.publisher_identity_id,
+      placeSlug: development.place?.slug ?? null,
+      placeName: development.place?.name_ar ?? null,
       verificationStatus: development.verification_status,
       verificationNote: development.verification_note_ar,
       eventDate,
