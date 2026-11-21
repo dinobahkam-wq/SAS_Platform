@@ -44,6 +44,7 @@ jobs:
             scripts/check-briefing-editorial-dimensions.mjs \
             scripts/check-briefing-four-layer-display.mjs \
             scripts/check-briefing-geography-v1.mjs \
+            scripts/check-briefing-photo-enrichment-v1.mjs \
             scripts/check-briefing-fx-context.mjs \
             scripts/check-briefing-canonical-v16.mjs \
             scripts/check-visual-knowledge-timeline.mjs \
