@@ -21,6 +21,7 @@ export async function saveBriefingEditorialMetadata(
   const issuer = String(form.get("issuer") ?? "");
   const publisher = String(form.get("publisher") ?? "");
   const note = String(form.get("note") ?? "").trim();
+  const placeSlug = String(form.get("place_slug") ?? "");
 
   if (!uuidPattern.test(id)) return { ok: false, message: "معرّف التطور غير صالح." };
   if (!allowedPriority.has(priority) || !allowedRelevance.has(relevance))
@@ -30,6 +31,14 @@ export async function saveBriefingEditorialMetadata(
   if (note.length > 1800) return { ok: false, message: "الملاحظة التحريرية طويلة جداً." };
   if (relevance && !note)
     return { ok: false, message: "اذكر مسار التأثير في اليمن ودليله قبل اعتماد تصنيف الارتباط." };
+
+  if (placeSlug && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(placeSlug))
+    return {ok:false,message:"معرف الموقع الجغرافي غير صالح."};
+  if (placeSlug) {
+    const {data:place,error:geoError} = await supabase.from("briefing_places")
+      .select("slug,is_active").eq("slug",placeSlug).eq("is_active",true).maybeSingle();
+    if(geoError || !place) return {ok:false,message:"الموقع غير موجود في سجل المواقع المعتمدة."};
+  }
 
   const { data: record, error: readError } = await supabase.from("briefing_developments")
     .select("id,status").eq("id", id).maybeSingle();
@@ -51,6 +60,7 @@ export async function saveBriefingEditorialMetadata(
     issuer_identity_id: issuer || null,
     publisher_identity_id: publisher || null,
     editorial_impact_note_ar: note || null,
+    place_slug: placeSlug || null,
     updated_by: userId,
   }).eq("id", id);
   if (error) {
