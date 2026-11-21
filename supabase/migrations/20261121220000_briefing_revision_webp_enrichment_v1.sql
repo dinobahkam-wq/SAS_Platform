@@ -32,9 +32,13 @@ CREATE POLICY sas_briefing_revision_images_admin_delete ON public.briefing_revis
 
 CREATE OR REPLACE FUNCTION private.guard_briefing_revision_image()
 RETURNS trigger LANGUAGE plpgsql SECURITY INVOKER SET search_path='' AS $$
-DECLARE rev uuid := coalesce(NEW.revision_id,OLD.revision_id);
-DECLARE dev uuid := coalesce(NEW.development_id,OLD.development_id);
+DECLARE rev uuid;
 BEGIN
+  IF TG_OP='DELETE' THEN
+    rev:=OLD.revision_id;
+  ELSE
+    rev:=NEW.revision_id;
+  END IF;
   IF NOT EXISTS(SELECT 1 FROM public.briefing_revisions r WHERE r.id=rev AND r.status='draft') THEN
     RAISE EXCEPTION 'Only draft revisions accept photo changes';
   END IF;
