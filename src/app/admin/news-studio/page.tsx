@@ -5,7 +5,7 @@ import type { BriefingStudioOrigin } from '@/lib/briefing-studio-transfer';
 import './briefing-official-card.css';
 import './briefing-studio-import.css';
 import '@/components/sas-identity.css';
-import {visualIdentities,findSourceIdentity,type Identity} from '@/lib/visual-identities';
+import {visualIdentities,findSourceIdentity,identityById,type Identity} from '@/lib/visual-identities';
 type Format='square'|'portrait'|'landscape'|'wide'|'story'|'custom';
 type Skin='forest'|'ink'|'ivory'|'navy'|'olive'|'stone'|'rose'|'charcoal'|'midnight'|'burgundy'|'cobalt'|'teal'|'sand'|'white'|'slate'|'plum'|'emerald'|'terracotta'|'custom';
 type Mode='news'|'urgent'|'statement'|'quote';
@@ -765,6 +765,9 @@ export default function Studio(){
   if(receivedBriefingRef.current===key)return;
   receivedBriefingRef.current=key;
   applyImportedNews(initialImport);
+  // Prefer the explicitly approved issuer, then the separately attributed publisher.
+  const transferredIdentity=identityById(briefingOrigin.issuerIdentityId) ?? identityById(briefingOrigin.publisherIdentityId) ?? findSourceIdentity(initialImport.sourceName);
+  if(transferredIdentity)void chooseRegistryIdentity(transferredIdentity);
   if(briefingOrigin.informationClass==='claim' || briefingOrigin.verificationStatus==='disputed' || briefingOrigin.verificationStatus==='unverified' || briefingOrigin.verificationStatus==='attributed'){
    setSourcePrefix('بحسب:');
   }
