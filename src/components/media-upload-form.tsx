@@ -37,6 +37,7 @@ export function MediaUploadForm() {
       setMessage("جارٍ تحويل الصورة إلى WebP وتحسين أبعادها…");
       const result=await prepareWebpUpload(file);
       const dt=new DataTransfer();dt.items.add(result.file);
+      if(!(input instanceof HTMLInputElement))throw new Error("تعذر الوصول إلى الملف المختار.");
       input.files=dt.files;
       const widthField=form.elements.namedItem("width");
       const heightField=form.elements.namedItem("height");
