@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 const file = (path) => readFileSync(path, "utf8");
-const migration = file("supabase/migrations/20261121120000_briefing_editorial_dimensions_v1.sql");
+const migration = file("supabase/migrations/20261121093245_briefing_editorial_dimensions_v1.sql");
 const actions = file("src/app/admin/briefings/editorial/actions.ts");
 const view = file("src/lib/briefing-view.ts");
 const studio = file("src/lib/briefing-studio-transfer.ts");
