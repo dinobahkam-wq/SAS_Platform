@@ -8,7 +8,7 @@ test("canonical standard is linked from every agent entrypoint",()=>{
  for(const p of ["AGENTS.md","docs/project-memory/README.md"]) {
    assert.match(source(p),/SAS_DAILY_BRIEFING_EDITORIAL_STANDARD_CURRENT\.md/);
  }
- for(const phrase of ["قسمين","الأسماء الرسمية","أسعار","مصدر","الصرف","gold","تصحيح","Vercel"]){
+ for(const phrase of ["قسمين","الاسم الرسمي","أسعار","مصدر","الصرف","الذهب","تصحيح","Vercel"]){
    assert.match(master,new RegExp(phrase,"i"),phrase);
  }
 });
