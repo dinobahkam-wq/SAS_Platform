@@ -20,6 +20,7 @@ const supportNavigation = [
   { href: "/admin/categories", label: "التصنيفات", symbol: "▦" },
   { href: "/admin/media", label: "مكتبة الوسائط", symbol: "▧" },
   { href: "/admin/identities", label: "هويات الجهات والشعارات", symbol: "◉" },
+  { href: "/admin/places", label: "السجل الجغرافي", symbol: "◎" },
 ];
 
 export function AdminShell({
