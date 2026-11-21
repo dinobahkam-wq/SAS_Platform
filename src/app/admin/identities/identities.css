@@ -1,0 +1,9 @@
+.sas-identities-status{padding:13px 16px;border:1px solid var(--line,#dce4de);border-radius:12px;margin-bottom:20px;color:var(--muted,#66726e);font-size:13px}
+.sas-identities-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
+.sas-identities-card{display:flex;gap:12px;align-items:center;border:1px solid var(--line,#dce4de);border-radius:13px;padding:14px;min-width:0}
+.sas-identities-art{width:66px;height:66px;flex:0 0 66px;border-radius:12px;border:1px solid #e4e9e6;background:white;padding:7px}
+.sas-identities-art img{width:100%;height:100%;object-fit:contain}
+.sas-identities-card h2{font-size:15px;line-height:1.5;margin:0 0 3px}
+.sas-identities-card p{font-size:12px;color:var(--muted,#66726e);margin:0}
+.sas-identities-card small{font-size:10px;opacity:.7}
+.sas-identities-foot{margin-top:18px;font-size:13px;color:var(--muted,#66726e)}
