@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 const read=(p)=>readFileSync(p,"utf8");
-const sql=read("supabase/migrations/20261121220000_briefing_revision_webp_enrichment_v1.sql");
+const sql=read("supabase/migrations/20261121204541_briefing_revision_webp_enrichment_v1.sql");
 const readModel=read("src/lib/public-briefing.ts");
 const publicBody=read("src/components/briefing-edition-body.tsx");
 const actions=read("src/app/admin/briefings/enrich/actions.ts");
