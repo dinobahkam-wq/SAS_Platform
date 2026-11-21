@@ -10,6 +10,8 @@ import {
   formatBriefingDateOnly,
 } from "@/components/briefing-public";
 import { getPublicBriefing } from "@/lib/public-briefing";
+import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
+import { identityById } from "@/lib/visual-identities";
 import { getDatedBriefingContext } from "@/lib/briefing-dated-context";
 import "./print.css";
 
@@ -34,6 +36,8 @@ export default async function BriefingPrintPage({
   if (!briefing) notFound();
 
   const { edition, revision, developments, executiveSummary } = briefing;
+  const ordered = prioritizeBriefingDevelopments(developments);
+  const highlighted = ordered.filter(item => item.priority_level === "critical" || item.priority_level === "high");
   const context = await getDatedBriefingContext(edition.edition_date);
   const fx = context?.exchange_rates;
   const indicativeFx = context?.indicative_exchange_rates;
@@ -75,6 +79,69 @@ export default async function BriefingPrintPage({
           </div>
           {revision.revision_kind === "correction" && revision.change_reason_ar ?
             <p className="briefing-print-correction">سبب التصحيح: {revision.change_reason_ar}</p> : null}
+        </section>
+
+        {executiveSummary.length ? (
+          <section className="briefing-print-summary">
+            <h2>المشهد في دقيقة</h2>
+            <ol className="sas-print-scene">
+              {executiveSummary.slice(0,5).map((item, index) => (
+                <li key={item.order || index}>
+                  {item.headline_ar ? <strong>{item.headline_ar}</strong> : null}
+                  <span>{item.text_ar.trim()}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
+
+        <section className="sas-print-priorities">
+          <h2>أهم التطورات</h2>
+          {highlighted.length ? <ol>{highlighted.map(item => (
+            <li key={item.order}>
+              <span>{item.priority_level === "critical" ? "أولوية قصوى" : "أولوية عالية"}</span>
+              <strong>{item.headline_ar}</strong>
+            </li>))}</ol> : <p>لم تُسجّل درجات أولوية في البيانات الأصلية لهذا العدد؛ لا يُفترض تصنيف بأثر رجعي.</p>}
+        </section>
+
+        <section className="briefing-print-developments">
+          <div className="briefing-print-section-heading">
+            <h2>سجل التطورات</h2>
+            <span>{developments.length} تطورًا</span>
+          </div>
+          {ordered.map((development, index) => (
+            <article className={`briefing-print-event sas-print-tone-${development.priority_level === "critical" ? "critical" : development.sources.some(source => source.source_type === "official_statement") ? "official" : development.geographic_scope === "regional" ? "regional" : identityById(development.issuer_identity_id)?.kind === "international" ? "international" : "neutral"}`} key={development.order + "-" + index}>
+              <div className="briefing-print-event-head">
+                <span className="briefing-print-event-no">{String(development.order + 1).padStart(2, "0")}</span>
+                <div className="briefing-print-event-meta">
+                  <span>{briefingCategoryLabel(development.category)}</span>
+                  <span>{briefingClassLabel(development.information_class)}</span>
+                  <span>{briefingVerificationLabel(development.verification_status)}</span>
+                  {development.location_text ? <span>{development.location_text}</span> : null}
+                </div>
+              </div>
+              <h3>{development.headline_ar}</h3>
+              <p>{development.summary_ar}</p>
+              <div className="briefing-print-citations">
+                <strong>المراجع:</strong>
+                {development.sources.length ? (
+                  <ol>
+                    {development.sources.map((source, sourceIndex) => (
+                      <li key={source.source_url || source.source_reference || sourceIndex}>
+                        {source.source_url ? <a href={source.source_url}>{source.source_title || source.source_name}</a>
+                        : <span>{source.source_title || source.source_name}</span>}
+                        {source.source_title && source.source_name ? <span> — {source.source_name}</span> : null}
+                        {source.published_at || source.publication_date ?
+                          <time dateTime={source.published_at || source.publication_date || undefined}>
+                            {" · "}{formatBriefingDateOnly((source.published_at || source.publication_date || "").slice(0, 10))}
+                          </time> : null}
+                      </li>
+                    ))}
+                  </ol>
+                ) : <span>لم تُدرج إحالة عامة.</span>}
+              </div>
+            </article>
+          ))}
         </section>
 
         {context ? (
@@ -134,62 +201,6 @@ export default async function BriefingPrintPage({
             </div>
           </section>
         ) : null}
-
-        {executiveSummary.length ? (
-          <section className="briefing-print-summary">
-            <h2>الملخص التنفيذي</h2>
-            <p>
-              {executiveSummary.map((item, index) => (
-                <span key={index}>
-                  {index > 0 ? " " : ""}{["", "وفي تطور آخر، ", "أما ميدانيًا، ", "وعلى المستوى الإنساني، ", "وفي السياق الدولي، "][index] ?? "كذلك، "}
-                  {item.text_ar.trim()}
-                </span>
-              ))}
-            </p>
-          </section>
-        ) : null}
-
-        <section className="briefing-print-developments">
-          <div className="briefing-print-section-heading">
-            <h2>سجل التطورات</h2>
-            <span>{developments.length} تطورًا</span>
-          </div>
-          {developments.map((development, index) => (
-            <article className="briefing-print-event" key={development.order + "-" + index}>
-              <div className="briefing-print-event-head">
-                <span className="briefing-print-event-no">{String(development.order + 1).padStart(2, "0")}</span>
-                <div className="briefing-print-event-meta">
-                  <span>{briefingCategoryLabel(development.category)}</span>
-                  <span>{briefingClassLabel(development.information_class)}</span>
-                  <span>{briefingVerificationLabel(development.verification_status)}</span>
-                  {development.location_text ? <span>{development.location_text}</span> : null}
-                </div>
-              </div>
-              <h3>{development.headline_ar}</h3>
-              <p>{development.summary_ar}</p>
-              {development.what_changed_ar ? <p className="briefing-print-detail">{development.what_changed_ar}</p> : null}
-              {development.context_ar ? <p className="briefing-print-context">السياق: {development.context_ar}</p> : null}
-              <div className="briefing-print-citations">
-                <strong>المراجع:</strong>
-                {development.sources.length ? (
-                  <ol>
-                    {development.sources.map((source, sourceIndex) => (
-                      <li key={source.source_url || source.source_reference || sourceIndex}>
-                        {source.source_url ? <a href={source.source_url}>{source.source_title || source.source_name}</a>
-                        : <span>{source.source_title || source.source_name}</span>}
-                        {source.source_title && source.source_name ? <span> — {source.source_name}</span> : null}
-                        {source.published_at || source.publication_date ?
-                          <time dateTime={source.published_at || source.publication_date || undefined}>
-                            {" · "}{formatBriefingDateOnly((source.published_at || source.publication_date || "").slice(0, 10))}
-                          </time> : null}
-                      </li>
-                    ))}
-                  </ol>
-                ) : <span>لم تُدرج إحالة عامة.</span>}
-              </div>
-            </article>
-          ))}
-        </section>
 
         <section className="briefing-print-methodology">
           <h2>المنهجية وحدود التغطية</h2>
