@@ -8,6 +8,7 @@ export function DevelopmentImageUpload({
   slug,revisionId,developmentId,
 }: {slug:string;revisionId:string;developmentId:string}) {
   const retry=useRef(false);
+  const fileRef=useRef<HTMLInputElement|null>(null);
   const [status,setStatus]=useState("");
   const [open,setOpen]=useState(false);
   async function convert(event:FormEvent<HTMLFormElement>){
@@ -41,17 +42,15 @@ export function DevelopmentImageUpload({
     }catch(error){setStatus(error instanceof Error?error.message:"تعذر تحويل الملف.");}
   }
   return <div className="sas-photo-widget">
-    <button type="button" className="button button-secondary button-small" onClick={()=>{
-      setOpen(x=>!x);setStatus("");
-    }}>{open?"إغلاق محرر الصورة":"إضافة صورة / استبدالها"}</button>
-    {open?<form action={uploadBriefingPhoto} onSubmit={convert} className="sas-photo-form">
+    <button type="button" className="button button-secondary button-small" onClick={()=>{setOpen(true);setStatus("");fileRef.current?.click();}}>إضافة صورة / استبدالها</button>
+    <form action={uploadBriefingPhoto} onSubmit={convert} className="sas-photo-form" hidden={!open}>
       <input name="slug" type="hidden" value={slug}/>
       <input name="revision_id" type="hidden" value={revisionId}/>
       <input name="development_id" type="hidden" value={developmentId}/>
       <input name="width" type="hidden"/>
       <input name="height" type="hidden"/>
       <input name="original_file_name" type="hidden"/>
-      <label>اختر الصورة من الجهاز<input name="file" type="file" accept="image/jpeg,image/png,image/avif,image/webp" required/></label>
+      <label>اختر الصورة من الجهاز<input name="file" ref={fileRef} onChange={()=>setOpen(true)} type="file" accept="image/jpeg,image/png,image/avif,image/webp" required/></label>
       <label>وصف الصورة للقارئ<input name="alt_text" required maxLength={300} placeholder="ماذا يظهر في الصورة؟"/></label>
       <label>تعليق اختياري<input name="caption" maxLength={600} placeholder="المشهد وتاريخه عند الحاجة"/></label>
       <label>صاحب الصورة / جهة الحقوق<input name="credit" required maxLength={200} placeholder="اسم المصور أو الجهة"/></label>
@@ -66,6 +65,6 @@ export function DevelopmentImageUpload({
       <p>تُحوّل الصورة إلى WebP محلياً، وتُحفظ في المكتبة وتُربط بهذا التطور في المسودة فقط. لا تُنشر قبل اعتماد المراجعة.</p>
       <button type="submit" className="button button-primary button-small">حفظ الصورة للتطور</button>
       {status?<p role="status">{status}</p>:null}
-    </form>:null}
+    </form>
   </div>;
 }
