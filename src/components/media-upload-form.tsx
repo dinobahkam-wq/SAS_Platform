@@ -2,6 +2,7 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import { uploadMedia } from "@/app/admin/media/actions";
+import { prepareWebpUpload } from "@/lib/prepare-webp-upload";
 
 export function MediaUploadForm() {
   const bypassValidation = useRef(false);
@@ -33,25 +34,21 @@ export function MediaUploadForm() {
     }
 
     try {
-      const image = await createImageBitmap(file);
-      const width = image.width;
-      const height = image.height;
-      image.close();
-
-      if (Math.max(width, height) > 2560) {
-        setMessage("يجب ألا يتجاوز أطول ضلع للصورة 2560 بكسل.");
-        return;
-      }
-
-      const widthField = form.elements.namedItem("width");
-      const heightField = form.elements.namedItem("height");
-      if (widthField instanceof HTMLInputElement) widthField.value = String(width);
-      if (heightField instanceof HTMLInputElement) heightField.value = String(height);
-
-      bypassValidation.current = true;
+      setMessage("جارٍ تحويل الصورة إلى WebP وتحسين أبعادها…");
+      const result=await prepareWebpUpload(file);
+      const dt=new DataTransfer();dt.items.add(result.file);
+      input.files=dt.files;
+      const widthField=form.elements.namedItem("width");
+      const heightField=form.elements.namedItem("height");
+      const originalField=form.elements.namedItem("original_file_name");
+      if(widthField instanceof HTMLInputElement)widthField.value=String(result.width);
+      if(heightField instanceof HTMLInputElement)heightField.value=String(result.height);
+      if(originalField instanceof HTMLInputElement)originalField.value=result.originalName;
+      bypassValidation.current=true;
+      setMessage(`تم التحويل إلى WebP: ${Math.round(result.file.size/1024)} KB؛ جارٍ الرفع…`);
       form.requestSubmit();
-    } catch {
-      setMessage("تعذر قراءة أبعاد الصورة. جرّب ملف صورة آخر.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "فشل تحويل الصورة إلى WebP.");
     }
   }
 
@@ -59,12 +56,15 @@ export function MediaUploadForm() {
     <form action={uploadMedia} onSubmit={validateImage} className="form-stack">
       {message ? <div className="notice notice-error">{message}</div> : null}
       <label className="field"><span>ملف الصورة</span><input type="file" name="file" accept="image/jpeg,image/png,image/webp,image/avif" required /></label>
+      <input type="hidden" name="original_file_name" />
       <input type="hidden" name="width" />
       <input type="hidden" name="height" />
-      <label className="field"><span>النص البديل (لإمكانية الوصول)</span><input name="alt_text" placeholder="وصف مختصر لما يظهر في الصورة" /></label>
+      <label className="field"><span>النص البديل (إلزامي)</span><input name="alt_text" required placeholder="وصف مختصر لما يظهر في الصورة" /></label>
       <label className="field"><span>تعليق الصورة</span><input name="caption" /></label>
-      <label className="field"><span>حقوق الصورة / المصور</span><input name="credit" /></label>
-      <p className="helper-text">الحد الأقصى 10 ميغابايت، وأطول ضلع 2560 بكسل. تُخزن الصور في الحاوية العامة sas-public-media.</p>
+      <label className="field"><span>المصدر / المصور (إلزامي)</span><input name="credit" required placeholder="صورة خاصة / وكالة الأنباء / اسم المصور" /></label>
+      <label className="field"><span>أساس حقوق الاستخدام</span><select name="rights_basis" required defaultValue=""><option value="" disabled>اختر نوع الترخيص</option><option value="owned">مملوكة لساس أو حصلنا عليها مباشرة</option><option value="permission">إذن أو ترخيص بالنشر</option><option value="public_domain">الملك العام موثق المصدر</option><option value="cc_by">ترخيص CC BY مع نسب المؤلف</option></select></label>
+      <label className="field"><span>رابط المصدر أو تصريح الاستخدام (مطلوب لغير الصور المملوكة)</span><input name="original_source_url" type="url" placeholder="https://..." /></label>
+      <p className="helper-text">تحويل تلقائي إلى WebP بجودة 82% وبحد أقصى 1600 بكسل. لا نرفع الأصل قبل تحويله. الحاوية العامة sas-public-media.</p>
       <button className="button button-primary" type="submit">رفع الصورة إلى المكتبة</button>
     </form>
   );
