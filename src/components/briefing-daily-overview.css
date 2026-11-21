@@ -34,3 +34,7 @@
 .briefing-overview-signal-title{display:block;font-size:12px;line-height:1.65;font-weight:600;color:var(--foreground)}
 .briefing-overview-signal-group small{display:block;font-size:10px;line-height:1.65;color:var(--muted);margin-top:2px}
 @media(max-width:700px){.briefing-overview-signals{grid-template-columns:1fr;gap:10px}.briefing-overview-signal-group li{padding-top:6px;padding-bottom:6px}}
+
+/* Show only editorial dimensions actually recorded in this edition. */
+.sas-overview-editorial{display:flex;gap:8px 18px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line,#d9e3de);padding:9px 0;font-size:11px;color:var(--muted,#68746e)}
+.sas-overview-editorial strong{color:var(--foreground);font-weight:700;font-variant-numeric:tabular-nums}
