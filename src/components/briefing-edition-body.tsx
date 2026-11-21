@@ -40,6 +40,16 @@ function isOfficialStatement(development: BriefingDevelopment) {
   );
 }
 
+/** Visual classification is factual presentation metadata, not a judgment of accuracy. */
+function developmentTone(development: BriefingDevelopment): "critical" | "official" | "regional" | "international" | "neutral" {
+  if (development.priority_level === "critical") return "critical";
+  if (isOfficialStatement(development)) return "official";
+  if (development.geographic_scope === "regional") return "regional";
+  const issuer = identityById(development.issuer_identity_id);
+  if (issuer?.kind === "international" || development.sources.some(source => source.source_type === "international_organization")) return "international";
+  return "neutral";
+}
+
 function matchesTab(development: BriefingDevelopment, tab: Tab) {
   switch (tab) {
     case "all": return true;
@@ -61,13 +71,57 @@ export function BriefingEditionBody({
   studioEdition?: { slug: string; revisionNo: number } | null;
 }) {
   const [activeTab, setActiveTab] = useState<Tab>("all");
-  const filtered = prioritizeBriefingDevelopments(developments).filter((development) => matchesTab(development, activeTab));
+  const ordered = prioritizeBriefingDevelopments(developments);
+  const filtered = ordered.filter((development) => matchesTab(development, activeTab));
+  const major = ordered.filter(development => development.priority_level === "critical" || development.priority_level === "high");
+
   const selectedLabel = tabs.find((tab) => tab.key === activeTab)?.label ?? "الكل";
   const sourceLabel = (development: BriefingDevelopment) => development.sources.find((source) => source.source_role === "primary")?.source_name ?? development.sources[0]?.source_name ?? null;
 
   return (
     <>
-      <nav className="briefing-topic-tabs" aria-label="تصفية التطورات حسب القسم">
+      {activeTab === "all" && executiveSummary.length > 0 ? (
+        <section className="sas-briefing-layer sas-scene-layer" aria-labelledby="sas-scene-title">
+          <div className="briefing-section-heading"><div>
+            <span className="sas-layer-eyebrow">01 · خلاصة العدد</span>
+            <h2 id="sas-scene-title">المشهد في دقيقة</h2>
+            <p>أبرز الوقائع والمواقف الواردة في العدد، كما وثّقتها المصادر.</p>
+          </div></div>
+          <ol className="sas-scene-points">
+            {executiveSummary.slice(0, 5).map((item,index) => <li key={item.order || index}>
+              <span className="sas-scene-index" aria-hidden="true">{String(index+1).padStart(2,"0")}</span>
+              <div className="sas-scene-text">
+                {item.headline_ar && <strong>{item.headline_ar}</strong>}
+                <p><BriefingEmphasis text={item.text_ar}/></p>
+                {item.sources.length > 0 ? <BriefingSourcesPopover sources={item.sources} label="مصادر الخلاصة"/> : null}
+              </div>
+            </li>)}
+          </ol>
+        </section>
+      ) : null}
+
+      {activeTab === "all" && major.length > 0 ? (
+        <section className="sas-briefing-layer sas-priority-layer" aria-labelledby="sas-priorities-title">
+          <div className="briefing-section-heading"><div>
+            <span className="sas-layer-eyebrow">02 · التطورات ذات الأولوية</span>
+            <h2 id="sas-priorities-title">أهم التطورات</h2>
+            <p>تطورات صُنفت صراحةً كأولوية قصوى أو عالية؛ لا تُمنح الأعداد القديمة درجات افتراضية.</p>
+          </div><span className="briefing-development-count">{major.length} تطورًا</span></div>
+          <ol className="sas-priority-items">
+            {major.map(development => <li key={development.order}>
+              <a href={`#sas-development-${development.order}`} className="sas-priority-item-link">
+                <span className={`sas-priority-indicator sas-priority-indicator--${development.priority_level}`}>
+                  {development.priority_level === "critical" ? "قصوى" : "عالية"}
+                </span>
+                <span>{development.headline_ar}</span>
+                <span aria-hidden="true">←</span>
+              </a>
+            </li>)}
+          </ol>
+        </section>
+      ) : null}
+
+      <nav className="briefing-topic-tabs" aria-label="تصفية سجل التطورات حسب القسم">
         {tabs.map((tab) => {
           const count = developments.filter((development) => matchesTab(development, tab.key)).length;
           return (
@@ -85,37 +139,10 @@ export function BriefingEditionBody({
         })}
       </nav>
 
-      {activeTab === "all" && executiveSummary.length > 0 ? (
-        <section className="briefing-summary-section" aria-label="الملخص التنفيذي">
-          <details className="briefing-summary-disclosure">
-            <summary>
-              <span className="briefing-summary-summary-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M5 6h14M5 12h14M5 18h9" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/></svg>
-              </span>
-              <span className="briefing-summary-summary-title">الملخص التنفيذي</span>
-              <span className="briefing-summary-summary-hint">اضغط لقراءة الموجز الكامل</span>
-              <span className="briefing-summary-chevron material-symbols-rounded" aria-hidden="true">keyboard_arrow_down</span>
-            </summary>
-            <div className="briefing-executive-prose">
-              <p>
-                {executiveSummary.map((item, index) => {
-                  const transitions = ["", "وفي تطور آخر، ", "أما ميدانيًا، ", "وعلى المستوى الإنساني، ", "وفي السياق الدولي، "];
-                  return (
-                    <span key={index} className="briefing-executive-clause">
-                      {index > 0 ? " " : ""}{transitions[index] ?? "كذلك، "}
-                      <BriefingEmphasis text={item.text_ar.trim()} />
-                    </span>
-                  );
-                })}
-              </p>
-            </div>
-          </details>
-        </section>
-      ) : null}
-
       <section className="briefing-developments-section" aria-labelledby="briefing-developments-title">
         <div className="briefing-section-heading briefing-developments-heading">
           <div>
+            <span className="sas-layer-eyebrow">03 · المرجع التفصيلي</span>
             <h2 id="briefing-developments-title">سجل التطورات</h2>
             <p>{activeTab === "all" ? "اليمن أولًا، ثم الإقليم والعالم المرتبطان به؛ ترتيب العرض لا يغيّر الأرشيف الأصلي." : `التطورات المصنفة ضمن «${selectedLabel}» في هذا العدد.`}</p>
           </div>
@@ -130,7 +157,7 @@ export function BriefingEditionBody({
                   ? formatBriefingDateOnly(development.occurred_on)
                   : "وقت الوقوع غير محدد";
               return (
-                <article className={`briefing-event briefing-event--dense sas-event-scope-${development.geographic_scope} sas-event-class-${development.information_class}${development.priority_level ? " sas-event-priority-"+development.priority_level : ""}`} key={development.order}>
+                <article id={`sas-development-${development.order}`} className={`briefing-event briefing-event--dense sas-tone-${developmentTone(development)} sas-event-scope-${development.geographic_scope} sas-event-class-${development.information_class}${development.priority_level ? " sas-event-priority-"+development.priority_level : ""}`} key={development.order}>
                   <div className="briefing-event-index">
                     <span>{String(index + 1).padStart(2, "0")}</span>
                   </div>
@@ -159,7 +186,7 @@ export function BriefingEditionBody({
                     })()}
                     <h3>{development.headline_ar}</h3>
                     {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
-                    {development.what_changed_ar ? <p className="briefing-dense-change"><strong>ما تغيّر</strong> {development.what_changed_ar}</p> : null}
+
                     <div className="briefing-dense-foot">
                       <div className="briefing-dense-evidence">
                         <BriefingTypeTag value={development.information_class}/>
@@ -179,13 +206,6 @@ export function BriefingEditionBody({
                           </svg>
                           إنشاء بطاقة بصرية
                         </Link>
-                      ) : null}
-                      {(development.context_ar || development.why_it_matters_ar) ? (
-                        <details className="briefing-dense-context">
-                          <summary>السياق والدلالة</summary>
-                          {development.context_ar ? <p><strong>السياق:</strong> {development.context_ar}</p> : null}
-                          {development.why_it_matters_ar ? <p><strong>لماذا يهم:</strong> {development.why_it_matters_ar}</p> : null}
-                        </details>
                       ) : null}
                     </div>
                   </div>
