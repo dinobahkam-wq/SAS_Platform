@@ -4,6 +4,8 @@ import { useBriefingStudioHandoff } from '@/components/briefing-studio-handoff-c
 import type { BriefingStudioOrigin } from '@/lib/briefing-studio-transfer';
 import './briefing-official-card.css';
 import './briefing-studio-import.css';
+import '@/components/sas-identity.css';
+import {visualIdentities,findSourceIdentity,type Identity} from '@/lib/visual-identities';
 type Format='square'|'portrait'|'landscape'|'wide'|'story'|'custom';
 type Skin='forest'|'ink'|'ivory'|'navy'|'olive'|'stone'|'rose'|'charcoal'|'midnight'|'burgundy'|'cobalt'|'teal'|'sand'|'white'|'slate'|'plum'|'emerald'|'terracotta'|'custom';
 type Mode='news'|'urgent'|'statement'|'quote';
@@ -433,6 +435,13 @@ function draw(canvas:HTMLCanvasElement,cfg:Config,index:number):{total:number;er
  ctx.fillStyle=c.accent;ctx.font='700 34px '+fontStack(cfg.metaFont);
  ctx.fillText(cfg.briefingOrigin?'الإحاطة اليومية':modes[cfg.mode],w-margin-cfg.marginRight,cfg.topPadding);
  ctx.strokeStyle=c.accent;ctx.globalAlpha=.52;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(margin+cfg.marginLeft,cfg.topPadding+74);ctx.lineTo(w-margin-cfg.marginRight,cfg.topPadding+74);ctx.stroke();ctx.globalAlpha=1;
+ if(cfg.mode!=='statement' && cfg.issuerLogo){
+  const bw=82,bh=66,bx=margin+cfg.marginLeft,by=cfg.topPadding+4;
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(bx,by,bw,bh,8);ctx.fill();
+  const factor=Math.min((bw-12)/cfg.issuerLogo.width,(bh-12)/cfg.issuerLogo.height);
+  const iw=cfg.issuerLogo.width*factor,ih=cfg.issuerLogo.height*factor;
+  ctx.drawImage(cfg.issuerLogo,bx+(bw-iw)/2,by+(bh-ih)/2,iw,ih);
+ }
  let yy=cfg.topPadding+100;
  if(taxonomy.length){
   ctx.fillStyle=c.dim;ctx.font='500 27px '+fontStack(cfg.metaFont);
@@ -620,6 +629,8 @@ export default function Studio(){
  const [issuer,setIssuer]=useState('');
  const [issuerLogo,setIssuerLogo]=useState<HTMLImageElement|null>(null);
  const [issuerLogoError,setIssuerLogoError]=useState('');
+ const [identityQuery,setIdentityQuery]=useState('');
+ const [selectedIdentityId,setSelectedIdentityId]=useState<string|null>(null);
  const [path,setPath]=useState<KnowledgePath>({dossier:'',issue:'',event:''});
  const [date,setDate]=useState(()=>{const p=new Intl.DateTimeFormat('en-GB-u-ca-gregory-nu-latn',{timeZone:'Asia/Aden',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const get=(type:string)=>p.find(x=>x.type===type)?.value??'';return get('year')+'/'+get('month')+'/'+get('day')});
  const [page,setPage]=useState(0);const [count,setCount]=useState(0);
@@ -677,13 +688,20 @@ export default function Studio(){
   const url=URL.createObjectURL(file);
   try{const image=await new Promise<HTMLImageElement>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('invalid'));img.src=url});setter(image);setMediaError('');setPage(0)}catch{setMediaError('تعذر قراءة ملف الصورة')}finally{URL.revokeObjectURL(url)}
  }
+ async function chooseRegistryIdentity(identity:Identity){
+  try {
+   const image=await new Promise<HTMLImageElement>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('asset'));img.src=identity.image});
+   setIssuerLogo(image);setSelectedIdentityId(identity.id);setIssuerLogoError('');setPage(0);
+   if(mode==='statement'&&!issuer.trim())setIssuer(identity.name);
+  } catch {setIssuerLogoError('تعذر تحميل ملف الشعار من المكتبة')}
+ }
  async function setIssuerImage(file:File|undefined){
   if(!file){setIssuerLogo(null);setIssuerLogoError('');return}
   if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>5*1024*1024){setIssuerLogoError('يجب رفع صورة PNG أو JPEG أو WebP بحجم لا يتجاوز 5MB');return}
   const url=URL.createObjectURL(file);
   try{
    const image=await new Promise<HTMLImageElement>((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('invalid image'));img.src=url});
-   setIssuerLogo(image);setIssuerLogoError('');setPage(0);
+   setIssuerLogo(image);setSelectedIdentityId(null);setIssuerLogoError('');setPage(0);
   }catch{setIssuerLogoError('تعذر قراءة الصورة المختارة')}
   finally{URL.revokeObjectURL(url)}
  }
@@ -929,6 +947,21 @@ export default function Studio(){
  <label>اسم المصدر (اختياري)<input value={sourceName} maxLength={120} placeholder="وكيل حضرموت الإخباري" onChange={e=>setSourceName(e.target.value)}/></label>
  <label>رابط المصدر (اختياري)<input dir="ltr" type="url" placeholder="https://..." value={sourceUrl} onChange={e=>setSourceUrl(e.target.value)}/></label>
  {(sourceUrl||sourceName)&&<p className="studio-note">المصدر جزء من المادة التحريرية، ويظهر داخل منطقة المحتوى لا في تذييل الشعار والتاريخ.</p>}
+ <fieldset className="studio-official-card-upload">
+ <legend>مكتبة هويات ساس البصرية</legend>
+ <p className="studio-note">شعار الجهة أو مصدر التوثيق؛ لا يعني الشعار اعتماد محتوى المصدر.</p>
+ <label>البحث في مكتبة الهويات<input value={identityQuery} placeholder="اسم الجهة أو المصدر" onChange={e=>setIdentityQuery(e.target.value)}/></label>
+ {sourceName && findSourceIdentity(sourceName) && <button type="button" onClick={()=>void chooseRegistryIdentity(findSourceIdentity(sourceName)!)}>شعار المصدر: {findSourceIdentity(sourceName)!.name}</button>}
+ <div className="sas-identity-studio-list">
+ {visualIdentities.filter(item=>!identityQuery.trim() || (item.name+' '+item.aliases.join(' ')).toLowerCase().includes(identityQuery.trim().toLowerCase())).map(item=>(
+ <button type="button" key={item.id} className="sas-identity-studio-pick" onClick={()=>void chooseRegistryIdentity(item)} aria-pressed={selectedIdentityId===item.id} title={item.name}>
+ <img src={item.image} alt="" loading="lazy"/><span>{item.name}</span>
+ </button>
+ ))}
+ </div>
+ {issuerLogo&&<button type="button" onClick={()=>{setIssuerLogo(null);setSelectedIdentityId(null);setIssuerLogoError('')}}>إزالة الشعار المختار</button>}
+ {issuerLogoError&&<p role="alert" className="admin-feedback">{issuerLogoError}</p>}
+ </fieldset>
  {mode==='statement'&&<><label>الجهة المصدرة<input value={issuer} maxLength={160} onChange={e=>setIssuer(e.target.value)}/></label>
  <label>شعار الجهة (اختياري · PNG/JPEG/WebP · 5MB)<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>void setIssuerImage(e.target.files?.[0])}/></label>
  {issuerLogo&&<button type="button" onClick={()=>{setIssuerLogo(null);setIssuerLogoError('')}}>حذف شعار الجهة</button>}
