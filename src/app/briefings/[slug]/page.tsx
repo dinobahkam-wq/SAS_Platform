@@ -50,7 +50,7 @@ export default async function PublicBriefingPage({
     );
   }
 
-  const { edition, revision, executiveSummary, developments } = briefing;
+  const { edition, revision, developments } = briefing;
   const correction = revision.revision_kind === "correction";
   const [weather, context, canOpenStudio] = await Promise.all([
     getBriefingWeatherIndicators(),
@@ -93,15 +93,19 @@ export default async function PublicBriefingPage({
           ) : null}
         </header>
 
-        <BriefingEditionBody executiveSummary={executiveSummary} developments={developments} studioEdition={canOpenStudio ? { slug: edition.slug, revisionNo: revision.revision_no } : null} />
-
-        <details className="sas-briefing-supplement">
-          <summary>مؤشرات العدد وبياناته المرجعية</summary>
-          <div className="sas-briefing-supplement-body">
-            <BriefingDailyOverview developments={developments} />
-            <BriefingIntelligencePanel context={context} weather={weather} />
+        <section className="sas-fixed-reference-panel" aria-label="مؤشرات العدد والبيانات المرجعية">
+          <div className="briefing-section-heading sas-reference-panel-heading">
+            <div>
+              <span className="sas-layer-eyebrow">01 · البيانات المرجعية</span>
+              <h2>مؤشرات العدد والبيانات المرجعية</h2>
+              <p>بيانات مؤرخة بحسب مصدرها؛ ولا تُعامل المؤشرات الحية كأنها سُجلت يوم العدد.</p>
+            </div>
           </div>
-        </details>
+          <BriefingDailyOverview developments={developments} />
+          <BriefingIntelligencePanel context={context} weather={weather} />
+        </section>
+
+        <BriefingEditionBody developments={developments} studioEdition={canOpenStudio ? { slug: edition.slug, revisionNo: revision.revision_no } : null} />
 
         <section className="briefing-methodology-section">
           <details>
