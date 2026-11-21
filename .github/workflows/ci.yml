@@ -54,7 +54,8 @@ jobs:
             scripts/check-admin-product-briefing-workspace.mjs \
             scripts/check-admin-team-owner-v1.mjs \
             scripts/check-mobile-experience-package-a.mjs \
-            scripts/check-mukalla-home-hero.mjs
+            scripts/check-mukalla-home-hero.mjs \
+            scripts/check-home-editorial-trial.mjs
 
       - name: Typecheck
         run: npm run typecheck
