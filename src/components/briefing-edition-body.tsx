@@ -15,7 +15,7 @@ import { BriefingSourcesPopover } from "@/components/briefing-sources-popover";
 import "./briefing-dense-layout.css";
 import "./briefing-studio-transfer.css";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
-import type { BriefingDevelopment, BriefingSummaryItem } from "@/lib/public-briefing";
+import type { BriefingDevelopment } from "@/lib/public-briefing";
 import { findSourceIdentity, identityById } from "@/lib/visual-identities";
 import "./sas-identity.css";
 
@@ -62,11 +62,9 @@ function matchesTab(development: BriefingDevelopment, tab: Tab) {
 }
 
 export function BriefingEditionBody({
-  executiveSummary,
   developments,
   studioEdition,
 }: {
-  executiveSummary: BriefingSummaryItem[];
   developments: BriefingDevelopment[];
   studioEdition?: { slug: string; revisionNo: number } | null;
 }) {
@@ -80,26 +78,6 @@ export function BriefingEditionBody({
 
   return (
     <>
-      {activeTab === "all" && executiveSummary.length > 0 ? (
-        <section className="sas-briefing-layer sas-scene-layer" aria-labelledby="sas-scene-title">
-          <div className="briefing-section-heading"><div>
-            <span className="sas-layer-eyebrow">01 · خلاصة العدد</span>
-            <h2 id="sas-scene-title">المشهد في دقيقة</h2>
-            <p>أبرز الوقائع والمواقف الواردة في العدد، كما وثّقتها المصادر.</p>
-          </div></div>
-          <ol className="sas-scene-points">
-            {executiveSummary.slice(0, 5).map((item,index) => <li key={item.order || index}>
-              <span className="sas-scene-index" aria-hidden="true">{String(index+1).padStart(2,"0")}</span>
-              <div className="sas-scene-text">
-                {item.headline_ar && <strong>{item.headline_ar}</strong>}
-                <p><BriefingEmphasis text={item.text_ar}/></p>
-                {item.sources.length > 0 ? <BriefingSourcesPopover sources={item.sources} label="مصادر الخلاصة"/> : null}
-              </div>
-            </li>)}
-          </ol>
-        </section>
-      ) : null}
-
       {activeTab === "all" ? (
         <section className="sas-briefing-layer sas-priority-layer" aria-labelledby="sas-priorities-title">
           <div className="briefing-section-heading"><div>
