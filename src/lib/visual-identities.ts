@@ -4,14 +4,14 @@
  * The registry describes identities; media publisher != organization making a statement.
  * The filename alone does not establish the provenance or usage permission of an emblem.
  */
-export type IdentityKind = "government" | "media" | "international" | "regional";
+export type IdentityKind = "government" | "media" | "international" | "regional" | "country";
 export type Identity = {
   id: string;
   name: string;
   kind: IdentityKind;
   image: string;
   aliases: readonly string[];
-  provenance: "user_supplied";
+  provenance: "user_supplied" | "flag_icons_mit";
 };
 
 export const visualIdentities: readonly Identity[] = [
@@ -52,7 +52,7 @@ export function findSourceIdentity(sourceName:string|null|undefined):Identity|nu
 
 /** Explicit identity IDs always take precedence over name matching. */
 export function identityById(id:string|null|undefined):Identity|null {
- return visualIdentities.find(item=>item.id===id)??null;
+ return allVisualAssets.find(item=>item.id===id)??null;
 }
 
 /** ISO 3166-1 alpha-2. Only curated country aliases; no guessing from article text. */
@@ -78,3 +78,14 @@ export function countryByName(name:string|null|undefined){
  const key=normalized(name??"");
  return countries.find(item=>item.aliases.some(alias=>normalized(alias)===key))??null;
 }
+
+/** Bundled subset of lipis/flag-icons (MIT), independent of remote CDNs. */
+export const countryFlagAssets: readonly Identity[] = countries.map(country=>({
+  id:"flag-"+country.code,
+  name:country.name,
+  kind:"country" as const,
+  image:"/flags/"+country.code+".svg",
+  aliases:country.aliases,
+  provenance:"flag_icons_mit" as const,
+}));
+export const allVisualAssets: readonly Identity[] = [...visualIdentities,...countryFlagAssets];
