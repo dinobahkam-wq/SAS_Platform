@@ -1,0 +1,195 @@
+/*
+ * SAS editorial-home experiment, informed by the layout grammar of thmanyah.com
+ * (user-supplied desktop capture, 2026-11-21).
+ * Independent implementation: no copied code, branding, images or third-party fonts.
+ * SCOPED to home page; all detail pages and CMS retain their original styling.
+ */
+.public-site.sas-editorial-home {
+  --sas-editorial-paper: #f6f4ee;
+  --sas-editorial-rule: #dfdfd7;
+  --sas-editorial-ink: #202c29;
+  --sas-editorial-muted: #66736d;
+  background: var(--sas-editorial-paper);
+}
+.public-site.sas-editorial-home .site-header {
+  background: var(--sas-editorial-paper);
+  box-shadow: none;
+  border-bottom: 1px solid var(--sas-editorial-rule);
+}
+.public-site.sas-editorial-home .site-header-inner {
+  max-width: 1320px;
+}
+.public-site.sas-editorial-home .site-nav {
+  gap: clamp(15px,2.1vw,30px);
+}
+.public-site.sas-editorial-home .site-nav a {
+  font-weight: 600;
+  font-size: 13px;
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero {
+  width: min(1280px, calc(100% - 52px));
+  max-width: 1280px;
+  min-height: clamp(275px, 26vw, 370px);
+  margin: clamp(22px,3vw,35px) auto clamp(44px,5vw,72px);
+  padding: clamp(34px,4.5vw,68px);
+  border-radius: 23px;
+  background: #152c2b !important;
+  box-shadow: none;
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero::before {
+  background: url("/syuwan.jfif") 47% 49% / cover no-repeat;
+  filter: saturate(.88) contrast(1.03) brightness(.81);
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero::after {
+  background: linear-gradient(to left,
+    rgba(14,35,34,.99) 0%,
+    rgba(14,35,34,.94) 28%,
+    rgba(14,35,34,.69) 50%,
+    rgba(14,35,34,.16) 76%,
+    rgba(14,35,34,.02) 100%);
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero .home-intro-copy {
+  max-width: min(720px,68%);
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero h1 {
+  color: #faf9f5 !important;
+  font-size: clamp(42px,4vw,66px);
+  line-height: 1.36;
+  text-shadow: 0 2px 12px rgba(0,0,0,.1);
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero h1 em {
+  color: #9eddd4 !important;
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero p {
+  max-width: 590px;
+  color: #edf3ed !important;
+  line-height: 1.85;
+  font-size: clamp(13px,1.15vw,16px);
+  text-shadow: 0 1px 5px rgba(0,0,0,.18);
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero .sas-cta--primary {
+  background: #fcfaf6;
+  color: #143d35;
+  border: 1px solid #fcfaf6;
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero .sas-cta--secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.7);
+}
+.public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero a:focus-visible,
+.public-site.sas-editorial-home .site-nav a:focus-visible {
+  outline: 3px solid #caa65d;
+  outline-offset: 4px;
+}
+.public-site.sas-editorial-home .home-section {
+  padding-block: clamp(37px,4.3vw,65px);
+  margin-block: 0;
+}
+.public-site.sas-editorial-home .home-section + .home-section {
+  border-top: 1px solid var(--sas-editorial-rule);
+}
+.public-site.sas-editorial-home .home-analysis-section,
+.public-site.sas-editorial-home .home-media-section {
+  background: transparent;
+}
+.public-site.sas-editorial-home .site-section-heading {
+  display: flex;
+  align-items: end;
+  margin-bottom: clamp(24px,2.5vw,40px);
+  border: 0;
+}
+.public-site.sas-editorial-home .site-section-heading h2 {
+  font-size: clamp(26px,2.2vw,37px);
+  line-height: 1.5;
+  letter-spacing: -.02em;
+  color: var(--sas-editorial-ink);
+}
+.public-site.sas-editorial-home .site-section-heading .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0;
+  color: #637067;
+}
+.public-site.sas-editorial-home .site-section-heading .sas-text-link {
+  color: #a95f39;
+  font-weight: 700;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.public-site.sas-editorial-home .content-card,
+.public-site.sas-editorial-home .sas-home-briefing-feature {
+  box-shadow: none;
+}
+.public-site.sas-editorial-home .content-card .content-image {
+  border-radius: 11px;
+  overflow: hidden;
+}
+.public-site.sas-editorial-home .content-card h3 {
+  font-weight: 750;
+  line-height: 1.6;
+}
+.public-site.sas-editorial-home .site-footer {
+  background: var(--sas-editorial-paper);
+  border-top: 1px solid var(--sas-editorial-rule);
+}
+@media (max-width: 1024px) and (min-width: 761px) {
+ .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero { min-height: 335px; }
+ .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero .home-intro-copy {max-width:75%;}
+}
+@media (max-width: 760px) {
+  .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero {
+    width: calc(100% - 28px);
+    margin: 13px 14px 25px;
+    padding: clamp(206px,56vw,260px) 20px 27px;
+    min-height: 0;
+    border-radius: 17px;
+    background: #152c2b !important;
+  }
+  .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero::before {
+    background-position: 51% 44%;
+    filter: brightness(.84) saturate(.93);
+  }
+  .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero::after {
+    background: linear-gradient(to bottom,
+      rgba(14,35,34,.02) 0%,
+      rgba(14,35,34,.07) 20%,
+      rgba(14,35,34,.74) 47%,
+      #152c2b 68%);
+  }
+  .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero .home-intro-copy {max-width:100%;}
+  .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero h1 {
+    font-size: clamp(30px,7.1vw,43px);
+    margin-top: 0;
+  }
+  .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero p {
+    color: #f3f6f2 !important;
+    font-size: 13px;
+  }
+  .public-site.sas-editorial-home .home-brand-hero.sas-mukalla-hero .home-compact-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+  .public-site.sas-editorial-home .home-section {
+    padding-block: 33px;
+  }
+  .public-site.sas-editorial-home .site-section-heading h2 {
+    font-size: clamp(23px,6vw,30px);
+  }
+}
+html[data-theme="dark"] .public-site.sas-editorial-home {
+  --sas-editorial-paper: #17201e;
+  --sas-editorial-rule: #384641;
+  --sas-editorial-ink: #f1f3ed;
+  --sas-editorial-muted: #b8c3bd;
+}
+html[data-theme="dark"] .public-site.sas-editorial-home .site-section-heading h2 {color: var(--sas-editorial-ink);}
+html[data-theme="dark"] .public-site.sas-editorial-home .site-section-heading .eyebrow {color:#aebcb6;}
+html[data-theme="dark"] .public-site.sas-editorial-home .site-section-heading .sas-text-link {color:#e0b083;}
+@media (prefers-reduced-motion: reduce) {
+  .public-site.sas-editorial-home *,
+  .public-site.sas-editorial-home *::before,
+  .public-site.sas-editorial-home *::after {scroll-behavior:auto;transition-duration:0s;}
+}
