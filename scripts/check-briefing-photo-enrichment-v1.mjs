@@ -1,0 +1,45 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const read=(p)=>readFileSync(p,"utf8");
+const sql=read("supabase/migrations/20261121220000_briefing_revision_webp_enrichment_v1.sql");
+const readModel=read("src/lib/public-briefing.ts");
+const publicBody=read("src/components/briefing-edition-body.tsx");
+const actions=read("src/app/admin/briefings/enrich/actions.ts");
+const page=read("src/app/admin/briefings/enrich/[slug]/page.tsx");
+const upload=read("src/components/media-upload-form.tsx");
+const converter=read("src/lib/prepare-webp-upload.ts");
+test("visual media are strictly revision-specific; published snapshot is never mutated",()=>{
+ assert.match(sql,/CREATE TABLE public\.briefing_revision_images/);
+ assert.match(sql,/PRIMARY KEY\(revision_id,development_id\)/);
+ assert.match(sql,/ENABLE ROW LEVEL SECURITY/);
+ assert.match(sql,/r\.status='draft'/);
+ assert.match(sql,/BEFORE INSERT OR UPDATE OR DELETE/);
+ assert.match(sql,/get_public_briefing\(p_slug text\)/);
+ assert.match(sql,/jsonb_set\(r\.published_snapshot/);
+ assert.doesNotMatch(sql,/UPDATE public\.briefing_revisions\s+SET published_snapshot/i);
+ assert.match(actions,/create_briefing_correction/);
+ assert.match(actions,/publish_briefing_revision/);
+});
+test("WebP is produced before upload and the server rejects mislabeled files",()=>{
+ assert.match(converter,/toBlob\(resolve,"image\/webp",\.82\)/);
+ assert.match(converter,/1600\/Math\.max/);
+ assert.match(converter,/blob\.type!=="image\/webp"/);
+ assert.match(upload,/prepareWebpUpload\(file\)/);
+ assert.match(actions,/file\.type!=="image\/webp"/);
+ assert.match(actions,/riff/i);
+ assert.match(actions,/WEBP/);
+ assert.match(actions,/rights_basis/);
+ assert.match(actions,/original_source_url/);
+});
+test("visual enrichments are optional, admin-only, and do not replace evidence",()=>{
+ assert.match(page,/await requireAdmin\(\)/);
+ assert.match(page,/DevelopmentImageUpload/);
+ assert.match(page,/startBriefingPhotoRevision/);
+ assert.match(page,/publishBriefingPhotoRevision/);
+ assert.match(publicBody,/development\.image\?/);
+ assert.match(publicBody,/development\.sources\.length/);
+ assert.match(publicBody,/إضافة صورة/);
+ assert.match(readModel,/image:parseImage\(row\.image\)/);
+ assert.match(readModel,/row\.bucket_id!=="sas-public-media"/);
+});
