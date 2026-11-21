@@ -5,16 +5,6 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/admin";
 
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const errors={
-  record:"تعذر العثور على الإحاطة أو المراجعة المطلوبة.",
-  draft:"يمكن إضافة الصور إلى مسودة فقط؛ أنشئ مراجعة بصرية من العدد المنشور.",
-  file:"يُقبل ملف WebP صالح لا يزيد عن 10 ميجابايت.",
-  rights:"أدخل وصف الصورة واسم صاحب الحق والترخيص، ورابط المصدر إن لم تكن مملوكة لساس.",
-  upload:"تعذر رفع الصورة؛ تأكد من الاتصال والصلاحيات.",
-  metadata:"تعذر حفظ وصف الصورة. لم تُعتمد صورة جديدة.",
-  link:"تعذر ربط الصورة بالتطور المحدد.",
-  publish:"تعذر نشر المراجعة؛ راجع عناصرها ومصادرها وحالتها.",
-} as const;
 function safeSlug(slug:string){return /^[a-z0-9-]{3,180}$/.test(slug);}
 function adminUrl(slug:string,status:string){
   return "/admin/briefings/enrich/"+encodeURIComponent(slug)+"?"+status;
@@ -147,6 +137,3 @@ export async function publishBriefingPhotoRevision(form:FormData) {
   redirect(adminUrl(slug,"published=1"));
 }
 
-export function photoUploadError(code:string|undefined) {
-  return code && code in errors?errors[code as keyof typeof errors]:null;
-}
