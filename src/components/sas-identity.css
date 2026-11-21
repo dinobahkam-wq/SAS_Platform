@@ -101,3 +101,15 @@
 .sas-priority-item-link{align-items:center}
 .sas-priority-item-link .sas-priority-title-group span:nth-child(2){flex:1}
 @media(max-width:650px){.sas-fixed-reference-panel{padding:12px 10px 4px}.sas-priority-item-link{gap:6px;padding:10px 8px}.sas-priority-identity .sas-identity-mark{width:24px;height:24px;flex-basis:24px}.sas-priority-title-group{gap:5px}}
+
+/* Verified geographic thumbnail: subordinate to the story and provenance marks. */
+.sas-development-visual-identities{display:flex;gap:9px 15px;align-items:center;flex-wrap:wrap;margin:0 0 8px}
+.sas-development-visual-identities .sas-identity-byline{margin:0}
+.sas-place-badge{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;padding:4px 7px;border:1px solid var(--line,#dce3df);border-radius:11px;background:var(--surface,#fff);max-width:100%}
+.sas-place-badge svg{display:block;width:48px;height:36px;flex:0 0 48px}
+.sas-place-label{display:grid;gap:1px;min-width:0}
+.sas-place-label strong{font-size:11px;line-height:1.5;color:var(--foreground)}
+.sas-place-label small{font-size:10px;color:var(--muted);line-height:1.4}
+.sas-place-badge--compact{padding:2px 4px;border-radius:7px}
+.sas-place-badge--compact svg{width:41px;height:28px;flex-basis:41px}
+@media(max-width:600px){.sas-place-badge svg{width:41px;height:31px;flex-basis:41px}.sas-place-badge--compact svg{width:34px;height:26px;flex-basis:34px}}

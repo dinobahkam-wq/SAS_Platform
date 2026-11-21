@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BriefingPrintAction } from "@/components/briefing-print-action";
 import { BrandLogo } from "@/components/brand-logo";
+import { BriefingLocationMark } from "@/components/briefing-location-mark";
+import "@/components/sas-identity.css";
 import {
   briefingCategoryLabel,
   briefingClassLabel,
@@ -172,6 +174,7 @@ export default async function BriefingPrintPage({
                   {development.location_text ? <span>{development.location_text}</span> : null}
                 </div>
               </div>
+              {development.place ? <BriefingLocationMark place={development.place} compact/> : null}
               <h3>{development.headline_ar}</h3>
               <p>{development.summary_ar}</p>
               <div className="briefing-print-citations">
@@ -194,14 +197,6 @@ export default async function BriefingPrintPage({
               </div>
             </article>
           ))}
-        </section>
-
-        <section className="briefing-print-methodology">
-          <h2>المنهجية وحدود التغطية</h2>
-          <h3>منهجية الرصد</h3>
-          <p>{revision.methodology_ar}</p>
-          <h3>حدود التغطية</h3>
-          <p>{revision.coverage_note_ar}</p>
         </section>
 
         <footer className="briefing-print-document-end">

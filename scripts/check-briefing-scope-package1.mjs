@@ -19,7 +19,7 @@ test("public and print editions omit Reading SAS without losing factual briefing
     assert.match(source, /Briefing|getPublicBriefing/, label);
     assert.match(source, /developments/, label);
     assert.doesNotMatch(source, /executiveSummary/, label);
-    assert.match(source, /methodology_ar/, label);
+    assert.doesNotMatch(source, /methodology_ar|briefing-print-methodology|briefing-methodology-section/, label);
   }
   assert.match(publicEdition, /BriefingIntelligencePanel/);
   assert.match(publicEdition, /BriefingDailyOverview/);

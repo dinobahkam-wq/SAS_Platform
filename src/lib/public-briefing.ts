@@ -18,6 +18,18 @@ export type BriefingSource = {
   accessed_at: string | null;
 };
 
+export type BriefingPlace = {
+  slug: string;
+  name_ar: string;
+  kind: "country" | "governorate" | "city" | "site";
+  country_code: string;
+  latitude: number | null;
+  longitude: number | null;
+  precision: "none" | "city_centroid" | "approximate" | "verified_site";
+  source_name: string;
+  source_url: string;
+};
+
 export type BriefingDevelopment = {
   order: number;
   headline_ar: string;
@@ -33,6 +45,7 @@ export type BriefingDevelopment = {
   occurred_on: string | null;
   time_precision: string;
   location_text: string | null;
+  place: BriefingPlace | null;
   geographic_scope: string;
   /** Explicit editorial metadata, absent on historical snapshots. */
   priority_level: "critical" | "high" | "standard" | null;
@@ -153,6 +166,23 @@ function parseSummary(value: unknown): BriefingSummaryItem[] {
   }).filter((entry) => entry.text_ar.trim() || entry.headline_ar.trim());
 }
 
+function parsePlace(value: unknown): BriefingPlace | null {
+  const row=object(value);
+  const slug=text(row.slug);
+  const kind=text(row.kind);
+  const precision=text(row.precision);
+  const country_code=text(row.country_code);
+  if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || !["country","governorate","city","site"].includes(kind)
+    || !/^[A-Z]{2}$/.test(country_code)
+    || !["none","city_centroid","approximate","verified_site"].includes(precision)) return null;
+  const latitude=typeof row.latitude === "number" && Number.isFinite(row.latitude) && Math.abs(row.latitude)<=90 ? row.latitude : null;
+  const longitude=typeof row.longitude === "number" && Number.isFinite(row.longitude) && Math.abs(row.longitude)<=180 ? row.longitude : null;
+  if ((latitude===null)!==(longitude===null)) return null;
+  return {slug,name_ar:text(row.name_ar),kind:kind as BriefingPlace["kind"],
+    country_code,latitude,longitude,precision:precision as BriefingPlace["precision"],
+    source_name:text(row.source_name),source_url:safeHttpUrl(row.source_url)??""};
+}
+
 function parseDevelopments(value: unknown): BriefingDevelopment[] {
   if (!Array.isArray(value)) return [];
   return value.map((entry) => {
@@ -172,6 +202,7 @@ function parseDevelopments(value: unknown): BriefingDevelopment[] {
       occurred_on: nullableText(row.occurred_on),
       time_precision: text(row.time_precision, "unknown"),
       location_text: nullableText(row.location_text),
+      place: parsePlace(row.place),
       geographic_scope: text(row.geographic_scope, "national"),
       priority_level: ["critical","high","standard"].includes(text(row.priority_level)) ? text(row.priority_level) as BriefingDevelopment["priority_level"] : null,
       yemen_relevance: ["direct","regional","strategic"].includes(text(row.yemen_relevance)) ? text(row.yemen_relevance) as BriefingDevelopment["yemen_relevance"] : null,

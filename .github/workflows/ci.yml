@@ -43,6 +43,7 @@ jobs:
             scripts/check-briefing-overview.mjs \
             scripts/check-briefing-editorial-dimensions.mjs \
             scripts/check-briefing-four-layer-display.mjs \
+            scripts/check-briefing-geography-v1.mjs \
             scripts/check-briefing-fx-context.mjs \
             scripts/check-visual-knowledge-timeline.mjs \
             scripts/check-visual-knowledge-state-government.mjs \

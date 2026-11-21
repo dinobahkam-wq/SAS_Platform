@@ -157,8 +157,62 @@ export type Database = {
           },
         ]
       }
+      briefing_places: {
+        Row: {
+          slug: string
+          name_ar: string
+          kind: string
+          country_code: string
+          parent_slug: string | null
+          latitude: number | null
+          longitude: number | null
+          coordinate_precision: string
+          source_name: string
+          source_url: string
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          slug: string
+          name_ar: string
+          kind: string
+          country_code: string
+          parent_slug?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          coordinate_precision: string
+          source_name: string
+          source_url: string
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          slug?: string
+          name_ar?: string
+          kind?: string
+          country_code?: string
+          parent_slug?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          coordinate_precision?: string
+          source_name?: string
+          source_url?: string
+          is_active?: boolean
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "briefing_places_parent_slug_fkey"
+            columns: ["parent_slug"]
+            isOneToOne: false
+            referencedRelation: "briefing_places"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
       briefing_developments: {
         Row: {
+          place_slug: string | null
           yemen_relevance: string | null
           publisher_identity_id: string | null
           priority_level: string | null
@@ -184,6 +238,7 @@ export type Database = {
           verification_status: string
         }
         Insert: {
+          place_slug?: string | null
           yemen_relevance?: string | null
           publisher_identity_id?: string | null
           priority_level?: string | null
@@ -209,6 +264,7 @@ export type Database = {
           verification_status?: string
         }
         Update: {
+          place_slug?: string | null
           yemen_relevance?: string | null
           publisher_identity_id?: string | null
           priority_level?: string | null
@@ -234,6 +290,13 @@ export type Database = {
           verification_status?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "briefing_developments_place_slug_fkey"
+            columns: ["place_slug"]
+            isOneToOne: false
+            referencedRelation: "briefing_places"
+            referencedColumns: ["slug"]
+          },
           {
             foreignKeyName: "briefing_developments_related_content_item_id_fkey"
             columns: ["related_content_item_id"]
