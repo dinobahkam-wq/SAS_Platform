@@ -49,7 +49,7 @@ export default async function Home() {
     <main className="public-site">
       <PublicHeader />
 
-      <section className="home-compact-intro home-brand-hero site-container">
+      <section className="home-compact-intro home-brand-hero sas-mukalla-hero site-container">
         <div className="home-intro-copy">
           <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
           <p>إحاطة سياسية موثقة، وتحليلات ودراسات، ومعرفة بصرية وفيديوهات تفسر الأحداث وسياقاتها.</p>
