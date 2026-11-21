@@ -29,7 +29,7 @@
 }
 .public-site .sas-split-hero .sas-hero-visual {
   position: absolute;
-  inset: 0 0 0 auto;
+  inset: 0 auto 0 0;
   width: 59%;
   z-index: 0;
   pointer-events: none;
@@ -97,7 +97,8 @@ html[data-theme="dark"] .public-site .home-brand-hero.sas-mukalla-hero.sas-split
   border-color: rgba(152, 197, 184, .21);
 }
 html[data-theme="dark"] .public-site .sas-split-hero .sas-hero-visual {
-  filter: brightness(.82) saturate(.88);
+  filter: none;
+  background-image: linear-gradient(rgba(10, 25, 23, .18), rgba(10, 25, 23, .18)), url("/sa.webp.png");
 }
 html[data-theme="dark"] .public-site .sas-split-hero .sas-hero-visual::after {
   background: linear-gradient(to right,
