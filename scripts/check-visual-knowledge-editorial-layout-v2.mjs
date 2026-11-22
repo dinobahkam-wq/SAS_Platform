@@ -33,3 +33,12 @@ test("the two historic interactive prototypes are unpublished but source code is
   assert.match(css, /@media\(max-width:420px\)/);
   assert.match(css, /prefers-reduced-motion/);
 });
+
+test("the primary image action opens the actual stored image, not the article", () => {
+  assert.match(view, /href=\{lead\.cover_url\}/);
+  assert.match(view, /عرض الصورة/);
+  assert.match(view, /target="_blank" rel="noopener noreferrer"/);
+  assert.match(view, /aria-label=\{"عرض الصورة بالحجم الكامل: " \+ lead\.title\}/);
+  assert.match(css, /padding-inline: clamp\(32px, 4\.1vw, 68px\)/);
+  assert.match(css, /margin-bottom: clamp\(28px, 3vw, 44px\)/);
+});
