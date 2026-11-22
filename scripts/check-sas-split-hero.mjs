@@ -41,7 +41,7 @@ test("mobile composition places image above content and fades vertically into th
 
 test("rotator uses the approved first frame and the five optional editorial frames",()=>{
   assert.match(rotator,/\/sa\.webp\.png/);
-  for(let i=12;i<=16;i++) assert.ok(rotator.includes(`/${i}.webp`));
+  for(let i=12;i<=16;i++) assert.ok(rotator.includes(`/${i}.webp.png`));
   assert.match(rotator,/Promise\.all/);
   assert.match(rotator,/img\.onerror/);
   assert.match(rotator,/6500/);
