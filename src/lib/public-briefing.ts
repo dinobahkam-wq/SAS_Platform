@@ -197,7 +197,7 @@ function parseImage(value:unknown):BriefingImage|null {
   const row=object(value);
   const path=text(row.object_path);
   if(row.bucket_id!=="sas-public-media"||!path||!/^[-a-zA-Z0-9_./]+\.webp$/.test(path)
-    ||path.includes("..")||!text(row.alt_text)||!text(row.credit))return null;
+    ||path.includes(".."))return null;
   const origin=process.env.NEXT_PUBLIC_SUPABASE_URL;
   if(!origin || !/^https:\/\//.test(origin))return null;
   const url=origin.replace(/\/$/,"")+"/storage/v1/object/public/sas-public-media/"+
