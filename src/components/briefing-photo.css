@@ -19,7 +19,8 @@
   float: none;
   max-width: none;
   padding: 0;
-  margin: 0;
+  /* Align the top of the image with the visible first line of the headline, not the line box. */
+  margin: 18px 0 0;
 }
 .briefing-event--dense .sas-briefing-photo img {
   display: block;
@@ -44,7 +45,7 @@
     flex-basis: clamp(82px, 26vw, 112px);
     width: clamp(82px, 26vw, 112px);
     max-width: none;
-    margin: 0;
+    margin: 9px 0 0;
   }
   .briefing-event--dense .sas-briefing-photo img {
     aspect-ratio: 1 / 1;
@@ -64,6 +65,7 @@
   .briefing-event--dense .sas-briefing-photo {
     flex: 0 0 120px;
     width: 120px;
+    margin-block-start: 10px;
     break-inside: avoid;
   }
 }
