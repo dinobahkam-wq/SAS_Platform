@@ -5,6 +5,7 @@ const read=(path)=>readFileSync(path,"utf8");
 const page=read("src/app/page.tsx");
 const layout=read("src/app/layout.tsx");
 const css=read("src/app/sas-split-hero.css");
+const rotator=read("src/components/sas-hero-rotator.tsx");
 test("the single hero card has a separate decorative left image and a semantic right copy column",()=>{
   assert.match(page,/sas-mukalla-hero sas-split-hero site-container/);
   assert.match(page,/<div className="sas-hero-visual" aria-hidden="true" \/>/);
@@ -36,4 +37,15 @@ test("mobile composition places image above content and fades vertically into th
   assert.match(css,/html\[data-theme="dark"\]/);
   assert.match(css,/prefers-reduced-motion/);
   assert.match(css,/@media print/);
+});
+
+test("rotator uses the approved first frame and the five optional editorial frames",()=>{
+  assert.match(rotator,/\/sa\.webp\.png/);
+  for(let i=12;i<=16;i++) assert.ok(rotator.includes(`/${i}.webp`));
+  assert.match(rotator,/Promise\.all/);
+  assert.match(rotator,/img\.onerror/);
+  assert.match(rotator,/6500/);
+  assert.match(rotator,/prefers-reduced-motion/);
+  assert.match(css,/\.sas-hero-rotator-frame\.is-active/);
+  assert.match(css,/opacity 1100ms ease-in-out/);
 });
