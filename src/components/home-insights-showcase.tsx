@@ -46,7 +46,7 @@ export function HomeInsightsShowcase({ items }: { items: PublicContentItem[] }) 
         </Link>
       </header>
 
-      <div className="sas-home-insights-grid">
+      <div className={secondary.length ? "sas-home-insights-grid" : "sas-home-insights-grid sas-home-insights-grid--single"}>
         <article className="sas-insight-feature">
           <div className="sas-insight-feature-text">
             <div className="sas-insight-feature-top">
