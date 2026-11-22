@@ -18,12 +18,6 @@ export function DevelopmentImageUpload({
     const fileInput=form.elements.namedItem("file");
     const file=fileInput instanceof HTMLInputElement?fileInput.files?.[0]:null;
     if(!file){setStatus("اختر صورة أولاً.");return;}
-    const basis=form.elements.namedItem("rights_basis");
-    const source=form.elements.namedItem("original_source_url");
-    if(basis instanceof HTMLSelectElement && source instanceof HTMLInputElement &&
-       basis.value!=="owned"&&!source.value.trim()){
-      setStatus("تتطلب الصور الخارجية رابطاً موثقاً للمصدر أو الترخيص.");return;
-    }
     try {
       setStatus("جارٍ التحويل الآمن إلى WebP…");
       const result=await prepareWebpUpload(file);
@@ -51,18 +45,18 @@ export function DevelopmentImageUpload({
       <input name="height" type="hidden"/>
       <input name="original_file_name" type="hidden"/>
       <label>اختر الصورة من الجهاز<input name="file" ref={fileRef} onChange={()=>setOpen(true)} type="file" accept="image/jpeg,image/png,image/avif,image/webp" required/></label>
-      <label>وصف الصورة للقارئ<input name="alt_text" required maxLength={300} placeholder="ماذا يظهر في الصورة؟"/></label>
+      <label>وصف الصورة للقارئ<input name="alt_text" maxLength={300} placeholder="ماذا يظهر في الصورة؟"/></label>
       <label>تعليق اختياري<input name="caption" maxLength={600} placeholder="المشهد وتاريخه عند الحاجة"/></label>
-      <label>صاحب الصورة / جهة الحقوق<input name="credit" required maxLength={200} placeholder="اسم المصور أو الجهة"/></label>
-      <label>الترخيص<select name="rights_basis" required defaultValue="">
-        <option value="" disabled>حدد الحقوق قبل الحفظ</option>
+      <label>صاحب الصورة / جهة الحقوق<input name="credit" maxLength={200} placeholder="اسم المصور أو الجهة"/></label>
+      <label>الترخيص<select name="rights_basis" defaultValue="">
+        <option value="">غير محدد — يمكن استكماله لاحقاً</option>
         <option value="owned">صورة مملوكة لساس</option>
         <option value="permission">إذن استخدام أو ترخيص صريح</option>
         <option value="public_domain">ملك عام موثق</option>
         <option value="cc_by">CC BY مع نسب الحقوق</option>
       </select></label>
       <label>الرابط الأصلي أو توثيق الترخيص<input name="original_source_url" type="url" placeholder="https://..."/></label>
-      <p>تُحوّل الصورة إلى WebP محلياً، وتُحفظ في المكتبة وتُربط بهذا التطور في المسودة فقط. لا تُنشر قبل اعتماد المراجعة.</p>
+      <p>بيانات الوصف والمصدر والحقوق اختيارية، وتُحفظ الحقول غير المعبأة دون افتراض ترخيص. تأكد من امتلاك حق نشر الصورة قبل اعتماد الإحاطة. تُحوّل إلى WebP محلياً وتُربط بالمسودة.</p>
       <button type="submit" className="button button-primary button-small">حفظ الصورة للتطور</button>
       {status?<p role="status">{status}</p>:null}
     </form>
