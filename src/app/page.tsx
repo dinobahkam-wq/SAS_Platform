@@ -85,7 +85,6 @@ export default async function Home() {
 
       <section className="home-section site-container sas-product-section">
         <SectionHeading eyebrow="السياسة بلغة الصورة" title="المعرفة البصرية" href="/visual-knowledge" />
-        <p className="sas-visual-showcase-intro">تصورات تفاعلية توضح المفاهيم السياسية وتحولات الأحداث، بمصادر يمكن الرجوع إليها.</p>
         <VisualKnowledgeEditorial items={visual} />
       </section>
 
