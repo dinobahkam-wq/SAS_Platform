@@ -52,9 +52,9 @@ test("interactive civics page works as a standalone knowledge product", () => {
   assert.match(component, /role="status"/);
   assert.match(component, /civicSources\.map/);
   assert.match(component, /التثقيف السياسي/);
-  assert.match(page, /<StateGovernmentCivics\s*\/>/);
-  assert.match(landing, /<VisualKnowledgeShowcase/);
-  assert.match(home, /<VisualKnowledgeShowcase/);
+  assert.match(page, /notFound\(\)/);
+  assert.match(landing, /<VisualKnowledgeEditorial/);
+  assert.match(home, /<VisualKnowledgeEditorial/);
 });
 
 test("visual styles preserve SAS typography and accessible responsive behavior", () => {
