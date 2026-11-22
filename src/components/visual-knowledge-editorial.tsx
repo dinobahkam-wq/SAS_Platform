@@ -47,13 +47,28 @@ export function VisualKnowledgeEditorial({ items, standalone = false }: {
           </div>
           <h3><Link href={url(lead)}>{lead.title}</Link></h3>
           {lead.excerpt ? <p>{lead.excerpt}</p> : null}
-          <Link className="sas-vke-primary sas-cta sas-cta--primary" href={url(lead)}>
-            استعرض المادة <span aria-hidden="true">←</span>
-          </Link>
+          {lead.cover_url ? (
+            <a className="sas-vke-primary sas-cta sas-cta--primary" href={lead.cover_url}
+              target="_blank" rel="noopener noreferrer"
+              aria-label={"عرض الصورة بالحجم الكامل: " + lead.title}>
+              عرض الصورة <span aria-hidden="true">↗</span>
+            </a>
+          ) : (
+            <Link className="sas-vke-primary sas-cta sas-cta--primary" href={url(lead)}>
+              قراءة المادة <span aria-hidden="true">←</span>
+            </Link>
+          )}
         </div>
-        <Link className="sas-vke-art" href={url(lead)} aria-label={"استعراض " + lead.title}>
-          <VisualCover item={lead} />
-        </Link>
+        {lead.cover_url ? (
+          <a className="sas-vke-art" href={lead.cover_url} target="_blank" rel="noopener noreferrer"
+            aria-label={"عرض الصورة بالحجم الكامل: " + lead.title}>
+            <VisualCover item={lead} />
+          </a>
+        ) : (
+          <Link className="sas-vke-art" href={url(lead)} aria-label={"قراءة " + lead.title}>
+            <VisualCover item={lead} />
+          </Link>
+        )}
       </article>
 
       {related.length ? (
