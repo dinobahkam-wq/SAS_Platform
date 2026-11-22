@@ -1,0 +1,275 @@
+/* SAS homepage analysis & research — editorial flagship, 2026-11. */
+.public-site .sas-home-insights {
+  --sas-insight-paper: var(--surface);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding-block: clamp(18px, 3vw, 36px);
+}
+.public-site .sas-home-insights::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 auto auto 0;
+  width: min(270px, 28%);
+  height: 180px;
+  opacity: .2;
+  pointer-events: none;
+  background: repeating-linear-gradient(135deg, transparent 0 11px, color-mix(in srgb, var(--accent) 35%, transparent) 12px, transparent 13px 25px);
+  mask-image: linear-gradient(to right, #000, transparent);
+}
+.public-site .sas-home-insights-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 22px;
+  margin-bottom: 30px;
+}
+.public-site .sas-home-insights-heading { min-width: 0; }
+.public-site .sas-home-insights-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--accent);
+  font: 700 14px/1.7 "Thmanyah Sans", sans-serif;
+}
+.public-site .sas-home-insights-symbol { font-size: 18px; }
+.public-site .sas-home-insights-heading h2 {
+  margin: 6px 0 10px;
+  font: 700 clamp(29px, 3.7vw, 49px)/1.45 "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+  color: var(--foreground);
+  text-wrap: balance;
+}
+.public-site .sas-home-insights-heading h2::after {
+  content: "";
+  display: block;
+  width: 110px;
+  height: 3px;
+  border-radius: 8px;
+  margin-top: 4px;
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.public-site .sas-home-insights-heading p {
+  color: var(--muted);
+  font: 400 13px/1.95 "Thmanyah Sans", sans-serif;
+  margin: 0;
+  max-width: 810px;
+}
+.public-site .sas-home-insights-view-all,
+.public-site .sas-home-insights-mobile-all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex: 0 0 auto;
+  border: 1px solid color-mix(in srgb, var(--accent) 78%, var(--line));
+  border-radius: 999px;
+  color: var(--accent);
+  padding: 11px 20px;
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
+  font: 700 12px/1.6 "Thmanyah Sans", sans-serif;
+  transition: background .2s ease, transform .2s ease;
+}
+.public-site .sas-home-insights-view-all:hover,
+.public-site .sas-home-insights-mobile-all:hover {
+  transform: translateY(-2px);
+  background: var(--accent-soft);
+}
+.public-site .sas-home-insights-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, .95fr);
+  align-items: stretch;
+  gap: 16px;
+}
+.public-site .sas-insight-feature {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(175px, .8fr);
+  gap: clamp(12px, 2.2vw, 28px);
+  align-items: center;
+  min-width: 0;
+  min-height: 400px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
+  border-radius: 19px;
+  padding: clamp(22px, 2.7vw, 36px);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 72%, var(--surface)), var(--surface) 82%);
+}
+.public-site .sas-insight-feature::before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  inset: -45% 44% auto auto;
+  width: 250px;
+  height: 470px;
+  opacity: .2;
+  transform: rotate(32deg);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 26%, transparent), transparent);
+}
+.public-site .sas-insight-feature-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+}
+.public-site .sas-insight-feature-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 15px; }
+.public-site .sas-insight-tag {
+  display: inline-flex;
+  width: fit-content;
+  border-radius: 8px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 84%, var(--surface));
+  padding: 6px 11px;
+  font: 700 11px/1.5 "Thmanyah Sans", sans-serif;
+}
+.public-site .sas-insight-feature-top time,
+.public-site .sas-insight-small-meta time {
+  color: var(--muted);
+  font: 500 11px/1.6 "Thmanyah Sans", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.public-site .sas-insight-feature h3 {
+  margin: clamp(15px, 2vw, 24px) 0 12px;
+  font: 700 clamp(22px, 2.25vw, 30px)/1.55 "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+  color: var(--foreground);
+  text-wrap: pretty;
+}
+.public-site .sas-insight-feature h3 a:hover { color: var(--accent); }
+.public-site .sas-insight-feature-text > p {
+  margin: 0;
+  color: var(--muted);
+  font: 400 13px/1.95 "Thmanyah Sans", sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.public-site .sas-insight-feature-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: auto;
+  padding: 12px 19px;
+  border-radius: 10px;
+  background: var(--brand-teal-deep, var(--accent));
+  color: #fff;
+  font: 700 12px/1.6 "Thmanyah Sans", sans-serif;
+  transition: transform .2s ease, filter .2s ease;
+}
+.public-site .sas-insight-feature-action:hover { transform: translateY(-2px); filter: brightness(1.08); }
+.public-site .sas-insight-feature-cover {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  aspect-ratio: 3/4;
+  max-height: 355px;
+  background: var(--surface);
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0 15px 26px rgba(15, 45, 39, .17);
+}
+.public-site .sas-insight-feature-cover img {
+  object-fit: contain;
+  object-position: center;
+}
+.public-site .sas-insight-cover-placeholder {
+  width: 100%;
+  height: 100%;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  background: linear-gradient(135deg, #dceee7, #f2f6f2);
+  color: #12574c;
+  font-size: 12px;
+}
+.public-site .sas-insight-cover-placeholder span:first-child { font: 700 22px "Tajarib Taweel", sans-serif; }
+.public-site .sas-home-insights-secondary { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 14px; min-width: 0; }
+.public-site .sas-insight-small { min-height: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); overflow: hidden; transition: box-shadow .2s ease, border-color .2s ease, transform .2s ease; }
+.public-site .sas-insight-small:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 38%, var(--line)); box-shadow: 0 9px 25px rgba(20, 54, 47, .07); }
+.public-site .sas-insight-small-link { display: flex; align-items: stretch; gap: 15px; height: 100%; min-width: 0; padding: 16px; }
+.public-site .sas-insight-small-cover {
+  position: relative;
+  width: 36%;
+  flex: 0 0 36%;
+  min-height: 154px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--accent-soft);
+}
+.public-site .sas-insight-small-cover img { object-fit: cover; }
+.public-site .sas-insight-small-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; align-items: flex-start; }
+.public-site .sas-insight-small-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.public-site .sas-insight-small h3 {
+  font: 700 clamp(15px, 1.2vw, 18px)/1.65 "Thmanyah Sans", sans-serif;
+  color: var(--foreground);
+  margin: 10px 0 7px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.public-site .sas-insight-small p {
+  margin: 0;
+  color: var(--muted);
+  font: 400 11px/1.75 "Thmanyah Sans", sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.public-site .sas-home-insights-mobile-all { display: none; }
+.public-site .sas-home-insights a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 1100px) {
+  .public-site .sas-home-insights-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); }
+  .public-site .sas-insight-feature { grid-template-columns: minmax(0, 1fr) minmax(145px, .7fr); padding: 22px; }
+  .public-site .sas-insight-small-link { padding: 12px; gap: 10px; }
+  .public-site .sas-insight-small-cover { width: 32%; flex-basis: 32%; }
+}
+@media (max-width: 850px) {
+  .public-site .sas-home-insights-grid { grid-template-columns: 1fr; }
+  .public-site .sas-insight-feature { min-height: 320px; grid-template-columns: minmax(0, 1fr) minmax(160px, .65fr); }
+  .public-site .sas-home-insights-secondary { grid-template-rows: auto; }
+  .public-site .sas-insight-small-cover { width: 28%; flex-basis: 28%; min-height: 132px; }
+}
+@media (max-width: 600px) {
+  .public-site .sas-home-insights { padding-top: 12px; }
+  .public-site .sas-home-insights-head { margin-bottom: 20px; }
+  .public-site .sas-home-insights-heading h2 { font-size: clamp(27px, 7.4vw, 36px); line-height: 1.5; }
+  .public-site .sas-home-insights-heading p { font-size: 12px; }
+  .public-site .sas-home-insights-view-all { display: none; }
+  .public-site .sas-insight-feature {
+    padding: 17px;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1.05fr) minmax(112px, .78fr);
+    gap: 13px;
+    border-radius: 15px;
+  }
+  .public-site .sas-insight-feature-top { gap: 5px; }
+  .public-site .sas-insight-feature-top time { font-size: 10px; }
+  .public-site .sas-insight-feature h3 { font-size: clamp(17px, 4.3vw, 23px); line-height: 1.6; margin-top: 12px; }
+  .public-site .sas-insight-feature-text > p { font-size: 11px; line-height: 1.8; -webkit-line-clamp: 4; }
+  .public-site .sas-insight-feature-action { font-size: 11px; padding: 10px 12px; margin-top: 15px; }
+  .public-site .sas-insight-feature-cover { max-height: none; aspect-ratio: 3 / 4; align-self: center; }
+  .public-site .sas-insight-small-link { padding: 12px; gap: 12px; }
+  .public-site .sas-insight-small-cover { flex-basis: 30%; width: 30%; min-height: 110px; }
+  .public-site .sas-insight-small h3 { font-size: 13px; -webkit-line-clamp: 2; margin: 6px 0; }
+  .public-site .sas-insight-small p { font-size: 10px; -webkit-line-clamp: 2; }
+  .public-site .sas-insight-small-meta time { font-size: 9px; }
+  .public-site .sas-insight-tag { font-size: 10px; padding: 4px 8px; }
+  .public-site .sas-home-insights-mobile-all { display: inline-flex; margin: 20px auto 0; min-width: 200px; }
+}
+@media (max-width: 360px) {
+  .public-site .sas-insight-feature { grid-template-columns: 1fr; }
+  .public-site .sas-insight-feature-cover { grid-row: 1; width: 54%; justify-self: center; max-height: 210px; }
+  .public-site .sas-insight-feature-text { grid-row: 2; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site .sas-home-insights a, .public-site .sas-insight-small { transition: none; }
+}
