@@ -70,7 +70,7 @@ export async function uploadBriefingPhoto(form:FormData) {
   const header=new Uint8Array(await file.slice(0,12).arrayBuffer());
   if(String.fromCharCode(...header.slice(0,4))!=="RIFF"||String.fromCharCode(...header.slice(8,12))!=="WEBP")
     redirect(adminUrl(slug,"error=file"));
-  if(!alt||!credit||!["owned","permission","public_domain","cc_by"].includes(basis)||(basis!=="owned"&&!source))
+  if(basis && !["owned","permission","public_domain","cc_by"].includes(basis))
     redirect(adminUrl(slug,"error=rights"));
   if(source){
     try{if(new URL(source).protocol!=="https:")throw Error("source")}
@@ -87,8 +87,8 @@ export async function uploadBriefingPhoto(form:FormData) {
   const {data:asset,error:metadataError}=await supabase.from("media_assets").insert({
     bucket_id:"sas-public-media",object_path:objectPath,file_name:file.name,
     original_file_name:originalName||file.name,mime_type:"image/webp",
-    file_size:file.size,width,height,alt_text:alt,caption:caption||null,credit,
-    rights_basis:basis,original_source_url:source||null,uploaded_by:userId
+    file_size:file.size,width,height,alt_text:alt||null,caption:caption||null,credit:credit||null,
+    rights_basis:basis||null,original_source_url:source||null,uploaded_by:userId
   }).select("id").single();
   if(metadataError||!asset){
     await supabase.storage.from("sas-public-media").remove([objectPath]);
@@ -127,7 +127,7 @@ export async function publishBriefingPhotoRevision(form:FormData) {
   const {error:e1}=await supabase.rpc("submit_briefing_revision",{p_revision_id:revisionId});
   if(e1)redirect(adminUrl(slug,"error=publish"));
   const {error:e2}=await supabase.rpc("approve_briefing_revision",{
-    p_revision_id:revisionId,p_note_ar:"اعتماد إضافة الصور ووثائق مصدرها وترخيصها دون تغيير المحتوى النصي."
+    p_revision_id:revisionId,p_note_ar:"اعتماد إضافة الصور دون تغيير المحتوى النصي؛ بيانات المصدر والحقوق بحسب المتاح."
   });
   if(e2)redirect(adminUrl(slug,"error=publish"));
   const {error:e3}=await supabase.rpc("publish_briefing_revision",{p_revision_id:revisionId});
