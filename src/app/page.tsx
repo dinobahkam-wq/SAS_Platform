@@ -7,7 +7,7 @@ import {
   SectionHeading,
 } from "@/components/public-site";
 import { EditorialRail } from "@/components/editorial-rail";
-import { KnowledgeRail } from "@/components/knowledge-rail";
+import { HomeInsightsShowcase } from "@/components/home-insights-showcase";
 import { getPublishedContent } from "@/lib/public-content";
 import { getPublicBriefing, getPublicBriefingArchive } from "@/lib/public-briefing";
 import { HomeBriefingShowcase } from "@/components/home-briefing-showcase";
@@ -74,10 +74,12 @@ export default async function Home() {
 
       <section className="home-section home-analysis-section sas-product-section">
         <div className="site-container">
-          <SectionHeading eyebrow="قراءة معمّقة" title="التحليل والدراسات" href="/insights" />
           {insights.length
-            ? <KnowledgeRail title="أحدث التحليلات والدراسات" items={insights} />
-            : <EmptyContent message="لا توجد تحليلات أو دراسات منشورة حتى الآن." />}
+            ? <HomeInsightsShowcase items={insights} />
+            : <>
+                <SectionHeading eyebrow="قراءة معمّقة" title="التحليل والدراسات" href="/insights" />
+                <EmptyContent message="لا توجد تحليلات أو دراسات منشورة حتى الآن." />
+              </>}
         </div>
       </section>
 
