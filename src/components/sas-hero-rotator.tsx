@@ -9,11 +9,11 @@ import { useEffect, useState } from "react";
  */
 const SOURCES = [
   "/sa.webp.png",
-  "/12.webp",
-  "/13.webp",
-  "/14.webp",
-  "/15.webp",
-  "/16.webp",
+  "/12.webp.png",
+  "/13.webp.png",
+  "/14.webp.png",
+  "/15.webp.png",
+  "/16.webp.png",
 ] as const;
 
 export function SasHeroRotator() {
