@@ -54,3 +54,184 @@
 @media(max-width:1020px){.sas-home-briefing-feature{grid-template-columns:1fr}.sas-home-briefing-highlights{border-inline-start:0;border-top:1px solid var(--line)}.sas-home-briefing-date{margin-top:20px}.sas-home-briefing-archive-grid{justify-content:flex-start}}
 @media(max-width:600px){.sas-home-briefing-feature{border-radius:12px}.sas-home-briefing-main,.sas-home-briefing-highlights{padding:20px}.sas-home-briefing-title{font-size:25px;line-height:1.6}.sas-home-briefing-lede{font-size:12px}.sas-home-briefing-date{margin-top:18px}.sas-home-briefing-metrics{gap:6px}.sas-home-briefing-metric{padding:7px 9px}.sas-home-briefing-actions{padding-top:22px}.sas-home-briefing-edition-note{display:none}.sas-home-briefing-archive{gap:10px}.sas-home-briefing-archive-grid{width:100%}.sas-home-briefing-archive-item{flex:1;min-width:min(100%,180px)}.sas-home-briefing-highlight-copy p{-webkit-line-clamp:2}}
 @media(prefers-reduced-motion:reduce){.sas-home-briefing-wrap a{transition:none}}
+
+
+/* Flagship briefing v3 — visual editorial bridge with the permanent Mukalla photograph. */
+.public-site .sas-home-briefing-feature {
+  grid-template-columns: minmax(0, 1.1fr) minmax(145px, .26fr) minmax(0, .91fr);
+  align-items: stretch;
+  border-radius: 23px;
+  border-color: color-mix(in srgb, var(--line) 76%, var(--accent) 24%);
+  box-shadow: 0 19px 44px rgba(26, 62, 56, .075);
+}
+.public-site .sas-home-briefing-main {
+  padding: clamp(27px, 3.65vw, 49px);
+  justify-content: flex-start;
+  background: var(--surface);
+}
+.public-site .sas-home-briefing-topline { margin-bottom: clamp(19px, 3vw, 35px); }
+.public-site .sas-home-briefing-kicker {
+  background: color-mix(in srgb, var(--accent-soft) 55%, var(--surface));
+  padding: 8px 11px;
+  border-radius: 9px;
+  letter-spacing: 0;
+}
+.public-site .sas-home-briefing-no {
+  font-size: 12px;
+  border-radius: 9px;
+  padding: 8px 10px;
+}
+.public-site .sas-home-briefing-title {
+  position: relative;
+  padding-inline-start: 16px;
+  margin: 4px 0 13px;
+  font: 700 clamp(32px, 3.65vw, 55px) / 1.45 "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+  color: var(--foreground);
+}
+.public-site .sas-home-briefing-title::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 14%;
+  bottom: 17%;
+  width: 5px;
+  background: var(--accent);
+  border-radius: 8px;
+}
+.public-site .sas-home-briefing-date {
+  margin-top: 0;
+  font-size: 12px;
+  gap: 9px;
+}
+.public-site .sas-home-briefing-subject {
+  margin: 14px 0 0;
+  max-width: 48ch;
+  color: var(--foreground);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.8;
+}
+.public-site .sas-home-briefing-lede {
+  margin-top: 15px;
+  font-size: 13px;
+  max-width: 46ch;
+}
+.public-site .sas-home-briefing-metrics {
+  margin-top: 24px;
+  gap: 8px;
+}
+.public-site .sas-home-briefing-metric {
+  border-radius: 10px;
+  padding: 9px 12px;
+}
+.public-site .sas-home-briefing-actions { padding-top: 32px; }
+.public-site .sas-home-briefing-primary-link {
+  border-radius: 10px;
+  min-height: 49px;
+  padding: 12px 22px;
+  font-size: 13px;
+}
+.public-site .sas-home-briefing-art {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 390px;
+  overflow: hidden;
+  background: #cbd9d5;
+  clip-path: polygon(29% 0, 100% 0, 70% 100%, 0 100%);
+}
+.public-site .sas-home-briefing-art-photo {
+  position: absolute;
+  inset: 0;
+  background: url("/17.webp") center / cover no-repeat;
+  filter: grayscale(100%) contrast(.95);
+  transform: scale(1.02);
+}
+.public-site .sas-home-briefing-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg,
+    rgba(5, 101, 103, .58) 0%,
+    rgba(185, 218, 210, .34) 43%,
+    rgba(5, 98, 98, .59) 100%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.public-site .sas-home-briefing-art-grid {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 58% 0;
+  opacity: .4;
+  background-image: radial-gradient(rgba(255, 255, 255, .8) 1px, transparent 1.5px);
+  background-size: 7px 7px;
+  mask-image: radial-gradient(ellipse at 58% 58%, black 9%, transparent 77%);
+}
+.public-site .sas-home-briefing-highlights {
+  border-inline-start: 0;
+  padding: clamp(26px, 3vw, 40px);
+  background: color-mix(in srgb, var(--surface) 94%, var(--accent-soft));
+}
+.public-site .sas-home-briefing-aside-heading > span:first-child { font-size: 15px; }
+.public-site .sas-home-briefing-list li {
+  grid-template-columns: 35px minmax(0, 1fr);
+  gap: 12px;
+  padding: 18px 0;
+}
+.public-site .sas-home-briefing-index {
+  display: grid;
+  place-items: center;
+  align-self: start;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  color: var(--accent);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--accent-soft) 69%, var(--surface));
+}
+.public-site .sas-home-briefing-highlight-copy p {
+  font-size: 12px;
+  line-height: 1.9;
+  -webkit-line-clamp: 3;
+}
+.public-site .sas-home-briefing-aside-link { padding-top: 23px; font-size: 12px; }
+
+@media (max-width: 1150px) {
+  .public-site .sas-home-briefing-feature {
+    grid-template-columns: minmax(0, 1.08fr) minmax(100px, .18fr) minmax(0, .88fr);
+  }
+  .public-site .sas-home-briefing-main,
+  .public-site .sas-home-briefing-highlights { padding: 26px; }
+  .public-site .sas-home-briefing-title { font-size: clamp(29px, 3.3vw, 42px); }
+}
+@media (max-width: 850px) {
+  .public-site .sas-home-briefing-feature { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
+  .public-site .sas-home-briefing-art {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-height: 175px;
+    max-height: 215px;
+    clip-path: none;
+  }
+  .public-site .sas-home-briefing-main { grid-column: 1 / -1; grid-row: 2; }
+  .public-site .sas-home-briefing-highlights {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    border-top: 1px solid var(--line);
+  }
+}
+@media (max-width: 600px) {
+  .public-site .sas-home-briefing-feature { border-radius: 16px; }
+  .public-site .sas-home-briefing-art { min-height: 155px; height: 180px; }
+  .public-site .sas-home-briefing-main,
+  .public-site .sas-home-briefing-highlights { padding: 22px 20px; }
+  .public-site .sas-home-briefing-title { font-size: 32px; }
+  .public-site .sas-home-briefing-topline { margin-bottom: 22px; }
+  .public-site .sas-home-briefing-metric { padding: 8px 10px; }
+  .public-site .sas-home-briefing-lede { font-size: 12px; }
+  .public-site .sas-home-briefing-highlights { padding-bottom: 26px; }
+}
+@media print {
+  .public-site .sas-home-briefing-feature { grid-template-columns: 1fr 1fr; }
+  .public-site .sas-home-briefing-art { display: none; }
+}
