@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { formatBriefingDateOnly } from "@/components/briefing-public";
 import type { BriefingArchiveItem, PublicBriefing } from "@/lib/public-briefing";
+import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
 import "./home-briefing-showcase.css";
 
 type IconName = "document" | "calendar" | "globe" | "layers" | "arrow" | "shield" | "pulse";
@@ -52,7 +53,8 @@ export function HomeBriefingShowcase({
   const subject = (latest.title_ar || "")
     .replace(/^الإحاطة اليومية\s*[|｜:–—-]\s*/u, "")
     .trim() || "قراءة يومية في تطورات اليمن ومحيطه";
-  const highlights = (briefing?.executiveSummary ?? []).slice(0, 3);
+  // Match the public briefing's displayed ordering, keeping each development's own image.
+  const highlights = prioritizeBriefingDevelopments(briefing?.developments ?? []).slice(0, 3);
   const developmentsCount = briefing?.developments.length;
   const summaryCount = briefing?.executiveSummary.length;
 
@@ -101,24 +103,44 @@ export function HomeBriefingShowcase({
           <div className="sas-home-briefing-art-grid"/>
         </div>
 
-        <aside className="sas-home-briefing-highlights" aria-label="من أبرز موضوعات العدد">
+        <aside className="sas-home-briefing-highlights" aria-label="أول ثلاثة تطورات من العدد">
           <div className="sas-home-briefing-aside-heading">
-            <span><BriefingIcon name="layers"/> من موجز العدد</span>
-            <span>{highlights.length ? "مختارات المحرر" : "الإحاطة الموثقة"}</span>
+            <span><BriefingIcon name="layers"/> من تطورات العدد</span>
+            <span>{highlights.length ? "من السجل الموثق" : "الإحاطة الموثقة"}</span>
           </div>
           {highlights.length ? (
             <ol className="sas-home-briefing-list">
               {highlights.map((item, index) => (
-                <li key={item.order + "-" + index}>
-                  <span className="sas-home-briefing-index">{String(index + 1).padStart(2, "0")}</span>
-                  <div className="sas-home-briefing-highlight-copy">
-                    <p>{item.text_ar}</p>
-                  </div>
+                <li key={item.order}>
+                  <Link className="sas-home-briefing-story" href={href + "#sas-development-" + item.order}>
+                    {item.image ? (
+                      <span className="sas-home-briefing-story-photo">
+                        <img
+                          src={item.image.url}
+                          alt={item.image.alt_text || ("صورة مرافقة للتطور: " + item.headline_ar)}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </span>
+                    ) : (
+                      <span className="sas-home-briefing-story-no-photo" aria-hidden="true">
+                        <BriefingIcon name="document"/>
+                      </span>
+                    )}
+                    <div className="sas-home-briefing-highlight-copy">
+                      <span className="sas-home-briefing-highlight-meta">
+                        <span className="sas-home-briefing-index">{String(index + 1).padStart(2, "0")}</span>
+                        <span>التطور {String(item.order + 1).padStart(2, "0")}</span>
+                      </span>
+                      <h4>{item.headline_ar}</h4>
+                      {item.summary_ar ? <p>{item.summary_ar}</p> : null}
+                    </div>
+                  </Link>
                 </li>
               ))}
             </ol>
           ) : (
-            <p className="sas-home-briefing-no-highlights">تُعرض المواد المختارة من الموجز التنفيذي فور توفر تفاصيل العدد.</p>
+            <p className="sas-home-briefing-no-highlights">تظهر التطورات المنشورة هنا فور توفر بيانات العدد.</p>
           )}
           <Link href={href} className="sas-home-briefing-aside-link">الاطلاع على السجل الكامل <BriefingIcon name="arrow"/></Link>
         </aside>
