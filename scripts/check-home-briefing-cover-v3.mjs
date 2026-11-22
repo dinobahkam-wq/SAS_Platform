@@ -25,3 +25,22 @@ test("edition metadata, source-backed counts, summary and archive links remain d
   assert.match(css, /@media \(max-width: 850px\)/);
   assert.match(css, /@media \(max-width: 600px\)/);
 });
+
+
+test("homepage previews the first three public developments with their own thumbnails", () => {
+  assert.match(jsx, /prioritizeBriefingDevelopments\(briefing\?\.developments \?\? \[\]\)\.slice\(0, 3\)/);
+  assert.match(jsx, /item\.image \?/);
+  assert.match(jsx, /src=\{item\.image\.url\}/);
+  assert.match(jsx, /item\.headline_ar/);
+  assert.match(jsx, /item\.summary_ar/);
+  assert.match(jsx, /#sas-development-/);
+  assert.match(css, /\.sas-home-briefing-story-photo/);
+  assert.match(css, /object-fit: cover/);
+});
+test("new visual hierarchy and motion respect small screens and reduced-motion settings", () => {
+  assert.match(css, /@keyframes sasBriefingSheen/);
+  assert.match(css, /@keyframes sasBriefingAccent/);
+  assert.match(css, /prefers-reduced-motion: reduce/);
+  assert.match(css, /@media \(max-width: 600px\)/);
+  assert.match(css, /\.sas-home-briefing-art \{/);
+});
