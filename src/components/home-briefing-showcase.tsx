@@ -65,6 +65,7 @@ export function HomeBriefingShowcase({
             <span className="sas-home-briefing-no">العدد {String(latest.edition_no).padStart(2, "0")}</span>
           </div>
 
+          <h3 className="sas-home-briefing-title">الإحاطة اليومية</h3>
           <div className="sas-home-briefing-date">
             <BriefingIcon name="calendar"/>
             <time dateTime={latest.edition_date}>{formatBriefingDateOnly(latest.edition_date)}</time>
@@ -72,8 +73,9 @@ export function HomeBriefingShowcase({
             <BriefingIcon name="globe"/>
             <span>اليمن والإقليم والعالم</span>
           </div>
-
-          <h3 className="sas-home-briefing-title">{subject}</h3>
+          {subject && subject !== "الإحاطة اليومية" && !/^\d{1,2}\s+/.test(subject) ? (
+            <p className="sas-home-briefing-subject">{subject}</p>
+          ) : null}
           <p className="sas-home-briefing-lede">
             أبرز الوقائع والمواقف والتغيرات، ضمن سجل تحريري موثق يضع التطورات في سياقها.
           </p>
@@ -90,8 +92,13 @@ export function HomeBriefingShowcase({
 
           <div className="sas-home-briefing-actions">
             <Link className="sas-home-briefing-primary-link sas-cta sas-cta--primary" href={href}>قراءة الإحاطة <BriefingIcon name="arrow"/></Link>
-            <span className="sas-home-briefing-edition-note">نسخة تحريرية مؤرخة وقابلة للتوثيق</span>
+            
           </div>
+        </div>
+
+        <div className="sas-home-briefing-art" aria-hidden="true">
+          <div className="sas-home-briefing-art-photo"/>
+          <div className="sas-home-briefing-art-grid"/>
         </div>
 
         <aside className="sas-home-briefing-highlights" aria-label="من أبرز موضوعات العدد">
