@@ -8,8 +8,8 @@ const css=read("src/app/sas-split-hero.css");
 const rotator=read("src/components/sas-hero-rotator.tsx");
 test("the single hero card has a separate decorative left image and a semantic right copy column",()=>{
   assert.match(page,/sas-mukalla-hero sas-split-hero site-container/);
-  assert.match(page,/<div className="sas-hero-visual" aria-hidden="true" \/>/);
-  assert.ok(page.indexOf('className="sas-hero-visual"')<page.indexOf('className="home-intro-copy"'));
+  assert.match(page,/<SasHeroRotator \/>/);
+  assert.ok(page.indexOf("<SasHeroRotator />")<page.indexOf('className="home-intro-copy"'));
   assert.match(page,/مِن الخَبر، <em>إِلى المعرِفَة<\/em>/);
   assert.match(page,/استعرض الإحاطة اليومية/);
   assert.match(page,/التحليل والدراسات/);
