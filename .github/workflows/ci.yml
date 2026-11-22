@@ -57,7 +57,8 @@ jobs:
             scripts/check-mobile-experience-package-a.mjs \
             scripts/check-mukalla-home-hero.mjs \
             scripts/check-sas-split-hero.mjs \
-            scripts/check-home-briefing-cover-v3.mjs
+            scripts/check-home-briefing-cover-v3.mjs \
+            scripts/check-home-insights-showcase-v1.mjs
 
       - name: Typecheck
         run: npm run typecheck
