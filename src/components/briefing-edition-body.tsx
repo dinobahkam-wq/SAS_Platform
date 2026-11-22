@@ -170,12 +170,16 @@ export function BriefingEditionBody({
                       <BriefingIdentityMarks development={development}/>
                       <BriefingLocationMark place={development.place}/>
                     </div>
-                    <h3>{development.headline_ar}</h3>
-                    {development.image?<figure className="sas-briefing-photo">
-                      <img src={development.image.url} alt={development.image.alt_text} loading="lazy" decoding="async"/>
-                      <figcaption>{development.image.caption||development.image.alt_text} · {development.image.credit}</figcaption>
-                    </figure>:null}
-                    {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
+                    <div className={development.image ? "sas-briefing-media-row" : "sas-briefing-media-row sas-briefing-media-row--text-only"}>
+                      {development.image ? <figure className="sas-briefing-photo">
+                        <img src={development.image.url} alt={development.image.alt_text} loading="lazy" decoding="async"/>
+                        <figcaption>{development.image.caption || development.image.alt_text} · {development.image.credit}</figcaption>
+                      </figure> : null}
+                      <div className="sas-briefing-media-copy">
+                        <h3>{development.headline_ar}</h3>
+                        {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
+                      </div>
+                    </div>
 
                     <div className="briefing-dense-foot">
                       <div className="briefing-dense-evidence">
