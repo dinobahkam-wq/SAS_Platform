@@ -225,6 +225,8 @@ html[data-theme="dark"] .public-site .home-brand-hero.sas-split-hero p {
   background-repeat: no-repeat;
   background-position: 42% 50%;
   background-size: cover;
+  /* Reversible monochrome trial: source assets remain untouched. */
+  filter: grayscale(100%);
   opacity: 0;
   transition: opacity 1100ms ease-in-out;
   will-change: opacity;
