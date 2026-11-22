@@ -88,9 +88,6 @@ export default async function PublicBriefingPage({
               تصدير PDF
             </Link>
           </div>
-          {correction && revision.change_reason_ar ? (
-            <p className="briefing-correction-note">سبب التصحيح: {revision.change_reason_ar}</p>
-          ) : null}
         </header>
 
         <section className="sas-fixed-reference-panel" aria-label="مؤشرات العدد والبيانات المرجعية">
