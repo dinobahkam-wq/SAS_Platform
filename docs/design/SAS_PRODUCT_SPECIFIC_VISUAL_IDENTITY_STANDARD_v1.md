@@ -1,7 +1,7 @@
 # SAS — Product-Specific Visual Identity Principle
 Version: 1.0 (proposed design standard)
 Date: 2026-11-23
-Status: Proposed for editorial and design approval
+Status: Product-specific identity framework proposed; Visual Knowledge homepage portal and gallery layout approved 2026-11-23
 Applies to: Homepage, product landing pages, content viewers, CMS previews
 
 ## Governing principle
@@ -30,20 +30,21 @@ Do not apply the same generic article-card layout to every product. Product func
 **Editorial concept:** Visual Knowledge Atlas / Gallery & Explorer
 **Design premise:** the image, map, chart or diagram IS the primary content; surrounding text is orientation, controls and attribution.
 
-### Homepage module
-- One featured published visual item with dominant poster/visual preview (not a tiny image next to an article).
-- Title, format, date and a single concise value statement (2 lines preferred); primary CTA “عرض الصورة” for a raster infographic, “استكشاف الخريطة” for map, “استكشاف المخطط” for interactive figure.
-- Optional secondary thumbnails only if real additional published visual items exist.
-- No filler scaffolding, invented thumbnails, meaningless counters or duplicated excerpts.
-- A distinctive but restrained gallery aesthetic: deep teal drawing-surface option, off-white mount, thin indexed borders, subtle grid/ticks, strong imagery.
-- Readable mobile view: artwork first, metadata and action clearly accessible; do not create horizontal overflow or unreadable raster mini-text.
+### Homepage module — APPROVED 2026-11-23
+- **No publication cards or specific visual items appear on the homepage in this section.**
+- A dedicated visual atlas portal communicates product purpose through original vector/abstract illustrations of maps, charts and knowledge cards, not simulated published news.
+- One primary action: “استكشف المعرض”, pointing to /visual-knowledge.
+- Keep SAS identity, RTL, fonts and functional contrast; distinct cartographic background and layered illustration.
+- On phones, the illustration precedes introductory text and action without horizontal overflow.
 
-### Section landing page
-- Product-specific header and succinct purpose; searchable/filterable gallery when inventory warrants it.
-- Categories by product form: بطاقات معرفية، خرائط، مخططات، إنفوجرافيك، خطوط زمنية.
-- Cover previews preserve original aspect ratio and identify type.
-- No forced single identical card aspect ratio for all maps, portraits and landscape charts.
-- First view is a visual gallery, not a duplicate article list.
+### Section landing page — APPROVED 2026-11-23
+- Gallery-first display of actual published media assets from Supabase, NOT a lead article / text editorial module.
+- Search, sort by publication date and type filters. Only display filters represented by actual published formats; extend taxonomy when new formats are supported by the CMS.
+- Grid responsive: 3 columns desktop, 2 tablet, 1 mobile, preserving image aspect ratios with object-fit: contain.
+- Cover opens the original image; article title opens its canonical contextual detail page.
+- Type, date and concise caption appear below artworks. No manufactured illustrative posts or placeholder article records.
+- Keep original files unchanged; publishing metadata and any future cover-versus-artwork split are separate editorial workflows.
+- The gallery may paginate as content grows beyond the current server feed ceiling; do not imply exhaustive history once there are more than the API limit.
 
 ### Single visual item viewer
 - **Visual stage:** image-fit by default, zoom (when useful), open original, download/share if permissions allow, source and update date.
@@ -77,4 +78,4 @@ Do not migrate existing schema until the actual editorial workflow and backwards
 - The Pudding resources: https://pudding.cool/resources/
 
 ## Decision boundary
-This is a design and editorial standard proposal; it does not authorize publishing, database schema changes, or production deployment. Implement only after visual review and approval.
+The Visual Knowledge portal and gallery interface are approved for development branch implementation. Further design system changes, publishing, database schema changes and production deployment require separate approval.
