@@ -18,6 +18,14 @@ export function VisualKnowledgePortal() {
       </div>
       <div className="sas-vkp-illustration" aria-hidden="true">
         <div className="sas-vkp-map-contours" />
+        <div className="sas-vkp-globe">
+          <svg viewBox="0 0 240 240" fill="none" aria-hidden="true">
+            <circle cx="120" cy="120" r="107" stroke="currentColor" strokeWidth="1.5"/>
+            <ellipse cx="120" cy="120" rx="52" ry="107" stroke="currentColor" strokeWidth="1.5"/>
+            <path d="M13 120H227 M26 73H214 M26 167H214" stroke="currentColor" strokeWidth="1.5"/>
+            <path d="M73 39 89 55 82 75 106 85 113 115 96 133 91 170 68 177 54 153 49 123 27 110 32 80 55 71Z M133 58 157 47 183 62 189 84 171 102 193 128 176 153 157 148 147 180 127 171 132 133 111 112 121 90Z" fill="currentColor" fillOpacity=".42"/>
+          </svg>
+        </div>
         <div className="sas-vkp-illustration-card sas-vkp-illustration-card--chart">
           <svg viewBox="0 0 180 112" fill="none" aria-hidden="true">
             <path d="M15 95H165 M15 95V18" stroke="currentColor" strokeOpacity=".28" strokeWidth="2"/>
