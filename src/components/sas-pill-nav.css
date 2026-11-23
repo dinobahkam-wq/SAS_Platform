@@ -1,0 +1,152 @@
+/* SAS PillNav — compact RTL-compatible animated navigation.
+ * Links remain navigational anchors; briefing filters remain real buttons.
+ * Uses geometric spring-like CSS easing without an animation-frame loop.
+ */
+.sas-pill-nav {
+  --sas-pill-fg: #41584f;
+  --sas-pill-active: #fff;
+  --sas-pill-surface: rgba(223, 237, 229, .65);
+  --sas-pill-glide: #087a77;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  padding: 4px;
+  border: 1px solid rgba(20, 95, 85, .10);
+  border-radius: 999px;
+  background: var(--sas-pill-surface);
+  box-shadow: inset 0 1px rgba(255,255,255,.65);
+  direction: rtl;
+}
+.sas-pill-nav__track {
+  position: relative;
+  display: flex;
+  direction: rtl;
+  align-items: center;
+  width: max-content;
+  min-width: 100%;
+  gap: 3px;
+}
+.sas-pill-nav__indicator {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: var(--sas-pill-glide);
+  box-shadow: 0 5px 12px rgba(4, 101, 97, .16), inset 0 1px 0 rgba(255,255,255,.13);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: center;
+  transition: left .46s cubic-bezier(.22, 1, .36, 1),
+              width .46s cubic-bezier(.22, 1, .36, 1),
+              opacity .18s ease;
+}
+.sas-pill-nav__indicator.is-ready { opacity: 1; }
+.sas-pill-nav__item,
+.public-site .site-header .sas-pill-nav__item {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  gap: 7px;
+  min-height: 37px;
+  padding: 8px 15px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  box-shadow: none;
+  color: var(--sas-pill-fg);
+  font: 650 12px/1.5 "Thmanyah Sans", sans-serif;
+  text-align: center;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .19s ease;
+}
+.sas-pill-nav__item.is-active,
+.sas-pill-nav__item:hover,
+.sas-pill-nav__item:focus-visible,
+.public-site .site-header .sas-pill-nav__item.is-active,
+.public-site .site-header .sas-pill-nav__item:hover,
+.public-site .site-header .sas-pill-nav__item:focus-visible {
+  color: var(--sas-pill-active);
+  background: none;
+}
+.sas-pill-nav__item:focus-visible {
+  outline: 2px solid #c99d48;
+  outline-offset: -3px;
+}
+.sas-pill-nav__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 23px;
+  height: 22px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.45);
+  color: inherit;
+  font: 700 10px/1 "Thmanyah Sans", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.sas-pill-nav--header {
+  flex: 0 1 auto;
+  width: max-content;
+  max-width: 100%;
+}
+.sas-pill-nav--briefing {
+  --sas-pill-surface: #edf3ef;
+  --sas-pill-glide: #087b79;
+  margin: 0 0 23px;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.sas-pill-nav--briefing::-webkit-scrollbar,
+.sas-pill-nav--header::-webkit-scrollbar { display: none; }
+.sas-pill-nav--briefing .sas-pill-nav__item {
+  min-height: 40px;
+  padding: 9px 14px;
+  font-size: 12px;
+}
+html[data-theme="dark"] .sas-pill-nav {
+  --sas-pill-fg: #c6d7cf;
+  --sas-pill-active: #f8fcfb;
+  --sas-pill-surface: rgba(31, 52, 46, .87);
+  --sas-pill-glide: #177f79;
+  border-color: rgba(166, 212, 194, .16);
+  box-shadow: inset 0 1px rgba(255,255,255,.04);
+}
+html[data-theme="dark"] .sas-pill-nav__count { background: rgba(0,0,0,.17); }
+@media (max-width: 760px) {
+  .public-site .site-header .sas-pill-nav--header,
+  .briefing-public-site .site-header .sas-pill-nav--header {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: flex-start;
+    padding: 4px;
+    border-radius: 13px;
+    scrollbar-width: none;
+  }
+  .public-site .site-header .sas-pill-nav--header .sas-pill-nav__track {
+    min-width: max-content;
+  }
+  .public-site .site-header .sas-pill-nav--header .sas-pill-nav__item {
+    min-height: 43px;
+    padding: 10px 13px;
+  }
+  .sas-pill-nav--briefing { width: 100%; max-width: 100%; border-radius: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sas-pill-nav__indicator,
+  .sas-pill-nav__item { transition: none !important; }
+}
+@media print {
+  .sas-pill-nav__indicator { display: none; }
+  .sas-pill-nav__item.is-active { color: var(--foreground) !important; text-decoration: underline; }
+}
