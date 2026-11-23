@@ -1,0 +1,58 @@
+/* Dedicated gallery gateway, visually distinct from SAS article and briefing cards. */
+.public-site .sas-vkp {
+  position:relative;isolation:isolate;display:grid;direction:rtl;
+  grid-template-columns:minmax(0,1fr) minmax(270px,.95fr);
+  min-height:270px;overflow:hidden;
+  border:1px solid color-mix(in srgb,var(--accent) 43%,var(--line));
+  border-radius:20px;
+  background:linear-gradient(116deg,color-mix(in srgb,var(--accent-soft) 52%,var(--surface)),var(--surface) 58%);
+  box-shadow:0 13px 35px rgba(11,65,61,.045);
+}
+.public-site .sas-vkp::before { content:"";position:absolute;inset:0;pointer-events:none;opacity:.13;
+ background:repeating-radial-gradient(circle at 28% 75%,transparent 0 15px,var(--accent) 16px 17px,transparent 18px 34px); }
+.public-site .sas-vkp-copy {
+ position:relative;z-index:2;padding:clamp(24px,3.6vw,54px);
+ display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-width:0;
+}
+.public-site .sas-vkp-eyebrow {color:var(--accent);font:700 11px/1.7 "Thmanyah Sans",sans-serif;}
+.public-site .sas-vkp-copy h3 {margin:10px 0 15px;font:700 clamp(28px,3.2vw,46px)/1.45 "Tajarib Taweel","Thmanyah Sans",sans-serif;}
+.public-site .sas-vkp-copy p {max-width:47ch;margin:0;color:var(--muted);font:400 13px/1.95 "Thmanyah Sans",sans-serif;}
+.public-site .sas-vkp-actions {display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:26px;}
+.public-site .sas-vkp-cta {display:inline-flex;justify-content:center;align-items:center;gap:13px;min-height:46px;
+ border-radius:10px;padding:11px 21px;background:var(--brand-teal-deep,var(--accent));color:#fff;
+ font:700 13px/1.5 "Thmanyah Sans",sans-serif;transition:transform .2s ease,filter .2s ease;}
+.public-site .sas-vkp-cta:hover {transform:translateY(-2px);filter:brightness(1.1);}
+.public-site .sas-vkp-formats {font:500 11px/1.8 "Thmanyah Sans",sans-serif;color:var(--muted);}
+.public-site .sas-vkp-illustration {position:relative;isolation:isolate;min-height:260px;overflow:hidden;pointer-events:none;}
+.public-site .sas-vkp-map-contours {position:absolute;inset:0;opacity:.37;
+ background:repeating-radial-gradient(ellipse at 58% 52%,transparent 0 15px,color-mix(in srgb,var(--accent) 25%,transparent) 16px 17px,transparent 18px 34px);}
+.public-site .sas-vkp-illustration-card {position:absolute;display:grid;place-items:center;
+ border:1px solid rgba(24,109,100,.22);border-radius:12px;
+ background:#f6f7ef;box-shadow:0 16px 30px rgba(12,69,67,.18);padding:13px 14px;
+ color:#0e655c;transition:transform .25s ease;}
+.public-site .sas-vkp-illustration-card svg {width:100%;height:80%;}
+.public-site .sas-vkp-illustration-card > span:last-child {font:700 10px "Thmanyah Sans",sans-serif;}
+.public-site .sas-vkp-illustration-card--chart {width:43%;height:58%;left:7%;top:8%;transform:rotate(-12deg);}
+.public-site .sas-vkp-illustration-card--map {width:43%;height:66%;left:37%;top:17%;transform:rotate(9deg);z-index:1;}
+.public-site .sas-vkp-illustration-card--note {width:39%;height:51%;left:24%;top:42%;transform:rotate(-4deg);
+ background:linear-gradient(160deg,#f7f9f1,#d8ece5);}
+.public-site .sas-vkp-note-tag {font-size:8px!important;color:#31756b;}
+.public-site .sas-vkp-note-lines {display:grid;gap:8px;width:84%;}
+.public-site .sas-vkp-note-lines i {height:5px;border-radius:9px;background:#80aea4;}
+.public-site .sas-vkp-note-lines i:nth-child(2) {width:68%;}
+.public-site .sas-vkp-note-lines i:nth-child(3) {width:84%;}
+.public-site .sas-vkp a:focus-visible {outline:2px solid var(--accent);outline-offset:4px;}
+@media(max-width:760px) {
+ .public-site .sas-vkp {grid-template-columns:1fr;}
+ .public-site .sas-vkp-illustration {grid-row:1;min-height:190px;max-height:210px;}
+ .public-site .sas-vkp-copy {grid-row:2;padding:25px 23px 30px;}
+ .public-site .sas-vkp-copy h3 {font-size:30px;}
+ .public-site .sas-vkp-actions {margin-top:20px;}
+}
+@media(max-width:420px) {
+ .public-site .sas-vkp-illustration {min-height:164px;height:165px;}
+ .public-site .sas-vkp-copy {padding:21px;}
+ .public-site .sas-vkp-formats {font-size:10px;}
+ .public-site .sas-vkp-illustration-card {padding:9px;}
+}
+@media(prefers-reduced-motion:reduce) { .public-site .sas-vkp-cta {transition:none;} .public-site .sas-vkp-cta:hover {transform:none;} }
