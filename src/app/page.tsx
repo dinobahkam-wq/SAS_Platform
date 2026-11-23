@@ -52,7 +52,7 @@ export default async function Home() {
       <section className="home-compact-intro home-brand-hero sas-mukalla-hero sas-split-hero site-container">
         <SasHeroRotator />
         <div className="home-intro-copy">
-          <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
+          <h1 className="sas-slogan-stroke" aria-label="مِن الخَبر، إِلى المعرِفَة"><span className="sas-slogan-segment sas-slogan-segment--first" data-text="مِن الخَبر،" aria-hidden="true">مِن الخَبر،</span>{" "}<em className="sas-slogan-segment sas-slogan-segment--second" data-text="إِلى المعرِفَة" aria-hidden="true">إِلى المعرِفَة</em></h1>
           <p>إحاطة سياسية موثقة، وتحليلات ودراسات، ومعرفة بصرية وفيديوهات تفسر الأحداث وسياقاتها.</p>
           <div className="home-compact-actions">
             <Link href="/briefings" className="button button-primary sas-cta sas-cta--primary">استعرض الإحاطة اليومية</Link>
