@@ -1,0 +1,64 @@
+/* Header only: keep the approved full-color transparent asset,
+ * reveal a restrained metallic reflection exclusively inside its alpha.
+ * No WebGL shader loop or extra image load is required.
+ */
+.site-header .site-brand .sas-metallic-logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+.site-header .site-brand .sas-metallic-logo .brand-logo-color {
+  display: block;
+}
+.site-header .site-brand .sas-metallic-logo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(112deg,
+    transparent 0%, transparent 34%,
+    rgba(255, 255, 255, .08) 40%,
+    rgba(240, 247, 230, .72) 48%,
+    rgba(189, 207, 197, .28) 53%,
+    transparent 61%, transparent 100%);
+  -webkit-mask-image: url("/brand/logos/sas%20color%20logo%20for%20the%20white%20background.png");
+  mask-image: url("/brand/logos/sas%20color%20logo%20for%20the%20white%20background.png");
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  opacity: 0;
+  transform: translateX(54%);
+}
+@media (hover: hover) and (pointer: fine) {
+  .site-header .site-brand:hover .sas-metallic-logo::after,
+  .site-header .site-brand:focus-visible .sas-metallic-logo::after {
+    opacity: .72;
+    transform: translateX(-55%);
+    transition: opacity .2s ease, transform 1.15s cubic-bezier(.22, 1, .36, 1);
+  }
+}
+.site-header .site-brand:focus-visible .sas-metallic-logo::after {
+  opacity: .72;
+  transform: translateX(-55%);
+  transition: opacity .2s ease, transform 1.15s cubic-bezier(.22, 1, .36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header .site-brand .sas-metallic-logo::after,
+  .site-header .site-brand:hover .sas-metallic-logo::after,
+  .site-header .site-brand:focus-visible .sas-metallic-logo::after {
+    opacity: 0;
+    transition: none;
+    transform: none;
+  }
+}
+@media print {
+  .site-header .site-brand .sas-metallic-logo::after { display: none; }
+}
