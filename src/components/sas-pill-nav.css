@@ -65,12 +65,9 @@
   cursor: pointer;
   transition: color .19s ease;
 }
-.sas-pill-nav__item.is-active,
-.sas-pill-nav__item:hover,
-.sas-pill-nav__item:focus-visible,
-.public-site .site-header .sas-pill-nav__item.is-active,
-.public-site .site-header .sas-pill-nav__item:hover,
-.public-site .site-header .sas-pill-nav__item:focus-visible {
+.sas-pill-nav__item.is-highlighted,
+.public-site .site-header .sas-pill-nav__item.is-highlighted,
+.briefing-public-site .site-header .sas-pill-nav__item.is-highlighted {
   color: var(--sas-pill-active);
   background: none;
 }
