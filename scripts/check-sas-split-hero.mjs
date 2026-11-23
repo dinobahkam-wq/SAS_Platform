@@ -10,7 +10,7 @@ test("the single hero card has a separate decorative left image and a semantic r
   assert.match(page,/sas-mukalla-hero sas-split-hero site-container/);
   assert.match(page,/<SasHeroRotator \/>/);
   assert.ok(page.indexOf("<SasHeroRotator />")<page.indexOf('className="home-intro-copy"'));
-  assert.match(page,/مِن الخَبر، <em>إِلى المعرِفَة<\/em>/);
+  assert.match(page,/aria-label="مِن الخَبر، إِلى المعرِفَة"/);
   assert.match(page,/استعرض الإحاطة اليومية/);
   assert.match(page,/التحليل والدراسات/);
   assert.ok(existsSync("public/sa.webp.png"));
@@ -48,4 +48,17 @@ test("rotator uses the approved first frame and the five optional editorial fram
   assert.match(rotator,/prefers-reduced-motion/);
   assert.match(css,/\.sas-hero-rotator-frame\.is-active/);
   assert.match(css,/opacity 1100ms ease-in-out/);
+});
+
+test("Arabic slogan stroke effect retains connected script and accessibility",()=>{
+  assert.match(page,/className="sas-slogan-stroke"/);
+  assert.match(page,/sas-slogan-segment--first/);
+  assert.match(page,/sas-slogan-segment--second/);
+  assert.match(page,/aria-hidden="true"/);
+  assert.match(css,/content: attr\(data-text\)/);
+  assert.match(css,/-webkit-text-stroke/);
+  assert.match(css,/@keyframes sasSloganTrace/);
+  assert.match(css,/@keyframes sasSloganFill/);
+  assert.match(css,/prefers-reduced-motion: reduce/);
+  assert.doesNotMatch(page,/StrokeText|gsap/);
 });
