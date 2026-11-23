@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PublicHeader, PublicFooter } from "@/components/public-site";
-import { VisualKnowledgeEditorial } from "@/components/visual-knowledge-editorial";
+import { VisualKnowledgeGallery } from "@/components/visual-knowledge-gallery";
 import { getPublishedContent } from "@/lib/public-content";
+import "./visual-atlas.css";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
@@ -16,20 +17,16 @@ export default async function VisualKnowledgePage() {
   return (
     <main className="public-site">
       <PublicHeader />
-      <section className="section-landing-intro site-container">
+      <section className="sas-visual-atlas-intro site-container">
         <div>
-          <span className="eyebrow">من الخبر إلى المعرفة</span>
+          <span className="eyebrow">الأطلس البصري · منصة ساس</span>
           <h1>المعرفة البصرية</h1>
-          <p>تصورات تفاعلية وإنفوجرافيك موثق تشرح الأحداث وتحولاتها، وتربط الوقائع بالمصادر وسياقها.</p>
+          <p>معرض للخرائط والمخططات والإنفوغراف والبطاقات المعرفية المنشورة؛ لفهم الوقائع والعلاقات والتحولات بلغة الصورة.</p>
         </div>
         <Link href="/" className="section-back-link">العودة إلى الرئيسية</Link>
       </section>
-      <div className="section-landing-content site-container" style={{ paddingBottom: 70 }}>
-        <div className="site-section-heading">
-          <div><span className="eyebrow">منصة معرفية تفاعلية</span><h2>الإصدارات المعرفية</h2></div>
-        </div>
-        <p className="sas-visual-showcase-intro">مواد مصورة تضع الأحداث والمفاهيم السياسية في سياقها، مع إتاحة قراءة المادة كاملة.</p>
-        <VisualKnowledgeEditorial items={items} standalone />
+      <div className="section-landing-content site-container sas-visual-atlas-content" style={{ paddingBottom: 70 }}>
+        <VisualKnowledgeGallery items={items} />
       </div>
       <PublicFooter />
     </main>
