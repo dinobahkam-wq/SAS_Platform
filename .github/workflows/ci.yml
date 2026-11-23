@@ -60,6 +60,7 @@ jobs:
             scripts/check-sas-pill-nav-v1.mjs \
             scripts/check-sas-metallic-logo-v1.mjs \
             scripts/check-home-briefing-cover-v3.mjs \
+            scripts/check-home-briefing-rotating-copy-v1.mjs \
             scripts/check-home-insights-showcase-v1.mjs
 
       - name: Typecheck
