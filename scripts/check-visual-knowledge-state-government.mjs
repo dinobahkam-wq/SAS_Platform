@@ -53,8 +53,8 @@ test("interactive civics page works as a standalone knowledge product", () => {
   assert.match(component, /civicSources\.map/);
   assert.match(component, /التثقيف السياسي/);
   assert.match(page, /notFound\(\)/);
-  assert.match(landing, /<VisualKnowledgeEditorial/);
-  assert.match(home, /<VisualKnowledgeEditorial/);
+  assert.match(landing, /<VisualKnowledgeGallery/);
+  assert.match(home, /<VisualKnowledgePortal/);
 });
 
 test("visual styles preserve SAS typography and accessible responsive behavior", () => {
