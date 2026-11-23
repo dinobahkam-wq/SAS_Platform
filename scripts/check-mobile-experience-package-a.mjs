@@ -37,7 +37,7 @@ test("page maintains four products, official display and two hero actions", () =
     assert.ok(home.includes(name), "Missing product: " + name);
   }
   assert.match(home, /مِن الخَبر،/);
-  assert.match(home, /<VisualKnowledgeEditorial items=\{visual\} \/>/);
+  assert.match(home, /<VisualKnowledgePortal \/>/);
   assert.match(home, /<HomeBriefingShowcase/);
   assert.match(home, /sas-cta--primary/);
   assert.match(home, /sas-cta--secondary/);
