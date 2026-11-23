@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HomeBriefingRotatingCopy } from "@/components/home-briefing-rotating-copy";
 import { formatBriefingDateOnly } from "@/components/briefing-public";
 import type { BriefingArchiveItem, PublicBriefing } from "@/lib/public-briefing";
 import { prioritizeBriefingDevelopments } from "@/lib/briefing-view";
@@ -81,6 +82,7 @@ export function HomeBriefingShowcase({
           <p className="sas-home-briefing-lede">
             أبرز الوقائع والمواقف والتغيرات، ضمن سجل تحريري موثق يضع التطورات في سياقها.
           </p>
+          <HomeBriefingRotatingCopy />
 
           <div className="sas-home-briefing-metrics" aria-label="بيانات العدد">
             {typeof developmentsCount === "number" ? (
