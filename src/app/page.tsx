@@ -11,7 +11,7 @@ import { HomeInsightsShowcase } from "@/components/home-insights-showcase";
 import { getPublishedContent } from "@/lib/public-content";
 import { getPublicBriefing, getPublicBriefingArchive } from "@/lib/public-briefing";
 import { HomeBriefingShowcase } from "@/components/home-briefing-showcase";
-import { VisualKnowledgeEditorial } from "@/components/visual-knowledge-editorial";
+import { VisualKnowledgePortal } from "@/components/visual-knowledge-portal";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +43,6 @@ export default async function Home() {
   const insights = [...analysis, ...research]
     .sort((a, b) => (b.published_at ?? "").localeCompare(a.published_at ?? ""))
     .slice(0, 9);
-  const visual = media.filter((item) => ["infographic", "photo_gallery"].includes(item.format));
   const programs = media.filter((item) => ["video", "podcast", "interview"].includes(item.format));
 
   return (
@@ -83,9 +82,8 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="home-section site-container sas-product-section">
-        <SectionHeading eyebrow="السياسة بلغة الصورة" title="المعرفة البصرية" href="/visual-knowledge" />
-        <VisualKnowledgeEditorial items={visual} />
+      <section className="home-section site-container sas-product-section" aria-label="بوابة المعرفة البصرية">
+        <VisualKnowledgePortal />
       </section>
 
       <section className="home-section home-media-section sas-product-section">
