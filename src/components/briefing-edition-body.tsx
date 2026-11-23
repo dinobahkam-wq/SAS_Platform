@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { SasPillNav } from "@/components/sas-pill-nav";
 import {
   BriefingEmphasis,
   BriefingTypeTag,
@@ -117,23 +118,17 @@ export function BriefingEditionBody({
 
   return (
     <>
-      <nav className="briefing-topic-tabs" aria-label="تصفية سجل التطورات حسب القسم">
-        {tabs.map((tab) => {
-          const count = developments.filter((development) => matchesTab(development, tab.key)).length;
-          return (
-            <button
-              key={tab.key}
-              className={`briefing-topic-tab${activeTab === tab.key ? " is-active" : ""}`}
-              type="button"
-              aria-pressed={activeTab === tab.key}
-              onClick={() => setActiveTab(tab.key)}
-            >
-              <span>{tab.label}</span>
-              <span className="briefing-topic-tab-count" aria-hidden="true">{count}</span>
-            </button>
-          );
-        })}
-      </nav>
+      <SasPillNav
+        variant="briefing"
+        ariaLabel="تصفية سجل التطورات حسب القسم"
+        items={tabs.map((tab) => ({
+          key: tab.key,
+          label: tab.label,
+          count: developments.filter((development) => matchesTab(development, tab.key)).length,
+        }))}
+        activeKey={activeTab}
+        onChange={(key) => setActiveTab(key as Tab)}
+      />
 
       <section className="briefing-developments-section" aria-labelledby="briefing-developments-title">
         <div className="briefing-section-heading briefing-developments-heading">
