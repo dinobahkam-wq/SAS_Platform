@@ -71,8 +71,9 @@ export function SasPillNav({ items, activeKey, onChange, variant, className = ""
           style={{ left: indicator.left, width: indicator.width }} />
         {items.map((item, index) => {
           const active = item.key === activeKey;
+          const highlighted = item.key === targetKey;
           const shared = {
-            className: "sas-pill-nav__item" + (active ? " is-active" : ""),
+            className: "sas-pill-nav__item" + (active ? " is-active" : "") + (highlighted ? " is-highlighted" : ""),
             onPointerEnter: () => setHoverKey(item.key),
             onPointerLeave: () => setHoverKey(null),
             onFocus: () => setFocusKey(item.key),
