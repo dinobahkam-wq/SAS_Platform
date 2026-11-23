@@ -1,0 +1,67 @@
+/* SAS daily briefing: continuous, subdued, whole-phrase editorial rotation. */
+.public-site .sas-home-briefing-rotating-copy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 11px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 42px;
+  margin-top: 19px;
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent-soft) 25%, var(--surface));
+  font-family: "Thmanyah Sans", sans-serif;
+}
+.public-site .sas-home-briefing-rotating-prefix {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+.public-site .sas-home-briefing-rotating-stage {
+  display: grid;
+  align-items: center;
+  position: relative;
+  flex: 1 1 205px;
+  min-width: 0;
+  min-height: 25px;
+  overflow: hidden;
+  direction: rtl;
+}
+.public-site .sas-home-briefing-rotating-phrase {
+  grid-area: 1 / 1;
+  display: block;
+  opacity: 0;
+  color: var(--accent);
+  font: 700 clamp(12px, 1.05vw, 14px)/1.8 "Thmanyah Sans", sans-serif;
+  transform: translateY(65%);
+  animation: sasBriefingPhraseTurn 16s cubic-bezier(.22, 1, .36, 1) infinite both;
+  white-space: nowrap;
+}
+@keyframes sasBriefingPhraseTurn {
+  0%, 3% { opacity: 0; transform: translateY(65%); }
+  7%, 19% { opacity: 1; transform: translateY(0); }
+  23%, 100% { opacity: 0; transform: translateY(-65%); }
+}
+@media (max-width: 600px) {
+  .public-site .sas-home-briefing-rotating-copy {
+    margin-top: 15px;
+    padding: 9px 11px;
+    gap: 6px 9px;
+  }
+  .public-site .sas-home-briefing-rotating-stage {
+    flex-basis: 172px;
+    min-height: 23px;
+  }
+  .public-site .sas-home-briefing-rotating-phrase { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site .sas-home-briefing-rotating-phrase { animation: none; opacity: 0; transform: none; }
+  .public-site .sas-home-briefing-rotating-phrase:first-child { opacity: 1; }
+}
+@media print {
+  .public-site .sas-home-briefing-rotating-phrase { animation: none; opacity: 0; transform: none; }
+  .public-site .sas-home-briefing-rotating-phrase:first-child { opacity: 1; }
+}
