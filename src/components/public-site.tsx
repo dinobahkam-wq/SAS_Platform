@@ -1,4 +1,5 @@
 import "./site-search-cta.css";
+import "./sas-metallic-logo.css";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -23,7 +24,7 @@ export function PublicHeader() {
     <header className="site-header">
       <div className="site-header-inner">
         <Link href="/" className="site-brand" aria-label="منصة ساس">
-          <BrandLogo variant="color" priority />
+          <span className="sas-metallic-logo"><BrandLogo variant="color" priority /></span>
         </Link>
         <SasHeaderPillNav />
         <div className="site-header-actions">
