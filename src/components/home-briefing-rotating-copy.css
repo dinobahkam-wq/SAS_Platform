@@ -41,9 +41,9 @@
   white-space: nowrap;
 }
 @keyframes sasBriefingPhraseTurn {
-  0%, 3% { opacity: 0; transform: translateY(65%); }
-  7%, 19% { opacity: 1; transform: translateY(0); }
-  23%, 100% { opacity: 0; transform: translateY(-65%); }
+  0% { opacity: 0; transform: translateY(65%); }
+  3%, 22% { opacity: 1; transform: translateY(0); }
+  25%, 100% { opacity: 0; transform: translateY(-65%); }
 }
 @media (max-width: 600px) {
   .public-site .sas-home-briefing-rotating-copy {
