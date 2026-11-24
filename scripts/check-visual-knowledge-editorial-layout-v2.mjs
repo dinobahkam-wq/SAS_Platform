@@ -43,7 +43,7 @@ test("gallery responsive accessibility and legacy unpublished routes", () => {
   assert.match(galleryStyle, /@media\(max-width:650px\)/);
   assert.match(galleryStyle, /prefers-reduced-motion/);
   assert.match(galleryStyle, /focus-visible/);
-  assert.match(gatewayStyle, /@media\(max-width:760px\)/);
+  assert.match(gatewayStyle, /@media\s*\(max-width:\s*760px\)/);
   assert.match(retiredCivic, /notFound\(\)/);
   assert.match(retiredTimeline, /notFound\(\)/);
 });
