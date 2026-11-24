@@ -9,11 +9,12 @@ import type { Json } from "@/types/database.types";
 const allowedSections = ["news", "analysis", "research", "media"] as const;
 const allowedBlockTypes = ["paragraph", "heading", "subheading", "quote", "list"] as const;
 
-function readStructuredBody(formData: FormData): Json {
+function readStructuredBody(formData: FormData, allowEmpty = false): Json {
   const raw = String(formData.get("body_json") ?? "").trim();
   if (!raw) {
     const legacyText = String(formData.get("body") ?? "").trim();
     if (legacyText) return textToBody(legacyText);
+    if (allowEmpty) return { version: 1, blocks: [] };
     throw new Error("أدخل متن المادة قبل الحفظ.");
   }
 
@@ -45,7 +46,7 @@ function readStructuredBody(formData: FormData): Json {
     if (text) blocks.push({ type, text: text.slice(0, 20000) });
   }
 
-  if (!blocks.length) throw new Error("أدخل فقرة واحدة على الأقل في متن المادة.");
+  if (!blocks.length && !allowEmpty) throw new Error("أدخل فقرة واحدة على الأقل في متن المادة.");
   return { version: 1, blocks } as Json;
 }
 
@@ -59,6 +60,7 @@ function readContent(formData: FormData) {
   const coverAssetValue = String(formData.get("cover_asset_id") ?? "").trim();
   const statusValue = String(formData.get("status") ?? "draft");
   const isFeatured = formData.get("is_featured") === "on";
+  const externalVideoUrl = String(formData.get("external_video_url") ?? "").trim();
   const sourceIds = [...new Set(formData.getAll("source_ids").map(String).filter(Boolean))];
 
   if (!allowedSections.includes(section as (typeof allowedSections)[number])) throw new Error("اختر قسمًا صحيحًا للمحتوى.");
@@ -71,13 +73,26 @@ function readContent(formData: FormData) {
     throw new Error("يجب ربط مصدر واحد على الأقل قبل نشر الخبر.");
   }
 
+  const videoFormat = section === "media" && ["video", "interview", "podcast"].includes(format);
+  if (videoFormat && (format === "video" || externalVideoUrl)) {
+    let url: URL;
+    try { url = new URL(externalVideoUrl); }
+    catch { throw new Error("أدخل رابط مشاهدة صالحًا."); }
+    if (url.protocol !== "https:" || !url.hostname || url.username || url.password) {
+      throw new Error("يجب أن يكون رابط المشاهدة HTTPS صالحًا.");
+    }
+  }
+  const body = readStructuredBody(formData, videoFormat && Boolean(externalVideoUrl));
+  const videoBody = videoFormat && externalVideoUrl
+    ? { ...(body as Record<string, Json>), external_video_url: externalVideoUrl }
+    : body;
   const slug = slugify(slugInput || title);
   if (!slug) throw new Error("تعذر إنشاء رابط صالح للمحتوى.");
 
   return {
     section, format, title, slug,
     excerpt: excerpt || null,
-    body: readStructuredBody(formData),
+    body: videoBody,
     category_id: categoryValue || null,
     cover_asset_id: coverAssetValue || null,
     status: statusValue,
