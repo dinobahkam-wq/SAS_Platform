@@ -11,7 +11,6 @@ import { formatLabel, sectionLabel } from "@/lib/content";
 import { BrandLogo } from "@/components/brand-logo";
 import { ThemeControl } from "@/components/theme-control";
 import { SasHeaderPillNav } from "@/components/sas-pill-nav";
-import { SasHeaderScrollState } from "@/components/sas-header-scroll-state";
 
 const navigation = [
   { href: "/briefings", label: "الإحاطة اليومية" },
@@ -22,8 +21,7 @@ const navigation = [
 
 export function PublicHeader() {
   return (
-    <header className="site-header sas-unified-header" data-scrolled="false">
-      <SasHeaderScrollState />
+    <header className="site-header sas-unified-header">
       <div className="site-header-inner">
         <Link href="/" className="site-brand" aria-label="منصة ساس">
           <span className="sas-metallic-logo"><BrandLogo variant="color" priority /></span>
