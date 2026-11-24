@@ -41,6 +41,9 @@ test("service worker never caches private content or editorial navigations", () 
 });
 test("Android native install, iOS help, safe updates, no dev SW", () => {
   assert.match(controls,/beforeinstallprompt/);
+  assert.match(controls,/window\.isSecureContext/);
+  assert.match(controls,/secureOrigin && !privatePath/);
+  assert.match(controls,/إرشادات تثبيت ساس/);
   assert.match(controls,/await event\.prompt\(\)/);
   assert.match(controls,/appinstalled/);
   assert.match(controls,/إضافة إلى الشاشة الرئيسية/);
