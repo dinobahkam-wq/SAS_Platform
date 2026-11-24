@@ -48,3 +48,15 @@ test("playback is user-initiated and keyboard accessible",()=>{
   assert.match(player,/preload="metadata"/);
   assert.doesNotMatch(player,/autoPlay/);
 });
+
+test("audio identity and playback icons use SVG instead of music or typography glyphs",()=>{
+  const playerCss=read("src/components/briefing-audio-player.css");
+  assert.match(player,/function AudioAiMark/);
+  assert.match(player,/function PlayStateIcon/);
+  assert.match(player,/موجز إخباري بصوت مولّد بالذكاء الاصطناعي/);
+  assert.match(player,/aria-label=\{playing \? "إيقاف الإحاطة الصوتية مؤقتًا"/);
+  assert.match(playerCss,/sas-briefing-audio__symbol/);
+  assert.match(playerCss,/sas-briefing-audio__toggle/);
+  assert.match(playerCss,/sas-briefing-audio__download/);
+  assert.doesNotMatch(player,/[♫Ⅱ]/);
+});
