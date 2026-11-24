@@ -3,8 +3,9 @@
  */
 .sas-briefing-audio {
   direction:rtl;
+  box-sizing:border-box;
   width:100%;
-  max-width:780px;
+  max-width:none;
   min-width:0;
   margin:20px 0;
   padding:19px;
