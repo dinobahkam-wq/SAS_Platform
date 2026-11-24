@@ -169,7 +169,7 @@ html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav_
     min-height: 42px;
     padding: 9px 13px;
   }
-  .sas-site-content   }
+}
 @media (max-width: 760px) {
   .sas-site-content .sas-unified-header .site-header-inner,
   .public-site .sas-unified-header .site-header-inner {
