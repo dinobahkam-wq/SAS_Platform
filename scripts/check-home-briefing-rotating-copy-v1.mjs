@@ -2,26 +2,27 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-const showcase = readFileSync("src/components/home-briefing-showcase.tsx", "utf8");
-const copy = readFileSync("src/components/home-briefing-rotating-copy.tsx", "utf8");
-const style = readFileSync("src/components/home-briefing-rotating-copy.css", "utf8");
+const showcase = readFileSync("src/components/home-briefing-showcase.tsx","utf8");
+const ticker = readFileSync("src/components/home-briefing-rotating-copy.tsx","utf8");
+const css = readFileSync("src/components/home-briefing-rotating-copy.css","utf8");
 
-test("editorial rotating text stays separate from the actual edition headline and development data", () => {
-  assert.match(showcase, /<HomeBriefingRotatingCopy \/>/);
-  assert.match(showcase, /latest\.edition_date/);
-  assert.match(showcase, /item\.headline_ar/);
-  assert.match(showcase, /item\.image\.url/);
-  assert.match(copy, /رصد يومي للتطورات/);
-  assert.match(copy, /وقائع موثقة بمصادرها/);
-  assert.match(copy, /قراءة للسياق والتحولات/);
-  assert.match(copy, /اليمن أولًا ومحيطه/);
+test("news ticker draws headlines and links from the published edition only", () => {
+  assert.match(showcase, /const tickerHeadlines = prioritizeBriefingDevelopments\(briefing\?\.developments \?\? \[\]\)/);
+  assert.match(showcase, /title: item\.headline_ar/);
+  assert.match(showcase, /#sas-development-/);
+  assert.match(showcase, /<HomeBriefingRotatingCopy headlines=\{tickerHeadlines\} \/>/);
+  assert.match(ticker, /headlines: BriefingTickerHeadline\[\]/);
+  assert.match(ticker, /أهم الأنباء/);
+  assert.doesNotMatch(ticker, /رصد يومي للتطورات|وقائع موثقة بمصادرها|قراءة للسياق والتحولات/);
 });
-test("rotation loops safely without character splitting or width shifts", () => {
-  assert.match(copy, /animationDelay: `\$\{index \* 4\}s`/);
-  assert.match(style, /animation: sasBriefingPhraseTurn 16s/);
-  assert.match(style, /infinite both/);
-  assert.match(style, /\.sas-home-briefing-rotating-stage/);
-  assert.match(style, /overflow: hidden/);
-  assert.match(style, /prefers-reduced-motion: reduce/);
-  assert.match(copy, /aria-hidden="true"/);
+test("highlight capsule expands and shrinks to measured Arabic headline text", () => {
+  assert.match(ticker, /getBoundingClientRect\(\)\.width/);
+  assert.match(ticker, /ResizeObserver/);
+  assert.match(ticker, /measuredWidth \+ 28/);
+  assert.match(css, /transition:width/);
+  assert.match(css, /text-overflow:ellipsis/);
+  assert.match(css, /@media\(max-width:600px\)/);
+  assert.match(ticker, /INTERVAL_MS = 4800/);
+  assert.match(ticker, /prefers-reduced-motion: reduce/);
+  assert.match(css, /prefers-reduced-motion:reduce/);
 });
