@@ -62,7 +62,6 @@ export function HomeBriefingShowcase({
   const highlights = prioritizeBriefingDevelopments(briefing?.developments ?? []).slice(0, 3);
   const tickerHeadlines = prioritizeBriefingDevelopments(briefing?.developments ?? [])
     .filter(item => item.headline_ar.trim().length > 0)
-    .slice(0, 10)
     .map(item => ({ order: item.order, title: item.headline_ar, href: href + "#sas-development-" + item.order }));
   const developmentsCount = briefing?.developments.length;
   const summaryCount = briefing?.executiveSummary.length;
