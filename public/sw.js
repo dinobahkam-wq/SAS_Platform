@@ -32,8 +32,11 @@ self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin || restricted(url)) return;
+  if (url.origin !== self.location.origin) return;
   if (request.mode === "navigate") {
+    // Even the newest briefing may show the generic offline shell when offline.
+    // Never cache its HTML or substitute an older edition.
+    if (/^\/(?:admin|login|auth|api)(?:\/|$)/.test(url.pathname)) return;
     event.respondWith((async () => {
       try { return await fetch(request); }
       catch {
@@ -43,6 +46,7 @@ self.addEventListener("fetch", event => {
     })());
     return;
   }
+  if (restricted(url)) return;
   if (url.pathname.startsWith("/_next/static/") || /^\/brand\/(?:icons|logos)\//.test(url.pathname)) {
     event.respondWith((async () => {
       const cache = await caches.open(STATIC);
