@@ -15,6 +15,7 @@ import "./sas-split-hero.css";
 import "./unified-glass-header.css";
 import { SasHeroThreads } from "@/components/sas-hero-threads";
 import { SasPublicScrollReveal } from "@/components/sas-public-scroll-reveal";
+import { SasPwaControls } from "@/components/sas-pwa-controls";
 import { themeInitializer } from "@/lib/theme-initializer";
 
 export const metadata: Metadata = {
@@ -26,6 +27,9 @@ export const metadata: Metadata = {
     "منصة إعلامية وبحثية تُنظّم الأخبار وتقدم التحليل والدراسات حول اليمن ومحيطه الإقليمي والدولي.",
   applicationName: "SAS Platform",
   metadataBase: new URL("https://www.sas-media.net"),
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: "ساس", statusBarStyle: "default" },
+  icons: { icon: "/brand/icons/sas-pwa-192.png", apple: "/brand/icons/sas-pwa-apple-180.png" },
 };
 
 export default function RootLayout({
@@ -39,6 +43,7 @@ export default function RootLayout({
         <Script id="sas-theme-initializer" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeInitializer }} />
         <SasHeroThreads />
         <SasPublicScrollReveal />
+        <SasPwaControls />
         <div className="sas-site-content">{children}</div>
       </body>
     </html>
