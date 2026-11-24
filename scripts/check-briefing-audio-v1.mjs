@@ -60,3 +60,13 @@ test("audio identity and playback icons use SVG instead of music or typography g
   assert.match(playerCss,/sas-briefing-audio__download/);
   assert.doesNotMatch(player,/[♫Ⅱ]/);
 });
+
+test("edition audio spans the same content width as reference panel",()=>{
+  const playerCss=read("src/components/briefing-audio-player.css");
+  const base=playerCss.match(/\.sas-briefing-audio\s*\{([^}]+)\}/)?.[1] ?? "";
+  assert.match(base,/box-sizing:\s*border-box/);
+  assert.match(base,/width:\s*100%/);
+  assert.match(base,/max-width:\s*none/);
+  assert.match(publicPage,/<BriefingAudioPlayer audio=\{editionAudio\}/);
+  assert.match(publicPage,/className="sas-fixed-reference-panel"/);
+});
