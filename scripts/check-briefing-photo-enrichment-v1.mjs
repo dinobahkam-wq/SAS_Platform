@@ -37,7 +37,7 @@ test("visual enrichments are optional, admin-only, and do not replace evidence",
  assert.match(page,/DevelopmentImageUpload/);
  assert.match(page,/startBriefingPhotoRevision/);
  assert.match(page,/publishBriefingPhotoRevision/);
- assert.match(publicBody,/development\.image\?/);
+ assert.match(publicBody,/development\.image\s*\?/);
  assert.match(publicBody,/development\.sources\.length/);
  assert.match(publicBody,/إضافة صورة/);
  assert.match(readModel,/image:parseImage\(row\.image\)/);
