@@ -7,7 +7,9 @@ const layout=read("src/app/layout.tsx");
 const css=read("src/app/mukalla-home-hero.css");
 test("homepage uses the approved SA hero image from the repository without replacing the branded slogan",()=>{
   assert.match(page,/home-brand-hero sas-mukalla-hero/);
-  assert.match(page,/مِن الخَبر، <em>إِلى المعرِفَة<\/em>/);
+  assert.match(page,/aria-label="مِن الخَبر، إِلى المعرِفَة"/);
+  assert.match(page,/className="sas-slogan-segment sas-slogan-segment--first"/);
+  assert.match(page,/className="sas-slogan-segment sas-slogan-segment--second"/);
   assert.match(css,/url\("\/sa\.webp\.png"\)/);
   const img=readFileSync("public/sa.webp.png");
   assert.ok(img.length > 250_000, "approved asset must be checked in");
