@@ -1,3 +1,12 @@
+### 2026-11-24 — PWA install and conservative caching package (PR #91 draft)
+- Based on still-unmerged PR #90; branch `feat/sas-pwa-install-and-performance-v1`; **no main merge or Vercel deployment**.
+- Next.js App Router manifest: Arabic/RTL standalone app, icon generation from approved black-backed `sas-logo-512.png`, including correct maskable dark background.
+- Client installer: Chromium Android native prompt when supplied; fallback guidance; iOS Safari/home-screen guide and in-app browser guidance; hides on standalone and private routes.
+- Production-only service worker: offline fallback for nonrestricted navigations, versioned cache for static assets, bounded image cache, no caching of HTML, API, briefings, login/admin, audio/video.
+- Manual opt-in service worker update; no forced reload during reading. CI includes new PWA regression and icon build.
+- Before acceptance: final CI, real Android/iOS HTTPS preview tests, install icons review, and Lighthouse performance audit.
+- See `docs/PWA_RELEASE_2026-11-24.md`.
+
 ### 2026-11-24 — Homepage video tile correction
 - Fixed omitted homepage integration: home previously drew the media section from `EditorialRail` and had no published media rows, so it showed an empty state while `/programs` had a branch-only preview video.
 - Centralized staged first-episode data and deduplication in `src/lib/programs-catalog-data.ts`; both home and `/programs` now use `ProgramsCatalog` and the same data source.
