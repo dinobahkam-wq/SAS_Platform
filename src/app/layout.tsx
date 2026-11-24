@@ -12,6 +12,7 @@ import "./editorial-products.css";
 import "./mobile-polish.css";
 import "./mukalla-home-hero.css";
 import "./sas-split-hero.css";
+import "./unified-glass-header.css";
 import { SasHeroThreads } from "@/components/sas-hero-threads";
 import { SasPublicScrollReveal } from "@/components/sas-public-scroll-reveal";
 import { themeInitializer } from "@/lib/theme-initializer";
