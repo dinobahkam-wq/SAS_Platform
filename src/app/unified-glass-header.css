@@ -1,244 +1,285 @@
-/* SAS unified glass header — public site only; intentionally loaded after legacy page styles.
- * Non-sticky document-flow header; balanced four-item product navigation.
- */
-.sas-site-content .sas-unified-header {
-  --sas-glass-bg: rgba(250, 253, 251, .79);
-  --sas-glass-compact: rgba(250, 253, 251, .88);
-  --sas-glass-stroke: rgba(14, 99, 91, .13);
-  --sas-glass-control: rgba(255, 255, 255, .46);
+/* SAS public header v2.
+   Header scrolls with the document. Product navigation is a restrained,
+   symmetrical four-column rail; at very narrow widths it scrolls horizontally.
+   Keep this file after legacy/global responsive styles. */
+.sas-site-content .site-header.sas-unified-header {
+  --header-border: rgba(14, 99, 91, .14);
+  --header-control: rgba(255,255,255,.56);
   position: relative;
+  top: auto;
   z-index: 80;
-  isolation: isolate;
-  overflow: visible;
-  background: var(--sas-glass-bg);
-  -webkit-backdrop-filter: saturate(145%) blur(18px);
-  backdrop-filter: saturate(145%) blur(18px);
-  border-bottom: 1px solid var(--sas-glass-stroke);
-  box-shadow: 0 8px 26px rgba(22, 70, 65, .045);
-  transition: background-color .24s ease, box-shadow .24s ease;
+  background: rgba(250,253,251,.84);
+  border-bottom: 1px solid var(--header-border);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(130%);
 }
-.sas-site-content .sas-unified-header .site-header-inner {
+.sas-site-content .sas-unified-header .site-header-inner,
+.public-site .sas-unified-header .site-header-inner {
   box-sizing: border-box;
   width: min(1480px, calc(100% - 48px));
-  min-height: 88px;
+  min-height: 78px;
   margin-inline: auto;
+  padding: 8px 0;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-areas: "brand nav actions";
   align-items: center;
-  justify-content: stretch;
-  gap: clamp(14px, 2.2vw, 35px);
-  padding: 7px 0;
-  transition: min-height .24s ease, padding .24s ease;
+  gap: clamp(14px,2vw,30px);
 }
-.sas-unified-header .site-brand { grid-area: brand; justify-self: start; min-width: 0; }
+.sas-unified-header .site-brand {
+  grid-area: brand;
+  min-width: 0;
+  justify-self: start;
+}
 .sas-unified-header .site-brand .brand-logo-color {
-  width: clamp(120px, 10vw, 157px);
-  height: 66px;
+  width: 142px;
+  height: 62px;
   object-fit: cover;
   object-position: center;
-  transition: height .24s ease, width .24s ease;
 }
-.sas-unified-header .sas-pill-nav--header.site-nav {
+.sas-unified-header .sas-pill-nav--header.site-nav,
+.public-site .sas-unified-header .sas-pill-nav--header.site-nav,
+.briefing-public-site .sas-unified-header .sas-pill-nav--header.site-nav {
   grid-area: nav;
-  justify-self: stretch;
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
+  display: block;
   box-sizing: border-box;
+  justify-self: stretch;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 4px;
   overflow-x: auto;
   overflow-y: hidden;
-  overscroll-behavior-inline: contain;
   scrollbar-width: none;
-  border: 1px solid var(--sas-glass-stroke);
-  border-radius: 14px;
-  padding: 4px;
-  background: rgba(44, 119, 104, .065);
+  border-radius: 11px;
+  border: 1px solid var(--header-border);
+  background: rgba(51,123,107,.045);
   box-shadow: none;
 }
-.sas-unified-header .sas-pill-nav--header.site-nav::-webkit-scrollbar { display: none; }
+.sas-unified-header .sas-pill-nav--header.site-nav::-webkit-scrollbar {
+  display: none;
+}
 .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track {
   display: grid;
-  grid-template-columns: repeat(4, minmax(max-content, 1fr));
-  width: max-content;
-  min-width: 100%;
+  direction: rtl;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  width: 100%;
+  min-width: 0;
   box-sizing: border-box;
-  gap: 4px;
-  padding-inline: 5px;
+  gap: 3px;
+  padding: 0;
 }
 .sas-unified-header .sas-pill-nav--header .sas-pill-nav__indicator {
-  border-radius: 10px;
-  box-shadow: 0 3px 9px rgba(0, 87, 84, .16);
+  display: none;
 }
 .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
 .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
 .briefing-public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
-  min-height: 43px;
-  width: 100%;
   box-sizing: border-box;
-  padding: 10px clamp(9px, .8vw, 13px);
-  border-radius: 10px;
-  font: 700 12px/1.5 "Thmanyah Sans", sans-serif;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  min-height: 43px;
+  padding: 9px 7px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--foreground);
+  font: 600 12px/1.55 "Thmanyah Sans",sans-serif;
+  text-align: center;
+  white-space: nowrap;
+  transition: background-color .16s ease,color .16s ease;
 }
-.sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active:not(.is-highlighted) {
+.sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-highlighted,
+.public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-highlighted {
+  background: rgba(12,121,115,.085);
   color: var(--accent);
+}
+.sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active,
+.public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active {
+  background: var(--accent);
+  color: #fff;
 }
 .sas-unified-header .site-header-actions {
   grid-area: actions;
-  display: flex;
-  justify-self: end;
+  display: inline-flex;
   align-items: center;
+  justify-self: end;
+  flex-shrink: 0;
   gap: 7px;
-  min-width: 0;
 }
 .sas-unified-header .site-header-actions .sas-header-search,
-.sas-unified-header .site-header-actions .sas-theme-trigger {
+.sas-unified-header .site-header-actions .sas-theme-trigger,
+.public-site .sas-unified-header .site-header-actions .sas-header-search,
+.public-site .sas-unified-header .site-header-actions .sas-theme-trigger {
   box-sizing: border-box;
   display: inline-flex;
-  flex: 0 0 44px;
+  flex: 0 0 42px;
   align-items: center;
   justify-content: center;
-  gap: 0;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  min-height: 42px;
   padding: 0;
-  border: 1px solid var(--sas-glass-stroke);
-  border-radius: 12px;
-  background: var(--sas-glass-control);
+  border-radius: 10px;
+  border: 1px solid var(--header-border);
+  background: var(--header-control);
   color: var(--foreground);
   box-shadow: none;
-  transition: background-color .18s ease, border-color .18s ease, color .18s ease;
 }
 .sas-unified-header .site-header-actions .sas-header-search span,
-.sas-unified-header .site-header-actions .sas-theme-trigger span { display: none; }
-.sas-unified-header .site-header-actions .sas-header-search:hover,
-.sas-unified-header .site-header-actions .sas-theme-trigger:hover {
-  background: var(--accent-soft);
+.sas-unified-header .site-header-actions .sas-theme-trigger span {
+  display: none;
+}
+.sas-unified-header .site-header-actions .site-admin-link,
+.public-site .sas-unified-header .site-header-actions .site-admin-link {
+  display: inline-flex;
+  min-height: 42px;
+  height: 42px;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  align-items: center;
+  border: 1px solid var(--header-border);
+  border-radius: 10px;
+  background: var(--header-control);
   color: var(--accent);
-  border-color: var(--accent);
+  font: 600 11px/1.5 "Thmanyah Sans",sans-serif;
 }
-.sas-unified-header .site-header-actions .site-admin-link {
-  min-height: 44px;
-  padding: 9px 14px;
-  border: 1px solid var(--sas-glass-stroke);
-  border-radius: 12px;
-  background: var(--sas-glass-control);
-  font: 700 11px/1.5 "Thmanyah Sans", sans-serif;
+.sas-unified-header .site-header-actions :is(a,button):hover {
+  border-color: var(--accent);
   color: var(--accent);
-}
-.sas-unified-header .site-header-actions .site-admin-link:hover {
   background: var(--accent-soft);
-  border-color: var(--accent);
 }
-.sas-unified-header .site-header-actions :is(a,button):focus-visible,
-.sas-unified-header .site-brand:focus-visible {
+.sas-unified-header :is(a,button):focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
-html[data-theme="dark"] .sas-site-content .sas-unified-header {
-  --sas-glass-bg: rgba(19, 34, 30, .80);
-  --sas-glass-compact: rgba(19, 34, 30, .90);
-  --sas-glass-stroke: rgba(171, 218, 203, .16);
-  --sas-glass-control: rgba(37, 61, 53, .58);
-  background: var(--sas-glass-bg);
+html[data-theme="dark"] .sas-site-content .site-header.sas-unified-header {
+  --header-border: rgba(171,218,203,.18);
+  --header-control: rgba(41,65,56,.65);
+  background: rgba(19,34,30,.88);
 }
-html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header.site-nav { background: rgba(45, 104, 91, .17); }
-html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active:not(.is-highlighted) { color: #b6ebe0; }
-@media (max-width: 1199px) {
-  .sas-site-content .sas-unified-header .site-header-inner {
-    width: min(100% - 36px, 1024px);
-    grid-template-columns: minmax(0, 1fr) auto;
+html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header.site-nav {
+  background: rgba(48,108,94,.13);
+}
+html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-highlighted {
+  background: rgba(106,177,157,.16);
+  color: #d6f4e8;
+}
+html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active {
+  background: #127b75;
+  color: #fff;
+}
+@media (max-width: 1250px) {
+  .sas-site-content .sas-unified-header .site-header-inner,
+  .public-site .sas-unified-header .site-header-inner {
+    width: calc(100% - 36px);
+    min-height: 0;
+    grid-template-columns: minmax(0,1fr) auto;
     grid-template-areas: "brand actions" "nav nav";
-    gap: 3px 12px;
-    padding: 4px 0 7px;
+    gap: 3px 10px;
+    padding: 6px 0 9px;
   }
-  .sas-unified-header .site-brand .brand-logo-color { width: 145px; height: 62px; }
-  .sas-unified-header .sas-pill-nav--header.site-nav {
-    justify-self: stretch;
-    width: 100%;
-    max-width: 100%;
-    padding: 3px;
-    border-radius: 12px;
-  }
-  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track { min-width: 100%; }
-  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
-  .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
-    min-height: 42px;
-    padding: 9px 13px;
+  .sas-unified-header .site-brand .brand-logo-color {
+    width: 138px;
+    height: 61px;
   }
 }
 @media (max-width: 760px) {
   .sas-site-content .sas-unified-header .site-header-inner,
   .public-site .sas-unified-header .site-header-inner {
     width: calc(100% - 28px);
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0,1fr) auto;
     grid-template-areas: "brand actions" "nav nav";
-    column-gap: 7px;
-    row-gap: 2px;
-    min-height: 0;
-    padding: 3px 0 7px;
+    column-gap: 8px;
+    row-gap: 3px;
+    padding: 4px 0 9px;
   }
   .sas-unified-header .site-brand .brand-logo-color,
   .public-site .sas-unified-header .site-brand .brand-logo-color {
-    width: 128px; height: 56px;
-    object-fit: cover;
+    width: 126px;
+    height: 55px;
+  }
+  .sas-unified-header .sas-pill-nav--header.site-nav,
+  .public-site .sas-unified-header .sas-pill-nav--header.site-nav {
+    width: 100%;
+    min-width: 0;
+    padding: 4px;
+    border-radius: 10px;
+    border-top: 1px solid var(--header-border);
+    justify-content: stretch;
+  }
+  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track,
+  .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track {
+    width: 100%;
+    min-width: 0;
+  }
+  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
+  .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
+    min-height: 42px;
+    padding: 8px 5px;
+    font-size: 11.5px;
   }
   .sas-unified-header .site-header-actions { gap: 5px; }
   .sas-unified-header .site-header-actions .sas-header-search,
   .sas-unified-header .site-header-actions .sas-theme-trigger,
   .public-site .sas-unified-header .site-header-actions .sas-header-search,
   .public-site .sas-unified-header .site-header-actions .sas-theme-trigger {
-    flex: 0 0 42px;
-    width: 42px; min-width: 42px; height: 42px; min-height: 42px;
-    border-radius: 11px; padding: 0;
+    flex-basis: 40px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
   }
   .sas-unified-header .site-header-actions .site-admin-link,
   .public-site .sas-unified-header .site-header-actions .site-admin-link {
-    padding: 8px 10px; min-height: 42px; height: 42px;
-    font-size: 10px; border-radius: 11px;
+    min-height: 40px;
+    height: 40px;
+    padding: 7px 9px;
+    font-size: 10.5px;
   }
-  .sas-unified-header .sas-pill-nav--header.site-nav,
-  .public-site .sas-unified-header .sas-pill-nav--header.site-nav {
-    grid-area: nav;
-    justify-content: flex-start;
-    gap: 0;
-    border-top: 1px solid var(--sas-glass-stroke);
-    padding: 3px 4px;
-    overflow-x: auto;
+}
+@media (max-width: 520px) {
+  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track,
+  .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track {
+    display: flex;
+    width: max-content;
+    min-width: max-content;
+    gap: 3px;
   }
-  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track { min-width: 100%; }
   .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
   .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
-    min-height: 42px; padding: 9px 12px;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 122px;
+    padding-inline: 11px;
   }
 }
 @media (max-width: 390px) {
   .sas-site-content .sas-unified-header .site-header-inner,
   .public-site .sas-unified-header .site-header-inner { width: calc(100% - 18px); }
   .sas-unified-header .site-brand .brand-logo-color,
-  .public-site .sas-unified-header .site-brand .brand-logo-color { width: 108px; height: 50px; }
-  .sas-unified-header .site-header-actions .sas-header-search,
-  .sas-unified-header .site-header-actions .sas-theme-trigger { flex-basis: 40px; width: 40px; min-width: 40px; }
-  .sas-unified-header .site-header-actions .site-admin-link { padding-inline: 7px; font-size: 10px; }
+  .public-site .sas-unified-header .site-brand .brand-logo-color {
+    width: 109px;
+    height: 50px;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sas-site-content .sas-unified-header,
-  .sas-unified-header .site-header-inner,
-  .sas-unified-header .site-brand .brand-logo-color,
-  .sas-unified-header .site-header-actions :is(a,button) { transition: none !important; }
+  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
+    transition: none !important;
+  }
 }
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .sas-site-content .sas-unified-header { background: var(--surface) !important; }
+  .sas-site-content .site-header.sas-unified-header { background: var(--surface); }
 }
 @media print {
-  .sas-site-content .sas-unified-header {
+  .sas-site-content .site-header.sas-unified-header {
     position: static;
-    background: white !important;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    box-shadow: none;
+    background: white;
   }
 }
