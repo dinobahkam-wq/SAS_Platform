@@ -1,3 +1,8 @@
+### 2026-11-24 — Header visual correction, iteration 3
+- Screenshot review rejected the previous tab presentation: the fourth item was clipped and the rail appeared visually unbalanced.
+- Rebuilt `unified-glass-header.css` as a simpler scoped design: four equal grid columns for standard widths, overflow-safe horizontal tabs only under 520px, balanced padding, restrained surfaces and an explicit active state; public header remains non-sticky.
+- CSS content reviewed structurally; automated GitHub CI and visual acceptance remain required. No main merge or deployment.
+
 ### 2026-11-24 — PR #90 CSS build repair
 - رُصد فشل Next.js/PostCSS محليًا وعلى CI بسبب selector معطوب عند السطر 172 في `src/app/unified-glass-header.css` بعد إزالة قواعد scroll.
 - أصلح الالتزام `b7a019fd9bfb4f62a2a748f9676f11fa918687f4` المقطع المعيب وأغلق @media بنحو صحيح. لا دمج إلى main ولا نشر.
