@@ -1,3 +1,9 @@
+### 2026-11-24 — Product navigation architectural correction v4
+- After desktop and narrow-window visual failure, replaced header-only reuse of animated `SasPillNav` with dedicated semantic product links (`sas-product-nav`), without touching briefing filters.
+- Desktop uses an intrinsic-width compact link group, not stretched columns; <=760px switches to a fully visible 2x2 grid without horizontal clipping or hidden product destinations.
+- Header stays non-sticky. The separation is based on Adobe Spectrum compact/overflow guidance and Google Chrome responsive site navigation principles. Require fresh CI and 360/390/600/768/1440 visual checks before merge.
+- No production deploy, no main merge.
+
 ### 2026-11-24 — Header visual correction, iteration 3
 - Screenshot review rejected the previous tab presentation: the fourth item was clipped and the rail appeared visually unbalanced.
 - Rebuilt `unified-glass-header.css` as a simpler scoped design: four equal grid columns for standard widths, overflow-safe horizontal tabs only under 520px, balanced padding, restrained surfaces and an explicit active state; public header remains non-sticky.
