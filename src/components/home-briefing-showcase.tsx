@@ -60,6 +60,10 @@ export function HomeBriefingShowcase({
     .trim() || "قراءة يومية في تطورات اليمن ومحيطه";
   // Match the public briefing's displayed ordering, keeping each development's own image.
   const highlights = prioritizeBriefingDevelopments(briefing?.developments ?? []).slice(0, 3);
+  const tickerHeadlines = prioritizeBriefingDevelopments(briefing?.developments ?? [])
+    .filter(item => item.headline_ar.trim().length > 0)
+    .slice(0, 10)
+    .map(item => ({ order: item.order, title: item.headline_ar, href: href + "#sas-development-" + item.order }));
   const developmentsCount = briefing?.developments.length;
   const summaryCount = briefing?.executiveSummary.length;
 
@@ -86,7 +90,7 @@ export function HomeBriefingShowcase({
           <p className="sas-home-briefing-lede">
             أبرز الوقائع والمواقف والتغيرات، ضمن سجل تحريري موثق يضع التطورات في سياقها.
           </p>
-          <HomeBriefingRotatingCopy />
+          <HomeBriefingRotatingCopy headlines={tickerHeadlines} />
           {audio ? <BriefingAudioPlayer audio={audio} compact /> : null}
 
           <div className="sas-home-briefing-metrics" aria-label="بيانات العدد">
