@@ -24,6 +24,7 @@ function identifyPlatform(): Platform {
 
 export function SasPwaControls() {
   const [platform, setPlatform] = useState<Platform>("none");
+  const [secureOrigin, setSecureOrigin] = useState(false);
   const [installEvent, setInstallEvent] = useState<InstallEvent | null>(null);
   const [installed, setInstalled] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -36,6 +37,7 @@ export function SasPwaControls() {
 
   useEffect(() => {
     setPlatform(identifyPlatform());
+    setSecureOrigin(window.isSecureContext);
     setInstalled(isStandalone());
     try { setDismissed(sessionStorage.getItem("sas-pwa-dismissed") === "1"); }
     catch { /* Storage might be restricted in private browsing. */ }
@@ -118,7 +120,7 @@ export function SasPwaControls() {
     workerWaiting.postMessage({ type: "SAS_SKIP_WAITING" });
   }
 
-  const eligible = !privatePath && !installed && !dismissed &&
+  const eligible = secureOrigin && !privatePath && !installed && !dismissed &&
     (platform === "ios" || platform === "ios-inapp" || platform === "android");
   if (!eligible && !workerWaiting) return null;
 
@@ -138,7 +140,7 @@ export function SasPwaControls() {
               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 3v12m-4-4 4 4 4-4M4 17v3h16v-3"/>
             </svg>
-            تثبيت ساس
+            {platform === "android" && !installEvent ? "إرشادات تثبيت ساس" : "تثبيت ساس"}
           </button>
           <button type="button" className="sas-pwa-banner__close" aria-label="إخفاء عرض التثبيت"
             onClick={dismiss}>×</button>
