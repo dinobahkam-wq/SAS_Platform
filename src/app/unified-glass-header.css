@@ -1,6 +1,6 @@
 /* SAS Adaptive Product Navigation v4.
  * Header is in normal document flow. Primary navigation is a compact
- * link group on desktop and a fully visible 2x2 grid on narrow screens.
+ * link group on desktop and a fully visible four-tab row on phones.
  * Do not reuse SasPillNav animation or legacy .site-nav styling here.
  */
 .sas-site-content .site-header.sas-unified-header {
@@ -174,7 +174,7 @@ html[data-theme="dark"] .sas-unified-header .sas-product-nav__link.is-active {
   }
   .sas-unified-header .site-brand .brand-logo-color { width: 138px; height: 60px; }
 }
-/* Never cut off the fourth product: two rows, all four destinations visible. */
+/* Keep all four product links visible together on mobile. */
 @media (max-width: 760px) {
   .sas-site-content .sas-unified-header .site-header-inner,
   .public-site .sas-unified-header .site-header-inner {
@@ -261,4 +261,133 @@ html[data-theme="dark"] .sas-unified-header .sas-product-nav__link.is-active {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
+}
+
+/* SAS mobile navigation v5 — four editorial shortcuts, NOT a shared 2×2 card.
+ * Individual quiet surfaces, no heavy black perimeter, clear focus and touch.
+ */
+.sas-unified-header .sas-product-nav__icon { display:none; }
+.sas-unified-header .sas-product-nav__text { display:block; min-width:0; }
+@media (max-width:760px) {
+  .sas-unified-header .sas-product-nav,
+  .public-site .sas-unified-header .sas-product-nav,
+  .briefing-public-site .sas-unified-header .sas-product-nav {
+    padding:0;
+    border:0;
+    background:transparent;
+    box-shadow:none;
+    border-radius:0;
+    min-width:0;
+  }
+  .sas-unified-header .sas-product-nav__list {
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(4px,1.7vw,9px);
+    width:100%;
+    min-width:0;
+    overflow:visible;
+  }
+  .sas-unified-header .sas-product-nav__link,
+  .public-site .sas-unified-header .sas-product-nav__link,
+  .briefing-public-site .sas-unified-header .sas-product-nav__link {
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    min-width:0;
+    width:100%;
+    min-height:84px;
+    padding:11px 3px 10px;
+    border:1px solid color-mix(in srgb,var(--accent) 17%,var(--line));
+    border-radius:15px;
+    background:linear-gradient(160deg,
+      color-mix(in srgb,var(--accent-soft) 30%,var(--surface)) 0%,
+      color-mix(in srgb,var(--surface) 94%,transparent) 100%);
+    color:var(--foreground);
+    box-shadow:0 4px 16px rgba(6,74,67,.045),inset 0 1px rgba(255,255,255,.33);
+    white-space:normal;
+    text-wrap:balance;
+    overflow-wrap:normal;
+    font:650 clamp(9px,2.55vw,11px)/1.35 "Thmanyah Sans",sans-serif;
+    transition:transform .2s ease,background-color .2s ease,
+      border-color .2s ease,box-shadow .2s ease,color .2s ease;
+  }
+  .sas-unified-header .sas-product-nav__link::after {
+    content:"";
+    position:absolute;
+    bottom:5px;
+    left:40%;
+    right:40%;
+    height:2px;
+    border-radius:3px;
+    background:var(--accent);
+    opacity:0;
+    transform:scaleX(.4);
+    transition:opacity .2s ease,transform .2s ease;
+  }
+  .sas-unified-header .sas-product-nav__icon {
+    display:grid;
+    place-items:center;
+    flex:0 0 28px;
+    width:30px;
+    height:30px;
+    color:var(--accent);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--accent-soft) 55%,var(--surface));
+  }
+  .sas-unified-header .sas-product-nav__icon svg {
+    width:19px;
+    height:19px;
+    flex:none;
+  }
+  .sas-unified-header .sas-product-nav__text {
+    display:block;
+    max-width:100%;
+    text-align:center;
+    overflow-wrap:normal;
+  }
+  .sas-unified-header .sas-product-nav__link:hover,
+  .sas-unified-header .sas-product-nav__link:focus-visible {
+    border-color:color-mix(in srgb,var(--accent) 47%,var(--line));
+    background:color-mix(in srgb,var(--accent-soft) 55%,var(--surface));
+    transform:translateY(-2px);
+    box-shadow:0 8px 19px rgba(6,74,67,.085);
+    color:var(--accent);
+  }
+  .sas-unified-header .sas-product-nav__link:hover::after,
+  .sas-unified-header .sas-product-nav__link:focus-visible::after,
+  .sas-unified-header .sas-product-nav__link.is-active::after {
+    opacity:1;
+    transform:scaleX(1);
+  }
+  .sas-unified-header .sas-product-nav__link.is-active {
+    color:var(--foreground);
+    border-color:color-mix(in srgb,var(--accent) 52%,var(--line));
+    background:linear-gradient(150deg,
+      color-mix(in srgb,var(--accent-soft) 80%,var(--surface)),var(--surface));
+  }
+  .sas-unified-header .sas-product-nav__link.is-active .sas-product-nav__icon {
+    color:white;
+    background:var(--accent);
+  }
+  .sas-unified-header .sas-product-nav__link.is-active:hover {color:var(--accent);}
+}
+@media(max-width:390px) {
+  .sas-unified-header .sas-product-nav__link,
+  .public-site .sas-unified-header .sas-product-nav__link {
+    min-height:80px;
+    padding:9px 2px 10px;
+    font-size:9px;
+    line-height:1.42;
+  }
+  .sas-unified-header .sas-product-nav__icon { width:28px;height:28px;flex-basis:28px; }
+}
+html[data-theme="dark"] .sas-unified-header .sas-product-nav__link.is-active {
+  color:var(--foreground);
+}
+@media(prefers-reduced-motion:reduce) {
+  .sas-unified-header .sas-product-nav__link,
+  .sas-unified-header .sas-product-nav__link::after {transition:none!important;transform:none!important;}
 }
