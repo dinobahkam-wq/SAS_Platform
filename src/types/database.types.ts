@@ -417,6 +417,54 @@ export type Database = {
           },
         ]
       }
+      briefing_audio_assets: {
+        Row: {
+          id: string
+          edition_id: string
+          revision_id: string
+          object_path: string
+          file_name: string
+          mime_type: string
+          file_size: number
+          duration_seconds: number
+          status: string
+          created_by: string
+          created_at: string
+          published_at: string | null
+        }
+        Insert: {
+          id?: string
+          edition_id: string
+          revision_id: string
+          object_path: string
+          file_name: string
+          mime_type: string
+          file_size: number
+          duration_seconds: number
+          status?: string
+          created_by?: string
+          created_at?: string
+          published_at?: string | null
+        }
+        Update: {
+          id?: string
+          edition_id?: string
+          revision_id?: string
+          object_path?: string
+          file_name?: string
+          mime_type?: string
+          file_size?: number
+          duration_seconds?: number
+          status?: string
+          created_by?: string
+          created_at?: string
+          published_at?: string | null
+        }
+        Relationships: [
+          { foreignKeyName: "briefing_audio_assets_edition_id_fkey"; columns: ["edition_id"]; isOneToOne: false; referencedRelation: "briefing_editions"; referencedColumns: ["id"] },
+          { foreignKeyName: "briefing_audio_assets_revision_id_fkey"; columns: ["revision_id"]; isOneToOne: false; referencedRelation: "briefing_revisions"; referencedColumns: ["id"] },
+        ]
+      }
       briefing_editions: {
         Row: {
           created_at: string
