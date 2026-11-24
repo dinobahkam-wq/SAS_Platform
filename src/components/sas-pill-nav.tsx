@@ -99,6 +99,27 @@ export function SasPillNav({ items, activeKey, onChange, variant, className = ""
   );
 }
 
+function ProductIcon({ section }: { section: string }) {
+  const common = {
+    width: 21, height: 21, viewBox: "0 0 24 24",
+    fill: "none", stroke: "currentColor", strokeWidth: 1.7,
+    strokeLinecap: "round" as const, strokeLinejoin: "round" as const,
+    "aria-hidden": true as const,
+  };
+  if (section === "/briefings") return (
+    <svg {...common}><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+  );
+  if (section === "/insights") return (
+    <svg {...common}><path d="M12 6c-3.5-2.1-6.8-2-9-1v14c2.3-1 5.8-1 9 1 3.2-2 6.7-2 9-1V5c-2.3-1-5.5-1.1-9 1Z"/><path d="M12 6v14"/></svg>
+  );
+  if (section === "/visual-knowledge") return (
+    <svg {...common}><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 15v3M12 11v7M17 7v11"/></svg>
+  );
+  return (
+    <svg {...common}><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3V9Z"/></svg>
+  );
+}
+
 const mainSections: SasPillItem[] = [
   { key: "/briefings", href: "/briefings", label: "الإحاطة اليومية" },
   { key: "/insights", href: "/insights", label: "التحليل والدراسات" },
@@ -120,7 +141,8 @@ export function SasHeaderPillNav() {
           return (
             <Link key={item.key} href={item.href!} className={"sas-product-nav__link" + (active ? " is-active" : "")}
               aria-current={active ? "page" : undefined}>
-              {item.label}
+              <span className="sas-product-nav__icon"><ProductIcon section={item.key} /></span>
+              <span className="sas-product-nav__text">{item.label}</span>
             </Link>
           );
         })}
