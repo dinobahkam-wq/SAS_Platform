@@ -22,3 +22,10 @@ Status: review branch `feat/sas-pwa-install-and-performance-v1` branching from u
 - On iOS, no website may invoke the native install sheet directly. On unsupported Android/browser environments the native install event might not fire.
 - Manifest/service worker alone cannot guarantee installation until the served site is HTTPS and device browser deems it eligible.
 - PWA source is not published on Vercel by this branch. Only `main` deployment after explicit authorization.
+
+## Direct native prompt / update UX refinement (2026-11-24)
+- On Android, the literal «تثبيت ساس» action appears **only** when `beforeinstallprompt` supplies an actual one-shot prompt event; its click handler invokes `prompt()` immediately within the user gesture. There is no deceptive fallback to a local instruction panel after dismissing the native dialog.
+- On supported non-native prompt flows, guidance is a **separate**, appropriately labelled UI, not a direct-install promise. Insecure LAN HTTP origins never show the install UI.
+- A waiting Service Worker raises «تحديث الآن» and opens a blocking progress dialog showing activation, page reload, or timeout/error states; it sends `SAS_SKIP_WAITING` and reloads once on `controllerchange`. The interface does not invent download progress percentages; no APK downloaded.
+- When app comes back into focus and hourly while visible, re-check for Service Worker updates. The app remains usable when the SW is unavailable.
+- Pending real Android/Samsung-browser verification over HTTPS; installer availability always remains subject to browser decisions.
