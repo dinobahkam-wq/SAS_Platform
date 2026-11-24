@@ -43,7 +43,12 @@ test("Android native install, iOS help, safe updates, no dev SW", () => {
   assert.match(controls,/beforeinstallprompt/);
   assert.match(controls,/window\.isSecureContext/);
   assert.match(controls,/secureOrigin && !privatePath/);
-  assert.match(controls,/إرشادات تثبيت ساس/);
+  assert.match(controls,/directInstallAvailable/);
+  assert.match(controls,/Boolean\(installEvent\)/);
+  assert.match(controls,/إضافة ساس إلى الهاتف/);
+  assert.match(controls,/setUpdateStage\("activating"\)/);
+  assert.match(controls,/controllerchange/);
+  assert.match(controls,/sas-pwa-spinner/);
   assert.match(controls,/await event\.prompt\(\)/);
   assert.match(controls,/appinstalled/);
   assert.match(controls,/إضافة إلى الشاشة الرئيسية/);
