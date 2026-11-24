@@ -60,7 +60,7 @@ export function HomeBriefingRotatingCopy({ headlines }: { headlines: BriefingTic
       </span>
       <div className="sas-home-briefing-ticker-track">
         <div className="sas-home-briefing-rotating-stage"
-          style={measuredWidth !== null ? { width: `min(100%, ${measuredWidth + 28}px)` } : undefined}>
+          style={measuredWidth !== null ? { width: measuredWidth + 28 } : undefined}>
           <a key={active.order} href={active.href} className="sas-home-briefing-rotating-phrase"
             title={active.title} aria-label={`اقرأ التطور: ${active.title}`}>
             {active.title}
