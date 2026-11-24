@@ -20,7 +20,7 @@ const foreground = await sharp(input).resize(300, 300, {
   fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 }
 }).png().toBuffer();
 const maskable = await sharp({
-  create: { width: 512, height: 512, channels: 4, background: "#f7faf8" }
+  create: { width: 512, height: 512, channels: 4, background: "#000000" }
 }).composite([{ input: foreground, left: 106, top: 106 }]).png().toBuffer();
 await writeFile(path.join(folder, "sas-pwa-maskable-512.png"), maskable);
 console.log("SAS PWA icons generated from approved sas-logo-512.png");
