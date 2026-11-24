@@ -6,7 +6,8 @@ import {
   PublicHeader,
   SectionHeading,
 } from "@/components/public-site";
-import { EditorialRail } from "@/components/editorial-rail";
+import { ProgramsCatalog } from "@/components/programs-catalog";
+import { getProgramsCatalogItems } from "@/lib/programs-catalog-data";
 import { HomeInsightsShowcase } from "@/components/home-insights-showcase";
 import { getPublishedContent } from "@/lib/public-content";
 import { getPublicBriefing, getPublicBriefingArchive } from "@/lib/public-briefing";
@@ -48,7 +49,7 @@ export default async function Home() {
   const insights = [...analysis, ...research]
     .sort((a, b) => (b.published_at ?? "").localeCompare(a.published_at ?? ""))
     .slice(0, 9);
-  const programs = media.filter((item) => ["video", "podcast", "interview"].includes(item.format));
+  const programs = getProgramsCatalogItems(media);
 
   return (
     <main className="public-site">
@@ -96,7 +97,7 @@ export default async function Home() {
         <div className="site-container">
           <SectionHeading eyebrow="ساس مرئيًا" title="الفيديو والبرامج" href="/programs" />
           {programs.length
-            ? <EditorialRail title="مقاطع وبرامج سياسية" items={programs} />
+            ? <ProgramsCatalog items={programs.slice(0, 4)} />
             : <EmptyContent message="ستظهر هنا المقاطع السياسية والحوارات والبرامج فور نشرها." />}
         </div>
       </section>
