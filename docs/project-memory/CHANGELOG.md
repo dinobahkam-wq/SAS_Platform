@@ -1,3 +1,8 @@
+### 2026-11-24 — Homepage video tile correction
+- Fixed omitted homepage integration: home previously drew the media section from `EditorialRail` and had no published media rows, so it showed an empty state while `/programs` had a branch-only preview video.
+- Centralized staged first-episode data and deduplication in `src/lib/programs-catalog-data.ts`; both home and `/programs` now use `ProgramsCatalog` and the same data source.
+- Added a regression assertion that the homepage displays the video tile and uses the same source as the catalog. This is a review-branch preview; no publication to production database, merge, or deployment.
+
 ### 2026-11-24 — Video & Programs external-link catalog (review branch)
 - Confirmed Supabase public object in `sas-public-media/programs/political-minutes/mohammed-salem-bafaqir-cover.png.png` (actual double `.png` suffix retained).
 - Built a responsive 9:16 poster catalog for `/programs`, with direct link navigation to the original video and no on-page provider label, embed, video upload, or playback bandwidth.
