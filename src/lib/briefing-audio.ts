@@ -9,29 +9,21 @@ export type PublishedBriefingAudio = {
   revisionId: string;
 };
 
-/** Public audio belongs only to an approved, CURRENT published briefing revision. */
+/** Public audio is read only from the current published revision via an RLS-safe RPC. */
 export async function getPublishedBriefingAudio(slug: string): Promise<PublishedBriefingAudio | null> {
   if (!/^[a-z0-9-]{3,180}$/.test(slug)) return null;
   const supabase = await createClient();
-  const { data: edition, error: editionError } = await supabase
-    .from("briefing_editions")
-    .select("id,slug,status,current_revision_id")
-    .eq("slug", slug).maybeSingle();
-  if (editionError || !edition || !edition.current_revision_id
-      || !["active", "archived"].includes(edition.status)) return null;
-  const { data: asset, error: audioError } = await supabase.from("briefing_audio_assets")
-    .select("object_path,file_name,duration_seconds,revision_id")
-    .eq("edition_id", edition.id).eq("revision_id", edition.current_revision_id)
-    .eq("status", "published").maybeSingle();
-  if (audioError || !asset) return null;
-  if (!/^[0-9a-f-]{36}\/[0-9a-f-]{36}\.(m4a|mp3)$/i.test(asset.object_path)) return null;
-  const { data } = supabase.storage.from("sas-briefing-audio").getPublicUrl(asset.object_path);
-  if (!data?.publicUrl) return null;
-  return {
-    url: data.publicUrl,
-    fileName: asset.file_name,
-    durationSeconds: asset.duration_seconds,
-    editionSlug: slug,
-    revisionId: asset.revision_id,
-  };
+  const {data, error} = await supabase.rpc("get_public_briefing_audio", {p_slug:slug});
+  if (error || !data || typeof data !== "object" || Array.isArray(data)) return null;
+  const row = data as Record<string,unknown>;
+  const objectPath = typeof row.object_path === "string" ? row.object_path : "";
+  const revisionId = typeof row.revision_id === "string" ? row.revision_id : "";
+  const fileName = typeof row.file_name === "string" ? row.file_name : "";
+  const durationSeconds = typeof row.duration_seconds === "number" ? row.duration_seconds : 0;
+  if (!/^[0-9a-f-]{36}\/[0-9a-f-]{36}\.(m4a|mp3)$/i.test(objectPath)
+    || !/^[0-9a-f-]{36}$/i.test(revisionId)
+    || !fileName || durationSeconds < 15 || durationSeconds > 1800) return null;
+  const {data:publicUrl} = supabase.storage.from("sas-briefing-audio").getPublicUrl(objectPath);
+  if (!publicUrl?.publicUrl) return null;
+  return {url:publicUrl.publicUrl,fileName,durationSeconds,editionSlug:slug,revisionId};
 }
