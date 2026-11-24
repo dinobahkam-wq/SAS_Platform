@@ -1067,6 +1067,7 @@ export type Database = {
         Returns: Json
       }
       get_public_briefing: { Args: { p_slug: string }; Returns: Json }
+      get_public_briefing_audio: { Args: { p_slug: string }; Returns: Json }
       get_public_briefing_archive: {
         Args: {
           p_before_date?: string
