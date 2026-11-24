@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { BriefingAudioPlayer } from "@/components/briefing-audio-player";
+import type { PublishedBriefingAudio } from "@/lib/briefing-audio";
 import { HomeBriefingRotatingCopy } from "@/components/home-briefing-rotating-copy";
 import { formatBriefingDateOnly } from "@/components/briefing-public";
 import type { BriefingArchiveItem, PublicBriefing } from "@/lib/public-briefing";
@@ -34,11 +36,13 @@ export function HomeBriefingShowcase({
   briefing,
   previous,
   unavailable = false,
+  audio = null,
 }: {
   latest: BriefingArchiveItem | null;
   briefing: PublicBriefing | null;
   previous: BriefingArchiveItem[];
   unavailable?: boolean;
+  audio?: PublishedBriefingAudio | null;
 }) {
   if (!latest) {
     return (
@@ -83,6 +87,7 @@ export function HomeBriefingShowcase({
             أبرز الوقائع والمواقف والتغيرات، ضمن سجل تحريري موثق يضع التطورات في سياقها.
           </p>
           <HomeBriefingRotatingCopy />
+          {audio ? <BriefingAudioPlayer audio={audio} compact /> : null}
 
           <div className="sas-home-briefing-metrics" aria-label="بيانات العدد">
             {typeof developmentsCount === "number" ? (
