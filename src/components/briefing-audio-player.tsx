@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import type { PublishedBriefingAudio } from "@/lib/briefing-audio";
 import "./briefing-audio-player.css";
 
@@ -89,7 +89,7 @@ export function BriefingAudioPlayer({
         <div className="sas-briefing-audio__timeline">
           <input aria-label="موضع الاستماع" type="range" min="0" max={Math.max(1,duration)}
             step="0.1" value={Math.min(position,duration)}
-            style={{"--sas-audio-progress": progress + "%"} as React.CSSProperties}
+            style={{"--sas-audio-progress": progress + "%"} as CSSProperties}
             onChange={event => {
               const next = Number(event.target.value);
               if (playerRef.current) playerRef.current.currentTime = next;
