@@ -44,9 +44,21 @@ test("primary product navigation keeps all four visible at narrow widths without
   assert.match(navigation, /className="sas-product-nav__list"/);
   assert.match(headerCss, /width: max-content/);
   assert.match(headerCss, /@media \(max-width: 760px\)/);
-  assert.match(headerCss, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.match(headerCss, /white-space: normal/);
+  assert.match(headerCss, /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
+  assert.match(headerCss, /white-space:normal/);
   assert.doesNotMatch(headerCss, /\.sas-product-nav\s*\{[^}]*overflow-x:\s*auto/);
   assert.match(headerCss, /position: relative/);
   assert.match(navigation, /variant: "header" \| "briefing"/);
+});
+
+test("mobile product navigation uses four icon-led individual surfaces, never a 2x2 box", () => {
+  const headerCss = read("src/app/unified-glass-header.css");
+  for (const section of ["/briefings","/insights","/visual-knowledge","/programs"]) {
+    assert.ok(navigation.includes('section === "' + section + '"') || section === "/programs");
+  }
+  assert.match(navigation, /<ProductIcon section=\{item\.key\}/);
+  assert.match(headerCss,/grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
+  assert.match(headerCss,/\.sas-product-nav__icon/);
+  assert.match(headerCss,/\.sas-product-nav__link::after/);
+  assert.match(headerCss,/prefers-reduced-motion/);
 });
