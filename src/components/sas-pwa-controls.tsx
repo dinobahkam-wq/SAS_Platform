@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./sas-pwa-controls.css";
 
 type InstallEvent = Event & {
@@ -29,6 +29,7 @@ export function SasPwaControls() {
   const [showGuide, setShowGuide] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [workerWaiting, setWorkerWaiting] = useState<ServiceWorker | null>(null);
+  const userRequestedUpdate = useRef(false);
   const [privatePath, setPrivatePath] = useState(true);
 
   useEffect(() => {
@@ -57,11 +58,10 @@ export function SasPwaControls() {
   useEffect(() => {
     if (!("serviceWorker" in navigator) || process.env.NODE_ENV !== "production") return;
     let cancelled = false;
-    let reloadOnControlChange = false;
     let registration: ServiceWorkerRegistration | undefined;
     const onChange = () => {
-      if (!reloadOnControlChange) return;
-      reloadOnControlChange = false;
+      if (!userRequestedUpdate.current) return;
+      userRequestedUpdate.current = false;
       window.location.reload();
     };
     navigator.serviceWorker.addEventListener("controllerchange", onChange);
@@ -113,6 +113,7 @@ export function SasPwaControls() {
   function updateApp() {
     if (!workerWaiting) return;
     setUpdating(true);
+    userRequestedUpdate.current = true;
     workerWaiting.postMessage({ type: "SAS_SKIP_WAITING" });
   }
 
