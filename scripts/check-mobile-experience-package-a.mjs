@@ -7,6 +7,7 @@ const layout = read("src/app/layout.tsx");
 const mobile = read("src/app/mobile-polish.css");
 const home = read("src/app/page.tsx");
 const header = read("src/components/public-site.tsx");
+const nav = read("src/components/sas-pill-nav.tsx");
 const threads = read("src/components/sas-hero-threads.tsx");
 
 test("mobile polish is an additive final public stylesheet, not a destructive redesign", () => {
@@ -21,7 +22,8 @@ test("mobile polish is an additive final public stylesheet, not a destructive re
 });
 
 test("mobile header supports usable RTL tabs and 44-pixel tap targets", () => {
-  assert.match(header, /aria-label="الأقسام الرئيسية"/);
+  assert.match(header, /<SasHeaderPillNav \/>/);
+  assert.match(nav, /الأقسام الرئيسية/);
   assert.match(header, /aria-label="البحث في منصة ساس"/);
   assert.match(header, /<ThemeControl \/>/);
   assert.match(mobile, /grid-template-areas: "brand actions" "nav nav"/);
