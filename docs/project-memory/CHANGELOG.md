@@ -1,3 +1,11 @@
+### 2026-11-24 — Video & Programs external-link catalog (review branch)
+- Confirmed Supabase public object in `sas-public-media/programs/political-minutes/mohammed-salem-bafaqir-cover.png.png` (actual double `.png` suffix retained).
+- Built a responsive 9:16 poster catalog for `/programs`, with direct link navigation to the original video and no on-page provider label, embed, video upload, or playback bandwidth.
+- Added validated HTTPS video URL to the existing admin content form; links are stored as `body.external_video_url` for formats video/interview/podcast without changing database schema.
+- Staged first `دقائق سياسية | محمد سالم بافقير` poster as a code-level fallback on this PR only. Published canonical content records take precedence to avoid duplicates.
+- No direct write to production `content_items` before UI review and release approval; no change to `main` or Vercel. CI adds `check-programs-external-video-v1.mjs`.
+- Follow-up for release: create the canonical editorial record and attach the uploaded asset through Media Library, then remove the staging fallback if no longer needed.
+
 ### 2026-11-24 — Full-width briefing audio player
 - Removed the audio card's 780px max-width and applied border-box sizing so it aligns with the reference indicator panel within the same briefing content container.
 - Added an audio regression check to guard full-width sizing and preserve the published-edition placement; no Supabase changes, main merge, or Vercel deployment.
