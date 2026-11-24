@@ -21,6 +21,7 @@ type ContentInitial = {
   category_id: string;
   is_featured: boolean;
   cover_asset_id: string;
+  external_video_url?: string;
 };
 
 export function ContentForm({
@@ -110,6 +111,14 @@ export function ContentForm({
             </select>
             <small className="helper-text">اختر صورة من مكتبة الوسائط لتظهر في بطاقة المادة وصفحتها. لا تُعرض الملفات غير المرتبطة بمادة منشورة للعامة.</small>
           </label>
+          {activeSection === "media" && ["video","interview","podcast"].includes(activeFormat) ? (
+            <label className="field field-full">
+              <span>رابط مشاهدة الفيديو</span>
+              <input name="external_video_url" type="url" dir="ltr" required={activeFormat === "video"}
+                defaultValue={initial?.external_video_url ?? ""} placeholder="https://www.facebook.com/share/v/…" />
+              <small className="helper-text">يفتح الغلاف الرابط مباشرة في تبويب جديد. لا يتم تخزين ملف الفيديو على الموقع.</small>
+            </label>
+          ) : null}
           <label className="field field-full">
             <span>الموجز / المقدمة</span>
             <textarea name="excerpt" defaultValue={initial?.excerpt ?? ""} rows={3} placeholder="ملخص قصير يظهر في بطاقات المحتوى..." />
