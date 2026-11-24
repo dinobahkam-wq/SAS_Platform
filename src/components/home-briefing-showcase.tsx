@@ -89,7 +89,6 @@ export function HomeBriefingShowcase({
           <p className="sas-home-briefing-lede">
             أبرز الوقائع والمواقف والتغيرات، ضمن سجل تحريري موثق يضع التطورات في سياقها.
           </p>
-          <HomeBriefingRotatingCopy headlines={tickerHeadlines} />
           {audio ? <BriefingAudioPlayer audio={audio} compact /> : null}
 
           <div className="sas-home-briefing-metrics" aria-label="بيانات العدد">
@@ -154,6 +153,12 @@ export function HomeBriefingShowcase({
           )}
           <Link href={href} className="sas-home-briefing-aside-link">الاطلاع على السجل الكامل <BriefingIcon name="arrow"/></Link>
         </aside>
+
+        {tickerHeadlines.length ? (
+          <div className="sas-home-briefing-ticker-footer">
+            <HomeBriefingRotatingCopy headlines={tickerHeadlines} />
+          </div>
+        ) : null}
       </article>
 
       {previous.length ? (
