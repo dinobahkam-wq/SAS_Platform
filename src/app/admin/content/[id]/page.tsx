@@ -48,6 +48,7 @@ export default async function EditContentPage({
           category_id: item.category_id ?? "",
           is_featured: item.is_featured,
           cover_asset_id: item.cover_asset_id ?? "",
+          external_video_url: item.body && typeof item.body === "object" && !Array.isArray(item.body) && typeof item.body.external_video_url === "string" ? item.body.external_video_url : "",
         }}
         error={search.error ? "تعذر الحفظ. تحقق من الحقول والمصادر، وتأكد من إسناد مصدر واحد على الأقل عند نشر الخبر." : undefined}
       />
