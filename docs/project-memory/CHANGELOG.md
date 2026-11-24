@@ -1,3 +1,7 @@
+### 2026-11-24 — Full-width briefing audio player
+- Removed the audio card's 780px max-width and applied border-box sizing so it aligns with the reference indicator panel within the same briefing content container.
+- Added an audio regression check to guard full-width sizing and preserve the published-edition placement; no Supabase changes, main merge, or Vercel deployment.
+
 ### 2026-11-24 — Product navigation architectural correction v4
 - After desktop and narrow-window visual failure, replaced header-only reuse of animated `SasPillNav` with dedicated semantic product links (`sas-product-nav`), without touching briefing filters.
 - Desktop uses an intrinsic-width compact link group, not stretched columns; <=760px switches to a fully visible 2x2 grid without horizontal clipping or hidden product destinations.
