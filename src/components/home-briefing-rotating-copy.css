@@ -1,67 +1,121 @@
-/* SAS daily briefing: continuous, subdued, whole-phrase editorial rotation. */
+/* The fixed label is separate from the adaptive headline capsule.
+ * The highlight expands to the actual title width and smoothly contracts again.
+ */
 .public-site .sas-home-briefing-rotating-copy {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 11px;
-  width: 100%;
-  max-width: 100%;
-  min-height: 42px;
-  margin-top: 19px;
-  padding: 8px 12px;
-  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--accent-soft) 25%, var(--surface));
-  font-family: "Thmanyah Sans", sans-serif;
+  display:flex;
+  align-items:center;
+  flex-wrap:nowrap;
+  gap:10px;
+  min-height:56px;
+  max-width:100%;
+  width:100%;
+  padding:8px;
+  margin-top:20px;
+  border:1px solid color-mix(in srgb,var(--accent) 15%,var(--line));
+  border-radius:15px;
+  background:color-mix(in srgb,var(--surface) 89%,var(--accent-soft));
+  direction:rtl;
+  font-family:"Thmanyah Sans",sans-serif;
+  isolation:isolate;
 }
 .public-site .sas-home-briefing-rotating-prefix {
-  flex: 0 0 auto;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 600;
+  display:inline-flex;
+  flex:0 0 auto;
+  align-items:center;
+  gap:7px;
+  min-height:36px;
+  padding:7px 12px;
+  border-radius:10px;
+  background:var(--brand-teal-deep,var(--accent));
+  color:#fff;
+  white-space:nowrap;
+  font-size:11px;
+  font-weight:750;
+}
+.public-site .sas-home-briefing-rotating-dot {
+  height:6px;
+  width:6px;
+  flex:0 0 6px;
+  border-radius:50%;
+  background:#e3c17d;
+  box-shadow:0 0 0 3px rgba(229,191,114,.16);
+}
+.public-site .sas-home-briefing-ticker-track {
+  position:relative;
+  display:flex;
+  flex:1 1 auto;
+  min-width:0;
+  overflow:hidden;
+  align-items:center;
 }
 .public-site .sas-home-briefing-rotating-stage {
-  display: grid;
-  align-items: center;
-  position: relative;
-  flex: 1 1 205px;
-  min-width: 0;
-  min-height: 25px;
-  overflow: hidden;
-  direction: rtl;
+  position:relative;
+  display:flex;
+  align-items:center;
+  min-height:36px;
+  max-width:100%;
+  overflow:hidden;
+  padding:0;
+  border-radius:10px;
+  background:color-mix(in srgb,var(--accent) 12%,var(--surface));
+  transition:width .58s cubic-bezier(.22,1,.36,1),background .25s ease;
 }
 .public-site .sas-home-briefing-rotating-phrase {
-  grid-area: 1 / 1;
-  display: block;
-  opacity: 0;
-  color: var(--accent);
-  font: 700 clamp(12px, 1.05vw, 14px)/1.8 "Thmanyah Sans", sans-serif;
-  transform: translateY(65%);
-  animation: sasBriefingPhraseTurn 16s cubic-bezier(.22, 1, .36, 1) infinite both;
-  white-space: nowrap;
+  display:block;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  padding:7px 14px;
+  font:700 12px/1.85 "Thmanyah Sans",sans-serif;
+  text-decoration:none;
+  color:var(--accent);
+  animation:sasHomeHeadlineEnter .5s cubic-bezier(.22,1,.36,1) both;
 }
-@keyframes sasBriefingPhraseTurn {
-  0% { opacity: 0; transform: translateY(65%); }
-  3%, 22% { opacity: 1; transform: translateY(0); }
-  25%, 100% { opacity: 0; transform: translateY(-65%); }
+.public-site .sas-home-briefing-rotating-phrase:hover {
+  text-decoration:underline;
+  text-underline-offset:3px;
 }
-@media (max-width: 600px) {
-  .public-site .sas-home-briefing-rotating-copy {
-    margin-top: 15px;
-    padding: 9px 11px;
-    gap: 6px 9px;
-  }
-  .public-site .sas-home-briefing-rotating-stage {
-    flex-basis: 172px;
-    min-height: 23px;
-  }
-  .public-site .sas-home-briefing-rotating-phrase { font-size: 12px; }
+.public-site .sas-home-briefing-rotating-phrase:focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:-3px;
+  border-radius:8px;
 }
-@media (prefers-reduced-motion: reduce) {
-  .public-site .sas-home-briefing-rotating-phrase { animation: none; opacity: 0; transform: none; }
-  .public-site .sas-home-briefing-rotating-phrase:first-child { opacity: 1; }
+.public-site .sas-home-briefing-ticker-measure {
+  position:absolute;
+  left:-99999px;
+  top:0;
+  display:inline-block;
+  width:max-content;
+  white-space:nowrap;
+  pointer-events:none;
+  visibility:hidden;
+  font:700 12px/1.85 "Thmanyah Sans",sans-serif;
+}
+.public-site .sas-home-briefing-rotating-counter {
+  color:var(--muted);
+  font-size:10px;
+  flex:0 0 auto;
+  direction:ltr;
+  font-variant-numeric:tabular-nums;
+}
+@keyframes sasHomeHeadlineEnter {
+  from { opacity:0; transform:translateY(12px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@media(max-width:600px){
+  .public-site .sas-home-briefing-rotating-copy { padding:6px; gap:6px; margin-top:15px; min-height:48px; }
+  .public-site .sas-home-briefing-rotating-prefix { padding:7px 9px; font-size:10px; min-height:34px; }
+  .public-site .sas-home-briefing-rotating-stage { min-height:34px; }
+  .public-site .sas-home-briefing-rotating-phrase { font-size:11px; padding:6px 10px; }
+  .public-site .sas-home-briefing-ticker-measure { font-size:11px; }
+  .public-site .sas-home-briefing-rotating-counter { display:none; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .public-site .sas-home-briefing-rotating-stage { transition:none!important; }
+  .public-site .sas-home-briefing-rotating-phrase { animation:none!important; }
 }
 @media print {
-  .public-site .sas-home-briefing-rotating-phrase { animation: none; opacity: 0; transform: none; }
-  .public-site .sas-home-briefing-rotating-phrase:first-child { opacity: 1; }
+  .public-site .sas-home-briefing-rotating-stage { transition:none; }
+  .public-site .sas-home-briefing-rotating-phrase { animation:none; }
 }
