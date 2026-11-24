@@ -61,6 +61,7 @@ jobs:
             scripts/check-sas-metallic-logo-v1.mjs \
             scripts/check-public-scroll-reveal-v1.mjs \
             scripts/check-briefing-audio-v1.mjs \
+            scripts/check-programs-external-video-v1.mjs \
             scripts/check-home-briefing-cover-v3.mjs \
             scripts/check-home-briefing-rotating-copy-v1.mjs \
             scripts/check-home-insights-showcase-v1.mjs
