@@ -1,18 +1,21 @@
-/* SAS public header v2.
-   Header scrolls with the document. Product navigation is a restrained,
-   symmetrical four-column rail; at very narrow widths it scrolls horizontally.
-   Keep this file after legacy/global responsive styles. */
+/* SAS Adaptive Product Navigation v4.
+ * Header is in normal document flow. Primary navigation is a compact
+ * link group on desktop and a fully visible 2x2 grid on narrow screens.
+ * Do not reuse SasPillNav animation or legacy .site-nav styling here.
+ */
 .sas-site-content .site-header.sas-unified-header {
-  --header-border: rgba(14, 99, 91, .14);
-  --header-control: rgba(255,255,255,.56);
+  --sas-header-border: rgba(14, 99, 91, .13);
+  --sas-header-control: rgba(255, 255, 255, .55);
   position: relative;
   top: auto;
   z-index: 80;
-  background: rgba(250,253,251,.84);
-  border-bottom: 1px solid var(--header-border);
+  isolation: isolate;
+  overflow: visible;
+  background: rgba(250, 253, 251, .86);
+  border-bottom: 1px solid var(--sas-header-border);
   box-shadow: none;
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
-  backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: saturate(130%) blur(14px);
+  -webkit-backdrop-filter: saturate(130%) blur(14px);
 }
 .sas-site-content .sas-unified-header .site-header-inner,
 .public-site .sas-unified-header .site-header-inner {
@@ -20,17 +23,19 @@
   width: min(1480px, calc(100% - 48px));
   min-height: 78px;
   margin-inline: auto;
-  padding: 8px 0;
+  padding: 7px 0;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   grid-template-areas: "brand nav actions";
   align-items: center;
-  gap: clamp(14px,2vw,30px);
+  justify-content: stretch;
+  column-gap: clamp(12px, 2vw, 32px);
+  row-gap: 7px;
 }
 .sas-unified-header .site-brand {
   grid-area: brand;
-  min-width: 0;
   justify-self: start;
+  min-width: 0;
 }
 .sas-unified-header .site-brand .brand-logo-color {
   width: 142px;
@@ -38,75 +43,60 @@
   object-fit: cover;
   object-position: center;
 }
-.sas-unified-header .sas-pill-nav--header.site-nav,
-.public-site .sas-unified-header .sas-pill-nav--header.site-nav,
-.briefing-public-site .sas-unified-header .sas-pill-nav--header.site-nav {
+.sas-unified-header .sas-product-nav {
   grid-area: nav;
-  display: block;
+  justify-self: center;
   box-sizing: border-box;
-  justify-self: stretch;
-  width: 100%;
-  min-width: 0;
+  width: max-content;
   max-width: 100%;
-  padding: 4px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  border-radius: 11px;
-  border: 1px solid var(--header-border);
-  background: rgba(51,123,107,.045);
-  box-shadow: none;
-}
-.sas-unified-header .sas-pill-nav--header.site-nav::-webkit-scrollbar {
-  display: none;
-}
-.sas-unified-header .sas-pill-nav--header .sas-pill-nav__track {
-  display: grid;
-  direction: rtl;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  width: 100%;
   min-width: 0;
-  box-sizing: border-box;
+  padding: 4px;
+  border-radius: 13px;
+  border: 1px solid var(--sas-header-border);
+  background: rgba(49, 125, 108, .065);
+}
+.sas-unified-header .sas-product-nav__list {
+  display: flex;
+  direction: rtl;
+  align-items: stretch;
+  justify-content: center;
   gap: 3px;
-  padding: 0;
+  width: max-content;
+  max-width: 100%;
 }
-.sas-unified-header .sas-pill-nav--header .sas-pill-nav__indicator {
-  display: none;
-}
-.sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
-.public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
-.briefing-public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
+.sas-unified-header .sas-product-nav__link {
   box-sizing: border-box;
   display: inline-flex;
+  flex: 0 0 auto;
   justify-content: center;
   align-items: center;
-  min-width: 0;
-  width: 100%;
-  min-height: 43px;
-  padding: 9px 7px;
-  border-radius: 8px;
-  background: transparent;
+  min-height: 42px;
+  padding: 9px 14px;
+  border-radius: 9px;
   color: var(--foreground);
-  font: 600 12px/1.55 "Thmanyah Sans",sans-serif;
+  font: 600 12px/1.6 "Thmanyah Sans", sans-serif;
   text-align: center;
+  text-decoration: none;
   white-space: nowrap;
-  transition: background-color .16s ease,color .16s ease;
+  transition: background-color .15s ease, color .15s ease;
 }
-.sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-highlighted,
-.public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-highlighted {
-  background: rgba(12,121,115,.085);
+.sas-unified-header .sas-product-nav__link:hover {
+  background: rgba(7, 125, 118, .09);
   color: var(--accent);
 }
-.sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active,
-.public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active {
+.sas-unified-header .sas-product-nav__link.is-active {
   background: var(--accent);
-  color: #fff;
+  color: white;
+}
+.sas-unified-header .sas-product-nav__link.is-active:hover {
+  color: white;
+  background: var(--accent-strong);
 }
 .sas-unified-header .site-header-actions {
   grid-area: actions;
+  justify-self: end;
   display: inline-flex;
   align-items: center;
-  justify-self: end;
   flex-shrink: 0;
   gap: 7px;
 }
@@ -125,28 +115,27 @@
   min-height: 42px;
   padding: 0;
   border-radius: 10px;
-  border: 1px solid var(--header-border);
-  background: var(--header-control);
+  border: 1px solid var(--sas-header-border);
   color: var(--foreground);
+  background: var(--sas-header-control);
   box-shadow: none;
 }
 .sas-unified-header .site-header-actions .sas-header-search span,
-.sas-unified-header .site-header-actions .sas-theme-trigger span {
-  display: none;
-}
+.sas-unified-header .site-header-actions .sas-theme-trigger span { display: none; }
 .sas-unified-header .site-header-actions .site-admin-link,
 .public-site .sas-unified-header .site-header-actions .site-admin-link {
+  box-sizing: border-box;
   display: inline-flex;
+  justify-content: center;
+  align-items: center;
   min-height: 42px;
   height: 42px;
-  box-sizing: border-box;
   padding: 9px 12px;
-  align-items: center;
-  border: 1px solid var(--header-border);
+  border: 1px solid var(--sas-header-border);
   border-radius: 10px;
-  background: var(--header-control);
+  background: var(--sas-header-control);
   color: var(--accent);
-  font: 600 11px/1.5 "Thmanyah Sans",sans-serif;
+  font: 600 11px/1.5 "Thmanyah Sans", sans-serif;
 }
 .sas-unified-header .site-header-actions :is(a,button):hover {
   border-color: var(--accent);
@@ -158,44 +147,42 @@
   outline-offset: 2px;
 }
 html[data-theme="dark"] .sas-site-content .site-header.sas-unified-header {
-  --header-border: rgba(171,218,203,.18);
-  --header-control: rgba(41,65,56,.65);
-  background: rgba(19,34,30,.88);
+  --sas-header-border: rgba(171, 218, 203, .18);
+  --sas-header-control: rgba(41, 65, 56, .65);
+  background: rgba(19, 34, 30, .88);
 }
-html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header.site-nav {
-  background: rgba(48,108,94,.13);
+html[data-theme="dark"] .sas-unified-header .sas-product-nav {
+  background: rgba(48, 108, 94, .18);
 }
-html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-highlighted {
-  background: rgba(106,177,157,.16);
+html[data-theme="dark"] .sas-unified-header .sas-product-nav__link:hover {
+  background: rgba(104, 187, 165, .17);
   color: #d6f4e8;
 }
-html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active {
+html[data-theme="dark"] .sas-unified-header .sas-product-nav__link.is-active {
   background: #127b75;
-  color: #fff;
+  color: white;
 }
-@media (max-width: 1250px) {
+/* Intermediate widths: two header rows, but navigation remains intrinsically sized. */
+@media (max-width: 1240px) {
   .sas-site-content .sas-unified-header .site-header-inner,
   .public-site .sas-unified-header .site-header-inner {
     width: calc(100% - 36px);
-    min-height: 0;
-    grid-template-columns: minmax(0,1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: "brand actions" "nav nav";
-    gap: 3px 10px;
-    padding: 6px 0 9px;
+    gap: 5px 12px;
+    padding: 5px 0 9px;
   }
-  .sas-unified-header .site-brand .brand-logo-color {
-    width: 138px;
-    height: 61px;
-  }
+  .sas-unified-header .site-brand .brand-logo-color { width: 138px; height: 60px; }
 }
+/* Never cut off the fourth product: two rows, all four destinations visible. */
 @media (max-width: 760px) {
   .sas-site-content .sas-unified-header .site-header-inner,
   .public-site .sas-unified-header .site-header-inner {
     width: calc(100% - 28px);
     grid-template-columns: minmax(0,1fr) auto;
     grid-template-areas: "brand actions" "nav nav";
-    column-gap: 8px;
-    row-gap: 3px;
+    min-height: 0;
+    gap: 4px 8px;
     padding: 4px 0 9px;
   }
   .sas-unified-header .site-brand .brand-logo-color,
@@ -203,25 +190,31 @@ html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav_
     width: 126px;
     height: 55px;
   }
-  .sas-unified-header .sas-pill-nav--header.site-nav,
-  .public-site .sas-unified-header .sas-pill-nav--header.site-nav {
+  .sas-unified-header .sas-product-nav,
+  .public-site .sas-unified-header .sas-product-nav {
+    justify-self: stretch;
     width: 100%;
-    min-width: 0;
+    max-width: 100%;
     padding: 4px;
-    border-radius: 10px;
-    border-top: 1px solid var(--header-border);
-    justify-content: stretch;
+    border-radius: 11px;
   }
-  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track,
-  .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track {
+  .sas-unified-header .sas-product-nav__list {
+    display: grid;
     width: 100%;
-    min-width: 0;
+    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px;
   }
-  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
-  .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
+  .sas-unified-header .sas-product-nav__link {
+    min-width: 0;
     min-height: 42px;
-    padding: 8px 5px;
-    font-size: 11.5px;
+    width: 100%;
+    padding: 8px 6px;
+    white-space: normal;
+    text-wrap: balance;
+    font-size: 12px;
+    line-height: 1.55;
+    overflow-wrap: normal;
   }
   .sas-unified-header .site-header-actions { gap: 5px; }
   .sas-unified-header .site-header-actions .sas-header-search,
@@ -239,23 +232,7 @@ html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav_
     min-height: 40px;
     height: 40px;
     padding: 7px 9px;
-    font-size: 10.5px;
-  }
-}
-@media (max-width: 520px) {
-  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track,
-  .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__track {
-    display: flex;
-    width: max-content;
-    min-width: max-content;
-    gap: 3px;
-  }
-  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item,
-  .public-site .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
-    flex: 0 0 auto;
-    width: auto;
-    min-width: 122px;
-    padding-inline: 11px;
+    font-size: 10px;
   }
 }
 @media (max-width: 390px) {
@@ -263,14 +240,16 @@ html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav_
   .public-site .sas-unified-header .site-header-inner { width: calc(100% - 18px); }
   .sas-unified-header .site-brand .brand-logo-color,
   .public-site .sas-unified-header .site-brand .brand-logo-color {
-    width: 109px;
-    height: 50px;
+    width: 107px;
+    height: 49px;
+  }
+  .sas-unified-header .sas-product-nav__link {
+    font-size: 11px;
+    padding-inline: 4px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item {
-    transition: none !important;
-  }
+  .sas-unified-header .sas-product-nav__link { transition: none !important; }
 }
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .sas-site-content .site-header.sas-unified-header { background: var(--surface); }
@@ -278,8 +257,8 @@ html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav_
 @media print {
   .sas-site-content .site-header.sas-unified-header {
     position: static;
+    background: white;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
-    background: white;
   }
 }
