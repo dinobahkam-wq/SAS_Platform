@@ -106,9 +106,25 @@ const mainSections: SasPillItem[] = [
   { key: "/programs", href: "/programs", label: "الفيديو والبرامج" },
 ];
 
+/** Primary product destinations use ordinary links, not the briefing filter pill control.
+ * The layout is entirely responsive CSS: compact intrinsic width on desktop,
+ * 2x2 fully visible links on narrow devices.
+ */
 export function SasHeaderPillNav() {
   const pathname = usePathname();
-  const active = mainSections.find((item) => pathname === item.href || pathname.startsWith(item.href + "/"));
-  return <SasPillNav items={mainSections} activeKey={active?.key ?? ""}
-    variant="header" className="site-nav" ariaLabel="الأقسام الرئيسية" />;
+  return (
+    <nav className="sas-product-nav" aria-label="الأقسام الرئيسية — منتجات منصة ساس">
+      <div className="sas-product-nav__list">
+        {mainSections.map((item) => {
+          const active = pathname === item.href || pathname.startsWith(item.href + "/");
+          return (
+            <Link key={item.key} href={item.href!} className={"sas-product-nav__link" + (active ? " is-active" : "")}
+              aria-current={active ? "page" : undefined}>
+              {item.label}
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+  );
 }

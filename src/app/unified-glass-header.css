@@ -1,0 +1,264 @@
+/* SAS Adaptive Product Navigation v4.
+ * Header is in normal document flow. Primary navigation is a compact
+ * link group on desktop and a fully visible 2x2 grid on narrow screens.
+ * Do not reuse SasPillNav animation or legacy .site-nav styling here.
+ */
+.sas-site-content .site-header.sas-unified-header {
+  --sas-header-border: rgba(14, 99, 91, .13);
+  --sas-header-control: rgba(255, 255, 255, .55);
+  position: relative;
+  top: auto;
+  z-index: 80;
+  isolation: isolate;
+  overflow: visible;
+  background: rgba(250, 253, 251, .86);
+  border-bottom: 1px solid var(--sas-header-border);
+  box-shadow: none;
+  backdrop-filter: saturate(130%) blur(14px);
+  -webkit-backdrop-filter: saturate(130%) blur(14px);
+}
+.sas-site-content .sas-unified-header .site-header-inner,
+.public-site .sas-unified-header .site-header-inner {
+  box-sizing: border-box;
+  width: min(1480px, calc(100% - 48px));
+  min-height: 78px;
+  margin-inline: auto;
+  padding: 7px 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "brand nav actions";
+  align-items: center;
+  justify-content: stretch;
+  column-gap: clamp(12px, 2vw, 32px);
+  row-gap: 7px;
+}
+.sas-unified-header .site-brand {
+  grid-area: brand;
+  justify-self: start;
+  min-width: 0;
+}
+.sas-unified-header .site-brand .brand-logo-color {
+  width: 142px;
+  height: 62px;
+  object-fit: cover;
+  object-position: center;
+}
+.sas-unified-header .sas-product-nav {
+  grid-area: nav;
+  justify-self: center;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  padding: 4px;
+  border-radius: 13px;
+  border: 1px solid var(--sas-header-border);
+  background: rgba(49, 125, 108, .065);
+}
+.sas-unified-header .sas-product-nav__list {
+  display: flex;
+  direction: rtl;
+  align-items: stretch;
+  justify-content: center;
+  gap: 3px;
+  width: max-content;
+  max-width: 100%;
+}
+.sas-unified-header .sas-product-nav__link {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+  padding: 9px 14px;
+  border-radius: 9px;
+  color: var(--foreground);
+  font: 600 12px/1.6 "Thmanyah Sans", sans-serif;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .15s ease, color .15s ease;
+}
+.sas-unified-header .sas-product-nav__link:hover {
+  background: rgba(7, 125, 118, .09);
+  color: var(--accent);
+}
+.sas-unified-header .sas-product-nav__link.is-active {
+  background: var(--accent);
+  color: white;
+}
+.sas-unified-header .sas-product-nav__link.is-active:hover {
+  color: white;
+  background: var(--accent-strong);
+}
+.sas-unified-header .site-header-actions {
+  grid-area: actions;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 7px;
+}
+.sas-unified-header .site-header-actions .sas-header-search,
+.sas-unified-header .site-header-actions .sas-theme-trigger,
+.public-site .sas-unified-header .site-header-actions .sas-header-search,
+.public-site .sas-unified-header .site-header-actions .sas-theme-trigger {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 42px;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0;
+  border-radius: 10px;
+  border: 1px solid var(--sas-header-border);
+  color: var(--foreground);
+  background: var(--sas-header-control);
+  box-shadow: none;
+}
+.sas-unified-header .site-header-actions .sas-header-search span,
+.sas-unified-header .site-header-actions .sas-theme-trigger span { display: none; }
+.sas-unified-header .site-header-actions .site-admin-link,
+.public-site .sas-unified-header .site-header-actions .site-admin-link {
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+  height: 42px;
+  padding: 9px 12px;
+  border: 1px solid var(--sas-header-border);
+  border-radius: 10px;
+  background: var(--sas-header-control);
+  color: var(--accent);
+  font: 600 11px/1.5 "Thmanyah Sans", sans-serif;
+}
+.sas-unified-header .site-header-actions :is(a,button):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.sas-unified-header :is(a,button):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+html[data-theme="dark"] .sas-site-content .site-header.sas-unified-header {
+  --sas-header-border: rgba(171, 218, 203, .18);
+  --sas-header-control: rgba(41, 65, 56, .65);
+  background: rgba(19, 34, 30, .88);
+}
+html[data-theme="dark"] .sas-unified-header .sas-product-nav {
+  background: rgba(48, 108, 94, .18);
+}
+html[data-theme="dark"] .sas-unified-header .sas-product-nav__link:hover {
+  background: rgba(104, 187, 165, .17);
+  color: #d6f4e8;
+}
+html[data-theme="dark"] .sas-unified-header .sas-product-nav__link.is-active {
+  background: #127b75;
+  color: white;
+}
+/* Intermediate widths: two header rows, but navigation remains intrinsically sized. */
+@media (max-width: 1240px) {
+  .sas-site-content .sas-unified-header .site-header-inner,
+  .public-site .sas-unified-header .site-header-inner {
+    width: calc(100% - 36px);
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "brand actions" "nav nav";
+    gap: 5px 12px;
+    padding: 5px 0 9px;
+  }
+  .sas-unified-header .site-brand .brand-logo-color { width: 138px; height: 60px; }
+}
+/* Never cut off the fourth product: two rows, all four destinations visible. */
+@media (max-width: 760px) {
+  .sas-site-content .sas-unified-header .site-header-inner,
+  .public-site .sas-unified-header .site-header-inner {
+    width: calc(100% - 28px);
+    grid-template-columns: minmax(0,1fr) auto;
+    grid-template-areas: "brand actions" "nav nav";
+    min-height: 0;
+    gap: 4px 8px;
+    padding: 4px 0 9px;
+  }
+  .sas-unified-header .site-brand .brand-logo-color,
+  .public-site .sas-unified-header .site-brand .brand-logo-color {
+    width: 126px;
+    height: 55px;
+  }
+  .sas-unified-header .sas-product-nav,
+  .public-site .sas-unified-header .sas-product-nav {
+    justify-self: stretch;
+    width: 100%;
+    max-width: 100%;
+    padding: 4px;
+    border-radius: 11px;
+  }
+  .sas-unified-header .sas-product-nav__list {
+    display: grid;
+    width: 100%;
+    max-width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px;
+  }
+  .sas-unified-header .sas-product-nav__link {
+    min-width: 0;
+    min-height: 42px;
+    width: 100%;
+    padding: 8px 6px;
+    white-space: normal;
+    text-wrap: balance;
+    font-size: 12px;
+    line-height: 1.55;
+    overflow-wrap: normal;
+  }
+  .sas-unified-header .site-header-actions { gap: 5px; }
+  .sas-unified-header .site-header-actions .sas-header-search,
+  .sas-unified-header .site-header-actions .sas-theme-trigger,
+  .public-site .sas-unified-header .site-header-actions .sas-header-search,
+  .public-site .sas-unified-header .site-header-actions .sas-theme-trigger {
+    flex-basis: 40px;
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+  }
+  .sas-unified-header .site-header-actions .site-admin-link,
+  .public-site .sas-unified-header .site-header-actions .site-admin-link {
+    min-height: 40px;
+    height: 40px;
+    padding: 7px 9px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 390px) {
+  .sas-site-content .sas-unified-header .site-header-inner,
+  .public-site .sas-unified-header .site-header-inner { width: calc(100% - 18px); }
+  .sas-unified-header .site-brand .brand-logo-color,
+  .public-site .sas-unified-header .site-brand .brand-logo-color {
+    width: 107px;
+    height: 49px;
+  }
+  .sas-unified-header .sas-product-nav__link {
+    font-size: 11px;
+    padding-inline: 4px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sas-unified-header .sas-product-nav__link { transition: none !important; }
+}
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .sas-site-content .site-header.sas-unified-header { background: var(--surface); }
+}
+@media print {
+  .sas-site-content .site-header.sas-unified-header {
+    position: static;
+    background: white;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

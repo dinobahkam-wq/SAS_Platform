@@ -21,7 +21,7 @@ const navigation = [
 
 export function PublicHeader() {
   return (
-    <header className="site-header">
+    <header className="site-header sas-unified-header">
       <div className="site-header-inner">
         <Link href="/" className="site-brand" aria-label="منصة ساس">
           <span className="sas-metallic-logo"><BrandLogo variant="color" priority /></span>

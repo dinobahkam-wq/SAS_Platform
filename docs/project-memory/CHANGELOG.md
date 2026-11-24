@@ -1,3 +1,47 @@
+### 2026-11-24 — Homepage video tile correction
+- Fixed omitted homepage integration: home previously drew the media section from `EditorialRail` and had no published media rows, so it showed an empty state while `/programs` had a branch-only preview video.
+- Centralized staged first-episode data and deduplication in `src/lib/programs-catalog-data.ts`; both home and `/programs` now use `ProgramsCatalog` and the same data source.
+- Added a regression assertion that the homepage displays the video tile and uses the same source as the catalog. This is a review-branch preview; no publication to production database, merge, or deployment.
+
+### 2026-11-24 — Video & Programs external-link catalog (review branch)
+- Confirmed Supabase public object in `sas-public-media/programs/political-minutes/mohammed-salem-bafaqir-cover.png.png` (actual double `.png` suffix retained).
+- Built a responsive 9:16 poster catalog for `/programs`, with direct link navigation to the original video and no on-page provider label, embed, video upload, or playback bandwidth.
+- Added validated HTTPS video URL to the existing admin content form; links are stored as `body.external_video_url` for formats video/interview/podcast without changing database schema.
+- Staged first `دقائق سياسية | محمد سالم بافقير` poster as a code-level fallback on this PR only. Published canonical content records take precedence to avoid duplicates.
+- No direct write to production `content_items` before UI review and release approval; no change to `main` or Vercel. CI adds `check-programs-external-video-v1.mjs`.
+- Follow-up for release: create the canonical editorial record and attach the uploaded asset through Media Library, then remove the staging fallback if no longer needed.
+
+### 2026-11-24 — Full-width briefing audio player
+- Removed the audio card's 780px max-width and applied border-box sizing so it aligns with the reference indicator panel within the same briefing content container.
+- Added an audio regression check to guard full-width sizing and preserve the published-edition placement; no Supabase changes, main merge, or Vercel deployment.
+
+### 2026-11-24 — Product navigation architectural correction v4
+- After desktop and narrow-window visual failure, replaced header-only reuse of animated `SasPillNav` with dedicated semantic product links (`sas-product-nav`), without touching briefing filters.
+- Desktop uses an intrinsic-width compact link group, not stretched columns; <=760px switches to a fully visible 2x2 grid without horizontal clipping or hidden product destinations.
+- Header stays non-sticky. The separation is based on Adobe Spectrum compact/overflow guidance and Google Chrome responsive site navigation principles. Require fresh CI and 360/390/600/768/1440 visual checks before merge.
+- No production deploy, no main merge.
+
+### 2026-11-24 — Header visual correction, iteration 3
+- Screenshot review rejected the previous tab presentation: the fourth item was clipped and the rail appeared visually unbalanced.
+- Rebuilt `unified-glass-header.css` as a simpler scoped design: four equal grid columns for standard widths, overflow-safe horizontal tabs only under 520px, balanced padding, restrained surfaces and an explicit active state; public header remains non-sticky.
+- CSS content reviewed structurally; automated GitHub CI and visual acceptance remain required. No main merge or deployment.
+
+### 2026-11-24 — PR #90 CSS build repair
+- رُصد فشل Next.js/PostCSS محليًا وعلى CI بسبب selector معطوب عند السطر 172 في `src/app/unified-glass-header.css` بعد إزالة قواعد scroll.
+- أصلح الالتزام `b7a019fd9bfb4f62a2a748f9676f11fa918687f4` المقطع المعيب وأغلق @media بنحو صحيح. لا دمج إلى main ولا نشر.
+
+### 2026-11-24 — PR #90 visual review adjustment
+- استجابة لصورة فحص D: أُعيد الهيدر إلى `position: relative`، ولم يعد sticky أو يتقلص بالتمرير، للمحافظة على كامل ارتفاع نافذة القراءة.
+- أُلغي مستمع التمرير ومكوّنه، وحُدّث التنقل الرئيسي لتوزيع الأعمدة الأربعة بالتساوي داخل الحاوية مع هوامش متوازنة وoverflow أفقي عند الحاجة.
+- الاحتفاظ بالشفافية الضبابية والأدوات المتناسقة والهوية؛ دون تعديل `main` أو Vercel.
+
+### 2026-11-24 — Unified Glass Header & Product Navigation v1 (review branch)
+- الفرع: `feat/unified-glass-header-nav-v1` مبني من `main` عند `22dca76387a67fe4e89255f98504491d86a23797`.
+- أضيف `src/app/unified-glass-header.css` لتحسين الحاوية الزجاجية، وتوحيد التنقل/الأدوات، وتجاوب عرض الشاشة، والوضع الداكن والاختزال الحركي.
+- أضيف `SasHeaderScrollState` للاستجابة الخفيفة للتمرير (passive listener + requestAnimationFrame) مع إلغاء الاشتراك عند فك التركيب.
+- ربط `PublicHeader` بالطبقة الموحدة وأُدخل CSS بعد ملفات الثيم والتجاوب لتجنب تعارض قواعد الهيدر القديمة.
+- لا تغييرات في المحتوى أو Supabase أو نظام الإدارة، ولا دمج `main` أو نشر Vercel. يلزم فحص CI والمعاينة المحلية 360/390/768/1280px قبل اعتماد الدمج.
+
 > **24 نوفمبر 2026 — إعداد إصدار الإحاطة اليومية والصوت:** إضافة شريط «أهم الأنباء» بعرض كامل وعناوين غير مبتورة وخلفية تتمدد/تنكمش حسب النص، وتحديث SVG التحكم في المشغّل وتخصيص شكل الصوت بالذكاء الاصطناعي، وتجهيز صفحة رفع/مراجعة/نشر الصوت، وقاعدة بيانات وStorage/RPC مع سياسات وصول. توثيق تسليم [24 نوفمبر](HANDOFF_2026-11-24_BRIEFING_AUDIO_TICKER_RELEASE.md)، والتحقق من CI قبل الدمج. لا يعتبر الدمج نشرًا على Vercel.
 
 > **21 نوفمبر 2026 — صورة المكلا في مساحة السلوقن:** تحديث في فرع `feat/home-mukalla-photo-responsive-v1`، ملف `public/Mukalla.webp` موجود مسبقاً، إضافة CSS مخصص لتدرج سطح المكتب ومشهد علوي للجوال مع المحافظة على السلوقن وتباين النص والأزرار، واختبار انحدار مرتبط بـ CI؛ دون تغيير Supabase. [التوثيق](../HOMEPAGE_MUKALLA_PHOTO_HERO_2026-11-21.md).

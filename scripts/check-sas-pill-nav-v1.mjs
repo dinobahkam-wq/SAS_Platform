@@ -37,3 +37,16 @@ test("motion is RTL-aware and accessible on phones and in dark mode", () => {
   assert.match(navigation, /onFocus:/);
   assert.match(navigation, /onBlur:/);
 });
+
+test("primary product navigation keeps all four visible at narrow widths without changing briefing tabs", () => {
+  const headerCss = read("src/app/unified-glass-header.css");
+  assert.match(navigation, /className="sas-product-nav"/);
+  assert.match(navigation, /className="sas-product-nav__list"/);
+  assert.match(headerCss, /width: max-content/);
+  assert.match(headerCss, /@media \(max-width: 760px\)/);
+  assert.match(headerCss, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(headerCss, /white-space: normal/);
+  assert.doesNotMatch(headerCss, /\.sas-product-nav\s*\{[^}]*overflow-x:\s*auto/);
+  assert.match(headerCss, /position: relative/);
+  assert.match(navigation, /variant: "header" \| "briefing"/);
+});
