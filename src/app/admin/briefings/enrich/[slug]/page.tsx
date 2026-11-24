@@ -10,7 +10,7 @@ const errorLabels:Record<string,string>={
   record:"تعذر العثور على العدد أو مراجعته.",
   draft:"المراجعة ليست مسودة قابلة للتعديل.",
   file:"الملف غير صالح؛ يتطلب WebP حقيقياً بعد المعالجة.",
-  rights:"صيغة الترخيص أو رابط المصدر غير صالحين.",
+  rights:"ينقص وصف الصورة أو توثيق صاحب الحقوق ومصدرها.",
   upload:"تعذر رفع الصورة إلى المكتبة.",
   metadata:"تعذر تسجيل بيانات الصورة.",
   link:"فشل ربط الصورة بالتطور؛ لم تُنشر أي تغييرات.",
@@ -93,8 +93,8 @@ export default async function EnrichBriefingPage({
         <div className="sas-photo-story-head"><span>{String(item.display_order+1).padStart(2,"0")}</span>
         <h2>{story.headline_ar}</h2></div>
         {story.summary_ar?<p className="sas-photo-story-summary">{story.summary_ar}</p>:null}
-        {url?<figure className="sas-photo-figure"><img src={url} alt={asset?.alt_text || `صورة مرافقة: ${story.headline_ar}`} loading="lazy"/>
-          {asset?.caption || asset?.credit ? <figcaption>{[asset.caption,asset.credit].filter(Boolean).join(" · ")}</figcaption> : null}</figure>:
+        {url?<figure className="sas-photo-figure"><img src={url} alt={asset?.alt_text??""} loading="lazy"/>
+          <figcaption>{asset?.caption??asset?.alt_text} · الحقوق: {asset?.credit}</figcaption></figure>:
           <p className="sas-photo-empty">بدون صورة — تصميم نصي افتراضي</p>}
         {isDraft?<div className="sas-photo-story-actions">
           <DevelopmentImageUpload slug={slug} revisionId={revision.id} developmentId={item.development_id}/>
