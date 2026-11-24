@@ -8,7 +8,7 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "predev": "node scripts/generate-pwa-icons.mjs",
-    "prebuild": "node scripts/generate-pwa-icons.mjs"
+    "prebuild": "node scripts/generate-pwa-icons.mjs && node scripts/stamp-pwa-worker.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.7",
