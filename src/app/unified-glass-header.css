@@ -1,5 +1,5 @@
 /* SAS unified glass header — public site only; intentionally loaded after legacy page styles.
- * One accessible navigation hierarchy; low-cost sticky glass with compact scroll state.
+ * Non-sticky document-flow header; balanced four-item product navigation.
  */
 .sas-site-content .sas-unified-header {
   --sas-glass-bg: rgba(250, 253, 251, .79);
@@ -138,8 +138,6 @@
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
-.sas-site-content .sas-unified-header[data-scrolled="true"] .site-header-actions .sas-header-search,
-.sas-unified-header[data-scrolled="true"] .site-header-actions .sas-theme-trigger,
 html[data-theme="dark"] .sas-site-content .sas-unified-header {
   --sas-glass-bg: rgba(19, 34, 30, .80);
   --sas-glass-compact: rgba(19, 34, 30, .90);
@@ -147,7 +145,7 @@ html[data-theme="dark"] .sas-site-content .sas-unified-header {
   --sas-glass-control: rgba(37, 61, 53, .58);
   background: var(--sas-glass-bg);
 }
-html[data-theme="dark"] .sas-site-content html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header.site-nav { background: rgba(45, 104, 91, .17); }
+html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header.site-nav { background: rgba(45, 104, 91, .17); }
 html[data-theme="dark"] .sas-unified-header .sas-pill-nav--header .sas-pill-nav__item.is-active:not(.is-highlighted) { color: #b6ebe0; }
 @media (max-width: 1199px) {
   .sas-site-content .sas-unified-header .site-header-inner {
