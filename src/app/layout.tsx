@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.sas-media.net"),
   manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "ساس", statusBarStyle: "default" },
-  icons: { icon: "/brand/icons/sas-pwa-192.png", apple: "/brand/icons/sas-pwa-apple-180.png" },
+  icons: { icon: "/brand/icons/sas-pwa-192.png?v=sas-color-20261124", apple: "/brand/icons/sas-pwa-apple-180.png?v=sas-color-20261124" },
 };
 
 export default function RootLayout({
