@@ -13,18 +13,19 @@ const upload = read("src/app/admin/briefings/audio/actions.ts");
 const admin = read("src/app/admin/briefings/audio/[slug]/page.tsx");
 const form = read("src/app/admin/briefings/audio/briefing-audio-upload-form.tsx");
 
-test("independent restricted audio storage and separate edition assets",()=>{
+test("independent restricted audio storage and public RPC",()=>{
   assert.match(migration,/sas-briefing-audio/);
   assert.match(migration,/CREATE TABLE IF NOT EXISTS public\.briefing_audio_assets/);
   assert.match(migration,/ENABLE ROW LEVEL SECURITY/);
-  assert.match(migration,/sas_audio_public_published/);
-  assert.match(migration,/current_revision_id=revision_id/);
   assert.match(migration,/status='draft'/);
   assert.match(migration,/private\.has_any_role/);
+  const publicSql=read("supabase/migrations/20261124112700_public_briefing_audio_rpc_v1.sql");
+  assert.match(publicSql,/get_public_briefing_audio/);
+  assert.match(publicSql,/a.status='published'/);
+  assert.match(publicSql,/e.current_revision_id/);
 });
-test("audio renders only when current revision has a published asset",()=>{
-  assert.match(lookup,/\.eq\("revision_id", edition\.current_revision_id\)/);
-  assert.match(lookup,/\.eq\("status", "published"\)/);
+test("player renders only for the approved edition companion",()=>{
+  assert.match(lookup,/get_public_briefing_audio/);
   assert.match(home,/getPublishedBriefingAudio/);
   assert.match(home,/audio=\{briefingAudio\}/);
   assert.match(showcase,/audio \? <BriefingAudioPlayer audio=\{audio\} compact \/> : null/);
