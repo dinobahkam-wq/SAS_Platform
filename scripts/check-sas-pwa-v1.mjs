@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 
 const read = path => readFileSync(path, "utf8");
 const manifest = read("src/app/manifest.ts");
-const worker = read("public/sw.js");
+const worker = read("public/sw-template.js");
 const controls = read("src/components/sas-pwa-controls.tsx");
 const layout = read("src/app/layout.tsx");
 const script = read("scripts/generate-pwa-icons.mjs");
@@ -36,6 +36,8 @@ test("service worker never caches private content or editorial navigations", () 
   assert.doesNotMatch(worker,/cache\.put\(request, response\.clone\(\)\)[\s\S]*request\.mode === "navigate"/);
   assert.match(worker,/MAX_IMAGES = 45/);
   assert.match(worker,/SAS_SKIP_WAITING/);
+  assert.match(worker,/__SAS_PWA_VERSION__/);
+  assert.match(read("scripts/stamp-pwa-worker.mjs"),/VERCEL_GIT_COMMIT_SHA/);
 });
 test("Android native install, iOS help, safe updates, no dev SW", () => {
   assert.match(controls,/beforeinstallprompt/);
