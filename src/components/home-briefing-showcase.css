@@ -431,3 +431,34 @@
 @media print {
   .public-site .sas-home-briefing-art::before { animation: none; }
 }
+
+
+/* Full-width headline ticker sits below ALL three flagship columns.
+ * Keep the original image, story list and audio player layout untouched.
+ */
+.public-site .sas-home-briefing-feature > .sas-home-briefing-ticker-footer {
+  grid-column:1 / -1;
+  grid-row:2;
+  min-width:0;
+  padding:15px clamp(24px,3vw,42px);
+  border-top:1px solid var(--line);
+  background:var(--surface);
+}
+@media(max-width:850px) {
+  .public-site .sas-home-briefing-feature > .sas-home-briefing-ticker-footer {
+    grid-column:1 / -1;
+    grid-row:4;
+    padding:14px 22px 18px;
+  }
+}
+@media(max-width:600px) {
+  .public-site .sas-home-briefing-feature > .sas-home-briefing-ticker-footer {
+    padding:12px 15px 16px;
+  }
+}
+@media print {
+  .public-site .sas-home-briefing-feature > .sas-home-briefing-ticker-footer {
+    grid-column:1 / -1;
+    grid-row:auto;
+  }
+}
