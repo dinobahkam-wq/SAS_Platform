@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import "./sas-pwa-controls.css";
 
 type InstallEvent = Event & {
@@ -30,10 +31,10 @@ export function SasPwaControls() {
   const [updating, setUpdating] = useState(false);
   const [workerWaiting, setWorkerWaiting] = useState<ServiceWorker | null>(null);
   const userRequestedUpdate = useRef(false);
-  const [privatePath, setPrivatePath] = useState(true);
+  const pathname = usePathname();
+  const privatePath = /^\/(?:admin|login|auth)(?:\/|$)/.test(pathname);
 
   useEffect(() => {
-    setPrivatePath(/^\/(?:admin|login|auth)(?:\/|$)/.test(location.pathname));
     setPlatform(identifyPlatform());
     setInstalled(isStandalone());
     try { setDismissed(sessionStorage.getItem("sas-pwa-dismissed") === "1"); }
@@ -118,8 +119,7 @@ export function SasPwaControls() {
   }
 
   const eligible = !privatePath && !installed && !dismissed &&
-    (platform === "ios" || platform === "ios-inapp" ||
-      (platform === "android" && Boolean(installEvent)));
+    (platform === "ios" || platform === "ios-inapp" || platform === "android");
   if (!eligible && !workerWaiting) return null;
 
   return (
