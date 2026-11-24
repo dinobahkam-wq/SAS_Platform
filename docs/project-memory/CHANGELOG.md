@@ -1,3 +1,11 @@
+### 2026-11-24 — Mobile shortcuts, headline cadence, repeatable slogan (review branch)
+- `feat/mobile-four-tabs-ticker-slogan-replay-v1` is based on post-PWA `main`, **not yet merged or deployed**.
+- The public header's four destinations use individual icon-led mobile surfaces in **one four-column row** rather than the old 2×2 bordered container; retains real RTL links, keyboard states, reduced-motion preferences, and desktop layout.
+- Main briefing's «أهم الأنباء» title advances with a shorter 3.6–7.2 second content-adaptive reading interval (previously 6.5–12 seconds), while hover/keyboard focus still pauses it. Copy transition adjusted to 480ms.
+- The Arabic slogan's existing glyph-safe stroke CSS resets only when its title leaves the viewport, and restarts upon returning. Reduced-motion preference and JS-off access remain safe.
+- Regression checks in `scripts/check-home-mobile-refresh-v1.mjs`, updated the legacy `scripts/check-sas-pill-nav-v1.mjs` assumption and CI registration.
+- PWA installation **not confirmed** as WebAPK on Samsung: a browser's accepted install UI can create a shortcut instead. Device-side Chrome/Google Play Services verification and actual presence in Android Settings > Apps are still required.
+
 ### 2026-11-24 — PWA install and conservative caching package (PR #91 draft)
 - Based on still-unmerged PR #90; branch `feat/sas-pwa-install-and-performance-v1`; **no main merge or Vercel deployment**.
 - Next.js App Router manifest: Arabic/RTL standalone app, icon generation from approved black-backed `sas-logo-512.png`, including correct maskable dark background.

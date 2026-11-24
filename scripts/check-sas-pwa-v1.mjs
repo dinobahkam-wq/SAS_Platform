@@ -17,6 +17,7 @@ test("manifest declares installed Arabic standalone SAS app", () => {
   assert.match(manifest,/sas-pwa-192\.png/);
   assert.match(manifest,/sas-pwa-512\.png/);
   assert.match(manifest,/sas-pwa-maskable-512\.png/);
+  assert.match(manifest,/sas-color-20261124/);
   assert.match(layout,/appleWebApp/);
 });
 test("brand icons generated, not redesigned, with maskable safe padding", () => {
@@ -24,6 +25,8 @@ test("brand icons generated, not redesigned, with maskable safe padding", () => 
   assert.match(script,/sas-pwa-apple-180\.png/);
   assert.match(script,/sas-pwa-maskable-512\.png/);
   assert.match(script,/left: 106, top: 106/);
+  assert.match(script,/background: "#ffffff"/);
+  assert.match(script,/r: 255, g: 255, b: 255/);
   assert.match(pkg.scripts.prebuild,/generate-pwa-icons\.mjs && node scripts\/stamp-pwa-worker\.mjs/);
   assert.equal(pkg.scripts.predev, "node scripts/generate-pwa-icons.mjs");
   assert.equal(pkg.dependencies.sharp,"0.35.5");

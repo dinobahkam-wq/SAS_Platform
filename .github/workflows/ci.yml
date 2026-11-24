@@ -58,6 +58,7 @@ jobs:
             scripts/check-mukalla-home-hero.mjs \
             scripts/check-sas-split-hero.mjs \
             scripts/check-sas-pill-nav-v1.mjs \
+            scripts/check-home-mobile-refresh-v1.mjs \
             scripts/check-sas-metallic-logo-v1.mjs \
             scripts/check-public-scroll-reveal-v1.mjs \
             scripts/check-briefing-audio-v1.mjs \

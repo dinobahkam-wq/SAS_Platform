@@ -28,9 +28,9 @@ test("full news headline remains readable in multiline without clipping or ellip
   assert.match(ticker,/Math\.ceil\(rect\.height\) \+ 16/);
   assert.match(ticker,/ResizeObserver/);
 });
-test("turquoise capsule stretches smoothly while readers have time to read",()=>{
-  assert.match(css,/transition:width \.75s/);
-  assert.match(css,/height \.75s/);
+test("turquoise capsule transitions quickly with content-sized reading intervals",()=>{
+  assert.match(css,/transition:width \.48s/);
+  assert.match(css,/height \.48s/);
   assert.match(ticker,/readingDuration\(active\.title\)/);
   assert.match(ticker,/onMouseEnter=\{\(\) => setPaused\(true\)\}/);
   assert.match(ticker,/onFocusCapture/);

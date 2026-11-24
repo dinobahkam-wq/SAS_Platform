@@ -8,7 +8,7 @@ const input = await readFile(source);
 await mkdir(folder, { recursive: true });
 const variant = async (size, name) => {
   const image = await sharp(input).resize(size, size, {
-    fit: "contain", background: { r: 247, g: 250, b: 248, alpha: 1 }
+    fit: "contain", background: { r: 255, g: 255, b: 255, alpha: 1 }
   }).png().toBuffer();
   await writeFile(path.join(folder, name), image);
 };
@@ -20,7 +20,7 @@ const foreground = await sharp(input).resize(300, 300, {
   fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 }
 }).png().toBuffer();
 const maskable = await sharp({
-  create: { width: 512, height: 512, channels: 4, background: "#000000" }
+  create: { width: 512, height: 512, channels: 4, background: "#ffffff" }
 }).composite([{ input: foreground, left: 106, top: 106 }]).png().toBuffer();
 await writeFile(path.join(folder, "sas-pwa-maskable-512.png"), maskable);
 console.log("SAS PWA icons generated from approved sas-logo-512.png");

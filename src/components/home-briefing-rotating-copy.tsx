@@ -10,8 +10,8 @@ export type BriefingTickerHeadline = {
 };
 
 function readingDuration(title: string) {
-  // Long headlines deserve adequate reading time, even without opening the briefing.
-  return Math.min(12000, Math.max(6500, 3000 + title.length * 95));
+  // Faster editorial rotation, while longer headlines retain reading time.
+  return Math.min(7200, Math.max(3600, 1900 + title.length * 51));
 }
 
 /**
