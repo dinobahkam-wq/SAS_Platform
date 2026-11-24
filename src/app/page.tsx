@@ -11,6 +11,7 @@ import { HomeInsightsShowcase } from "@/components/home-insights-showcase";
 import { getPublishedContent } from "@/lib/public-content";
 import { getPublicBriefing, getPublicBriefingArchive } from "@/lib/public-briefing";
 import { HomeBriefingShowcase } from "@/components/home-briefing-showcase";
+import { getPublishedBriefingAudio } from "@/lib/briefing-audio";
 import { VisualKnowledgePortal } from "@/components/visual-knowledge-portal";
 
 export const dynamic = "force-dynamic";
@@ -40,6 +41,10 @@ export default async function Home() {
     briefingUnavailable = true;
   }
 
+  const briefingAudio = briefings[0]
+    ? await getPublishedBriefingAudio(briefings[0].slug).catch(() => null)
+    : null;
+
   const insights = [...analysis, ...research]
     .sort((a, b) => (b.published_at ?? "").localeCompare(a.published_at ?? ""))
     .slice(0, 9);
@@ -68,6 +73,7 @@ export default async function Home() {
           briefing={latestEdition}
           previous={briefings.slice(1, 3)}
           unavailable={briefingUnavailable}
+          audio={briefingAudio}
         />
       </section>
 
