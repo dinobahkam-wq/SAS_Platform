@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS public.briefing_audio_assets (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   edition_id uuid NOT NULL REFERENCES public.briefing_editions(id) ON DELETE RESTRICT,
   revision_id uuid NOT NULL REFERENCES public.briefing_revisions(id) ON DELETE RESTRICT,
-  object_path text NOT NULL UNIQUE CHECK (object_path ~ '^[0-9a-f-]{36}/[0-9a-f-]{36}\\.(m4a|mp3)$'),
+  object_path text NOT NULL UNIQUE CHECK (object_path ~ '^[0-9a-f-]{36}/[0-9a-f-]{36}\.(m4a|mp3)$'),
   file_name text NOT NULL CHECK(length(file_name)>0 AND length(file_name)<=220),
   mime_type text NOT NULL CHECK(mime_type IN ('audio/mp4','audio/mpeg')),
   file_size integer NOT NULL CHECK(file_size > 0 AND file_size <= 10485760),
