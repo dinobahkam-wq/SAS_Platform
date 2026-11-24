@@ -1,4 +1,5 @@
 import "./site-search-cta.css";
+import "./sas-metallic-logo.css";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,6 +10,7 @@ import {
 import { formatLabel, sectionLabel } from "@/lib/content";
 import { BrandLogo } from "@/components/brand-logo";
 import { ThemeControl } from "@/components/theme-control";
+import { SasHeaderPillNav } from "@/components/sas-pill-nav";
 
 const navigation = [
   { href: "/briefings", label: "الإحاطة اليومية" },
@@ -22,13 +24,9 @@ export function PublicHeader() {
     <header className="site-header">
       <div className="site-header-inner">
         <Link href="/" className="site-brand" aria-label="منصة ساس">
-          <BrandLogo variant="color" priority />
+          <span className="sas-metallic-logo"><BrandLogo variant="color" priority /></span>
         </Link>
-        <nav className="site-nav" aria-label="الأقسام الرئيسية">
-          {navigation.map((item) => (
-            <Link href={item.href} key={item.href}>{item.label}</Link>
-          ))}
-        </nav>
+        <SasHeaderPillNav />
         <div className="site-header-actions">
           <Link href="/search" className="sas-header-search" aria-label="البحث في منصة ساس" title="البحث في الإحاطات والمواد">
             <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="7.1"/><path d="m16 16 5 5"/></svg>

@@ -13,6 +13,7 @@ import "./mobile-polish.css";
 import "./mukalla-home-hero.css";
 import "./sas-split-hero.css";
 import { SasHeroThreads } from "@/components/sas-hero-threads";
+import { SasPublicScrollReveal } from "@/components/sas-public-scroll-reveal";
 import { themeInitializer } from "@/lib/theme-initializer";
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body>
         <Script id="sas-theme-initializer" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeInitializer }} />
         <SasHeroThreads />
+        <SasPublicScrollReveal />
         <div className="sas-site-content">{children}</div>
       </body>
     </html>

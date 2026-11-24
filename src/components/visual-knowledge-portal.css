@@ -1,0 +1,225 @@
+/* SAS Visual Atlas — organic gallery portal experiment, inspired by the approved concept.
+   Decorative only; links, typography and published content remain accessible. */
+.public-site .sas-vkp {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  direction: rtl;
+  grid-template-columns: minmax(0, 1.15fr) minmax(290px, .85fr);
+  min-height: 390px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, #337c65 38%, var(--line));
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 10% 93%, #195749 0, transparent 40%),
+    radial-gradient(ellipse at 90% 4%, #c7dfa3 0, transparent 38%),
+    linear-gradient(132deg, #4c9579 0%, #9fca8f 44%, #dfecc9 100%);
+  box-shadow: 0 17px 39px rgba(21, 70, 60, .12);
+}
+.public-site .sas-vkp::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -16%;
+  bottom: 11%;
+  right: -6%;
+  width: 76%;
+  border-radius: 44% 0 0 53% / 60% 0 0 45%;
+  transform: rotate(-5deg);
+  background: #fffefa;
+  box-shadow: -10px 6px 28px rgba(20, 75, 63, .06);
+  pointer-events: none;
+}
+.public-site .sas-vkp::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: -9%;
+  right: -8%;
+  bottom: -31%;
+  height: 50%;
+  transform: rotate(-8deg);
+  border-radius: 50% 65% 0 0;
+  background: linear-gradient(115deg, rgba(9, 75, 66, .54), rgba(54, 133, 102, .53) 58%, rgba(153, 193, 121, .42));
+  pointer-events: none;
+}
+.public-site .sas-vkp-copy {
+  position: relative;
+  z-index: 3;
+  padding: clamp(28px, 4.2vw, 64px) clamp(28px, 4.5vw, 75px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+}
+.public-site .sas-vkp-eyebrow {
+  color: #236b56;
+  font: 700 14px/1.6 "Thmanyah Sans", sans-serif;
+  letter-spacing: 0;
+}
+.public-site .sas-vkp-copy h3 {
+  margin: 17px 0 20px;
+  color: #093e37;
+  font: 700 clamp(36px, 4.2vw, 64px)/1.3 "Tajarib Taweel", "Thmanyah Sans", sans-serif;
+  text-wrap: balance;
+}
+.public-site .sas-vkp-copy p {
+  max-width: 43ch;
+  margin: 0;
+  color: #4a6258;
+  font: 400 clamp(13px, 1.25vw, 16px)/1.95 "Thmanyah Sans", sans-serif;
+}
+.public-site .sas-vkp-actions {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 25px;
+  margin-top: 27px;
+}
+.public-site .sas-vkp-formats {
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(207, 226, 199, .44);
+  color: #305e4b;
+  font: 600 12px/1.65 "Thmanyah Sans", sans-serif;
+}
+.public-site .sas-vkp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  min-height: 50px;
+  padding: 12px 29px;
+  border-radius: 12px;
+  background: linear-gradient(130deg, #dfa941, #c48b27);
+  color: #fff;
+  box-shadow: 0 6px 15px rgba(134, 93, 22, .17);
+  font: 700 15px/1.5 "Thmanyah Sans", sans-serif;
+  transition: transform .22s ease, filter .22s ease;
+}
+.public-site .sas-vkp-cta:hover { transform: translateY(-2px); filter: brightness(1.07); }
+.public-site .sas-vkp-illustration {
+  position: relative;
+  isolation: isolate;
+  z-index: 2;
+  min-height: 390px;
+  overflow: visible;
+  pointer-events: none;
+}
+.public-site .sas-vkp-map-contours {
+  position: absolute;
+  inset: 0;
+  opacity: .26;
+  background: repeating-radial-gradient(ellipse at 10% 24%, transparent 0 15px, #e6f3ce 16px 17px, transparent 18px 31px);
+  mask-image: linear-gradient(140deg, black, transparent 77%);
+}
+.public-site .sas-vkp-globe {
+  position: absolute;
+  left: -8%;
+  bottom: -38%;
+  width: min(87%, 340px);
+  aspect-ratio: 1;
+  color: #e7efc9;
+  opacity: .55;
+  transform: rotate(-19deg);
+}
+.public-site .sas-vkp-globe svg { display: block; width: 100%; height: 100%; }
+.public-site .sas-vkp-illustration-card {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid rgba(25, 90, 76, .2);
+  border-radius: 17px;
+  color: #175e52;
+  background: linear-gradient(155deg, #fffcf2, #e7eee1);
+  box-shadow: 0 20px 30px rgba(10, 63, 51, .22);
+  transition: transform .25s ease;
+}
+.public-site .sas-vkp-illustration-card svg { width: 100%; height: 78%; }
+.public-site .sas-vkp-illustration-card > span:last-child {
+  color: #175e52;
+  font: 700 11px "Thmanyah Sans", sans-serif;
+}
+.public-site .sas-vkp-illustration-card--chart {
+  width: 46%;
+  height: 46%;
+  left: 10%;
+  top: 10%;
+  transform: rotate(-10deg);
+}
+.public-site .sas-vkp-illustration-card--map {
+  width: 46%;
+  height: 49%;
+  left: 46%;
+  top: 28%;
+  z-index: 2;
+  transform: rotate(8deg);
+}
+.public-site .sas-vkp-illustration-card--note {
+  width: 44%;
+  height: 42%;
+  left: 14%;
+  top: 50%;
+  z-index: 1;
+  transform: rotate(-5deg);
+}
+.public-site .sas-vkp-note-tag { color: #347366; font-size: 9px !important; }
+.public-site .sas-vkp-note-lines { display: grid; gap: 9px; width: 86%; }
+.public-site .sas-vkp-note-lines i { height: 6px; border-radius: 9px; background: #9cbdad; }
+.public-site .sas-vkp-note-lines i:nth-child(2) { width: 65%; }
+.public-site .sas-vkp-note-lines i:nth-child(3) { width: 82%; }
+.public-site .sas-vkp a:focus-visible { outline: 3px solid #a26b0e; outline-offset: 4px; }
+
+@media (max-width: 950px) and (min-width: 761px) {
+  .public-site .sas-vkp { grid-template-columns: minmax(0, 1.13fr) minmax(230px, .87fr); }
+  .public-site .sas-vkp::before { width: 78%; }
+  .public-site .sas-vkp-copy { padding: 28px 35px; }
+  .public-site .sas-vkp-copy h3 { font-size: 43px; }
+}
+@media (max-width: 760px) {
+  .public-site .sas-vkp {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    border-radius: 18px;
+  }
+  .public-site .sas-vkp::before {
+    top: 26%;
+    right: -18%;
+    bottom: -21%;
+    width: 138%;
+    border-radius: 48% 47% 0 0 / 19% 22% 0 0;
+    transform: rotate(-3deg);
+  }
+  .public-site .sas-vkp::after { bottom: -35%; height: 25%; }
+  .public-site .sas-vkp-illustration { grid-row: 1; min-height: 240px; max-height: 270px; overflow: hidden; }
+  .public-site .sas-vkp-copy {
+    grid-row: 2;
+    padding: 20px 27px 37px;
+    align-items: center;
+    text-align: center;
+  }
+  .public-site .sas-vkp-copy h3 { margin: 10px 0 12px; font-size: clamp(32px, 7vw, 44px); }
+  .public-site .sas-vkp-copy p { max-width: 40ch; font-size: 13px; }
+  .public-site .sas-vkp-eyebrow { font-size: 12px; }
+  .public-site .sas-vkp-actions { align-items: center; margin-top: 22px; gap: 15px; }
+  .public-site .sas-vkp-globe { width: 230px; bottom: -115px; left: 2%; }
+  .public-site .sas-vkp-illustration-card--chart { width: 35%; height: 62%; left: 13%; top: 12%; }
+  .public-site .sas-vkp-illustration-card--map { width: 35%; height: 64%; left: 47%; top: 19%; }
+  .public-site .sas-vkp-illustration-card--note { width: 34%; height: 52%; left: 31%; top: 41%; }
+}
+@media (max-width: 420px) {
+  .public-site .sas-vkp-illustration { min-height: 190px; height: 190px; }
+  .public-site .sas-vkp-copy { padding: 15px 20px 30px; }
+  .public-site .sas-vkp-illustration-card { padding: 10px; border-radius: 12px; }
+  .public-site .sas-vkp-copy h3 { font-size: 33px; }
+  .public-site .sas-vkp-formats { font-size: 10px; }
+  .public-site .sas-vkp-cta { min-height: 45px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site .sas-vkp-cta,
+  .public-site .sas-vkp-illustration-card { transition: none; }
+  .public-site .sas-vkp-cta:hover { transform: none; }
+}

@@ -61,7 +61,7 @@ export default async function AdminBriefingsPage() {
                 </div>
                 <h2>{edition.title_ar}</h2>
                 <div className="sas-admin-edition-actions">
-                  <Link className="button button-primary button-small" href={"/admin/briefings/"+encodeURIComponent(edition.slug)}>استعراض التطورات ←</Link><Link className="button button-secondary button-small" href={"/admin/briefings/enrich/"+encodeURIComponent(edition.slug)}>إضافة صور</Link>
+                  <Link className="button button-primary button-small" href={"/admin/briefings/"+encodeURIComponent(edition.slug)}>استعراض التطورات ←</Link><Link className="button button-secondary button-small" href={"/admin/briefings/enrich/"+encodeURIComponent(edition.slug)}>إضافة صور</Link><Link className="button button-secondary button-small" href={"/admin/briefings/audio/"+encodeURIComponent(edition.slug)}>الإحاطة الصوتية</Link>
                   <Link className="button button-quiet button-small" href={"/briefings/"+encodeURIComponent(edition.slug)} target="_blank" rel="noopener noreferrer">فتح النسخة العامة</Link>
                 </div>
               </article>

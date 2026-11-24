@@ -213,3 +213,125 @@ html[data-theme="dark"] .public-site .home-brand-hero.sas-split-hero p {
   .public-site .sas-split-hero .sas-hero-visual { display: none; }
   .public-site .home-brand-hero.sas-split-hero .home-intro-copy { max-width: 100%; }
 }
+
+/* Rotating SAS editorial covers: the same composition and masks for every frame. */
+.public-site .sas-split-hero .sas-hero-visual.sas-hero-rotator {
+  background-image: none;
+  overflow: hidden;
+}
+.public-site .sas-split-hero .sas-hero-rotator-frame {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: 42% 50%;
+  background-size: cover;
+  /* Reversible monochrome trial: source assets remain untouched. */
+  filter: grayscale(100%);
+  opacity: 0;
+  transition: opacity 1100ms ease-in-out;
+  will-change: opacity;
+}
+.public-site .sas-split-hero .sas-hero-rotator-frame.is-active {
+  opacity: 1;
+}
+html[data-theme="dark"] .public-site .sas-split-hero .sas-hero-visual.sas-hero-rotator {
+  background-image: none;
+  filter: brightness(.88) saturate(.90);
+}
+@media (max-width: 760px) {
+  .public-site .sas-split-hero .sas-hero-rotator-frame {
+    background-position: 42% 45%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site .sas-split-hero .sas-hero-rotator-frame {
+    transition: none;
+    will-change: auto;
+  }
+}
+@media print {
+  .public-site .sas-split-hero .sas-hero-rotator-frame {
+    display: none;
+  }
+}
+
+/* One-time StrokeText-inspired Arabic slogan reveal.
+ * Animate the whole shaped phrase, not individual letters: Arabic joining,
+ * diacritics, Tajarib font metrics and RTL order stay intact.
+ * No GSAP dependency or interval coupled to the image carousel.
+ */
+.public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+  white-space: nowrap;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+  isolation: isolate;
+}
+.public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::before,
+.public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: block;
+  white-space: nowrap;
+  direction: rtl;
+  text-align: right;
+  font: inherit;
+  letter-spacing: inherit;
+  pointer-events: none;
+}
+.public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::before {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: .9px var(--sas-slogan-ink, #223430);
+  clip-path: inset(0 0 0 100%);
+  animation: sasSloganTrace 1.45s cubic-bezier(.22,.7,.25,1) both;
+}
+.public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::after {
+  color: var(--sas-slogan-ink, #223430);
+  -webkit-text-fill-color: var(--sas-slogan-ink, #223430);
+  clip-path: inset(0 0 0 100%);
+  animation: sasSloganFill 1.05s cubic-bezier(.18,.8,.28,1) .9s both;
+}
+.public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment--second {
+  font-style: normal;
+  --sas-slogan-ink: #007e80;
+}
+.public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment--second::before {
+  animation-delay: .52s;
+}
+.public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment--second::after {
+  animation-delay: 1.45s;
+}
+html[data-theme="dark"] .public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment--first {
+  --sas-slogan-ink: #f0f5f1;
+}
+html[data-theme="dark"] .public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment--second {
+  --sas-slogan-ink: #80d4cb;
+}
+@keyframes sasSloganTrace {
+  from { clip-path: inset(0 0 0 100%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes sasSloganFill {
+  from { clip-path: inset(0 0 0 100%); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::before,
+  .public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::after {
+    animation: none;
+    clip-path: none;
+  }
+  .public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::before {
+    display: none;
+  }
+}
+@media print {
+  .public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::before { display: none; }
+  .public-site .sas-split-hero .sas-slogan-stroke .sas-slogan-segment::after {
+    animation: none; clip-path: none;
+  }
+}

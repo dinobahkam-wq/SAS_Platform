@@ -1,0 +1,12 @@
+.sas-admin-briefing-audio { display:grid; gap:18px; direction:rtl; }
+.sas-admin-audio-panel { display:grid; gap:17px; padding:clamp(20px,3vw,30px); max-width:850px; }
+.sas-admin-audio-panel h2 { margin:0; font:700 20px/1.6 "Tajarib Taweel","Thmanyah Sans",sans-serif; }
+.sas-admin-audio-panel audio { display:block; width:min(100%,650px); margin:14px 0; }
+.sas-admin-audio-upload { display:grid; gap:11px; max-width:650px; border-top:1px solid var(--line); padding-top:19px; }
+.sas-admin-audio-upload label { font-weight:700; }
+.sas-admin-audio-upload input[type=file] { width:100%; padding:12px; border:1px dashed var(--line); border-radius:10px; }
+.sas-admin-audio-upload button { justify-self:start; }
+.sas-admin-audio-upload button:disabled { opacity:.45; cursor:not-allowed; }
+.sas-admin-audio-upload p,.sas-admin-audio-publish p { color:var(--muted); line-height:1.9; }
+.sas-admin-audio-upload [role=alert] { color:#ba3636; }
+.sas-admin-audio-publish { border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line)); padding:17px; border-radius:12px; }

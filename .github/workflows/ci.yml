@@ -56,7 +56,14 @@ jobs:
             scripts/check-admin-team-owner-v1.mjs \
             scripts/check-mobile-experience-package-a.mjs \
             scripts/check-mukalla-home-hero.mjs \
-            scripts/check-sas-split-hero.mjs
+            scripts/check-sas-split-hero.mjs \
+            scripts/check-sas-pill-nav-v1.mjs \
+            scripts/check-sas-metallic-logo-v1.mjs \
+            scripts/check-public-scroll-reveal-v1.mjs \
+            scripts/check-briefing-audio-v1.mjs \
+            scripts/check-home-briefing-cover-v3.mjs \
+            scripts/check-home-briefing-rotating-copy-v1.mjs \
+            scripts/check-home-insights-showcase-v1.mjs
 
       - name: Typecheck
         run: npm run typecheck

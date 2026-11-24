@@ -5,11 +5,12 @@ const read=(path)=>readFileSync(path,"utf8");
 const page=read("src/app/page.tsx");
 const layout=read("src/app/layout.tsx");
 const css=read("src/app/sas-split-hero.css");
+const rotator=read("src/components/sas-hero-rotator.tsx");
 test("the single hero card has a separate decorative left image and a semantic right copy column",()=>{
   assert.match(page,/sas-mukalla-hero sas-split-hero site-container/);
-  assert.match(page,/<div className="sas-hero-visual" aria-hidden="true" \/>/);
-  assert.ok(page.indexOf('className="sas-hero-visual"')<page.indexOf('className="home-intro-copy"'));
-  assert.match(page,/مِن الخَبر، <em>إِلى المعرِفَة<\/em>/);
+  assert.match(page,/<SasHeroRotator \/>/);
+  assert.ok(page.indexOf("<SasHeroRotator />")<page.indexOf('className="home-intro-copy"'));
+  assert.match(page,/aria-label="مِن الخَبر، إِلى المعرِفَة"/);
   assert.match(page,/استعرض الإحاطة اليومية/);
   assert.match(page,/التحليل والدراسات/);
   assert.ok(existsSync("public/sa.webp.png"));
@@ -36,4 +37,28 @@ test("mobile composition places image above content and fades vertically into th
   assert.match(css,/html\[data-theme="dark"\]/);
   assert.match(css,/prefers-reduced-motion/);
   assert.match(css,/@media print/);
+});
+
+test("rotator uses the approved first frame and the five optional editorial frames",()=>{
+  assert.match(rotator,/\/sa\.webp\.png/);
+  for(let i=12;i<=16;i++) assert.ok(rotator.includes(`/${i}.webp.png`));
+  assert.match(rotator,/Promise\.all/);
+  assert.match(rotator,/img\.onerror/);
+  assert.match(rotator,/6500/);
+  assert.match(rotator,/prefers-reduced-motion/);
+  assert.match(css,/\.sas-hero-rotator-frame\.is-active/);
+  assert.match(css,/opacity 1100ms ease-in-out/);
+});
+
+test("Arabic slogan stroke effect retains connected script and accessibility",()=>{
+  assert.match(page,/className="sas-slogan-stroke"/);
+  assert.match(page,/sas-slogan-segment--first/);
+  assert.match(page,/sas-slogan-segment--second/);
+  assert.match(page,/aria-hidden="true"/);
+  assert.match(css,/content: attr\(data-text\)/);
+  assert.match(css,/-webkit-text-stroke/);
+  assert.match(css,/@keyframes sasSloganTrace/);
+  assert.match(css,/@keyframes sasSloganFill/);
+  assert.match(css,/prefers-reduced-motion: reduce/);
+  assert.doesNotMatch(page,/StrokeText|gsap/);
 });

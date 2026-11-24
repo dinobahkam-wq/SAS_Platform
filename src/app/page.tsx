@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SasHeroRotator } from "@/components/sas-hero-rotator";
 import {
   EmptyContent,
   PublicFooter,
@@ -6,11 +7,12 @@ import {
   SectionHeading,
 } from "@/components/public-site";
 import { EditorialRail } from "@/components/editorial-rail";
-import { KnowledgeRail } from "@/components/knowledge-rail";
+import { HomeInsightsShowcase } from "@/components/home-insights-showcase";
 import { getPublishedContent } from "@/lib/public-content";
 import { getPublicBriefing, getPublicBriefingArchive } from "@/lib/public-briefing";
 import { HomeBriefingShowcase } from "@/components/home-briefing-showcase";
-import { VisualKnowledgeShowcase } from "@/components/visual-knowledge-feature";
+import { getPublishedBriefingAudio } from "@/lib/briefing-audio";
+import { VisualKnowledgePortal } from "@/components/visual-knowledge-portal";
 
 export const dynamic = "force-dynamic";
 
@@ -39,10 +41,13 @@ export default async function Home() {
     briefingUnavailable = true;
   }
 
+  const briefingAudio = briefings[0]
+    ? await getPublishedBriefingAudio(briefings[0].slug).catch(() => null)
+    : null;
+
   const insights = [...analysis, ...research]
     .sort((a, b) => (b.published_at ?? "").localeCompare(a.published_at ?? ""))
     .slice(0, 9);
-  const visual = media.filter((item) => ["infographic", "photo_gallery"].includes(item.format));
   const programs = media.filter((item) => ["video", "podcast", "interview"].includes(item.format));
 
   return (
@@ -50,9 +55,9 @@ export default async function Home() {
       <PublicHeader />
 
       <section className="home-compact-intro home-brand-hero sas-mukalla-hero sas-split-hero site-container">
-        <div className="sas-hero-visual" aria-hidden="true" />
+        <SasHeroRotator />
         <div className="home-intro-copy">
-          <h1>مِن الخَبر، <em>إِلى المعرِفَة</em></h1>
+          <h1 className="sas-slogan-stroke" aria-label="مِن الخَبر، إِلى المعرِفَة"><span className="sas-slogan-segment sas-slogan-segment--first" data-text="مِن الخَبر،" aria-hidden="true">مِن الخَبر،</span>{" "}<em className="sas-slogan-segment sas-slogan-segment--second" data-text="إِلى المعرِفَة" aria-hidden="true">إِلى المعرِفَة</em></h1>
           <p>إحاطة سياسية موثقة، وتحليلات ودراسات، ومعرفة بصرية وفيديوهات تفسر الأحداث وسياقاتها.</p>
           <div className="home-compact-actions">
             <Link href="/briefings" className="button button-primary sas-cta sas-cta--primary">استعرض الإحاطة اليومية</Link>
@@ -68,25 +73,23 @@ export default async function Home() {
           briefing={latestEdition}
           previous={briefings.slice(1, 3)}
           unavailable={briefingUnavailable}
+          audio={briefingAudio}
         />
       </section>
 
       <section className="home-section home-analysis-section sas-product-section">
         <div className="site-container">
-          <SectionHeading eyebrow="قراءة معمّقة" title="التحليل والدراسات" href="/insights" />
           {insights.length
-            ? <KnowledgeRail title="أحدث التحليلات والدراسات" items={insights} />
-            : <EmptyContent message="لا توجد تحليلات أو دراسات منشورة حتى الآن." />}
+            ? <HomeInsightsShowcase items={insights} />
+            : <>
+                <SectionHeading eyebrow="قراءة معمّقة" title="التحليل والدراسات" href="/insights" />
+                <EmptyContent message="لا توجد تحليلات أو دراسات منشورة حتى الآن." />
+              </>}
         </div>
       </section>
 
-      <section className="home-section site-container sas-product-section">
-        <SectionHeading eyebrow="السياسة بلغة الصورة" title="المعرفة البصرية" href="/visual-knowledge" />
-        <p className="sas-visual-showcase-intro">تصورات تفاعلية توضح المفاهيم السياسية وتحولات الأحداث، بمصادر يمكن الرجوع إليها.</p>
-        <VisualKnowledgeShowcase />
-        {visual.length ? (
-          <div style={{ marginTop: 24 }}><EditorialRail title="مواد بصرية أخرى" items={visual} /></div>
-        ) : null}
+      <section className="home-section site-container sas-product-section" aria-label="بوابة المعرفة البصرية">
+        <VisualKnowledgePortal />
       </section>
 
       <section className="home-section home-media-section sas-product-section">

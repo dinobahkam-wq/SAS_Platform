@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { SasPillNav } from "@/components/sas-pill-nav";
 import {
   BriefingEmphasis,
   BriefingTypeTag,
@@ -117,23 +118,17 @@ export function BriefingEditionBody({
 
   return (
     <>
-      <nav className="briefing-topic-tabs" aria-label="تصفية سجل التطورات حسب القسم">
-        {tabs.map((tab) => {
-          const count = developments.filter((development) => matchesTab(development, tab.key)).length;
-          return (
-            <button
-              key={tab.key}
-              className={`briefing-topic-tab${activeTab === tab.key ? " is-active" : ""}`}
-              type="button"
-              aria-pressed={activeTab === tab.key}
-              onClick={() => setActiveTab(tab.key)}
-            >
-              <span>{tab.label}</span>
-              <span className="briefing-topic-tab-count" aria-hidden="true">{count}</span>
-            </button>
-          );
-        })}
-      </nav>
+      <SasPillNav
+        variant="briefing"
+        ariaLabel="تصفية سجل التطورات حسب القسم"
+        items={tabs.map((tab) => ({
+          key: tab.key,
+          label: tab.label,
+          count: developments.filter((development) => matchesTab(development, tab.key)).length,
+        }))}
+        activeKey={activeTab}
+        onChange={(key) => setActiveTab(key as Tab)}
+      />
 
       <section className="briefing-developments-section" aria-labelledby="briefing-developments-title">
         <div className="briefing-section-heading briefing-developments-heading">
@@ -170,12 +165,16 @@ export function BriefingEditionBody({
                       <BriefingIdentityMarks development={development}/>
                       <BriefingLocationMark place={development.place}/>
                     </div>
-                    <h3>{development.headline_ar}</h3>
-                    {development.image?<figure className="sas-briefing-photo">
-                      <img src={development.image.url} alt={development.image.alt_text} loading="lazy" decoding="async"/>
-                      <figcaption>{development.image.caption||development.image.alt_text} · {development.image.credit}</figcaption>
-                    </figure>:null}
-                    {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
+                    <div className={development.image ? "sas-briefing-media-row" : "sas-briefing-media-row sas-briefing-media-row--text-only"}>
+                      {development.image ? <figure className="sas-briefing-photo">
+                        <img src={development.image.url} alt={development.image.alt_text || `صورة مرافقة: ${development.headline_ar}`} loading="lazy" decoding="async"/>
+                        {development.image.caption || development.image.credit ? <figcaption>{[development.image.caption, development.image.credit].filter(Boolean).join(" · ")}</figcaption> : null}
+                      </figure> : null}
+                      <div className="sas-briefing-media-copy">
+                        <h3>{development.headline_ar}</h3>
+                        {development.summary_ar ? <p className="briefing-event-summary"><BriefingEmphasis text={development.summary_ar}/></p> : null}
+                      </div>
+                    </div>
 
                     <div className="briefing-dense-foot">
                       <div className="briefing-dense-evidence">

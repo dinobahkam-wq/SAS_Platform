@@ -5,6 +5,8 @@ import { PublicFooter, PublicHeader } from "@/components/public-site";
 import { formatBriefingDateOnly } from "@/components/briefing-public";
 import { BriefingEditionBody } from "@/components/briefing-edition-body";
 import { getPublicBriefing } from "@/lib/public-briefing";
+import { getPublishedBriefingAudio } from "@/lib/briefing-audio";
+import { BriefingAudioPlayer } from "@/components/briefing-audio-player";
 import { getBriefingWeatherIndicators } from "@/lib/briefing-indicators";
 import { getDatedBriefingContext } from "@/lib/briefing-dated-context";
 import { BriefingIntelligencePanel } from "@/components/briefing-intelligence-panel";
@@ -52,6 +54,7 @@ export default async function PublicBriefingPage({
 
   const { edition, revision, developments } = briefing;
   const correction = revision.revision_kind === "correction";
+  const editionAudio = await getPublishedBriefingAudio(edition.slug).catch(() => null);
   const [weather, context, canOpenStudio] = await Promise.all([
     getBriefingWeatherIndicators(),
     getDatedBriefingContext(edition.edition_date),
@@ -88,10 +91,9 @@ export default async function PublicBriefingPage({
               تصدير PDF
             </Link>
           </div>
-          {correction && revision.change_reason_ar ? (
-            <p className="briefing-correction-note">سبب التصحيح: {revision.change_reason_ar}</p>
-          ) : null}
         </header>
+
+        {editionAudio ? <BriefingAudioPlayer audio={editionAudio} /> : null}
 
         <section className="sas-fixed-reference-panel" aria-label="مؤشرات العدد والبيانات المرجعية">
           <div className="briefing-section-heading sas-reference-panel-heading">

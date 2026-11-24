@@ -42,10 +42,10 @@ test("interactive page and section have complete navigation and data boundary", 
   assert.match(ui, /event\.significance/);
   assert.match(ui, /قراءة تحريرية لساس/);
   assert.match(ui, /href=\{source\.url\}/);
-  assert.match(route, /YemenCrisisTimeline/);
-  assert.match(landing, /VisualKnowledgeShowcase/);
-  assert.match(home, /VisualKnowledgeShowcase/);
-  assert.match(route, /PublicFooter/);
+  assert.match(route, /notFound\(\)/);
+  assert.match(landing, /VisualKnowledgeGallery/);
+  assert.match(home, /VisualKnowledgePortal/);
+  assert.match(route, /notFound/);
 });
 
 test("styles are scoped and designed for RTL, small screens and keyboard access", () => {
