@@ -1,3 +1,5 @@
+> **إغلاق الإصدار — 24 نوفمبر 2026:** اكتمل دمج [PR #88](https://github.com/dinobahkam-wq/SAS_Platform/pull/88) في `main` عند الالتزام `5d021f1e8bbb7039dd7514079435ba547e7a0285`، بعد معالجة تعارضات حقوق صور WebP والمحافظة على سجلات `main`. نجح CI على PR وعلى `main` بعد الدمج (اختبارات الانحدار وTypeScript وNext.js production build). لم يتم نشر Vercel في هذه العملية. جميع فروع التطوير التاريخية غير المحذوفة تُعامل كأرشيف، وتبدأ الفروع الجديدة من `main`.
+
 # SAS Platform — Release handoff and integration record, 24 November 2026
 
 ## Status and scope
