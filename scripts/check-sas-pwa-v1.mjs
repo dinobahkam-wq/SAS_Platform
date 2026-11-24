@@ -24,7 +24,7 @@ test("brand icons generated, not redesigned, with maskable safe padding", () => 
   assert.match(script,/sas-pwa-apple-180\.png/);
   assert.match(script,/sas-pwa-maskable-512\.png/);
   assert.match(script,/left: 106, top: 106/);
-  assert.equal(pkg.scripts.prebuild, "node scripts/generate-pwa-icons.mjs");
+  assert.match(pkg.scripts.prebuild,/generate-pwa-icons\.mjs && node scripts\/stamp-pwa-worker\.mjs/);
   assert.equal(pkg.scripts.predev, "node scripts/generate-pwa-icons.mjs");
   assert.equal(pkg.dependencies.sharp,"0.35.5");
 });
