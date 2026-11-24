@@ -31,7 +31,7 @@ test("brand icons generated, not redesigned, with maskable safe padding", () => 
 test("service worker never caches private content or editorial navigations", () => {
   assert.match(worker,/request\.mode === "navigate"/);
   assert.match(worker,/try \{ return await fetch\(request\); \}/);
-  assert.match(worker,/\/briefings/);
+  assert.match(worker,/briefings\(\?:/);
   assert.match(worker,/\?:admin\|login\|auth\|api/);
   assert.doesNotMatch(worker,/cache\.put\(request, response\.clone\(\)\)[\s\S]*request\.mode === "navigate"/);
   assert.match(worker,/MAX_IMAGES = 45/);
