@@ -37,3 +37,7 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# Generated PWA files (built from approved assets and Git SHA)
+public/sw.js
+public/brand/icons/sas-pwa-*.png
