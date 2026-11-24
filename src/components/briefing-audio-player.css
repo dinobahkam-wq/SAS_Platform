@@ -1,42 +1,180 @@
-/* Optional editorial audio companion; renders only for a published current revision. */
+/* SAS Daily Audio — editorial AI voice player.
+ * Scoped styles shared by the homepage feature and the briefing detail page.
+ */
 .sas-briefing-audio {
-  width: 100%;
-  max-width: 780px;
-  margin: 21px 0;
-  padding: 18px 20px;
-  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--line));
-  border-radius: 15px;
-  background: color-mix(in srgb, var(--accent-soft) 19%, var(--surface));
-  color: var(--foreground);
-  direction: rtl;
-  font-family: "Thmanyah Sans", sans-serif;
-  box-shadow: 0 7px 25px rgba(15,75,65,.04);
+  direction:rtl;
+  width:100%;
+  max-width:780px;
+  min-width:0;
+  margin:20px 0;
+  padding:19px;
+  border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));
+  border-radius:18px;
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--accent-soft) 37%,var(--surface)),
+    var(--surface) 78%);
+  color:var(--foreground);
+  font-family:"Thmanyah Sans",sans-serif;
+  box-shadow:0 12px 36px rgba(11,72,65,.065),inset 0 1px 0 rgba(255,255,255,.25);
 }
-.sas-briefing-audio__heading { display:flex; align-items:center; gap:12px; }
-.sas-briefing-audio__symbol { display:grid; place-items:center; width:38px; height:38px; border-radius:11px; color:white; background:#127d75; font-size:21px; }
-.sas-briefing-audio__heading > div { display:grid; gap:3px; min-width:0; }
-.sas-briefing-audio__heading strong { font-size:15px; }
-.sas-briefing-audio__heading > div > span { color:var(--muted); font-size:11px; }
-.sas-briefing-audio__duration { margin-inline-start:auto; color:var(--accent); font:700 13px "Thmanyah Sans",sans-serif; font-variant-numeric:tabular-nums; }
-.sas-briefing-audio__controls { display:flex; align-items:center; gap:12px; margin-top:15px; }
-.sas-briefing-audio__toggle { width:41px; height:41px; flex:0 0 41px; display:grid; place-items:center; border:0; border-radius:50%; background:var(--accent); color:#fff; cursor:pointer; font-size:17px; }
-.sas-briefing-audio__toggle:focus-visible { outline:3px solid #d7ab54; outline-offset:3px; }
-.sas-briefing-audio__timeline { flex:1; min-width:0; }
-.sas-briefing-audio__timeline input { width:100%; cursor:pointer; accent-color:var(--accent); }
-.sas-briefing-audio__times { display:flex; justify-content:space-between; color:var(--muted); font-size:10px; font-variant-numeric:tabular-nums; }
-.sas-briefing-audio__extras { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px 15px; margin-top:13px; }
-.sas-briefing-audio__extras label { display:inline-flex; align-items:center; gap:7px; color:var(--muted); font-size:11px; }
-.sas-briefing-audio__extras select { border:1px solid var(--line); border-radius:6px; padding:5px; background:var(--surface); color:var(--foreground); font-family:inherit; }
-.sas-briefing-audio__extras input[type="range"] { width:65px; accent-color:var(--accent); }
-.sas-briefing-audio__extras a { color:var(--accent); font-size:11px; font-weight:700; text-decoration:none; }
-.sas-briefing-audio__extras a:hover { text-decoration:underline; }
-.sas-briefing-audio [role="alert"] { color:#b94242; font-size:12px; }
-.sas-briefing-audio--compact { margin:16px 0 22px; padding:15px; }
-.sas-briefing-audio--compact .sas-briefing-audio__heading strong { font-size:14px; }
+.sas-briefing-audio__heading {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+.sas-briefing-audio__symbol {
+  display:grid;
+  flex:0 0 48px;
+  place-items:center;
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  color:#f0f9f6;
+  background:linear-gradient(145deg,#005d63,#159f91);
+  box-shadow:0 6px 15px rgba(0,98,102,.19);
+}
+.sas-briefing-audio__heading-copy { display:grid; gap:4px; flex:1 1 auto; min-width:0; }
+.sas-briefing-audio__heading-copy strong {
+  font:700 16px/1.4 "Tajarib Taweel","Thmanyah Sans",sans-serif;
+  color:var(--foreground);
+}
+.sas-briefing-audio__heading-copy > span {
+  color:var(--muted);
+  font:500 11px/1.55 "Thmanyah Sans",sans-serif;
+  text-wrap:pretty;
+}
+.sas-briefing-audio__duration {
+  margin-inline-start:auto;
+  align-self:start;
+  color:var(--accent);
+  font:750 12px/1.5 "Thmanyah Sans",sans-serif;
+  font-variant-numeric:tabular-nums;
+  direction:ltr;
+  flex:0 0 auto;
+  padding:6px 9px;
+  border-radius:999px;
+  background:color-mix(in srgb,var(--accent) 9%,var(--surface));
+}
+.sas-briefing-audio__controls {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-top:19px;
+}
+.sas-briefing-audio__toggle {
+  display:grid;
+  place-items:center;
+  flex:0 0 48px;
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:50%;
+  color:#fff;
+  background:var(--brand-teal-deep,var(--accent));
+  box-shadow:0 6px 16px rgba(0,91,87,.19);
+  cursor:pointer;
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.sas-briefing-audio__toggle:hover { transform:scale(1.06); box-shadow:0 8px 20px rgba(0,91,87,.26); }
+.sas-briefing-audio__toggle:focus-visible,.sas-briefing-audio a:focus-visible,
+.sas-briefing-audio input:focus-visible,.sas-briefing-audio select:focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+.sas-briefing-audio__timeline { flex:1 1 auto; min-width:0; }
+.sas-briefing-audio__timeline input[type="range"] {
+  display:block;
+  appearance:none;
+  -webkit-appearance:none;
+  width:100%;
+  height:6px;
+  margin:0;
+  border-radius:999px;
+  background:linear-gradient(to right,
+    var(--accent) 0 var(--sas-audio-progress,0%),
+    color-mix(in srgb,var(--accent) 15%,var(--line)) var(--sas-audio-progress,0%) 100%);
+  direction:ltr;
+  cursor:pointer;
+}
+.sas-briefing-audio__timeline input::-webkit-slider-thumb {
+  -webkit-appearance:none;
+  width:14px; height:14px;
+  border:3px solid var(--surface);
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 1px var(--accent);
+}
+.sas-briefing-audio__timeline input::-moz-range-thumb {
+  width:10px; height:10px;
+  border:3px solid var(--surface);
+  border-radius:50%;
+  background:var(--accent);
+}
+.sas-briefing-audio__times {
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+  color:var(--muted);
+  font:600 10px/1.3 "Thmanyah Sans",sans-serif;
+  font-variant-numeric:tabular-nums;
+}
+.sas-briefing-audio__extras {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px 14px;
+  flex-wrap:wrap;
+  margin-top:17px;
+  padding-top:13px;
+  border-top:1px solid color-mix(in srgb,var(--accent) 12%,var(--line));
+}
+.sas-briefing-audio__extras label {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:var(--muted);
+  font-size:11px;
+  white-space:nowrap;
+}
+.sas-briefing-audio__speed select {
+  padding:5px 7px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  font:700 11px "Thmanyah Sans",sans-serif;
+  color:var(--foreground);
+  background:var(--surface);
+}
+.sas-briefing-audio__volume input {
+  max-width:76px;
+  min-width:40px;
+  accent-color:var(--accent);
+}
+.sas-briefing-audio__download {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:var(--accent);
+  font-size:11px;
+  font-weight:750;
+  text-decoration:none;
+}
+.sas-briefing-audio__download:hover { text-decoration:underline; text-underline-offset:4px; }
+.sas-briefing-audio [role="alert"] { color:#c14040; font-size:12px; }
+.sas-briefing-audio--compact { margin:14px 0 17px; padding:14px 15px; }
+.sas-briefing-audio--compact .sas-briefing-audio__symbol { flex-basis:42px;width:42px;height:42px;border-radius:13px; }
+.sas-briefing-audio--compact .sas-briefing-audio__heading-copy strong {font-size:15px;}
+.sas-briefing-audio--compact .sas-briefing-audio__toggle { width:43px;height:43px;flex-basis:43px; }
 @media(max-width:600px) {
-  .sas-briefing-audio { padding:14px 12px; }
-  .sas-briefing-audio__heading > div > span { font-size:10px; }
+  .sas-briefing-audio { padding:14px 12px;border-radius:14px; }
+  .sas-briefing-audio__heading { gap:9px; }
+  .sas-briefing-audio__symbol { width:42px;height:42px;flex-basis:42px; }
+  .sas-briefing-audio__heading-copy strong { font-size:14px; }
+  .sas-briefing-audio__heading-copy > span { font-size:10px; }
+  .sas-briefing-audio__duration { font-size:10px; padding:5px 7px; }
+  .sas-briefing-audio__extras { gap:8px 10px; }
+  .sas-briefing-audio__volume input { width:58px; }
 }
 @media(prefers-reduced-motion:reduce) {
-  .sas-briefing-audio *, .sas-briefing-audio *::before, .sas-briefing-audio *::after { transition:none!important; animation:none!important; }
+  .sas-briefing-audio *, .sas-briefing-audio *::before, .sas-briefing-audio *::after { transition:none!important;animation:none!important; }
 }
