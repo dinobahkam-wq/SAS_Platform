@@ -113,7 +113,7 @@ const mainSections: SasPillItem[] = [
 export function SasHeaderPillNav() {
   const pathname = usePathname();
   return (
-    <nav className="sas-product-nav" aria-label="منتجات منصة ساس">
+    <nav className="sas-product-nav" aria-label="الأقسام الرئيسية — منتجات منصة ساس">
       <div className="sas-product-nav__list">
         {mainSections.map((item) => {
           const active = pathname === item.href || pathname.startsWith(item.href + "/");
